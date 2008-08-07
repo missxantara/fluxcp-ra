@@ -1,7 +1,8 @@
 <?php
 return array(
 	'servers' => array(
-		'Login Server' => array(
+		array(
+			'name'    => 'Primary Login Server',
 			'address' => '218.54.139.105',
 			'port'    => 6900,
 			'md5auth' => false,
@@ -13,26 +14,40 @@ return array(
 				'port' => 3306,             // -- Implied.
 				'sock' => '/tmp/mysql.sock' // -- Usually never necessary.
 			),
-			'map_servers'  => array(
-				'First Map Server' => array(
-					'address' => '218.54.139.105',
-					'port'    => 6121,
-					'dbconf'  => '[LoginServer]' // -- Implied.
+			'char_map_servers' => array(
+				array(
+					'name'        => 'Mid-rate',
+					'blvl_rate'   => 200, // Informative.
+					'jlvl_rate'   => 200, // Informative.
+					'drop_rate'   => 30,  // Used as a drop rate multiplier in item searches.
+					
+					'char_server' => array(
+						'name'    => 'First Char Server',
+						'address' => '218.54.139.105',
+						'port'    => 5121
+					),
+					'map_server'  => array(
+						'name'    => 'First Map Server',
+						'address' => '218.54.139.105',
+						'port'    => 6121
+					)
 				),
-				'Second Map Server' => array(
-					'address' => '218.54.139.105',
-					'port'    => 6121,
-					'dbconf'  => '[LoginServer]' // -- Implied.
-				)
-			),
-			'char_servers' => array(
-				'First Character Server' => array(
-					'address' => '218.54.139.105',
-					'port'    => 5121
-				),
-				'Second Character Server' => array(
-					'address' => '218.54.139.105',
-					'port'    => 5121
+				array(
+					'name'        => 'Low-rate',
+					'blvl_rate'   => 5,
+					'jlvl_rate'   => 5,
+					'drop_rate'   => 2,
+					
+					'char_server' => array(
+						'name'    => 'Second Char Server',
+						'address' => '218.54.139.105',
+						'port'    => 5121
+					),
+					'map_server'  => array(
+						'name'    => 'Second Map Server',
+						'address' => '218.54.139.105',
+						'port'    => 6121
+					)
 				)
 			)
 		)

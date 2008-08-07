@@ -1,8 +1,7 @@
 <?php
 class Flux {
 	public static $config;
-	public static $serverCollection;
-	public static $serverGroups;
+	public static $servers = array();
 	private function __construct(){}
 }
 ?>

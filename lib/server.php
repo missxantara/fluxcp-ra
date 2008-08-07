@@ -19,8 +19,8 @@ class Server {
 		elseif (!array_key_exists('port', $config)) {
 			$this->throwException('ServerConfigError', "'port' must be present.");
 		}
-		elseif (!ctype_digit($config['port']) || $config['port'] < 1 || $config['port'] > 65535) {
-			$this->throwException('ServerConfigError', "'port' must be a number between 1 and 65535.");
+		elseif (!ctype_digit($config['port'])) {
+			$this->throwException('ServerConfigError', "'port' must be a number.");
 		}
 		elseif (!array_key_exists('dbconf', $config)) {
 			$this->throwException('ServerConfigError', "'dbconf' must be present.");
