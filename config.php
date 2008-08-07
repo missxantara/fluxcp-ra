@@ -1,5 +1,6 @@
 <?php
 return array(
+	'theme'   => 'default',
 	'servers' => array(
 		array(
 			'name'    => 'Primary Login Server',
