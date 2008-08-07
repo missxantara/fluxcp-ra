@@ -11,7 +11,7 @@ class ServerPair {
 	var $jobLevelRate;
 	var $dropRate;
 	
-	public function __construct($loginServer, array $config)
+	public function __construct(LoginServer $loginServer, array $config)
 	{
 		$this->loginServer = $loginServer;
 		
