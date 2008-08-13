@@ -20,8 +20,8 @@ class Flux_Config {
 	 * Default options for setter.
 	 *
 	 * @access private
-     * @var array
-     */
+	 * @var array
+	 */
 	private $defaultSetOptions = array('overwrite' => true, 'force' => true);
 	
 	/**
