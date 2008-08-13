@@ -117,7 +117,18 @@ class Flux_Athena {
 		if ($this->loginServer->config->get('UseMD5')) {
 			$password = md5($password);
 		}
-		// TODO: finish.
+		
+		$sql = "SELECT userid FROM {$this->loginDatabase}.login WHERE userid = ? AND user_pass = ?";
+		$sth = $this->connection->getStatement($sql);
+		$sth->execute(array($username, $password));
+		
+		$res = $sth->fetch();
+		if ($res) {
+			return true;
+		}
+		else {
+			return false;
+		}
 	}
 }
 ?>
