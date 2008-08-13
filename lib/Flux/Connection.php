@@ -49,5 +49,51 @@ class Flux_Connection {
 		$this->pdoMain = $pdoMain;
 		$this->pdoLogs = $pdoLogs;
 	}
+	
+	/**
+	 * Get the PDO instance for the main database server connection.
+	 *
+	 * @return PDO
+	 * @access public
+	 */
+	public function getConnection()
+	{
+		return $this->pdoMain;
+	}
+	
+	/**
+	 * Get the PDO instance for the logs database server connection.
+	 *
+	 * @return PDO
+	 * @access public
+	 */
+	public function getLogsConnection()
+	{
+		return $this->pdoLogs;
+	}
+	
+	/**
+	 * Instanciate a PDOStatement without obtaining a PDO handler before-hand.
+	 *
+	 * @return PDOStatement
+	 * @access public
+	 */
+	public function getStatement($statement, $options = array())
+	{
+		$sth = $this->pdoMain->prepare($statement, $options);
+		return $sth;
+	}
+	
+	/**
+	 * Instanciate a PDOStatement without obtaining a PDO handler before-hand.
+	 *
+	 * @return PDOStatement
+	 * @access public
+	 */
+	public function getStatementForLogs($statement, $options = array())
+	{
+		$sth = $this->pdoLogs->prepare($statement, $options);
+		return $sth;
+	}
 }
 ?>
