@@ -23,7 +23,7 @@ class Flux_Connection {
 	 * @access private
 	 * @var PDO
 	 */
-	public $pdoMain;
+	private $pdoMain;
 	
 	/**
 	 * @access private
