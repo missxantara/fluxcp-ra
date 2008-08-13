@@ -39,7 +39,7 @@ class Flux_Connection {
 	public function __construct(Flux_Config $dbConfig, Flux_Config $logsDbConfig)
 	{
 		// Establish connection for main databases.
-		$dsnMain = sprintf('mysql:host=%s;dbname=%s', $dbConfig->getHostname(), $dbConfig->getDatabase());
+		$dsnMain = sprintf('mysql:host=%s', $dbConfig->getHostname());
 		$pdoMain = new PDO($dsnMain, $dbConfig->getUsername(), $dbConfig->getPassword());
 		
 		// Establish separate connection just for the log database.

@@ -45,6 +45,23 @@ class Flux_Athena {
 	public $dropRates;
 	
 	/**
+	 * Database used for the login-related SQL operations.
+	 *
+	 * @access public
+	 * @var string
+	 */
+	public $loginDatabase;
+	
+	/**
+	 * Database used for the char/map (aka everything else) SQL operations.
+	 * This does not include log-related tasks.
+	 *
+	 * @access public
+	 * @var string
+	 */
+	public $charMapDatabase;
+	
+	/**
 	 * Login server object tied to this collective eA server.
 	 *
 	 * @access public
@@ -78,14 +95,16 @@ class Flux_Athena {
 	 */
 	public function __construct(Flux_Connection $connection, Flux_Config $charMapConfig, Flux_LoginServer $loginServer, Flux_CharServer $charServer, Flux_MapServer $mapServer)
 	{
-		$this->connection   = $connection;
-		$this->loginServer  = $loginServer;
-		$this->charServer   = $charServer;
-		$this->mapServer    = $mapServer;
-		$this->serverName   = $charMapConfig->getServerName();
-		$this->baseExpRates = (int)$charMapConfig->getBaseExpRates();
-		$this->jobExpRates  = (int)$charMapConfig->getJobExpRates();
-		$this->dropRates    = (int)$charMapConfig->getDropRates();
+		$this->connection      = $connection;
+		$this->loginServer     = $loginServer;
+		$this->charServer      = $charServer;
+		$this->mapServer       = $mapServer;
+		$this->serverName      = $charMapConfig->getServerName();
+		$this->loginDatabase   = $loginServer->config->getDatabase();
+		$this->charMapDatabase = $charMapConfig->getDatabase();
+		$this->baseExpRates    = (int)$charMapConfig->getBaseExpRates();
+		$this->jobExpRates     = (int)$charMapConfig->getJobExpRates();
+		$this->dropRates       = (int)$charMapConfig->getDropRates();
 	}
 	
 	/**

@@ -15,5 +15,5 @@ Flux::initialize(array(
 	'serversConfigFile' => FLUX_CONFIG_DIR.'/servers.php'
 ));
 
-//printf('<pre>%s</pre>', print_r(Flux::$servers, true));
+printf('<pre>%s</pre>', print_r(Flux::$servers, true));
 ?>

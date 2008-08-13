@@ -208,7 +208,8 @@ class Flux {
 				$charMapServer->setJobExpRates(1, $options);
 				$charMapServer->setDropRates(1, $options);
 				$charMapServer->setCharServer(array(), $options);
-				$charMapServer->setMapServer(array(), $options);				
+				$charMapServer->setMapServer(array(), $options);
+				$charMapServer->setDatabase($dbConfig->getDatabase(), $options);				
 				
 				if (!$charMapServer->getServerName()) {
 					self::raise('ServerName is required for each CharMapServers pair in your servers configuration.');
@@ -229,9 +230,6 @@ class Flux {
 				elseif (!$mapServer->getPort()) {
 					self::raise('Port is required for each MapServer section in your servers configuration.');
 				}
-				
-				$charServer->setDatabase($dbConfig->getDatabase(), $options);
-				$mapServer->setDatabase($dbConfig->getDatabase(), $options);
 			}
 		}
 		

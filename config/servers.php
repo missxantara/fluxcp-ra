@@ -39,15 +39,14 @@ return array(
 				'BaseExpRates' => 5,
 				'JobExpRates'  => 5,
 				'DropRates'    => 3,
+				//'Database'     => 'ragnarok', // Defaults to DbConfig.Database
 				'CharServer'   => array(
 					'Address'  => '127.0.0.1',
-					'Port'     => 6121,
-					//'Database' => 'ragnarok' // Defaults to DbConfig.Database
+					'Port'     => 6121
 				),
 				'MapServer'    => array(
 					'Address'  => '127.0.0.1',
-					'Port'     => 5121,
-					//'Database' => 'ragnarok' // Defaults to DbConfig.Database
+					'Port'     => 5121
 				)
 			),
 			array(
@@ -55,15 +54,14 @@ return array(
 				'BaseExpRates' => 200,
 				'JobExpRates'  => 200,
 				'DropRates'    => 25,
+				//'Database'     => 'ragnarok', // Defaults to DbConfig.Database
 				'CharServer'   => array(
 					'Address'  => '127.0.0.1',
-					'Port'     => 6121,
-					//'Database' => 'ragnarok' // Defaults to DbConfig.Database
+					'Port'     => 6121
 				),
 				'MapServer'    => array(
 					'Address'  => '127.0.0.1',
-					'Port'     => 5121,
-					//'Database' => 'ragnarok' // Defaults to DbConfig.Database
+					'Port'     => 5121
 				)
 			),
 			array(
@@ -71,15 +69,14 @@ return array(
 				'BaseExpRates' => 5000,
 				'JobExpRates'  => 5000,
 				'DropRates'    => 1000,
+				//'Database'     => 'ragnarok', // Defaults to DbConfig.Database
 				'CharServer'   => array(
 					'Address'  => '127.0.0.1',
-					'Port'     => 6121,
-					//'Database' => 'ragnarok' // Defaults to DbConfig.Database
+					'Port'     => 6121
 				),
 				'MapServer'    => array(
 					'Address'  => '127.0.0.1',
-					'Port'     => 5121,
-					//'Database' => 'ragnarok' // Defaults to DbConfig.Database
+					'Port'     => 5121
 				)
 			)
 		)
