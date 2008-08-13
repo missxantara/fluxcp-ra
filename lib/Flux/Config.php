@@ -173,7 +173,10 @@ class Flux_Config {
 	}
 	
 	/**
+	 * Convenience method for raising an internal exception.
 	 *
+	 * @param string $message Error message.
+	 * @access public
 	 */
 	public function raise($message)
 	{
@@ -182,7 +185,11 @@ class Flux_Config {
 	}
 	
 	/**
+	 * Adds the ability to call set<ConfigDirective>(<Value>) as native methods.
 	 *
+	 * @param string $method
+	 * @param arary $args
+	 * @access public
 	 */
 	public function __call($method, $args = array())
 	{
