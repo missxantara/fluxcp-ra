@@ -110,6 +110,7 @@ class Flux_Athena {
 	/**
 	 * Validate credentials against the login server's database information.
 	 *
+	 * @return bool True/false if valid or invalid.
 	 * @access public
 	 */
 	public function isAuth($username, $password)
