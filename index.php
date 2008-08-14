@@ -24,6 +24,7 @@ $dispatcher->setDefaultModule(Flux::config('DefaultModule'));
 $dispatcher->setDefaultAction(Flux::config('DefaultAction'));
 $dispatcher->dispatch(array(
 	'basePath'         => Flux::config('BaseURI'),
+	'useCleanUrls'     => Flux::config('UseCleanUrls'),
 	'modulePath'       => FLUX_MODULE_DIR,
 	'themePath'        => FLUX_THEME_DIR.'/'.Flux::config('ThemeName'),
 	'missingActionErr' => 'errors/missing_action.php',

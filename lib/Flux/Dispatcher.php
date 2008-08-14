@@ -76,6 +76,7 @@ class Flux_Dispatcher {
 		$defaultAction    = $config->get('defaultAction');
 		$missingActionErr = $config->get('missingActionErr');
 		$missingViewErr   = $config->get('missingViewErr');
+		$useCleanUrls     = $config->get('useCleanUrls');
 		
 		if (!$defaultModule && $this->defaultModule) {
 			$defaultModule = $this->defaultModule;
@@ -117,15 +118,16 @@ class Flux_Dispatcher {
 		$params->set('action', $actionName);
 		
 		$templateArray  = array(
-			'params'     => $params,
-			'basePath'   => $basePath,
-			'modulePath' => $modulePath,
-			'moduleName' => $moduleName,
-			'themePath'  => $themePath,
-			'actionName' => $actionName,
-			'viewName'   => $actionName,
-			'headerName' => 'header',
-			'footerName' => 'footer'
+			'params'       => $params,
+			'basePath'     => $basePath,
+			'modulePath'   => $modulePath,
+			'moduleName'   => $moduleName,
+			'themePath'    => $themePath,
+			'actionName'   => $actionName,
+			'viewName'     => $actionName,
+			'headerName'   => 'header',
+			'footerName'   => 'footer',
+			'useCleanUrls' => $useCleanUrls
 		);
 		$templateConfig = new Flux_Config($templateArray);
 		$template       = new Flux_Template($templateConfig);

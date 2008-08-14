@@ -131,6 +131,15 @@ class Flux_Template {
 	protected $footerPath;
 	
 	/**
+	 * Whether or not to use mod_rewrite-powered clean URLs or just plain old
+	 * query strings.
+	 *
+	 * @access protected
+	 * @var string
+	 */
+	protected $useCleanUrls;
+	
+	/**
 	 * Construct new template onbject.
 	 *
 	 * @param Flux_Config $config
@@ -138,15 +147,16 @@ class Flux_Template {
 	 */
 	public function __construct(Flux_Config $config)
 	{
-		$this->params     = $config->get('params');
-		$this->basePath   = $config->get('basePath');
-		$this->modulePath = $config->get('modulePath');
-		$this->moduleName = $config->get('moduleName');
-		$this->themePath  = $config->get('themePath');
-		$this->actionName = $config->get('actionName');
-		$this->viewName   = $config->get('viewName');
-		$this->headerName = $config->get('headerName');
-		$this->footerName = $config->get('footerName');
+		$this->params       = $config->get('params');
+		$this->basePath     = $config->get('basePath');
+		$this->modulePath   = $config->get('modulePath');
+		$this->moduleName   = $config->get('moduleName');
+		$this->themePath    = $config->get('themePath');
+		$this->actionName   = $config->get('actionName');
+		$this->viewName     = $config->get('viewName');
+		$this->headerName   = $config->get('headerName');
+		$this->footerName   = $config->get('footerName');
+		$this->useCleanUrls = $config->get('useCleanUrls');
 		
 		$this->actionPath = sprintf('%s/%s/%s.php', $this->modulePath, $this->moduleName, $this->actionName);
 		if (!file_exists($this->actionPath)) {
@@ -239,6 +249,42 @@ class Flux_Template {
 			$path = implode('/', $path);
 		}
 		return $this->path("{$this->themePath}/$path");
+	}
+	
+	/**
+	 * Create a URI based on the setting of $useCleanUrls. This will determine
+	 * whether or not we will create a mod_rewrite-based clean URL or just a
+	 * regular query string based one.
+	 *
+	 * @param string $moduleName
+	 * @param string $actionName
+	 * @access public
+	 */
+	public function url($moduleName, $actionName = 'index', $params = array())
+	{
+		if ($params instanceOf Flux_Config) {
+			$params = $params->toArray();
+		}
+		$queryString = '';
+		if (count($params)) {
+			$queryString .= '?';
+			foreach ($params as $param => $value) {
+				$queryString .= sprintf('%s=%s&', $param, urlencode($value));
+			}
+			$queryString = rtrim('&', $queryString);
+		}
+		
+		if ($this->useCleanUrls) {
+			return sprintf('%s/%s/%s%s', $this->basePath, $moduleName, $actionName, $queryString);
+		}
+		else {
+			if ($actionName) {
+				return sprintf('%s/?module=%s&action=%s%s', $this->basePath, $moduleName, $actionName, $queryString);
+			}
+			else {
+				return sprintf('%s/?module=%s%s', $this->basePath, $moduleName, $queryString);
+			}
+		}
 	}
 }
 ?>
