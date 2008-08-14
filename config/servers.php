@@ -4,6 +4,7 @@ return array(
 	// specify multiple server groups (however they should share the same login
 	// server whilst they are allowed to have multiple char/map pairs).
 	array(
+		'ServerName'     => 'MyRO',
 		// Global database configuration (excludes logs database configuration).
 		'DbConfig'       => array(
 			//'Socket'     => '/tmp/mysql.sock',
@@ -35,7 +36,7 @@ return array(
 		),
 		'CharMapServers' => array(
 			array(
-				'ServerName'   => 'Low-rate Example',
+				'ServerName'   => "Foo",
 				'BaseExpRates' => 5,
 				'JobExpRates'  => 5,
 				'DropRates'    => 3,
@@ -50,7 +51,7 @@ return array(
 				)
 			),
 			array(
-				'ServerName'   => 'Mid-rate Example',
+				'ServerName'   => "Bar",
 				'BaseExpRates' => 200,
 				'JobExpRates'  => 200,
 				'DropRates'    => 25,
@@ -65,11 +66,131 @@ return array(
 				)
 			),
 			array(
-				'ServerName'   => 'High-rate Example',
-				'BaseExpRates' => 5000,
-				'JobExpRates'  => 5000,
-				'DropRates'    => 1000,
+				'ServerName'   => "Baz",
+				'BaseExpRates' => 200,
+				'JobExpRates'  => 200,
+				'DropRates'    => 25,
 				//'Database'     => 'ragnarok', // Defaults to DbConfig.Database
+				'CharServer'   => array(
+					'Address'  => '127.0.0.1',
+					'Port'     => 6121
+				),
+				'MapServer'    => array(
+					'Address'  => '127.0.0.1',
+					'Port'     => 5121
+				)
+			)
+		)
+	),
+	// Second server configuration example ;)
+	array(
+		'ServerName'     => 'HisRO',
+		'DbConfig'       => array(
+			'Hostname'   => '127.0.0.1',
+			'Username'   => 'ragnarok',
+			'Password'   => 'ragnarok',
+			'Database'   => 'ragnarok',
+			'Persistent' => true
+		),
+		'LogsDbConfig'   => array(
+			'Hostname'   => '127.0.0.1',
+			'Username'   => 'ragnarok',
+			'Password'   => 'ragnarok',
+			'Database'   => 'ragnarok',
+			'Persistent' => true
+		),
+		'LoginServer'    => array(
+			'Address'  => '127.0.0.1',
+			'Port'     => 6900,
+			'UseMD5'   => false,
+		),
+		'CharMapServers' => array(
+			array(
+				'ServerName'   => "Qux",
+				'BaseExpRates' => 5,
+				'JobExpRates'  => 5,
+				'DropRates'    => 3,
+				'CharServer'   => array(
+					'Address'  => '127.0.0.1',
+					'Port'     => 6121
+				),
+				'MapServer'    => array(
+					'Address'  => '127.0.0.1',
+					'Port'     => 5121
+				)
+			),
+			array(
+				'ServerName'   => "Quux",
+				'BaseExpRates' => 5,
+				'JobExpRates'  => 5,
+				'DropRates'    => 3,
+				'CharServer'   => array(
+					'Address'  => '127.0.0.1',
+					'Port'     => 6121
+				),
+				'MapServer'    => array(
+					'Address'  => '127.0.0.1',
+					'Port'     => 5121
+				)
+			)
+		)
+	),
+	// Third server configuration example! :D
+	array(
+		'ServerName'     => 'HerRO',
+		'DbConfig'       => array(
+			'Hostname'   => '127.0.0.1',
+			'Username'   => 'ragnarok',
+			'Password'   => 'ragnarok',
+			'Database'   => 'ragnarok',
+			'Persistent' => true
+		),
+		'LogsDbConfig'   => array(
+			'Hostname'   => '127.0.0.1',
+			'Username'   => 'ragnarok',
+			'Password'   => 'ragnarok',
+			'Database'   => 'ragnarok',
+			'Persistent' => true
+		),
+		'LoginServer'    => array(
+			'Address'  => '127.0.0.1',
+			'Port'     => 6900,
+			'UseMD5'   => false,
+		),
+		'CharMapServers' => array(
+			array(
+				'ServerName'   => "Spam",
+				'BaseExpRates' => 5,
+				'JobExpRates'  => 5,
+				'DropRates'    => 3,
+				'CharServer'   => array(
+					'Address'  => '127.0.0.1',
+					'Port'     => 6121
+				),
+				'MapServer'    => array(
+					'Address'  => '127.0.0.1',
+					'Port'     => 5121
+				)
+			),
+			array(
+				'ServerName'   => "Ham",
+				'BaseExpRates' => 5,
+				'JobExpRates'  => 5,
+				'DropRates'    => 3,
+				'CharServer'   => array(
+					'Address'  => '127.0.0.1',
+					'Port'     => 6121
+				),
+				'MapServer'    => array(
+					'Address'  => '127.0.0.1',
+					'Port'     => 5121
+				)
+			),
+			array(
+				'ServerName'   => "Eggs",
+				'BaseExpRates' => 5,
+				'JobExpRates'  => 5,
+				'DropRates'    => 3,
 				'CharServer'   => array(
 					'Address'  => '127.0.0.1',
 					'Port'     => 6121
