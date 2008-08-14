@@ -177,13 +177,25 @@ class Flux {
 	 */
 	public static function parseServersConfigFile($filename)
 	{
-		$config  = self::parseConfigFile($filename);
-		$options = array('overwrite' => false, 'force' => true); // Config::set() options.
+		$config            = self::parseConfigFile($filename);
+		$options           = array('overwrite' => false, 'force' => true); // Config::set() options.
+		$serverNames       = array();
+		$athenaServerNames = array();
 		
 		foreach ($config->getChildrenConfigs() as $topConfig) {
 			//
 			// Top-level normalization.
 			//
+			
+			if (!($serverName = $topConfig->getServerName())) {
+				self::raise('ServerName is required for each top-level server configuration, check your servers configuration file.');
+			}
+			elseif (in_array($serverName, $serverNames)) {
+				self::raise("The server name '$serverName' has already been configured. Please use another name.");
+			}
+			
+			$serverNames[] = $serverName;
+			$athenaServerNames[$serverName] = array();
 			
 			$topConfig->setDbConfig(array(), $options);
 			$topConfig->setLogsDbConfig(array(), $options);
@@ -224,11 +236,16 @@ class Flux {
 				$charMapServer->setMapServer(array(), $options);
 				$charMapServer->setDatabase($dbConfig->getDatabase(), $options);				
 				
-				if (!$charMapServer->getServerName()) {
+				if (!($athenaServerName = $charMapServer->getServerName())) {
 					self::raise('ServerName is required for each CharMapServers pair in your servers configuration.');
 				}
-
+				elseif (in_array($athenaServerName, $athenaServerNames[$serverName])) {
+					self::raise("The server name '$athenaServerName' under '$serverName' has already been configured. Please use another name.");
+				}
+				
+				$athenaServerNames[$serverName][] = $athenaServerName;
 				$charServer = $charMapServer->getCharServer();
+				
 				if (!$charServer->getAddress()) {
 					self::raise('Address is required for each CharServer section in your servers configuration.');
 				}
