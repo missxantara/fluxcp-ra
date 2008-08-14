@@ -81,7 +81,7 @@ class Flux {
 			
 			// LoginAthenaGroup maintains the grouping of a central login
 			// server and its underlying Athena objects.
-			self::$servers[$key] = new Flux_LoginAthenaGroup($loginServer);
+			self::$servers[$key] = new Flux_LoginAthenaGroup($config->getServerName(), $loginServer);
 			
 			foreach ($config->getCharMapServers()->getChildrenConfigs() as $charMapServer) {
 				$charServer = new Flux_CharServer($charMapServer->getCharServer());

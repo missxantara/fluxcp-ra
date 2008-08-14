@@ -5,6 +5,14 @@
  */
 class Flux_LoginAthenaGroup {
 	/**
+	 * Global server name, representing all Athena servers.
+	 *
+	 * @access public
+	 * @var string
+	 */
+	public $serverName;
+	
+	/**
 	 * Main login server for the contained Athena servers.
 	 *
 	 * @access public
@@ -25,8 +33,9 @@ class Flux_LoginAthenaGroup {
 	 *
 	 * @access public
 	 */
-	public function __construct($loginServer, array $athenaServers = array())
+	public function __construct($serverName, Flux_LoginServer $loginServer, array $athenaServers = array())
 	{
+		$this->serverName  = $serverName;
 		$this->loginServer = $loginServer;
 		foreach ($athenaServers as $athenaServer) {
 			$this->addAthenaServer($athenaServer);
