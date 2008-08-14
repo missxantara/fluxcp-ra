@@ -114,6 +114,8 @@ class Flux_Athena {
 	/**
 	 * Validate credentials against the login server's database information.
 	 *
+	 * @param string $username Ragnarok account username.
+	 * @param string $password Ragnarok account password.
 	 * @return bool True/false if valid or invalid.
 	 * @access public
 	 */
