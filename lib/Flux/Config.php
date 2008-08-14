@@ -57,7 +57,7 @@ class Flux_Config {
 	 * @return array Configuration array.
 	 * @access public
 	 */
-	public function toArray()
+	public function &toArray()
 	{
 		return $this->configArr;
 	}
@@ -115,6 +115,9 @@ class Flux_Config {
 			if (is_array($value) && $configObjectIfArray) {
 				$configClassName = get_class($this);
 				return new $configClassName($value);
+			}
+			elseif ($value instanceOf Flux_Config && !$configObjectIfArray) {
+				return $value->toArray();
 			}
 			else {
 				return $value;
