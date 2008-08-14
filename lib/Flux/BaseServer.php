@@ -1,6 +1,7 @@
 <?php
 /**
- *
+ * The BaseServer implementation is used for containing methods and properties
+ * directly related to the server itself, such as checking its upstatus.
  */
 class Flux_BaseServer {
 	/**

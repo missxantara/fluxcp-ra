@@ -8,7 +8,9 @@ require_once 'Flux/MapServer.php';
 require_once 'Flux/Athena.php';
 
 /**
- *
+ * The Flux class contains methods related to the application on the larger
+ * scale. For the most part, it handles application initialization such as
+ * parsing the configuration files and whatnot.
  */
 class Flux {
 	/**
@@ -152,7 +154,15 @@ class Flux {
 	public static function parseAppConfigFile($filename)
 	{
 		$config = self::parseConfigFile($filename);
-		return $config; // Does nothing special for now.
+		
+		if (!$config->getThemeName()) {
+			self::raise('ThemeName is required in application configuration.');
+		}
+		elseif (!self::themeExists($themeName=$config->getThemeName())) {
+			self::raise("The selected theme '$themeName' does not exist.");
+		}
+		
+		return $config;
 	}
 	
 	/**
@@ -234,6 +244,17 @@ class Flux {
 		}
 		
 		return $config;
+	}
+	
+	/**
+	 * Check whether or not a theme exists.
+	 *
+	 * @return bool
+	 * @access public
+	 */
+	public static function themeExists($themeName)
+	{
+		return is_dir(FLUX_THEME_DIR."/$themeName");
 	}
 }
 ?>

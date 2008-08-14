@@ -1,6 +1,10 @@
 <?php
 /**
+ * The Athena class is used for all database interactions with each eA server,
+ * hence its name.
  *
+ * All methods related to creating/modifying any data in the Ragnarok databases
+ * and tables shall always go into this class.
  */
 class Flux_Athena {	
 	/**
