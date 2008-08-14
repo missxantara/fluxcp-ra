@@ -21,6 +21,22 @@ p {
 	font-size: 90%;
 }
 
+table {
+	font-family: Verdana, Tahoma, Helvetica, sans-serif;
+	font-size: 90%;
+}
+
+input {
+	outline-color: #ddd;
+}
+
+input[type=text], input[type=password], textarea {
+	padding: 5px;
+	border: 1px solid #ddd;
+	font-size: 100%;
+	color: #222;
+}
+
 .module-name, .action-name {
 	font-size: 150%;
 }
