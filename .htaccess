@@ -1,4 +1,5 @@
 RewriteEngine On
 RewriteBase /~kuja/flux/
 RewriteCond %{REQUEST_URI} !\.(js|ico|gif|jpg|png|css|pdf|swf|flv)$
+RewriteCond %{REQUEST_URI} !/index\.php$
 RewriteRule ^([^/]+)(?:/([^/]+))? index.php?module=$1&action=$2 [QSA]
