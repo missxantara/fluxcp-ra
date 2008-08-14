@@ -171,6 +171,7 @@ class Flux_Template {
 			$this->moduleName = 'errors';
 			$this->actionName = 'missing_view';
 			$this->viewName   = 'missing_view';
+			$this->actionPath = sprintf('%s/%s/%s.php', $this->modulePath, $this->moduleName, $this->actionName);
 			$this->viewPath   = sprintf('%s/%s/%s.php', $this->themePath, $this->moduleName, $this->viewName);
 		}
 		
