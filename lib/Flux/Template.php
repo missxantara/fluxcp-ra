@@ -140,6 +140,14 @@ class Flux_Template {
 	protected $useCleanUrls;
 	
 	/**
+	 * URL of the current module/action being viewed.
+	 *
+	 * @access protected
+	 * @var string
+	 */
+	protected $url;
+	
+	/**
 	 * Construct new template onbject.
 	 *
 	 * @param Flux_Config $config
@@ -177,6 +185,7 @@ class Flux_Template {
 		
 		$this->headerPath = sprintf('%s/%s.php', $this->themePath, $this->headerName);
 		$this->footerPath = sprintf('%s/%s.php', $this->themePath, $this->footerName);
+		$this->url        = $this->url($this->moduleName, $this->actionName);
 	}
 	
 	/**
