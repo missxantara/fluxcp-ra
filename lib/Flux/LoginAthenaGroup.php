@@ -29,6 +29,14 @@ class Flux_LoginAthenaGroup {
 	public $loginServer;
 	
 	/**
+	 * Database used for the login-related SQL operations.
+	 *
+	 * @access public
+	 * @var string
+	 */
+	public $loginDatabase;
+	
+	/**
 	 * Array of Flux_Athena instances.
 	 *
 	 * @access public
@@ -43,10 +51,13 @@ class Flux_LoginAthenaGroup {
 	 */
 	public function __construct($serverName, Flux_Connection $connection, Flux_LoginServer $loginServer, array $athenaServers = array())
 	{
-		$this->serverName  = $serverName;
-		$this->connection  = $connection;
-		$this->loginServer = $loginServer;
+		$this->serverName    = $serverName;
+		$this->connection    = $connection;
+		$this->loginServer   = $loginServer;
+		$this->loginDatabase = $loginServer->config->getDatabase();
 		
+		// Assign connection to LoginServer, used mainly to enable
+		// authentication feature.
 		$this->loginServer->setConnection($connection);
 		
 		foreach ($athenaServers as $athenaServer) {
