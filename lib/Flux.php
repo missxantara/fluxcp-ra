@@ -39,6 +39,23 @@ class Flux {
 	public static $servers = array();
 	
 	/**
+	 * Registry where Flux_LoginAthenaGroup instances are kept for easy
+	 * searching.
+	 *
+	 * @access public
+	 * @var array
+	 */
+	public static $loginAthenaGroupRegistry = array();
+	
+	/**
+	 * Registry where Flux_Athena instances are kept for easy searching.
+	 *
+	 * @access public
+	 * @var array
+	 */
+	public static $athenaServerRegistry = array();
+	
+	/**
 	 * Initialize Flux application. This will handle configuration parsing and
 	 * instanciating of objects crucial to the control panel.
 	 *
@@ -83,6 +100,9 @@ class Flux {
 			// server and its underlying Athena objects.
 			self::$servers[$key] = new Flux_LoginAthenaGroup($config->getServerName(), $connection, $loginServer);
 			
+			// Add into registry.
+			self::registerServerGroup($config->getServerName(), self::$servers[$key]);
+			
 			foreach ($config->getCharMapServers()->getChildrenConfigs() as $charMapServer) {
 				$charServer = new Flux_CharServer($charMapServer->getCharServer());
 				$mapServer  = new Flux_MapServer($charMapServer->getMapServer());
@@ -90,6 +110,9 @@ class Flux {
 				// Create the collective server object, Flux_Athena.
 				$athena = new Flux_Athena($charMapServer, $loginServer, $charServer, $mapServer);
 				self::$servers[$key]->addAthenaServer($athena);
+				
+				// Add into registry.
+				self::registerAthenaServer($config->getServerName(), $charMapServer->getServerName(), $athena);
 			}
 		}
 	}
@@ -275,6 +298,79 @@ class Flux {
 	public static function themeExists($themeName)
 	{
 		return is_dir(FLUX_THEME_DIR."/$themeName");
+	}
+	
+	/**
+	 * Register the server group into the registry.
+	 *
+	 * @param string $serverName Server group's name.
+	 * @param Flux_LoginAthenaGroup Server group object.
+	 * @return Flux_LoginAthenaGroup
+	 * @access private
+	 */
+	private function registerServerGroup($serverName, Flux_LoginAthenaGroup $serverGroup)
+	{
+		self::$loginAthenaGroupRegistry[$serverName] = $serverGroup;
+		return $serverGroup;
+	}
+	
+	/**
+	 * Register the Athena server into the registry.
+	 *
+	 * @param string $serverName Server group's name.
+	 * @param string $athenaServerName Athena server's name.
+	 * @param Flux_Athena $athenaServer Athena server object.
+	 * @return Flux_Athena
+	 * @access private
+	 */
+	private function registerAthenaServer($serverName, $athenaServerName, Flux_Athena $athenaServer)
+	{
+		if (!array_key_exists($serverName, self::$athenaServerRegistry) || !is_array(self::$athenaServerRegistry[$serverName])) {
+			self::$athenaServerRegistry[$serverName] = array();
+		}
+		
+		self::$athenaServerRegistry[$serverName][$athenaServerName] = $athenaServer;
+		return $athenaServer;
+	}
+	
+	/**
+	 * Get Flux_LoginAthenaGroup server object by its ServerName.
+	 *
+	 * @param string
+	 * @return mixed Returns Flux_LoginAthenaGroup instance or false on failure.
+	 * @access public
+	 */
+	public static function getServerGroupByName($serverName)
+	{
+		$registry = &self::$loginAthenaGroupRegistry;
+		
+		if (array_key_exists($serverName, $registry) && $registry[$serverName] instanceOf Flux_LoginAthenaGroup) {
+			return $registry[$serverName];
+		}
+		else {
+			return false;
+		}
+	}
+	
+	/**
+	 * Get Flux_Athena instance by its group/server names.
+	 *
+	 * @param string $serverName Server group name.
+	 * @param string $athenaServerName Athena server name.
+	 * @return mixed Returns Flux_Athena instance or false on failure.
+	 * @access public
+	 */
+	public static function getAthenaServerByName($serverName, $athenaServerName)
+	{
+		$registry = &self::$athenaServerRegistry;
+		if (array_key_exists($serverName, $registry) && array_key_exists($athenaServerName, $registry[$serverName]) &&
+			$registry[$serverName][$athenaServerName] instanceOf Flux_Athena) {
+		
+			return $registry[$serverName][$athenaServerName];
+		}
+		else {
+			return false;
+		}
 	}
 }
 ?>
