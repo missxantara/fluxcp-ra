@@ -10,10 +10,10 @@ class Flux_Athena {
 	/**
 	 * Connection object for saving and retrieving data to the eA databases.
 	 *
-	 * @access private
+	 * @access public
 	 * @var Flux_Connection
 	 */
-	private $connection;
+	public $connection;
 	
 	/**
 	 * Server name, normally something like 'My Cool High-Rate'.
@@ -97,9 +97,8 @@ class Flux_Athena {
 	 * @param Flux_MapServer $mapServer
 	 * @access public
 	 */
-	public function __construct(Flux_Connection $connection, Flux_Config $charMapConfig, Flux_LoginServer $loginServer, Flux_CharServer $charServer, Flux_MapServer $mapServer)
+	public function __construct(Flux_Config $charMapConfig, Flux_LoginServer $loginServer, Flux_CharServer $charServer, Flux_MapServer $mapServer)
 	{
-		$this->connection      = $connection;
 		$this->loginServer     = $loginServer;
 		$this->charServer      = $charServer;
 		$this->mapServer       = $mapServer;
@@ -112,30 +111,12 @@ class Flux_Athena {
 	}
 	
 	/**
-	 * Validate credentials against the login server's database information.
 	 *
-	 * @param string $username Ragnarok account username.
-	 * @param string $password Ragnarok account password.
-	 * @return bool True/false if valid or invalid.
-	 * @access public
 	 */
-	public function isAuth($username, $password)
+	public function setConnection(Flux_Connection $connection)
 	{
-		if ($this->loginServer->config->get('UseMD5')) {
-			$password = md5($password);
-		}
-		
-		$sql = "SELECT userid FROM {$this->loginDatabase}.login WHERE userid = ? AND user_pass = ?";
-		$sth = $this->connection->getStatement($sql);
-		$sth->execute(array($username, $password));
-		
-		$res = $sth->fetch();
-		if ($res) {
-			return true;
-		}
-		else {
-			return false;
-		}
+		$this->connection = $connection;
+		return $connection;
 	}
 	
 	/**

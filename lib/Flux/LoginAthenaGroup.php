@@ -13,6 +13,14 @@ class Flux_LoginAthenaGroup {
 	public $serverName;
 	
 	/**
+	 * Connection to the MySQL server.
+	 *
+	 * @access public
+	 * @var Flux_Connection
+	 */
+	public $connection;
+	
+	/**
 	 * Main login server for the contained Athena servers.
 	 *
 	 * @access public
@@ -33,10 +41,14 @@ class Flux_LoginAthenaGroup {
 	 *
 	 * @access public
 	 */
-	public function __construct($serverName, Flux_LoginServer $loginServer, array $athenaServers = array())
+	public function __construct($serverName, Flux_Connection $connection, Flux_LoginServer $loginServer, array $athenaServers = array())
 	{
 		$this->serverName  = $serverName;
+		$this->connection  = $connection;
 		$this->loginServer = $loginServer;
+		
+		$this->loginServer->setConnection($connection);
+		
 		foreach ($athenaServers as $athenaServer) {
 			$this->addAthenaServer($athenaServer);
 		}
@@ -51,12 +63,26 @@ class Flux_LoginAthenaGroup {
 	public function addAthenaServer(Flux_Athena $athenaServer)
 	{
 		if ($athenaServer->loginServer === $this->loginServer) {
+			$athenaServer->setConnection($this->connection);
 			$this->athenaServers[] = $athenaServer;
 			return $this->athenaServers;
 		}
 		else {
 			return false;
 		}
+	}
+	
+	/**
+	 * See Flux_LoginServer->isAuth().
+	 *
+	 * @param string $username
+	 * @param string $password
+	 * @return bool
+	 * @access public
+	 */
+	public function isAuth($username, $password)
+	{
+		return $this->loginServer->isAuth($username, $password);
 	}
 }
 ?>
