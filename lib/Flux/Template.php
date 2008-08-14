@@ -165,27 +165,6 @@ class Flux_Template {
 		$this->headerName   = $config->get('headerName');
 		$this->footerName   = $config->get('footerName');
 		$this->useCleanUrls = $config->get('useCleanUrls');
-		
-		$this->actionPath = sprintf('%s/%s/%s.php', $this->modulePath, $this->moduleName, $this->actionName);
-		if (!file_exists($this->actionPath)) {
-			$this->moduleName = 'errors';
-			$this->actionName = 'missing_action';
-			$this->viewName   = 'missing_action';
-			$this->actionPath = sprintf('%s/%s/%s.php', $this->modulePath, $this->moduleName, $this->actionName);
-		}
-		
-		$this->viewPath = sprintf('%s/%s/%s.php', $this->themePath, $this->moduleName, $this->actionName);
-		if (!file_exists($this->viewPath)) {
-			$this->moduleName = 'errors';
-			$this->actionName = 'missing_view';
-			$this->viewName   = 'missing_view';
-			$this->actionPath = sprintf('%s/%s/%s.php', $this->modulePath, $this->moduleName, $this->actionName);
-			$this->viewPath   = sprintf('%s/%s/%s.php', $this->themePath, $this->moduleName, $this->viewName);
-		}
-		
-		$this->headerPath = sprintf('%s/%s.php', $this->themePath, $this->headerName);
-		$this->footerPath = sprintf('%s/%s.php', $this->themePath, $this->footerName);
-		$this->url        = $this->url($this->moduleName, $this->actionName);
 	}
 	
 	/**
@@ -211,6 +190,18 @@ class Flux_Template {
 	 */
 	public function render(array &$dataArr = array())
 	{
+		$this->actionPath = sprintf('%s/%s/%s.php', $this->modulePath, $this->moduleName, $this->actionName);
+		if (!file_exists($this->actionPath)) {
+			$this->moduleName = 'errors';
+			$this->actionName = 'missing_action';
+			$this->viewName   = 'missing_action';
+			$this->actionPath = sprintf('%s/%s/%s.php', $this->modulePath, $this->moduleName, $this->actionName);
+		}
+		
+		$this->headerPath = sprintf('%s/%s.php', $this->themePath, $this->headerName);
+		$this->footerPath = sprintf('%s/%s.php', $this->themePath, $this->footerName);
+		$this->url        = $this->url($this->moduleName, $this->actionName);
+		
 		// Merge with default data.
 		$data = array_merge(&$this->defaultData, &$dataArr);
 		
@@ -220,14 +211,29 @@ class Flux_Template {
 		
 		include $this->actionPath;
 		
-		if (file_exists($this->headerPath)) {
-			include $this->headerPath;
-		}
+		if (empty($actionHasNoView)) {
+			$this->viewPath = sprintf('%s/%s/%s.php', $this->themePath, $this->moduleName, $this->actionName);
+			if (!file_exists($this->viewPath)) {
+				$this->moduleName = 'errors';
+				$this->actionName = 'missing_view';
+				$this->viewName   = 'missing_view';
+				$this->actionPath = sprintf('%s/%s/%s.php', $this->modulePath, $this->moduleName, $this->actionName);
+				$this->viewPath   = sprintf('%s/%s/%s.php', $this->themePath, $this->moduleName, $this->viewName);
+			}
+			
+			$this->headerPath = sprintf('%s/%s.php', $this->themePath, $this->headerName);
+			$this->footerPath = sprintf('%s/%s.php', $this->themePath, $this->footerName);
+			$this->url        = $this->url($this->moduleName, $this->actionName);
+			
+			if (file_exists($this->headerPath)) {
+				include $this->headerPath;
+			}
 		
-		include $this->viewPath;
+			include $this->viewPath;
 		
-		if (file_exists($this->footerPath)) {
-			include $this->footerPath;
+			if (file_exists($this->footerPath)) {
+				include $this->footerPath;
+			}
 		}
 	}
 	
