@@ -7,6 +7,7 @@ return array(
 	'ThemeName'     => 'default',            // The theme name of the theme you would like to use.  Themes are in FLUX_ROOT/themes.
 	'DefaultModule' => 'main',               // This is the module to execute when none has been specified.
 	'DefaultAction' => 'index',              // This is the default action for any module, probably should leave this alone.
-	'UseCleanUrls'  => true                  // Set to true if you're running Apache and it supports mod_rewrite and .htaccess files. 
+	'UseCleanUrls'  => true,                 // Set to true if you're running Apache and it supports mod_rewrite and .htaccess files.
+	'debugMode'     => false                  // Set to false to minimize technical details from being output by Flux.
 );
 ?>

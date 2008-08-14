@@ -67,16 +67,16 @@ class Flux_Dispatcher {
 	 */
 	public function dispatch($options = array())
 	{
-		$config           = new Flux_Config($options);
-		$basePath         = $config->get('basePath');
-		$paramsArr        = $config->get('params');
-		$modulePath       = $config->get('modulePath');
-		$themePath        = $config->get('themePath');
-		$defaultModule    = $config->get('defaultModule');
-		$defaultAction    = $config->get('defaultAction');
-		$missingActionErr = $config->get('missingActionErr');
-		$missingViewErr   = $config->get('missingViewErr');
-		$useCleanUrls     = $config->get('useCleanUrls');
+		$config                    = new Flux_Config($options);
+		$basePath                  = $config->get('basePath');
+		$paramsArr                 = $config->get('params');
+		$modulePath                = $config->get('modulePath');
+		$themePath                 = $config->get('themePath');
+		$defaultModule             = $config->get('defaultModule');
+		$defaultAction             = $config->get('defaultAction');
+		$missingActionModuleAction = $config->get('missingActionModuleAction');
+		$missingViewModuleAction   = $config->get('missingViewModuleAction');
+		$useCleanUrls              = $config->get('useCleanUrls');
 		
 		if (!$defaultModule && $this->defaultModule) {
 			$defaultModule = $this->defaultModule;
@@ -118,16 +118,18 @@ class Flux_Dispatcher {
 		$params->set('action', $actionName);
 		
 		$templateArray  = array(
-			'params'       => $params,
-			'basePath'     => $basePath,
-			'modulePath'   => $modulePath,
-			'moduleName'   => $moduleName,
-			'themePath'    => $themePath,
-			'actionName'   => $actionName,
-			'viewName'     => $actionName,
-			'headerName'   => 'header',
-			'footerName'   => 'footer',
-			'useCleanUrls' => $useCleanUrls
+			'params'                    => $params,
+			'basePath'                  => $basePath,
+			'modulePath'                => $modulePath,
+			'moduleName'                => $moduleName,
+			'themePath'                 => $themePath,
+			'actionName'                => $actionName,
+			'viewName'                  => $actionName,
+			'headerName'                => 'header',
+			'footerName'                => 'footer',
+			'missingActionModuleAction' => $missingActionModuleAction,
+			'missingViewModuleAction'   => $missingViewModuleAction,
+			'useCleanUrls'              => $useCleanUrls
 		);
 		$templateConfig = new Flux_Config($templateArray);
 		$template       = new Flux_Template($templateConfig);

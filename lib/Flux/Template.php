@@ -148,6 +148,22 @@ class Flux_Template {
 	protected $url;
 	
 	/**
+	 * Module/action for missing action's event.
+	 *
+	 * @access protected
+	 * @var array
+	 */
+	protected $missingActionModuleAction;
+	
+	/**
+	 * Module/action for missing view's event.
+	 *
+	 * @access protected
+	 * @var array
+	 */
+	protected $missingViewModuleAction;
+	
+	/**
 	 * Construct new template onbject.
 	 *
 	 * @param Flux_Config $config
@@ -155,16 +171,18 @@ class Flux_Template {
 	 */
 	public function __construct(Flux_Config $config)
 	{
-		$this->params       = $config->get('params');
-		$this->basePath     = $config->get('basePath');
-		$this->modulePath   = $config->get('modulePath');
-		$this->moduleName   = $config->get('moduleName');
-		$this->themePath    = $config->get('themePath');
-		$this->actionName   = $config->get('actionName');
-		$this->viewName     = $config->get('viewName');
-		$this->headerName   = $config->get('headerName');
-		$this->footerName   = $config->get('footerName');
-		$this->useCleanUrls = $config->get('useCleanUrls');
+		$this->params                    = $config->get('params');
+		$this->basePath                  = $config->get('basePath');
+		$this->modulePath                = $config->get('modulePath');
+		$this->moduleName                = $config->get('moduleName');
+		$this->themePath                 = $config->get('themePath');
+		$this->actionName                = $config->get('actionName');
+		$this->viewName                  = $config->get('viewName');
+		$this->headerName                = $config->get('headerName');
+		$this->footerName                = $config->get('footerName');
+		$this->useCleanUrls              = $config->get('useCleanUrls');
+		$this->missingActionModuleAction = $config->get('missingActionModuleAction', false);
+		$this->missingViewModuleAction   = $config->get('missingViewModuleAction', false);
 	}
 	
 	/**
@@ -192,17 +210,17 @@ class Flux_Template {
 	{
 		$this->actionPath = sprintf('%s/%s/%s.php', $this->modulePath, $this->moduleName, $this->actionName);
 		if (!file_exists($this->actionPath)) {
-			$this->moduleName = 'errors';
-			$this->actionName = 'missing_action';
-			$this->viewName   = 'missing_action';
+			$this->moduleName = $this->missingActionModuleAction[0];
+			$this->actionName = $this->missingActionModuleAction[1];
+			$this->viewName   = $this->missingActionModuleAction[1];
 			$this->actionPath = sprintf('%s/%s/%s.php', $this->modulePath, $this->moduleName, $this->actionName);
 		}
 		
 		$this->viewPath = sprintf('%s/%s/%s.php', $this->themePath, $this->moduleName, $this->actionName);
 		if (!file_exists($this->viewPath)) {
-			$this->moduleName = 'errors';
-			$this->actionName = 'missing_view';
-			$this->viewName   = 'missing_view';
+			$this->moduleName = $this->missingViewModuleAction[0];
+			$this->actionName = $this->missingViewModuleAction[1];
+			$this->viewName   = $this->missingViewModuleAction[1];
 			$this->actionPath = sprintf('%s/%s/%s.php', $this->modulePath, $this->moduleName, $this->actionName);
 			$this->viewPath   = sprintf('%s/%s/%s.php', $this->themePath, $this->moduleName, $this->viewName);
 		}

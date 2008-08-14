@@ -23,11 +23,11 @@ $dispatcher = Flux_Dispatcher::getInstance();
 $dispatcher->setDefaultModule(Flux::config('DefaultModule'));
 $dispatcher->setDefaultAction(Flux::config('DefaultAction'));
 $dispatcher->dispatch(array(
-	'basePath'         => Flux::config('BaseURI'),
-	'useCleanUrls'     => Flux::config('UseCleanUrls'),
-	'modulePath'       => FLUX_MODULE_DIR,
-	'themePath'        => FLUX_THEME_DIR.'/'.Flux::config('ThemeName'),
-	'missingActionErr' => 'errors/missing_action.php',
-	'missingViewErr'   => 'errors/missing_view.php'
+	'basePath'                  => Flux::config('BaseURI'),
+	'useCleanUrls'              => Flux::config('UseCleanUrls'),
+	'modulePath'                => FLUX_MODULE_DIR,
+	'themePath'                 => FLUX_THEME_DIR.'/'.Flux::config('ThemeName'),
+	'missingActionModuleAction' => Flux::config('debugMode') ? array('errors', 'missing_action') : array('main', 'page_not_found'),
+	'missingViewModuleAction'   => Flux::config('debugMode') ? array('errors', 'missing_view')   : array('main', 'page_not_found')
 ));
 ?>
