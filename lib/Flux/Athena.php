@@ -137,5 +137,16 @@ class Flux_Athena {
 			return false;
 		}
 	}
+	
+	/**
+	 * When casted to a string, the server name should be used.
+	 *
+	 * @return string
+	 * @access public
+	 */
+	public function __toString()
+	{
+		return $this->serverName;
+	}
 }
 ?>

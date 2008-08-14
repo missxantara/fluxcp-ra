@@ -6,6 +6,7 @@ require_once 'Flux/LoginServer.php';
 require_once 'Flux/CharServer.php';
 require_once 'Flux/MapServer.php';
 require_once 'Flux/Athena.php';
+require_once 'Flux/LoginAthenaGroup.php';
 
 /**
  * The Flux class contains methods related to the application on the larger
@@ -74,19 +75,21 @@ class Flux {
 	 */
 	public static function initializeServerObjects()
 	{
-		foreach (self::$serversConfig->getChildrenConfigs() as $config) {
+		foreach (self::$serversConfig->getChildrenConfigs() as $key => $config) {
 			$connection  = new Flux_Connection($config->getDbConfig(), $config->getLogsDbConfig());
 			$loginServer = new Flux_LoginServer($config->getLoginServer());
 			
-			$serverGroup = array('LoginServer' => $loginServer, 'Athena' => array());
-			self::$servers[] = &$serverGroup;
+			// LoginAthenaGroup maintains the grouping of a central login
+			// server and its underlying Athena objects.
+			self::$servers[$key] = new Flux_LoginAthenaGroup($loginServer);
 			
 			foreach ($config->getCharMapServers()->getChildrenConfigs() as $charMapServer) {
 				$charServer = new Flux_CharServer($charMapServer->getCharServer());
 				$mapServer  = new Flux_MapServer($charMapServer->getMapServer());
 				
 				// Create the collective server object, Flux_Athena.
-				$serverGroup['Athena'][] = new Flux_Athena($connection, $charMapServer, $loginServer, $charServer, $mapServer);
+				$athena = new Flux_Athena($connection, $charMapServer, $loginServer, $charServer, $mapServer);
+				self::$servers[$key]->addAthenaServer($athena);
 			}
 		}
 	}
