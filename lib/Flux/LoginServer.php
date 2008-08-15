@@ -35,6 +35,8 @@ class Flux_LoginServer extends Flux_BaseServer {
 	/**
 	 * Set the connection object to be used for this LoginServer instance.
 	 *
+	 * @param Flux_Connection $connection
+	 * @return Flux_Connection
 	 * @access public
 	 */
 	public function setConnection(Flux_Connection $connection)
