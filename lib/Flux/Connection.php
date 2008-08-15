@@ -85,6 +85,7 @@ class Flux_Connection {
 	public function getStatement($statement, $options = array())
 	{
 		$sth = $this->pdoMain->prepare($statement, $options);
+		$sth->setFetchMode(PDO::FETCH_OBJ);
 		return $sth;
 	}
 	
@@ -97,6 +98,7 @@ class Flux_Connection {
 	public function getStatementForLogs($statement, $options = array())
 	{
 		$sth = $this->pdoLogs->prepare($statement, $options);
+		$sth->setFetchMode(PDO::FETCH_OBJ);
 		return $sth;
 	}
 }
