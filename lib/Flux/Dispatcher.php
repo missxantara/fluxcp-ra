@@ -134,6 +134,10 @@ class Flux_Dispatcher {
 		$templateConfig = new Flux_Config($templateArray);
 		$template       = new Flux_Template($templateConfig);
 		
+		// Make session data available to actions and views.
+		$data = array('session' => Flux::$sessionData);
+		$template->setDefaultData($data);
+		
 		// Render template! :D
 		$template->render();
 	}

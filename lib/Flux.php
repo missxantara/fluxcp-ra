@@ -56,6 +56,14 @@ class Flux {
 	public static $athenaServerRegistry = array();
 	
 	/**
+	 * Object containing all of Flux's session data.
+	 *
+	 * @access public
+	 * @var Flux_SessionData
+	 */
+	public static $sessionData;
+	
+	/**
 	 * Initialize Flux application. This will handle configuration parsing and
 	 * instanciating of objects crucial to the control panel.
 	 *
