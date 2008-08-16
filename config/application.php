@@ -8,6 +8,6 @@ return array(
 	'DefaultModule' => 'main',               // This is the module to execute when none has been specified.
 	'DefaultAction' => 'index',              // This is the default action for any module, probably should leave this alone.
 	'UseCleanUrls'  => true,                 // Set to true if you're running Apache and it supports mod_rewrite and .htaccess files.
-	'debugMode'     => true                  // Set to false to minimize technical details from being output by Flux.
+	'DebugMode'     => true                  // Set to false to minimize technical details from being output by Flux.
 );
 ?>
