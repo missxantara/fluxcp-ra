@@ -58,9 +58,9 @@ class Flux_Connection {
 	 * Get the PDO instance for the main database server connection.
 	 *
 	 * @return PDO
-	 * @access public
+	 * @access private
 	 */
-	public function getConnection()
+	private function getConnection()
 	{
 		return $this->pdoMain;
 	}
@@ -69,9 +69,9 @@ class Flux_Connection {
 	 * Get the PDO instance for the logs database server connection.
 	 *
 	 * @return PDO
-	 * @access public
+	 * @access private
 	 */
-	public function getLogsConnection()
+	private function getLogsConnection()
 	{
 		return $this->pdoLogs;
 	}
