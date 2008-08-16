@@ -1,4 +1,7 @@
 <?php
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
 define('FLUX_ROOT',       str_replace('\\', '/', dirname(__FILE__)));
 define('FLUX_CONFIG_DIR', 'config');
 define('FLUX_LIB_DIR',    'lib');
@@ -18,6 +21,10 @@ try {
 		'appConfigFile'     => FLUX_CONFIG_DIR.'/application.php',
 		'serversConfigFile' => FLUX_CONFIG_DIR.'/servers.php',
 	));
+	
+	if (!Flux::config('DebugMode')) {
+		ini_set('display_errors', 0);
+	}
 
 	// Dispatch requests->modules->actions->views.
 	$dispatcher = Flux_Dispatcher::getInstance();
@@ -28,8 +35,8 @@ try {
 		'useCleanUrls'              => Flux::config('UseCleanUrls'),
 		'modulePath'                => FLUX_MODULE_DIR,
 		'themePath'                 => FLUX_THEME_DIR.'/'.Flux::config('ThemeName'),
-		'missingActionModuleAction' => Flux::config('debugMode') ? array('errors', 'missing_action') : array('main', 'page_not_found'),
-		'missingViewModuleAction'   => Flux::config('debugMode') ? array('errors', 'missing_view')   : array('main', 'page_not_found')
+		'missingActionModuleAction' => Flux::config('DebugMode') ? array('errors', 'missing_action') : array('main', 'page_not_found'),
+		'missingViewModuleAction'   => Flux::config('DebugMode') ? array('errors', 'missing_view')   : array('main', 'page_not_found')
 	));
 }
 catch (Exception $e) {
