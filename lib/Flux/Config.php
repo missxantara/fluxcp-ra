@@ -92,7 +92,7 @@ class Flux_Config {
 	 * @param bool $configObjectIfArray True/false whether or not to return Flux_Config instances for values that are an array.
 	 * @access public
 	 */
-	public function &get($key, $configObjectIfArray = true)
+	public function get($key, $configObjectIfArray = true)
 	{
 		$keys = explode('.', $key);
 		$base = &$this->configArr;
@@ -144,7 +144,7 @@ class Flux_Config {
 	 * @param array $options Array of options.
 	 * @access public
 	 */
-	public function &set($key, $value, $options = array())
+	public function set($key, $value, $options = array())
 	{
 		$opts = array_merge($this->defaultSetOptions, $options);
 		$keys = explode('.', $key);

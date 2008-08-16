@@ -206,7 +206,7 @@ class Flux_Template {
 	 * @param arary $dataArr Key=>value pairs of variables to be exposed to the template as globals.
 	 * @access public
 	 */
-	public function render(array &$dataArr = array())
+	public function render(array $dataArr = array())
 	{
 		$this->actionPath = sprintf('%s/%s/%s.php', $this->modulePath, $this->moduleName, $this->actionName);
 		if (!file_exists($this->actionPath)) {
@@ -230,7 +230,7 @@ class Flux_Template {
 		$this->url        = $this->url($this->moduleName, $this->actionName);
 		
 		// Merge with default data.
-		$data = array_merge(&$this->defaultData, &$dataArr);
+		$data = array_merge($this->defaultData, $dataArr);
 		
 		// Extract data array and make them appear as though they were global
 		// variables from the template.
