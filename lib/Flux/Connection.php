@@ -42,16 +42,8 @@ class Flux_Connection {
 	 */
 	public function __construct(Flux_Config $dbConfig, Flux_Config $logsDbConfig)
 	{
-		// Establish connection for main databases.
-		$dsnMain = sprintf('mysql:host=%s', $dbConfig->getHostname());
-		$pdoMain = new PDO($dsnMain, $dbConfig->getUsername(), $dbConfig->getPassword());
-		
-		// Establish separate connection just for the log database.
-		$dsnLogs = sprintf('mysql:host=%s;dbname=%s', $logsDbConfig->getHostname(), $logsDbConfig->getDatabase());
-		$pdoLogs = new PDO($dsnLogs, $logsDbConfig->getUsername(), $logsDbConfig->getPassword());
-		
-		$this->pdoMain = $pdoMain;
-		$this->pdoLogs = $pdoLogs;
+		$this->dbConfig     = $dbConfig;
+		$this->logsDbConfig = $logsDbConfig;
 	}
 	
 	/**
@@ -62,6 +54,12 @@ class Flux_Connection {
 	 */
 	private function getConnection()
 	{
+		if (!$this->pdoMain) {
+			// Establish connection for main databases.
+			$dsnMain       = sprintf('mysql:host=%s', $this->dbConfig->getHostname());
+			$pdoMain       = new PDO($dsnMain, $this->dbConfig->getUsername(), $this->dbConfig->getPassword());
+			$this->pdoMain = $pdoMain;
+		}
 		return $this->pdoMain;
 	}
 	
@@ -73,6 +71,12 @@ class Flux_Connection {
 	 */
 	private function getLogsConnection()
 	{
+		if (!$this->pdoLogs) {
+			// Establish separate connection just for the log database.
+			$dsnLogs       = sprintf('mysql:host=%s;dbname=%s', $this->logsDbConfig->getHostname(), $this->logsDbConfig->getDatabase());
+			$pdoLogs       = new PDO($dsnLogs, $this->logsDbConfig->getUsername(), $this->logsDbConfig->getPassword());
+			$this->pdoLogs = $pdoLogs;
+		}
 		return $this->pdoLogs;
 	}
 	
@@ -84,7 +88,8 @@ class Flux_Connection {
 	 */
 	public function getStatement($statement, $options = array())
 	{
-		$sth = $this->pdoMain->prepare($statement, $options);
+		$dbh = $this->getConnection();
+		$sth = $dbh->prepare($statement, $options);
 		$sth->setFetchMode(PDO::FETCH_OBJ);
 		return $sth;
 	}
@@ -97,7 +102,8 @@ class Flux_Connection {
 	 */
 	public function getStatementForLogs($statement, $options = array())
 	{
-		$sth = $this->pdoLogs->prepare($statement, $options);
+		$dbh = $this->getLogsConnection();
+		$sth = $dbh->prepare($statement, $options);
 		$sth->setFetchMode(PDO::FETCH_OBJ);
 		return $sth;
 	}
