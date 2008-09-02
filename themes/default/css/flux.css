@@ -3,18 +3,220 @@
 	 *********************************************/
 
 body {
-	margin: 10px;
+	margin: 0;
 	padding: 0;
-	font-family: Tahoma, Helvetica, Verdana, sans-serif;
-	font-size: 85%;
+	font-family: "Lucida Grande", "Lucida Sans", Verdana, Tahoma, sans-serif;
+	font-size: 10pt;
 	color: #000;
+	background-color: #fff;
 }
 
-p {
-	margin: 0 0 5px 0;
-	padding: 0;
+table {
+	font-family: "Lucida Grande", "Lucida Sans", Verdana, Tahoma, sans-serif;
+	font-size: 10pt;
+	border-spacing: 0;
+	border-collapse: collapse;
 }
 
-.request, .module-name, .fs-path {
+tr, td, th {
+	vertical-align: top;
+}
+
+h3 {
+	font-style: italic;
+}
+
+a img {
+	border: 0;
+}
+
+input[type=text], input[type=password], textarea {
+	padding: 2px;
+	font-size: 12pt;
+	color: #444;
+	border: 1px solid #aaa;
+	outline-width: 0;
+}
+
+input[type=text]:hover, input[type=password]:hover, textarea:hover {
+	color: #46a;
+	background-color: #dee;
+	border: 1px solid #8ac;
+}
+
+.center {
+	text-align: center;
+}
+
+.menuitem {
+	/*font-weight: bold;*/
+	color: #7ea1c4;
+	background-color: #d7e8f9;
+	text-align: center;
+	text-shadow: #fff 1pt 1pt;
+}
+
+.menuitem:hover {
+	color: #fff;
+	background-color: #c4dbf2;
+	text-shadow: #aaa 1pt 1pt;
+	cursor: pointer;
+}
+
+.menuitem a {
+	display: block;
+	padding: 10px 5px;
+	color: #7ea1c4;
+	text-decoration: none;
+	width: 161px;
+}
+
+.menuitem a:hover {
+	color: #fff;
+}
+
+.request {
+	display: inline-block;
+	padding: 5px;
+	font-family: Monaco, "Lucida Console", "Bitsteam Vera Sans Mono", monospace;
+	font-size: 12pt;
+	background-color: #eee;
+	border: 1px solid #ddd;
+}
+
+.keyword {
+	color: #ffba00;
+	font-style: italic;
+}
+
+.red {
+	color: #f00;
+}
+
+.note {
+	padding: 5px;
+	color: #444;
+	background-color: #eaeaea;
+	font-style: italic;
+}
+
+.up {
 	font-weight: bold;
+	color: #0f0;
+	text-transform: uppercase;
+}
+
+.down {
+	color: #f00;
+	text-transform: uppercase;
+}
+
+.submit_button {
+	display: block;
+	margin: 10px;
+	padding: 5px;
+	background-color: #eee;
+	border: 1px solid #ccc;
+}
+
+.submit_button:hover {
+	color: #fff;
+	background-color: #333;
+	border: 1px solid #111;
+	cursor: pointer;
+}
+
+.install_table th, .install_table td {
+	padding: 5px 10px;
+	border: 1px solid #ddd;
+}
+
+.install_table th {
+	background-color: #eef;
+}
+
+.install_table td {
+	width: 180px;
+	text-align: center;
+}
+
+.created {
+	color: green;
+	width: 80px;
+}
+
+.missing {
+	color: red;
+	width: 80px;
+}
+
+#sidebar img {
+	display: block;
+}
+
+#loginbox {
+	margin-bottom: 10px;
+	color: #555;
+}
+
+#content {
+	color: #555;
+	background-color: #f8f8f8;
+}
+
+#register_form table td, #login_form table td {
+	padding: 1px;
+}
+
+#register_form table th label, #login_form table th label {
+	display: block;
+	padding: 5px;
+	text-align: center;
+}
+
+#register_form input[type=text], #register_form input[type=password], #login_form input[type=text], #login_form input[type=password] {
+	width: 140px;
+}
+
+#register_form select, #login_form select {
+	width: 147px;
+}
+
+#loginbox a, #content a {
+	color: #4083c6;
+	text-decoration: none;
+}
+
+#loginbox a:hover, #content a:hover {
+	color: #fff;
+	background-color: #8ebceb;
+}
+
+#server_status th, #server_status td {
+	padding: 5px 8px 5px 8px;
+	text-align: left;
+	border-bottom: 1px solid #ddd;	
+}
+
+#server_status th {
+	background-color: #eee;
+	color: #aaa;
+	text-align: center;
+}
+
+#server_status .server {
+	color: #222;
+}
+
+#server_status .status {
+	text-align: center;
+}
+
+#copyright p {
+	margin-top: 5px;
+	margin-bottom: 20px;
+	font-style: italic;
+	font-size: 8pt;
+	color: #ccc;
+	text-align: right;
 }

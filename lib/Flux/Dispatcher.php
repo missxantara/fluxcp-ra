@@ -114,6 +114,13 @@ class Flux_Dispatcher {
 			}
 		}
 		
+		// Authorization handling.
+		$auth = Flux_Authorization::getInstance();
+		if (!$auth->actionAllowed($moduleName, $actionName)) {
+			$moduleName = 'unauthorized';
+			$actionName = $this->defaultAction;
+		}
+		
 		$params->set('module', $moduleName);
 		$params->set('action', $actionName);
 		
@@ -134,8 +141,12 @@ class Flux_Dispatcher {
 		$templateConfig = new Flux_Config($templateArray);
 		$template       = new Flux_Template($templateConfig);
 		
-		// Make session data available to actions and views.
-		$data = array('session' => Flux::$sessionData, 'params' => $params);
+		// Default data available to all actions and views.
+		$data = array(
+			'auth'    => Flux_Authorization::getInstance(),
+			'session' => Flux::$sessionData,
+			'params'  => $params
+		);
 		$template->setDefaultData($data);
 		
 		// Render template! :D

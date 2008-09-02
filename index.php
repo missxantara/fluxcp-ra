@@ -3,6 +3,7 @@ error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
 define('FLUX_ROOT',       str_replace('\\', '/', dirname(__FILE__)));
+define('FLUX_DATA_DIR',   'data');
 define('FLUX_CONFIG_DIR', 'config');
 define('FLUX_LIB_DIR',    'lib');
 define('FLUX_MODULE_DIR', 'modules');
@@ -11,24 +12,38 @@ define('FLUX_THEME_DIR',  'themes');
 set_include_path(FLUX_LIB_DIR.PATH_SEPARATOR.get_include_path());
 //ini_set('session.save_path', 'data/sessions');
 
+// Default account levels.
+require_once FLUX_CONFIG_DIR.'/levels.php';
+
+// Some necessary Flux core libraries.
 require_once 'Flux.php';
 require_once 'Flux/Dispatcher.php';
 require_once 'Flux/SessionData.php';
+require_once 'Flux/Authorization.php';
 
-try {
+try {	
+	// Initialize Flux.
+	Flux::initialize(array(
+		'appConfigFile'      => FLUX_CONFIG_DIR.'/application.php',
+		'serversConfigFile'  => FLUX_CONFIG_DIR.'/servers.php',
+		'messagesConfigFile' => FLUX_CONFIG_DIR.'/messages.php'
+	));
+	
+	session_save_path(FLUX_DATA_DIR.'/sessions');
 	session_start();
-	if (empty($_SESSION['FLUX_SESSION_DATA']) || !is_array($_SESSION['FLUX_SESSION_DATA'])) {
-		$_SESSION['FLUX_SESSION_DATA'] = array();
+	
+	$sessionKey = Flux::config('SessionKey');
+	if (empty($_SESSION[$sessionKey]) || !is_array($_SESSION[$sessionKey])) {
+		$_SESSION[$sessionKey] = array();
 	}
 	
 	// Initialize session data.
-	Flux::$sessionData = new Flux_SessionData($_SESSION['FLUX_SESSION_DATA']);
+	Flux::$sessionData = new Flux_SessionData($_SESSION[$sessionKey]);
 	
-	// Initialize Flux.
-	Flux::initialize(array(
-		'appConfigFile'     => FLUX_CONFIG_DIR.'/application.php',
-		'serversConfigFile' => FLUX_CONFIG_DIR.'/servers.php',
-	));
+	// Initialize authorization component.
+	$accessConfig = new Flux_Config(include(FLUX_CONFIG_DIR.'/access.php'));
+	$accessConfig->set('unauthorized.index', AccountLevel::ANYONE);
+	$authComponent = Flux_Authorization::getInstance($accessConfig, Flux::$sessionData);
 	
 	if (!Flux::config('DebugMode')) {
 		ini_set('display_errors', 0);
@@ -37,7 +52,6 @@ try {
 	// Dispatch requests->modules->actions->views.
 	$dispatcher = Flux_Dispatcher::getInstance();
 	$dispatcher->setDefaultModule(Flux::config('DefaultModule'));
-	$dispatcher->setDefaultAction(Flux::config('DefaultAction'));
 	$dispatcher->dispatch(array(
 		'basePath'                  => Flux::config('BaseURI'),
 		'useCleanUrls'              => Flux::config('UseCleanUrls'),

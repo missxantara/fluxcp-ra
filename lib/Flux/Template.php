@@ -229,12 +229,38 @@ class Flux_Template {
 		$this->footerPath = sprintf('%s/%s.php', $this->themePath, $this->footerName);
 		$this->url        = $this->url($this->moduleName, $this->actionName);
 		
+		// Tidy up!
+		if (Flux::config('OutputCleanHTML')) {
+			$dispatcher = Flux_Dispatcher::getInstance();
+			$tidyIgnore = false;
+			if (($tidyIgnores = Flux::config('TidyIgnore')) instanceOf Flux_Config) {
+				foreach ($tidyIgnores->getChildrenConfigs() as $ignore) {
+					$ignore = $ignore->toArray();
+					if (is_array($ignore) && array_key_exists('module', $ignore)) {
+						$module = $ignore['module'];
+						$action = array_key_exists('action', $ignore) ? $ignore['action'] : $dispatcher->defaultAction;
+						if ($this->moduleName == $module && $this->actionName == $action) {
+							$tidyIgnore = true;
+						}
+					}
+				}
+			}
+			if (!$tidyIgnore) {
+				ob_start();
+			}
+		}
+		
 		// Merge with default data.
 		$data = array_merge($this->defaultData, $dataArr);
 		
 		// Extract data array and make them appear as though they were global
 		// variables from the template.
 		extract($data, EXTR_REFS);
+		
+		$preprocessorPath = sprintf('%s/main/preprocess.php', $this->modulePath);
+		if (file_exists($preprocessorPath)) {
+			include $preprocessorPath;
+		}
 		
 		include $this->actionPath;
 		
@@ -247,6 +273,58 @@ class Flux_Template {
 		if (file_exists($this->footerPath)) {
 			include $this->footerPath;
 		}
+		
+		// Really, tidy up!
+		if (Flux::config('OutputCleanHTML') && !$tidyIgnore) {
+			$content = ob_get_clean();
+			$content = tidy_repair_string($content, array('indent' => true, 'wrap' => false, 'output-xhtml' => true), 'utf8');
+			echo $content;
+		}
+	}
+	
+	/**
+	 *
+	 * @return array
+	 */
+	public function getMenuItems()
+	{
+		$auth          = Flux_Authorization::getInstance();
+		$defaultAction = Flux_Dispatcher::getInstance()->defaultAction;
+		$menuItems     = Flux::config('MenuItems');
+		$allowedItems  = array(); //var_dump($auth->actionAllowed('account', 'login'));
+		
+		if (!($menuItems instanceOf Flux_Config)) {
+			return array();
+		}
+		
+		foreach ($menuItems->toArray() as $menuName => $menuItem) {
+			$module = array_key_exists('module', $menuItem) ? $menuItem['module'] : false;
+			$action = array_key_exists('action', $menuItem) ? $menuItem['action'] : $defaultAction;
+			
+			if ($auth->actionAllowed($module, $action)) {
+				$allowedItems[] = array('name' => $menuName, 'module' => $module, 'action' => $action);
+			}
+		}
+		
+		return $allowedItems;
+	}
+	
+	/**
+	 *
+	 * @return array
+	 */
+	public function getServerNames()
+	{
+		return array_keys(Flux::$loginAthenaGroupRegistry);
+	}
+	
+	/**
+	 *
+	 * @return bool
+	 */
+	public function hasManyServers()
+	{
+		return count(Flux::$loginAthenaGroupRegistry) > 1;
 	}
 	
 	/**
@@ -288,12 +366,16 @@ class Flux_Template {
 	 * @param string $actionName
 	 * @access public
 	 */
-	public function url($moduleName, $actionName = 'index', $params = array())
+	public function url($moduleName, $actionName = null, $params = array())
 	{
+		$defaultAction = Flux_Dispatcher::getInstance()->defaultAction;
+		
 		if ($params instanceOf Flux_Config) {
 			$params = $params->toArray();
 		}
+		
 		$queryString = '';
+		
 		if (count($params)) {
 			$queryString .= '?';
 			foreach ($params as $param => $value) {
@@ -303,16 +385,62 @@ class Flux_Template {
 		}
 		
 		if ($this->useCleanUrls) {
-			return sprintf('%s/%s/%s%s', $this->basePath, $moduleName, $actionName, $queryString);
+			if ($actionName && $actionName != $defaultAction) {
+				return sprintf('%s/%s/%s/%s', $this->basePath, $moduleName, $actionName, $queryString);
+			}
+			else {
+				return sprintf('%s/%s/%s', $this->basePath, $moduleName, $queryString);
+			}
 		}
 		else {
-			if ($actionName) {
+			if ($actionName && $actionName != $defaultAction) {
 				return sprintf('%s/?module=%s&action=%s%s', $this->basePath, $moduleName, $actionName, $queryString);
 			}
 			else {
 				return sprintf('%s/?module=%s%s', $this->basePath, $moduleName, $queryString);
 			}
 		}
+	}
+	
+	/**
+	 *
+	 */
+	public function formatDollar($number)
+	{
+		return number_format($number, 2, '.', ',');
+	}
+	
+	/**
+	 *
+	 */
+	public function dollarsToPoints($dollars)
+	{
+		$rate   = Flux::config('CashPointRate');
+		$points = $dollars / $rate;
+		return floor($points);
+	}
+	
+	/**
+	 *
+	 * @return string
+	 */
+	public function serverUpDown($bool)
+	{
+		$class = $bool ? 'up' : 'down';
+		return sprintf('<span class="%s">%s</span>', $class, $bool ? 'Up' : 'Down');
+	}
+	
+	/**
+	 *
+	 */
+	public function redirect($location = null)
+	{
+		if (is_null($location)) {
+			$location = $this->basePath;
+		}
+		
+		header("Location: $location");
+		exit;
 	}
 }
 ?>

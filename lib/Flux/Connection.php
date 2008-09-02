@@ -81,6 +81,19 @@ class Flux_Connection {
 	}
 	
 	/**
+	 *
+	 */
+	public function useDatabase($dbName)
+	{
+		if ($this->pdoMain) {
+			return $this->getStatement("USE $dbName")->execute();
+		}
+		else {
+			return false;
+		}
+	}
+	
+	/**
 	 * Instanciate a PDOStatement without obtaining a PDO handler before-hand.
 	 *
 	 * @return PDOStatement

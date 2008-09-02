@@ -1,0 +1,15 @@
+CREATE TABLE IF NOT EXISTS `flux_donation_items` (
+ `id` INT( 11 ) UNSIGNED NOT NULL DEFAULT  '0',
+ `nameid` INT( 11 ) UNSIGNED NOT NULL DEFAULT  '0',
+ `quantity` INT( 11 ) UNSIGNED NOT NULL DEFAULT  '0',
+ `refine` TINYINT( 3 ) UNSIGNED NOT NULL DEFAULT  '0',
+ `attribute` TINYINT( 4 ) UNSIGNED NOT NULL DEFAULT  '0',
+ `card0` SMALLINT( 11 ) UNSIGNED NOT NULL DEFAULT  '0',
+ `card1` SMALLINT( 11 ) UNSIGNED NOT NULL DEFAULT  '0',
+ `card2` SMALLINT( 11 ) UNSIGNED NOT NULL DEFAULT  '0',
+ `card3` SMALLINT( 11 ) UNSIGNED NOT NULL DEFAULT  '0',
+ `cost` INT( 11 ) UNSIGNED NOT NULL ,
+ `account_id` INT( 11 ) UNSIGNED NOT NULL ,
+ `char_id` INT( 11 ) UNSIGNED NOT NULL ,
+ `redemption_date` DATETIME NULL
+) ENGINE = MYISAM COMMENT = 'Donation item queue awaiting redemption by the owner.';

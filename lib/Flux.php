@@ -31,6 +31,14 @@ class Flux {
 	public static $serversConfig;
 	
 	/**
+	 * Messages configuration object.
+	 *
+	 * @access public
+	 * @var Flux_Config
+	 */
+	public static $messagesConfig;
+	
+	/**
 	 * Collection of Flux_Athena objects.
 	 *
 	 * @access public
@@ -73,7 +81,7 @@ class Flux {
 	 */
 	public static function initialize($options = array())
 	{
-		$required = array('appConfigFile', 'serversConfigFile');
+		$required = array('appConfigFile', 'serversConfigFile', 'messagesConfigFile');
 		foreach ($required as $option) {
 			if (!array_key_exists($option, $options)) {
 				self::raise("Missing required option `$option' in Flux::initialize()");
@@ -83,8 +91,9 @@ class Flux {
 		// Parse application and server configuration files, this will also
 		// handle configuration file normalization. See the source for the
 		// below methods for more details on what's being done.
-		self::$appConfig     = self::parseAppConfigFile($options['appConfigFile']);
-		self::$serversConfig = self::parseServersConfigFile($options['serversConfigFile']);
+		self::$appConfig      = self::parseAppConfigFile($options['appConfigFile']);
+		self::$serversConfig  = self::parseServersConfigFile($options['serversConfigFile']);
+		self::$messagesConfig = self::parseMessagesConfigFile($options['messagesConfigFile']);
 		
 		// Initialize server objects.
 		self::initializeServerObjects();
@@ -140,6 +149,24 @@ class Flux {
 		}
 		else {
 			return self::$appConfig->get($key);
+		}
+	}
+	
+	/**
+	 * Wrapper method for setting and getting values from the messagesConfig.
+	 *
+	 * @param string $key
+	 * @param mixed $value
+	 * @param arary $options
+	 * @access public
+	 */
+	public static function message($key, $value = null, $options = array())
+	{
+		if (!is_null($value)) {
+			return self::$messagesConfig->set($key, $value, $options);
+		}
+		else {
+			return self::$messagesConfig->get($key);
 		}
 	}
 	
@@ -294,6 +321,19 @@ class Flux {
 			}
 		}
 		
+		return $config;
+	}
+	
+	/**
+	 * Parses a messages configuration file.
+	 *
+	 * @param string $filename
+	 * @access public
+	 */
+	public static function parseMessagesConfigFile($filename)
+	{
+		$config = self::parseConfigFile($filename);
+		// Nothing yet.
 		return $config;
 	}
 	
