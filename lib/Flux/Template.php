@@ -275,7 +275,7 @@ class Flux_Template {
 		}
 		
 		// Really, tidy up!
-		if (Flux::config('OutputCleanHTML') && !$tidyIgnore) {
+		if (Flux::config('OutputCleanHTML') && !$tidyIgnore && function_exists('tidy_repair_string')) {
 			$content = ob_get_clean();
 			$content = tidy_repair_string($content, array('indent' => true, 'wrap' => false, 'output-xhtml' => true), 'utf8');
 			echo $content;
