@@ -99,7 +99,14 @@ class Flux_Dispatcher {
 		// Provide easier access to parameters.
 		$params = new Flux_Config($paramsArr);
 		
-		if (!$params->get('module') && !$params->get('action')) {
+		if (Flux::config('UseCleanUrls')) {
+			$baseURI    = preg_replace('&/+&', '/', rtrim(Flux::config('BaseURI'), '/')).'/';
+			$requestURI = preg_replace('&/+&', '/', rtrim($_SERVER['REQUEST_URI'], '/')).'/';
+			$components = explode('/', trim((string)substr($requestURI, strlen($baseURI)), '/'));
+			$moduleName = empty($components[0]) ? $defaultModule : $components[0];
+			$actionName = empty($components[1]) ? $defaultAction : $components[1];
+		}
+		elseif (!$params->get('module') && !$params->get('action')) {
 			$moduleName = $defaultModule;
 			$actionName = $defaultAction;
 		}

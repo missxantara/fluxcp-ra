@@ -1,6 +1,6 @@
 <?php
 $businessEmail = htmlspecialchars(Flux::config('PayPalBusinessEmail'));
-$itemName = htmlspecialchars('Donation credits (1 credit per $'.$this->formatDollar(Flux::config('CreditExchangeRate')).' USD)');
+$itemName = htmlspecialchars('Donation Credits (1 credit per $'.$this->formatDollar(Flux::config('CreditExchangeRate')).' USD)');
 ?>
 <form action="https://www.paypal.com/cgi-bin/webscr" method="post">
 <input type="hidden" name="cmd" value="_donations">
