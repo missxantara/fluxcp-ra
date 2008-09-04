@@ -33,7 +33,7 @@ class Flux_BaseServer {
 	 */
 	public function isUp()
 	{
-		$addr = $this->config->getAdress();
+		$addr = $this->config->getAddress();
 		$port = $this->config->getPort();
 		$sock = @fsockopen($addr, $port);
 		
