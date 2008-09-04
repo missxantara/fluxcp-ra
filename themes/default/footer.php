@@ -16,7 +16,7 @@
 				<td colspan="3"></td>
 				<td id="copyright">
 					<?php if (Flux::config('ShowCopyright')): ?>
-					<p>Copyright &copy; 2008 Matthew Harris and Nikunj Mehta.</p>
+					<p><strong>Powered by Flux Control Panel</strong> &mdash; Copyright &copy; 2008 Matthew Harris and Nikunj Mehta.</p>
 					<?php endif ?>
 				</td>
 				<td></td>
