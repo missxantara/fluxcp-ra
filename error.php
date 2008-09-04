@@ -48,7 +48,8 @@
 		<h2 class="heading">Critical Error</h2>
 		
 		<p>An error was encountered during the lifetime of the application.</p>
-		<p>This is normally due to a programming error in the program, but can be caused for a variety of reasons.</p>
+		<p>This could be due to a variety of problems, such as a bug in the application.</p>
+		<p><strong>However, normally it is caused by <em>misconfiguration</em>.</strong></p>
 		
 		<h2 class="heading">Exception Details</h2>
 		<p>Error: <strong><?php echo get_class($e) ?></strong></p>
