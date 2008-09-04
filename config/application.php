@@ -18,7 +18,7 @@ return array(
 	'UseCleanUrls'         => true,                 // Set to true if you're running Apache and it supports mod_rewrite and .htaccess files.
 	'DebugMode'            => true,                 // Set to false to minimize technical details from being output by Flux.
 	'UseCaptcha'           => true,                 // Use CAPTCHA image for account registration to prevent automated account creations. (Requires GD2)
-	'CashPointRate'        => 1.5,                  // By default, 1 cash point = 1 USD. Adjust the number to change the value of a single cash point.
+	'CreditExchangeRate'   => 2,                    // The rate at which credits are exchanged for dollars.
 	'AcceptDonations'      => true,                 // Whether or not to accept donations.
 	
 	// These are the main menu items that should be displayed by themes.
