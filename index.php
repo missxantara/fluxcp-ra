@@ -20,6 +20,7 @@ require_once 'Flux.php';
 require_once 'Flux/Dispatcher.php';
 require_once 'Flux/SessionData.php';
 require_once 'Flux/Authorization.php';
+require_once 'Flux/PermissionError.php';
 
 try {	
 	// Initialize Flux.
@@ -30,7 +31,15 @@ try {
 	));
 	
 	session_save_path(FLUX_DATA_DIR.'/sessions');
-	session_start();
+	if (!is_writable($dir=realpath(session_save_path()))) {
+		throw new Flux_PermissionError("The session storage directory '$dir' is not writable.  Remedy with `chmod 0707 $dir`");
+	}
+	elseif (!is_writable($dir=realpath(FLUX_DATA_DIR.'/logs'))) {
+		throw new Flux_PermissionError("The log storage directory '$dir' is not writable.  Remedy with `chmod 0707 $dir`");
+	}
+	else {
+		session_start();
+	}
 	
 	$sessionKey = Flux::config('SessionKey');
 	if (empty($_SESSION[$sessionKey]) || !is_array($_SESSION[$sessionKey])) {
