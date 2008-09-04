@@ -31,7 +31,7 @@ return array(
 		'LoginServer'    => array(
 			'Address'  => '127.0.0.1',
 			'Port'     => 6900,
-			'UseMD5'   => false,
+			'UseMD5'   => true,
 			//'Database' => 'ragnarok'
 		),
 		'CharMapServers' => array(
