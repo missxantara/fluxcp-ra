@@ -70,7 +70,8 @@ class Flux_Connection {
 			$dsn .= ";dbname=$dbName";
 		}
 		
-		return new PDO($dsn, $dbConfig->getUsername(), $dbConfig->getPassword());
+		$persistent = array(PDO::ATTR_PERSISTENT => (bool)$dbConfig->getPersistent());
+		return new PDO($dsn, $dbConfig->getUsername(), $dbConfig->getPassword(), $persistent);
 	}
 	
 	/**
