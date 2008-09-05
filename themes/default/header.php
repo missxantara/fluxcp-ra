@@ -23,39 +23,6 @@
 			}
 		</script>
 		<?php endif ?>
-		<?php if ($params->get('module') == 'donate'): ?>
-		<script type="text/javascript">
-			var CashPointRate = <?php echo (float)Flux::config('CashPointRate') ?>;
-			function convertCashPointsToDollars(cp, result){
-				if (cp.value.length < 1) {
-					result.style.visibility = 'hidden';
-				}
-				
-				else {
-					var cpoints = parseInt(cp.value);
-					var dollars = (cpoints * CashPointRate).toFixed(2);
-					var message = '** The total amount for <strong>'+addCommas(cpoints)+' CP</strong> is <strong>$'+addCommas(dollars)+' USD</strong> **';
-					result.style.visibility = 'visible';
-					result.innerHTML = message;
-				}
-			}
-			function addCommas(nStr)
-			{
-				nStr += '';
-				x     = nStr.split('.');
-				x1    = x[0];
-				x2    = x.length > 1 ? '.' + x[1] : '';
-				
-				var rgx = /(\d+)(\d{3})/;
-				
-				while (rgx.test(x1)) {
-					x1 = x1.replace(rgx, '$1' + ',' + '$2');
-				}
-				
-				return x1 + x2;
-			}
-		</script>
-		<?php endif ?>
 	</head>
 	<body>
 		<table cellspacing="0" cellpadding="0" width="100%">
