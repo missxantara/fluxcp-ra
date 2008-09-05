@@ -407,6 +407,7 @@ class Flux_Template {
 	 */
 	public function formatDollar($number)
 	{
+		$number = (float)$number;
 		$amount = number_format(
 			$number,
 			Flux::config('MoneyDecimalPlaces'),
