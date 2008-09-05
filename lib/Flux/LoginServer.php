@@ -60,7 +60,11 @@ class Flux_LoginServer extends Flux_BaseServer {
 			$password = md5($password);
 		}
 		
-		$sql = "SELECT userid FROM {$this->loginDatabase}.login WHERE sex != 'S' AND level >= 0 AND userid = ? AND user_pass = ?";
+		if (trim($username) == '' || trim($password) == '') {
+			return false;
+		}
+		
+		$sql = "SELECT userid FROM {$this->loginDatabase}.login WHERE sex != 'S' AND level >= 0 AND userid = ? AND user_pass = ? LIMIT 1";
 		$sth = $this->connection->getStatement($sql);
 		$sth->execute(array($username, $password));
 		
