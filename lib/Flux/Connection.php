@@ -47,6 +47,33 @@ class Flux_Connection {
 	}
 	
 	/**
+	 *
+	 */
+	private function connect(Flux_Config $dbConfig)
+	{
+		$dsn = 'mysql:';
+		
+		// Differentiate between a socket-type connection or an ip:port
+		// connection.
+		if ($sock=$dbConfig->getSocket()) {
+			$dsn .= "unix_socket=$sock";
+		}
+		else {
+			$dsn .= 'host='.$dbConfig->getHostname();
+			if ($port=$dbConfig->getPort()) {
+				$dsn .= ";port=$port";
+			}
+		}
+		
+		// May or may not have a database name specified.
+		if ($dbName=$dbConfig->getDatabase()) {
+			$dsn .= ";dbname=$dbName";
+		}
+		
+		return new PDO($dsn, $dbConfig->getUsername(), $dbConfig->getPassword());
+	}
+	
+	/**
 	 * Get the PDO instance for the main database server connection.
 	 *
 	 * @return PDO
@@ -56,8 +83,7 @@ class Flux_Connection {
 	{
 		if (!$this->pdoMain) {
 			// Establish connection for main databases.
-			$dsnMain       = sprintf('mysql:host=%s', $this->dbConfig->getHostname());
-			$pdoMain       = new PDO($dsnMain, $this->dbConfig->getUsername(), $this->dbConfig->getPassword());
+			$pdoMain       = $this->connect($this->dbConfig);
 			$this->pdoMain = $pdoMain;
 		}
 		return $this->pdoMain;
@@ -73,8 +99,7 @@ class Flux_Connection {
 	{
 		if (!$this->pdoLogs) {
 			// Establish separate connection just for the log database.
-			$dsnLogs       = sprintf('mysql:host=%s;dbname=%s', $this->logsDbConfig->getHostname(), $this->logsDbConfig->getDatabase());
-			$pdoLogs       = new PDO($dsnLogs, $this->logsDbConfig->getUsername(), $this->logsDbConfig->getPassword());
+			$pdoLogs       = $this->connect($this->logsDbConfig);
 			$this->pdoLogs = $pdoLogs;
 		}
 		return $this->pdoLogs;
