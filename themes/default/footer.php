@@ -10,7 +10,8 @@
 						</tr>
 					</table>
 				</td>
-				<td></td>
+				<!-- Spacing between content and horizontal end-of-page -->
+				<td style="padding: 10px"></td>
 			</tr>
 			<tr>
 				<td colspan="3"></td>

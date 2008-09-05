@@ -43,8 +43,8 @@
 					<?php include 'main/sidebar.php' ?>
 				</td>
 				<!-- Spacing between sidebar and content -->
-				<td width="20"></td>
-				<td>
+				<td style="padding: 10px"></td>
+				<td width="100%">
 					<!-- Login box / User information -->
 					<?php include 'main/loginbox.php' ?>
 					
