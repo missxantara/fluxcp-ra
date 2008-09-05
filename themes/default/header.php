@@ -37,7 +37,7 @@
 				<td colspan="3" height="20"></td>
 			</tr>
 			<tr>
-				<td></td>
+				<td style="padding: 10px"></td>
 				<td width="198">
 					<!-- Sidebar -->
 					<?php include 'main/sidebar.php' ?>
