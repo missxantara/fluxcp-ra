@@ -24,18 +24,6 @@ Columns:
  - redeemed         ** Whether or not the item has been redeemed.
  - redemption_date  ** DATETIME of when the item was redeemed.
 
-Table: flux_donation_log
-Columns:
- - id             ** Transaction ID.
- - status         ** Transaction status.
- - account_id     ** Account ID.
- - payment_type   ** Payment type.
- - email          ** Donator e-mail address.
- - amount         ** USD amount donated.
- - received       ** Credits received.
- - balance        ** Credit balance after donation.
- - donation_date  ** Date of donation.
-
 Table: flux_redemption_log
 Columns:
  - id               ** Unique item ID.

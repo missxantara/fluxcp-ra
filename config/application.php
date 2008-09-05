@@ -2,25 +2,34 @@
 // This is the application configuration file. All values have been set to
 // the default, and should be changed as needed.
 return array(
-	'BaseURI'              => '/~kuja/flux',           // The base URI is the base web root on which your application lies.
-	'SiteTitle'            => 'Flux Control Panel',    // This value is only used if the theme decides to use it.
-	'ThemeName'            => 'default',               // The theme name of the theme you would like to use.  Themes are in FLUX_ROOT/themes.
-	'MinUsernameLength'    => 4,                       //
-	'MaxUsernameLength'    => 20,                      //
-	'MinPasswordLength'    => 6,                       //
-	'MaxPasswordLength'    => 20,                      //
-	'AllowDuplicateEmails' => false,                   //
-	'SessionKey'           => 'fluxSessionData',       // Shouldn't be changed, just specifies the session key to be used for session data.
-	'DefaultModule'        => 'main',                  // This is the module to execute when none has been specified.
-	'DefaultAction'        => 'index',                 // This is the default action for any module, probably should leave this alone. (Deprecated)
-	'OutputCleanHTML'      => true,                    // Use this if you have Tidy installed to clean your HTML output when serving pages.
-	'ShowCopyright'        => true,                    // Whether or not to show the copyright footer.
-	'UseCleanUrls'         => true,                    // Set to true if you're running Apache and it supports mod_rewrite and .htaccess files.
-	'DebugMode'            => true,                    // Set to false to minimize technical details from being output by Flux.
-	'UseCaptcha'           => true,                    // Use CAPTCHA image for account registration to prevent automated account creations. (Requires GD2)
-	'CreditExchangeRate'   => 2,                       // The rate at which credits are exchanged for dollars.
-	'AcceptDonations'      => true,                    // Whether or not to accept donations.
-	'PayPalBusinessEmail'  => 'shugotenshi@gmail.com', // Enter the e-mail under which you have registered your business account.
+	'BaseURI'              => '/~kuja/flux',            // The base URI is the base web root on which your application lies.
+	'SiteTitle'            => 'Flux Control Panel',     // This value is only used if the theme decides to use it.
+	'ThemeName'            => 'default',                // The theme name of the theme you would like to use.  Themes are in FLUX_ROOT/themes.
+	'MinUsernameLength'    => 4,                        //
+	'MaxUsernameLength'    => 20,                       //
+	'MinPasswordLength'    => 6,                        //
+	'MaxPasswordLength'    => 20,                       //
+	'AllowDuplicateEmails' => false,                    //
+	'SessionKey'           => 'fluxSessionData',        // Shouldn't be changed, just specifies the session key to be used for session data.
+	'DefaultModule'        => 'main',                   // This is the module to execute when none has been specified.
+	'DefaultAction'        => 'index',                  // This is the default action for any module, probably should leave this alone. (Deprecated)
+	'OutputCleanHTML'      => true,                     // Use this if you have Tidy installed to clean your HTML output when serving pages.
+	'ShowCopyright'        => true,                     // Whether or not to show the copyright footer.
+	'UseCleanUrls'         => true,                     // Set to true if you're running Apache and it supports mod_rewrite and .htaccess files.
+	'DebugMode'            => true,                     // Set to false to minimize technical details from being output by Flux.
+	'UseCaptcha'           => true,                     // Use CAPTCHA image for account registration to prevent automated account creations. (Requires GD2)
+	'CreditExchangeRate'   => 1,                        // The rate at which credits are exchanged for dollars.
+	'DonationCurrency'     => 'EUR',                    //
+	'MoneyDecimalPlaces'   => 0,                        //
+	'MoneyThousandsSymbol' => '.',                      //
+	'MoneyDecimalSymbol'   => ',',                      //
+	'AcceptDonations'      => true,                     // Whether or not to accept donations.
+	'PayPalIpnUrl'         => 'www.sandbox.paypal.com', // The URL for PayPal's IPN responses (www.paypal.com for live and www.sandbox.paypal.com for testing)
+	'PayPalBusinessEmail'  => 'shugotenshi@gmail.com',  // Enter the e-mail under which you have registered your business account.
+	'PayPalReceiverEmails' => array(                    // These are the receiver e-mail addresses who are allowed to receive payment.
+		'bytefl_1220541393_biz@gmail.com',
+		'bytefl_1220541393_biz@gmail.com'
+	),
 	
 	// These are the main menu items that should be displayed by themes.
 	// They route to modules and actions.  Whether they are displayed or

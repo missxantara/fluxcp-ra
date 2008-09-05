@@ -222,6 +222,9 @@ class Flux {
 		elseif (!self::themeExists($themeName=$config->getThemeName())) {
 			self::raise("The selected theme '$themeName' does not exist.");
 		}
+		elseif (!($config->getPayPalReceiverEmails() instanceOf Flux_Config)) {
+			self::raise("PayPalReceiverEmails must be an array.");
+		}
 		
 		return $config;
 	}

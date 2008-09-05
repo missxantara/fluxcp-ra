@@ -407,7 +407,13 @@ class Flux_Template {
 	 */
 	public function formatDollar($number)
 	{
-		return number_format($number, 2, '.', ',');
+		$amount = number_format(
+			$number,
+			Flux::config('MoneyDecimalPlaces'),
+			Flux::config('MoneyDecimalSymbol'),
+			Flux::config('MoneyThousandsSymbol')
+		);
+		return $amount;
 	}
 	
 	/**

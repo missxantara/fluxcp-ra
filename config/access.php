@@ -8,7 +8,8 @@ return array(
 			'*'        => AccountLevel::ANYONE
 		),
 		'donate'    => array(
-			'index'    => AccountLevel::ANYONE
+			'index'    => AccountLevel::ANYONE,
+			'notify'   => AccountLevel::ANYONE,
 		),
 		'purchase'  => array(
 			'index'    => AccountLevel::ANYONE,

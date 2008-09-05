@@ -42,7 +42,7 @@ try {
 	}
 	
 	// Create some basic directories.
-	$directories = array(FLUX_DATA_DIR.'/logs/donations', FLUX_DATA_DIR.'/logs/donations/invalid');
+	$directories = array(FLUX_DATA_DIR.'/logs/transactions');
 	foreach ($directories as $directory) {
 		if (!is_dir($directory)) {
 			mkdir($directory, 0755);
