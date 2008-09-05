@@ -22,7 +22,7 @@ require_once 'Flux/SessionData.php';
 require_once 'Flux/Authorization.php';
 require_once 'Flux/PermissionError.php';
 
-try {	
+try {
 	// Initialize Flux.
 	Flux::initialize(array(
 		'appConfigFile'      => FLUX_CONFIG_DIR.'/application.php',
@@ -39,6 +39,14 @@ try {
 	}
 	else {
 		session_start();
+	}
+	
+	// Create some basic directories.
+	$directories = array(FLUX_DATA_DIR.'/logs/donations', FLUX_DATA_DIR.'/logs/donations/invalid');
+	foreach ($directories as $directory) {
+		if (!is_dir($directory)) {
+			mkdir($directory, 0755);
+		}
 	}
 	
 	$sessionKey = Flux::config('SessionKey');
@@ -71,7 +79,8 @@ try {
 	));
 }
 catch (Exception $e) {
+	require_once FLUX_CONFIG_DIR.'/error.php';
 	define('__ERROR__', 1);
-	include 'error.php';
+	include $errorFile;
 }
 ?>

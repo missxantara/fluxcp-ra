@@ -1,4 +1,4 @@
-<?php if (!defined('__ERROR__')) exit; ?>
+<?php if (defined('__ERROR__') && $showExceptions): ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
 	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html>
@@ -78,3 +78,8 @@
 		<?php endif ?>
 	</body>
 </html>
+<?php else: ?>
+<h2>Error</h2>
+<p>An error occurred while trying to process your request.</p>
+<p>Please try contacting an administrator: <a href="mailto:<?php echo htmlspecialchars($adminEmail) ?>"><?php echo htmlspecialchars($adminEmail) ?></a></p>
+<?php endif ?>
