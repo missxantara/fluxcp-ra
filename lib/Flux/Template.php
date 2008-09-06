@@ -283,6 +283,9 @@ class Flux_Template {
 	}
 	
 	/**
+	 * Returns an array of menu items that should be diplayed from the theme.
+	 * Only menu items the current user (and their level) have access to will
+	 * be returned as part of the array;
 	 *
 	 * @return array
 	 */
@@ -291,7 +294,7 @@ class Flux_Template {
 		$auth          = Flux_Authorization::getInstance();
 		$defaultAction = Flux_Dispatcher::getInstance()->defaultAction;
 		$menuItems     = Flux::config('MenuItems');
-		$allowedItems  = array(); //var_dump($auth->actionAllowed('account', 'login'));
+		$allowedItems  = array();
 		
 		if (!($menuItems instanceOf Flux_Config)) {
 			return array();
@@ -310,6 +313,7 @@ class Flux_Template {
 	}
 	
 	/**
+	 * Get an array of login server names.
 	 *
 	 * @return array
 	 */
@@ -319,6 +323,7 @@ class Flux_Template {
 	}
 	
 	/**
+	 * Determine if more than 1 server exists.
 	 *
 	 * @return bool
 	 */
@@ -403,7 +408,10 @@ class Flux_Template {
 	}
 	
 	/**
+	 * Format money strings (note: name soon to be changed).
 	 *
+	 * @param float $number Amount
+	 * @return string Formatted amount
 	 */
 	public function formatDollar($number)
 	{
@@ -418,8 +426,12 @@ class Flux_Template {
 	}
 	
 	/**
+	 * Returns "up" or "down" in a span HTML element with either the class
+	 * .up or .down, based on the value of $bool. True returns up, false
+	 * returns down.
 	 *
-	 * @return string
+	 * @param bool $bool True/false value
+	 * @return string Up/down
 	 */
 	public function serverUpDown($bool)
 	{
@@ -428,7 +440,10 @@ class Flux_Template {
 	}
 	
 	/**
+	 * Redirect client to another location. Script execution is terminated
+	 * after instructing the client to redirect.
 	 *
+	 * @param string $location
 	 */
 	public function redirect($location = null)
 	{
@@ -441,7 +456,10 @@ class Flux_Template {
 	}
 	
 	/**
+	 * Guess the HTTP server's current full URL.
 	 *
+	 * @param bool $withRequest True to include REQUEST_URI, false if not.
+	 * @return string URL
 	 */
 	public function entireUrl($withRequest = true)
 	{
