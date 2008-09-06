@@ -449,5 +449,22 @@ class Flux_Template {
 		header("Location: $location");
 		exit;
 	}
+	
+	/**
+	 *
+	 */
+	public function entireUrl($withRequest = true)
+	{
+		$proto    = empty($_SERVER['HTTPS']) ? 'http://' : 'https://';
+		$hostname = $_SERVER['HTTP_HOST'];
+		$request  = $_SERVER['REQUEST_URI'];
+		
+		if ($withRequest) {
+			return $proto.$hostname.$request;
+		}
+		else {
+			return $proto.$hostname.'/';
+		}
+	}
 }
 ?>
