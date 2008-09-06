@@ -419,16 +419,6 @@ class Flux_Template {
 	
 	/**
 	 *
-	 */
-	public function dollarsToPoints($dollars)
-	{
-		$rate   = Flux::config('CashPointRate');
-		$points = $dollars / $rate;
-		return floor($points);
-	}
-	
-	/**
-	 *
 	 * @return string
 	 */
 	public function serverUpDown($bool)
