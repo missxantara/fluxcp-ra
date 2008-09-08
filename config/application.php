@@ -46,7 +46,7 @@ return array(
 		'Purchase'      => array('module' => 'purchase'),
 		'Donate'        => array('module' => 'donate'),
 		'Server Status' => array('module' => 'server', 'action' => 'status'),
-		'Server Logs'   => array('module' => 'server', 'action' => 'log'),
+		'Log Data'      => array('module' => 'logdata'),
 		//'IP Ban List'   => array('module' => 'ipban'),
 		//'Accounts'      => array('module' => 'account'),
 		//'Characters'    => array('module' => 'character'),
@@ -66,6 +66,17 @@ return array(
 		'server' => array(
 			'status'     => 'View Status',
 			'status-xml' => 'View Status as XML'
+		),
+		'logdata' => array(
+			'paypal'  => 'Transactions',
+			'command' => 'Commands',
+			'branch'  => 'Branches',
+			'chat'    => 'Chats',
+			'login'   => 'Logins',
+			'mvp'     => 'MVP',
+			'npc'     => 'NPC',
+			'pick'    => 'Item Picks',
+			'zeny'    => 'Zeny'
 		)
 	),
 	

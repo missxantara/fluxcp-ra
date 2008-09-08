@@ -59,9 +59,20 @@ return array(
 			'index'    => AccountLevel::NORMAL
 		),
 		'server'    => array(
-			'status'   => AccountLevel::ANYONE,
+			'status'     => AccountLevel::ANYONE,
 			'status-xml' => AccountLevel::ANYONE,
-			'log'      => AccountLevel::LOWGM
+		),
+		'logdata'   => array(
+			'index'   => AccountLevel::ADMIN,
+			'paypal'  => AccountLevel::ADMIN,
+			'command' => AccountLevel::ADMIN,
+			'branch'  => AccountLevel::ADMIN,
+			'chat'    => AccountLevel::ADMIN,
+			'login'   => AccountLevel::ADMIN,
+			'mvp'     => AccountLevel::ADMIN,
+			'npc'     => AccountLevel::ADMIN,
+			'pick'    => AccountLevel::ADMIN,
+			'zeny'    => AccountLevel::ADMIN
 		),
 		'ipban'     => array(
 			'index'    => AccountLevel::ADMIN,
