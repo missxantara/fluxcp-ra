@@ -63,7 +63,10 @@ return array(
 	// Sub-menu items that are displayed for any action belonging to a
 	// particular module. The format it simple.
 	'SubMenuItems' => array(
-		
+		'server' => array(
+			'status'     => 'View Status',
+			'status-xml' => 'View Status as XML'
+		)
 	),
 	
 	// Specifies which modules and actions should be ignored by Tidy
