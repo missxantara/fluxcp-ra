@@ -313,6 +313,32 @@ class Flux_Template {
 	}
 	
 	/**
+	 * Get sub-menu items for a particular module.
+	 *
+	 * @param string $moduleName
+	 * @return array
+	 */
+	public function getSubMenuItems($moduleName = null)
+	{
+		$auth         = Flux_Authorization::getInstance();
+		$moduleName   = $moduleName ? $moduleName : $this->moduleName;
+		$subMenuItems = Flux::config('SubMenuItems');
+		$allowedItems = array();
+		
+		if (!($subMenuItems instanceOf Flux_Config) || !( ($menus = $subMenuItems->get($moduleName)) instanceOf Flux_Config )) {
+			return array();
+		}
+		
+		foreach ($menus->toArray() as $actionName => $menuName) {
+			if ($auth->actionAllowed($moduleName, $actionName)) {
+				$allowedItems[] = array('name' => $menuName, 'module' => $moduleName, 'action' => $actionName);
+			}
+		}
+		
+		return $allowedItems;
+	}
+	
+	/**
 	 * Get an array of login server names.
 	 *
 	 * @return array
