@@ -81,7 +81,7 @@ class Flux_Paginator {
 	 */
 	private function calculatePages()
 	{
-		$this->numberOfPages = floor($this->total / $this->perPage);
+		$this->numberOfPages = (int)ceil($this->total / $this->perPage);
 	}
 	
 	/**
@@ -93,7 +93,7 @@ class Flux_Paginator {
 	 */
 	public function getSQL($sql)
 	{
-		$offset = $this->perPage * $this->currentPage;
+		$offset = ($this->perPage * $this->currentPage) - $this->perPage;
 		return "$sql LIMIT $offset,{$this->perPage}";
 	}
 	
