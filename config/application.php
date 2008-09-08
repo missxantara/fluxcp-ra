@@ -5,11 +5,11 @@ return array(
 	'BaseURI'              => '/~kuja/flux',            // The base URI is the base web root on which your application lies.
 	'SiteTitle'            => 'Flux Control Panel',     // This value is only used if the theme decides to use it.
 	'ThemeName'            => 'default',                // The theme name of the theme you would like to use.  Themes are in FLUX_ROOT/themes.
-	'MinUsernameLength'    => 4,                        //
-	'MaxUsernameLength'    => 20,                       //
-	'MinPasswordLength'    => 6,                        //
-	'MaxPasswordLength'    => 20,                       //
-	'AllowDuplicateEmails' => false,                    //
+	'MinUsernameLength'    => 4,                        // Minimum username length.
+	'MaxUsernameLength'    => 20,                       // Maximum username length.
+	'MinPasswordLength'    => 6,                        // Minimum password length.
+	'MaxPasswordLength'    => 20,                       // Maximum password length.
+	'AllowDuplicateEmails' => false,                    // Whether or not to allow duplicate e-mails to be used in registration.
 	'SessionKey'           => 'fluxSessionData',        // Shouldn't be changed, just specifies the session key to be used for session data.
 	'DefaultModule'        => 'main',                   // This is the module to execute when none has been specified.
 	'DefaultAction'        => 'index',                  // This is the default action for any module, probably should leave this alone. (Deprecated)
@@ -18,24 +18,24 @@ return array(
 	'UseCleanUrls'         => true,                     // Set to true if you're running Apache and it supports mod_rewrite and .htaccess files.
 	'DebugMode'            => true,                     // Set to false to minimize technical details from being output by Flux.
 	'UseCaptcha'           => true,                     // Use CAPTCHA image for account registration to prevent automated account creations. (Requires GD2)
-	'CreditExchangeRate'   => 1,                        // The rate at which credits are exchanged for dollars.
-	'DonationCurrency'     => 'EUR',                    //
-	'MoneyDecimalPlaces'   => 0,                        //
-	'MoneyThousandsSymbol' => '.',                      //
-	'MoneyDecimalSymbol'   => ',',                      //
+	'CreditExchangeRate'   => 1.5,                      // The rate at which credits are exchanged for dollars.
+	'DonationCurrency'     => 'USD',                    // Preferred donation currency. Only donations made in this currency will be processed for credit deposits.
+	'MoneyDecimalPlaces'   => 2,                        // (Visual) Number of decimal places to display in amount.
+	'MoneyThousandsSymbol' => ',',                      // (Visual) Thousanths place separator (a period in European currencies).
+	'MoneyDecimalSymbol'   => '.',                      // (Visual) Decimal separator (a comma in European currencies).
 	'AcceptDonations'      => true,                     // Whether or not to accept donations.
 	'PayPalIpnUrl'         => 'www.sandbox.paypal.com', // The URL for PayPal's IPN responses (www.paypal.com for live and www.sandbox.paypal.com for testing)
-	'PayPalBusinessEmail'  => 'shugotenshi@gmail.com',  // Enter the e-mail under which you have registered your business account.
+	'PayPalBusinessEmail'  => 'admin@localhost',        // Enter the e-mail under which you have registered your business account.
 	'PayPalReceiverEmails' => array(                    // These are the receiver e-mail addresses who are allowed to receive payment.
-		'bytefl_1220541393_biz@gmail.com',
-		'bytefl_1220541393_biz@gmail.com'
+		'admin2@localhost',                             // -- This array may be empty if you only use one e-mail
+		'admin3@localhost'                              // -- because your Business Email is also checked.
 	),
 	
 	// These are the main menu items that should be displayed by themes.
 	// They route to modules and actions.  Whether they are displayed or
 	// not at any given time depends on the user's account level and/or
 	// their login status.
-	'MenuItems'       => array(
+	'MenuItems' => array(
 		'Home'          => array('module' => 'main'),
 		'Register'      => array('module' => 'account', 'action' => 'create'),
 		'Login'         => array('module' => 'account', 'action' => 'login'),
@@ -58,9 +58,15 @@ return array(
 		'Installation'  => array('module' => 'install'),
 	),
 	
+	// Sub-menu items that are displayed for any action belonging to a
+	// particular module. The format it simple.
+	'SubMenuItems' => array(
+		
+	),
+	
 	// Specifies which modules and actions should be ignored by Tidy
 	// (enabled/disabled by the OutputCleanHTML option).
-	'TidyIgnore'      => array(
+	'TidyIgnore' => array(
 		array('module' => 'captcha')
 	)
 );
