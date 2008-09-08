@@ -1,9 +1,35 @@
 <?php
+/**
+ * Draws a CAPTCHA image for use in forms such as the registration form.
+ */
 class Flux_Captcha {
+	/**
+	 * GD image resource.
+	 *
+	 * @access protected
+	 * @var resource
+	 */
 	protected $gd;
+	
+	/**
+	 * CAPTCHA options.
+	 *
+	 * @access public
+	 * @var array
+	 */
 	public $options;
+	
+	/**
+	 * Security code.
+	 *
+	 * @access public
+	 * @var code
+	 */
 	public $code;
 	
+	/**
+	 * Create new CAPTCHA.
+	 */
 	public function __construct($options = array())
 	{
 		$this->options = array_merge(
@@ -27,6 +53,11 @@ class Flux_Captcha {
 		$this->generateImage();
 	}
 	
+	/**
+	 * Generate the security code to be used.
+	 *
+	 * @access protected
+	 */
 	protected function generateCode()
 	{
 		$code  = '';
@@ -40,6 +71,11 @@ class Flux_Captcha {
 		return $code;
 	}
 	
+	/**
+	 * Generate the image.
+	 *
+	 * @access protected
+	 */
 	protected function generateImage()
 	{
 		$this->gd = imagecreatefrompng($this->options['background']);
@@ -47,6 +83,11 @@ class Flux_Captcha {
 		imagestring($this->gd, $loadFont, 15, 5, $this->code, imagecolorallocate($this->gd, 255, 255, 255));
 	}
 	
+	/**
+	 * Display image.
+	 *
+	 * @access public
+	 */
 	public function display()
 	{
 		header('Content-Type: image/png');

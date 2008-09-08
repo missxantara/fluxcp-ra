@@ -1,7 +1,17 @@
 <?php
+/**
+ * Objectifies a given object.
+ */
 class Flux_DataObject {
 	protected $object;
 	
+	/**
+	 * Create new DataObject.
+	 *
+	 * @param StdClass $object
+	 * @param array $default Default values
+	 * @access public
+	 */ 
 	public function __construct(StdClass $object = null, $defaults = array())
 	{
 		if (is_null($object)) {

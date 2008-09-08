@@ -1,15 +1,48 @@
 <?php
+/**
+ * Convenient way to log information to files.
+ */
 class Flux_LogFile {
+	/**
+	 * File handler for open log file.
+	 *
+	 * @access public
+	 * @var resource
+	 */
 	private $fp;
+	
+	/**
+	 * Log file name.
+	 *
+	 * @access public
+	 * @var string
+	 */
 	public $filename;
+	
+	/**
+	 * Date format used to indicate when the action was logged.
+	 *
+	 * @access public
+	 * @var string
+	 */
 	public $dateFormat = '[Y-m-d h:i:s] ';
 	
+	/**
+	 * Create new LogFile instance.
+	 *
+	 * @param string $filename
+	 * @param string $mode (see: http://www.php.net/fopen)
+	 * @access public
+	 */
 	public function __construct($filename, $mode = 'a')
 	{
 		$this->filename = realpath(dirname($filename)).'/'.basename($filename);
 		$this->fp = fopen($this->filename, 'a');
 	}
 	
+	/**
+	 * Close file handle.
+	 */
 	public function __destruct()
 	{
 		if ($this->fp) {
@@ -17,6 +50,13 @@ class Flux_LogFile {
 		}
 	}
 	
+	/**
+	 * Write a line to the log file.
+	 *
+	 * @param string $format
+	 * @param string $var, ...
+	 * @access public
+	 */
 	public function puts()
 	{
 		$args = func_get_args();

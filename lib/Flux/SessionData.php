@@ -6,12 +6,44 @@ require_once 'Flux/LoginError.php';
  * Contains all of Flux's session data.
  */
 class Flux_SessionData {
+	/**
+	 * Actual session data array.
+	 *
+	 * @access private
+	 * @var array
+	 */
 	private $sessionData;
+	
+	/**
+	 * Session data filters.
+	 *
+	 * @access private
+	 * @var array
+	 */
 	private $dataFilters = array();
 	
+	/**
+	 * Selected login server group.
+	 *
+	 * @access public
+	 * @var Flux_LoginAthenaGroup
+	 */
 	public $loginAthenaGroup;
+	
+	/**
+	 * Selected login server.
+	 *
+	 * @access public
+	 * @var Flux_LoginServer
+	 */
 	public $loginServer;
 	
+	/**
+	 * Create new SessionData instance.
+	 *
+	 * @param array $sessionData
+	 * @access public
+	 */
 	public function __construct(array &$sessionData)
 	{
 		$this->sessionData = &$sessionData;
@@ -19,6 +51,13 @@ class Flux_SessionData {
 		$this->initialize();
 	}
 	
+	/**
+	 * Initialize session data.
+	 *
+	 * @param bool $force
+	 * @return bool
+	 * @access private
+	 */
 	private function initialize($force = false)
 	{
 		$keysToInit = array('account', 'serverName', 'athenaServerName', 'securityCode');
@@ -40,6 +79,12 @@ class Flux_SessionData {
 		return true;
 	}
 	
+	/**
+	 * Log current user out.
+	 * 
+	 * @return bool
+	 * @access public
+	 */
 	public function logout()
 	{
 		$this->loginAthenaGroup = null;
@@ -71,6 +116,14 @@ class Flux_SessionData {
 		}
 	}
 	
+	/**
+	 * Set session data.
+	 *
+	 * @param array $keys Session keys to be affected.
+	 * @param mixed $value Value to be assigned to all specified keys.
+	 * @return mixed whatever was set
+	 * @access public
+	 */
 	public function setData(array $keys, $value)
 	{
 		foreach ($keys as $key) {
@@ -80,6 +133,14 @@ class Flux_SessionData {
 		return $value;
 	}
 	
+	/**
+	 * Add a session data setter filter.
+	 *
+	 * @param string $key Which session key
+	 * @param string $callback Function callback.
+	 * @return string Callback
+	 * @access public
+	 */
 	public function addDataFilter($key, $callback)
 	{
 		if (!array_key_exists($key, $this->dataFilters)) {
@@ -98,11 +159,23 @@ class Flux_SessionData {
 		return $arg;
 	}
 	
+	/**
+	 * Checks whether the current user is logged in.
+	 */
 	public function isLoggedIn()
 	{
 		return $this->account->level >= AccountLevel::NORMAL;
 	}
 	
+	/**
+	 * User login.
+	 *
+	 * @param string $server Server name
+	 * @param string $username
+	 * @param string $password
+	 * @throws Flux_LoginError
+	 * @access public
+	 */
 	public function login($server, $username, $password)
 	{
 		$loginAthenaGroup = Flux::getServerGroupByName($server);
@@ -131,6 +204,11 @@ class Flux_SessionData {
 		return true;
 	}
 	
+	/**
+	 * Get available server names.
+	 *
+	 * @access public
+	 */
 	public function getAthenaServerNames()
 	{
 		if ($this->loginAthenaGroup) {
@@ -145,6 +223,12 @@ class Flux_SessionData {
 		}
 	}
 	
+	/**
+	 * Get a Flux_Athena instance by its name based on current server settings.
+	 * 
+	 * @param string $name
+	 * @access public
+	 */
 	public function getAthenaServer($name = null)
 	{
 		if (is_null($name) && $this->athenaServerName) {

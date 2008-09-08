@@ -3,15 +3,64 @@ require_once 'Flux/LogFile.php';
 require_once 'Flux/Config.php';
 require_once 'Flux/Error.php';
 
+/**
+ * Handles PayPal instant payment notifications.
+ */
 class Flux_PaymentNotifyRequest {
+	/**
+	 * Logger class for logging to the PayPal log stored on disk.
+	 *
+	 * @access private
+	 * @var Flux_LogFile
+	 */
 	private $ppLogFile;
+	
+	/**
+	 * Set to true after the notification has been verified by PayPal.
+	 *
+	 * @access private
+	 * @var bool
+	 */
 	private $txnIsValid = false;
 	
+	/**
+	 * PayPal server name to use for verification.
+	 *
+	 * @access public
+	 * @var string
+	 */
 	public $ppServer;
+	
+	/**
+	 * Your currently configured PayPal business email.
+	 *
+	 * @access public
+	 * @var string
+	 */
 	public $myBusinessEmail;
+	
+	/**
+	 * Your currently configured currency code.
+	 *
+	 * @access public
+	 * @var string
+	 */
 	public $myCurrencyCode;
+	
+	/**
+	 * PayPal's IPN variables organized into a Flux_Config instance.
+	 *
+	 * @access private
+	 * @var Flux_Config
+	 */
 	public $ipnVariables;
 	
+	/**
+	 * Construct new PaymentNotifyRequest instance from specified IPN variables.
+	 *
+	 * @param array $ipnPostVars
+	 * @access public
+	 */
 	public function __construct(array $ipnPostVars)
 	{
 		$this->ppLogFile       = new Flux_LogFile(realpath(FLUX_DATA_DIR.'/logs/paypal.log'));
@@ -21,6 +70,14 @@ class Flux_PaymentNotifyRequest {
 		$this->ipnVariables    = new Flux_Config($ipnPostVars);
 	}
 
+	/**
+	 * Log to PayPal log file. Works like printf().
+	 *
+	 * @param string $format
+	 * @param mixed ...
+	 * @return string
+	 * @access protected
+	 */
 	protected function logPayPal()
 	{
 		$args = func_get_args();
@@ -28,6 +85,11 @@ class Flux_PaymentNotifyRequest {
 		return call_user_func_array($func, $args);
 	}
 	
+	/**
+	 * Process transaction.
+	 *
+	 * @access public
+	 */
 	public function process()
 	{
 		$this->logPayPal('Received notification from %s (%s)', $_SERVER['REMOTE_ADDR'], gethostbyaddr($_SERVER['REMOTE_ADDR']));
@@ -158,6 +220,13 @@ class Flux_PaymentNotifyRequest {
 		return false;
 	}
 	
+	/**
+	 * Translate the IPN variables into a query string for use in a POST
+	 * request.
+	 *
+	 * @return string
+	 * @access private
+	 */
 	private function ipnVarsToQueryString()
 	{
 		$ipnVars = $this->ipnVariables->toArray();
@@ -169,6 +238,12 @@ class Flux_PaymentNotifyRequest {
 		return $qString;
 	}
 	
+	/**
+	 * Verify IPN variables against PayPal server.
+	 *
+	 * @return bool True if verified, false if not.
+	 * @access private
+	 */
 	private function verify()
 	{
 		$qString  = 'cmd=_notify-validate&'.$this->ipnVarsToQueryString();
@@ -214,6 +289,13 @@ class Flux_PaymentNotifyRequest {
 		}
 	}
 	
+	/**
+	 * Save the transaction details to disk in the file name format of:
+	 * data/logs/transactions/TXN_TYPE/PAYMENT_STATUS.log
+	 *
+	 * @return string File name
+	 * @access private
+	 */
 	private function saveDetailsToFile()
 	{
 		if ($this->txnIsValid) {
@@ -241,6 +323,14 @@ class Flux_PaymentNotifyRequest {
 		return false;
 	}
 	
+	/**
+	 * Log the transaction details into the flux_paypal_transactions table.
+	 *
+	 * @param Flux_LoginAthenaGroup $servGroup
+	 * @param string $accountID
+	 * @param string $serverName
+	 * @access private
+	 */
 	private function logToPayPalTable(Flux_LoginAthenaGroup $servGroup, $accountID, $serverName)
 	{
 		if ($this->txnIsValid) {

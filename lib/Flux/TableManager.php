@@ -1,19 +1,91 @@
 <?php
+/**
+ * Manages the creation of tables that need to be created.
+ */
 class Flux_TableManager {
+	/**
+	 * Flux_Athena instances.
+	 *
+	 * @access public
+	 * @var Flux_Athena
+	 */
 	public $athena;
+	
+	/**
+	 * Directory where the logindb schemas are located.
+	 *
+	 * @access public
+	 * @var string
+	 */
 	public $loginDbSchemaDir;
+	
+	/**
+	 * Directory where the charmapdb schemas are located.
+	 *
+	 * @access public
+	 * @var string
+	 */
 	public $charMapDbSchemaDir;
+	
+	/**
+	 * Schema files located in logindb schema dir.
+	 *
+	 * @access public
+	 * @var array
+	 */
 	public $loginDbSchemaFiles = array();
+	
+	/**
+	 * Schema files located in charmapdb schema dir.
+	 *
+	 * @access public
+	 * @var array
+	 */
 	public $charMapDbSchemaFiles = array();
+	
+	/**
+	 * Logindb table names.
+	 *
+	 * @access public
+	 * @var array
+	 */
 	public $loginDbTables = array();
+	
+	/**
+	 * Charmapdb table names.
+	 *
+	 * @access public
+	 * @var array
+	 */
 	public $charMapDbTables = array();
 	
+	/**
+	 * Flag: create table(s) in logindb.
+	 */
 	const CREATE_IN_LOGIN_DB = 0;
+	
+	/**
+	 * Flag: create table(s) in charmapdb.
+	 */
 	const CREATE_IN_CHAR_MAP_DB = 1;
 	
+	/**
+	 * Flag: search logindb tables.
+	 */
 	const SEARCH_LOGIN_TABLES = 0;
+	
+	/**
+	 * Flag: search charmapdb tables.
+	 */
 	const SEARCH_CHAR_MAP_TABLES = 1;
 	
+	/**
+	 * Create new TableManager instance.
+	 *
+	 * @param Flux_Athena $athena
+	 * @param string $loginDbSchemaDir
+	 * @param string $charMapDbSchemaDir
+	 */
 	public function __construct(Flux_Athena $athena, $loginDbSchemaDir = null, $charMapDbSchemaDir = null)
 	{
 		if (is_null($loginDbSchemaDir)) {
@@ -44,6 +116,12 @@ class Flux_TableManager {
 		$this->getExistingTables();
 	}
 	
+	/**
+	 * Get available schemas.
+	 *
+	 * @return array
+	 * @access public
+	 */
 	public function getSchemas()
 	{
 		return array(
@@ -52,26 +130,59 @@ class Flux_TableManager {
 		);
 	}
 	
+	/**
+	 * Create logindb table.
+	 *
+	 * @param string $schemaName
+	 * @access public
+	 */
 	public function createLoginDbTable($schemaName)
 	{
 		return $this->createTable($schemaName, self::CREATE_IN_LOGIN_DB);
 	}
 	
+	/**
+	 * Create charmapdb table.
+	 *
+	 * @param string $schemaName
+	 * @access public
+	 */
 	public function createCharMapDbTable($schemaName)
 	{
 		return $this->createTable($schemaName, self::CREATE_IN_CHAR_MAP_DB);
 	}
 	
+	/**
+	 * Check if logindb has a particular table.
+	 *
+	 * @param string $tableName
+	 * @return bool
+	 * @access public
+	 */
 	public function hasLoginDbTable($tableName)
 	{
 		return $this->hasTable($tableName, self::SEARCH_LOGIN_TABLES);
 	}
 	
+	/**
+	 * Check if charmapdb has a particular table.
+	 *
+	 * @param string $tableName
+	 * @return bool
+	 * @access public
+	 */
 	public function hasCharMapDbTable($tableName)
 	{
 		return $this->hasTable($tableName, self::SEARCH_CHAR_MAP_TABLES);
 	}
 	
+	/**
+	 * Create table.
+	 *
+	 * @param string $schemaName
+	 * @param int $whichDatabase
+	 * @access public
+	 */
 	public function createTable($schemaName, $whichDatabase)
 	{
 		switch ($whichDatabase) {
@@ -97,6 +208,13 @@ class Flux_TableManager {
 		}
 	}
 	
+	/**
+	 * Check if a table exists.
+	 *
+	 * @param string $tableName
+	 * @param int $whichTables
+	 * @access public
+	 */
 	protected function hasTable($tableName, $whichTables)
 	{
 		switch ($whichTables) {
@@ -112,6 +230,12 @@ class Flux_TableManager {
 		}
 	}
 	
+	/**
+	 * Get existing table names.
+	 *
+	 * @retun array
+	 * @access public
+	 */
 	protected function getExistingTables()
 	{
 		$databases = array(
