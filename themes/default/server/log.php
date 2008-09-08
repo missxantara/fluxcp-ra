@@ -1,1 +1,0 @@
-<h2>Server Logs</h2>
