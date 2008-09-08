@@ -8,6 +8,7 @@ $itemName           = htmlspecialchars('Donation Credits (1 credit per '.$this->
 ?>
 <form action="https://www.paypal.com/cgi-bin/webscr" method="post">
 <input type="hidden" name="cmd" value="_donations">
+<input type="hidden" name="return" value="<?php echo $this->entireUrl(false) ?>">
 <input type="hidden" name="custom" value="<?php echo $customDataEscaped ?>">
 <input type="hidden" name="business" value="<?php echo $businessEmail ?>">
 <input type="hidden" name="item_name" value="<?php echo $itemName ?>">
