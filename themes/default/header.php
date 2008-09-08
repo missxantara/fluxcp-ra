@@ -15,6 +15,7 @@
 		<script src="<?php echo $this->themePath('js/ie7.js') ?>" type="text/javascript"></script>
 		<![endif]-->
 		<?php if ($session->isLoggedIn()): ?>
+		<script type="text/javascript" src="<?php echo $this->themePath('js/jquery-1.2.6.min.js') ?>"></script>
 		<script type="text/javascript">
 			function updatePreferredServer(sel){
 				var preferred = sel.options[sel.selectedIndex].value;
