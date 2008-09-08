@@ -150,6 +150,20 @@ input[type=text]:hover, input[type=password]:hover, textarea:hover {
 	width: 80px;
 }
 
+.pages {
+	color: #ccc;
+	text-align: center;
+}
+
+.pages .page-num {
+	padding: 0 5px;
+}
+
+.pages .current-page {
+	font-weight: bold;
+	font-style: italic;
+}
+
 #sidebar img {
 	display: block;
 }
