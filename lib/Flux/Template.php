@@ -452,6 +452,32 @@ class Flux_Template {
 	}
 	
 	/**
+	 * Format a MySQL DATE column according to the DateFormat config.
+	 *
+	 * @param string $data
+	 * @return string
+	 * @access public
+	 */
+	public function formatDate($date = null)
+	{
+		$ts = $date ? strtotime($date) : time();
+		return date(Flux::config('DateFormat'), $ts);
+	}
+	
+	/**
+	 * Format a MySQL DATETIME column according to the DateTimeFormat config.
+	 *
+	 * @param string $dataTime
+	 * @return string
+	 * @access public
+	 */
+	public function formatDateTime($dateTime = null)
+	{
+		$ts = $dateTime ? strtotime($dateTime) : time();
+		return date(Flux::config('DateTimeFormat'), $ts);
+	}
+	
+	/**
 	 * Returns "up" or "down" in a span HTML element with either the class
 	 * .up or .down, based on the value of $bool. True returns up, false
 	 * returns down.
