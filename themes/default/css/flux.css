@@ -170,7 +170,6 @@ input[type=text]:hover, input[type=password]:hover, textarea:hover {
 .horizontal-table {
 	border-spacing: 0;
 	border-collapse: collapse;
-	width: 100%;
 }
 
 .horizontal-table th {
@@ -191,6 +190,11 @@ input[type=text]:hover, input[type=password]:hover, textarea:hover {
 }
 
 .td-checkbox {
+	text-align: center;
+}
+
+.td-action {
+	color: #ccc;
 	text-align: center;
 }
 
