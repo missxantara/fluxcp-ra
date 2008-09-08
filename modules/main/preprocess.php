@@ -1,4 +1,31 @@
 <?php
+// Check for "special" date fields.
+$__dates = array();
+foreach ($params->toArray() as $key => $value) {
+	if (preg_match('&^(.+?)_(year|month|day|hour|minute|second)$&', $key, $m)) {
+		$__dateParam = $m[1];
+		$__dateType  = $m[2];
+		
+		if (!array_key_exists($__dateParam, $__dates)) {
+			$__dateArray = array();
+			$__dates[$__dateParam] = new Flux_Config($__dateArray);
+		}
+		
+		$__dates[$__dateParam]->set($__dateType, $value);
+	}
+	
+	foreach ($__dates as $__dateName => $__date) {
+		$_year   = (int)$__date->get('year');
+		$_month  = (int)$__date->get('month');
+		$_day    = (int)$__date->get('day');
+		$_hour   = (int)$__date->get('hour');
+		$_minute = (int)$__date->get('minute');
+		$_second = (int)$__date->get('second');
+		$_format = sprintf('%04d-%02d-%02d %02d:%02d:%02d', $_year, $_month, $_day, $_hour, $_minute, $_second);
+		$params->set("{$__dateName}_date", $_format);
+	}
+}
+
 if (count($_POST)) {
 	// Update preferred server.
 	if ($params->get('preferred_server')) {

@@ -478,6 +478,114 @@ class Flux_Template {
 	}
 	
 	/**
+	 * Create a series of select fields matching a MySQL DATE format.
+	 *
+	 * @param string $name
+	 * @param string $value DATE formatted string.
+	 * @return string
+	 */
+	public function dateField($name, $value = null)
+	{
+		$ts    = $value ? strtotime($value) : time();
+		$year  = date('Y', $ts);
+		$month = date('m', $ts);
+		$day   = date('d', $ts);
+		
+		// Get years.
+		$years = sprintf('<select name="%s_year">', $name);
+		for ($i = 2038; $i >= 1970; --$i) {
+			if ($year == $i) {
+				$years .= sprintf('<option value="%04d" selected="selected">%04d</option>', $i, $i);
+			}
+			else {
+				$years .= sprintf('<option value="%04d">%04d</option>', $i, $i);
+			}
+		}
+		$years .= '</select>';
+		
+		// Get months.
+		$months = sprintf('<select name="%s_month">', $name);
+		for ($i = 1; $i <= 12; ++$i) {
+			if ($month == $i) {
+				$months .= sprintf('<option value="%02d" selected="selected">%02d</option>', $i, $i);
+			}
+			else {
+				$months .= sprintf('<option value="%02d">%02d</option>', $i, $i);
+			}
+		}
+		$months .= '</select>';
+		
+		// Get days.
+		$days = sprintf('<select name="%s_day">', $name);
+		for ($i = 1; $i <= 31; ++$i) {
+			if ($day == $i) {
+				$days .= sprintf('<option value="%02d" selected="selected">%02d</option>', $i, $i);
+			}
+			else {
+				$days .= sprintf('<option value="%02d">%02d</option>', $i, $i);
+			}
+		}
+		$days .= '</select>';
+		
+		return sprintf('<span class="date-field">%s-%s-%s</span>', $years, $months, $days);
+	}
+	
+	/**
+	 * Create a series of select fields matching a MySQL DATETIME format.
+	 *
+	 * @param string $name
+	 * @param string $value DATETIME formatted string.
+	 * @return string
+	 */
+	public function dateTimeField($name, $value = null)
+	{
+		$dateField = $this->dateField($name, $value);
+		$ts        = $value ? strtotime($value) : strtotime('00:00:00');
+		//$ts        = strtotime('00:00:00');
+		$hour      = date('H', $ts);
+		$minute    = date('i', $ts);
+		$second    = date('s', $ts);
+		
+		// Get hours.
+		$hours = sprintf('<select name="%s_hour">', $name);
+		for ($i = 0; $i <= 23; ++$i) {
+			if ($hour == $i) {
+				$hours .= sprintf('<option value="%02d" selected="selected">%02d</option>', $i, $i);
+			}
+			else {
+				$hours .= sprintf('<option value="%02d">%02d</option>', $i, $i);
+			}
+		}
+		$hours .= '</select>';
+		
+		// Get minutes.
+		$minutes = sprintf('<select name="%s_minute">', $name);
+		for ($i = 0; $i <= 59; ++$i) {
+			if ($minute == $i) {
+				$minutes .= sprintf('<option value="%02d" selected="selected">%02d</option>', $i, $i);
+			}
+			else {
+				$minutes .= sprintf('<option value="%02d">%02d</option>', $i, $i);
+			}
+		}
+		$minutes .= '</select>';
+		
+		// Get seconds.
+		$seconds = sprintf('<select name="%s_second">', $name);
+		for ($i = 0; $i <= 59; ++$i) {
+			if ($second == $i) {
+				$seconds .= sprintf('<option value="%02d" selected="selected">%02d</option>', $i, $i);
+			}
+			else {
+				$seconds .= sprintf('<option value="%02d">%02d</option>', $i, $i);
+			}
+		}
+		$seconds .= '</select>';
+		
+		return sprintf('<span class="date-time-field">%s @ %s:%s:%s</span>', $dateField, $hours, $minutes, $seconds);
+	}
+	
+	/**
 	 * Returns "up" or "down" in a span HTML element with either the class
 	 * .up or .down, based on the value of $bool. True returns up, false
 	 * returns down.
