@@ -7,6 +7,6 @@
 			$params->get('module') == $menuItem['module'] && $params->get('action') == $menuItem['action'] ? ' current-sub-menu' : '',
 			htmlspecialchars($menuItem['name'])) ?>
 	<?php endforeach ?>
-	<?php echo implode(', ', $menus) ?>
+	<?php echo implode(' • ', $menus) ?>
 	</div>
 <?php endif ?>
