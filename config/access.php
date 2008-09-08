@@ -60,6 +60,7 @@ return array(
 		),
 		'server'    => array(
 			'status'   => AccountLevel::ANYONE,
+			'status-xml' => AccountLevel::ANYONE,
 			'log'      => AccountLevel::LOWGM
 		),
 		'ipban'     => array(
