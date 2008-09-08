@@ -182,8 +182,16 @@ input[type=text]:hover, input[type=password]:hover, textarea:hover {
 	padding: 5px 10px;
 }
 
+.horizontal-table th, .horizontal-table td {
+	border: 1px solid #ddd;
+}
+
 .current-sub-menu {
 	font-weight: bold;
+}
+
+.td-checkbox {
+	text-align: center;
 }
 
 #submenu {
