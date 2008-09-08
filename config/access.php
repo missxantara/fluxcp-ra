@@ -3,6 +3,8 @@
 return array(
 	// Module/action permissions.
 	// These are handled during runtime by Flux.
+	// '*' is a default that is checked for any action that has not been
+	// specified an access level.
 	'modules' => array(
 		'main'      => array(
 			'*'        => AccountLevel::ANYONE
