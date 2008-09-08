@@ -167,6 +167,29 @@ input[type=text]:hover, input[type=password]:hover, textarea:hover {
 	font-style: italic;
 }
 
+.horizontal-table {
+	border-spacing: 0;
+	border-collapse: collapse;
+	width: 100%;
+}
+
+.horizontal-table th {
+	padding: 5px 10px;
+	background-color: #eee;
+}
+
+.horizontal-table td {
+	padding: 5px 10px;
+}
+
+.current-sub-menu {
+	font-weight: bold;
+}
+
+#submenu {
+	color: #bbb;
+}
+
 #sidebar img {
 	display: block;
 }

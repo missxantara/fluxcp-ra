@@ -59,3 +59,5 @@
 						<tr>
 							<td bgcolor="#f8f8f8"></td>
 							<td bgcolor="#f8f8f8">
+								<!-- Sub menu -->
+								<?php include 'main/submenu.php' ?>
