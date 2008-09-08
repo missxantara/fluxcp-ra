@@ -6,9 +6,9 @@ return array(
 	'SiteTitle'            => 'Flux Control Panel',     // This value is only used if the theme decides to use it.
 	'ThemeName'            => 'default',                // The theme name of the theme you would like to use.  Themes are in FLUX_ROOT/themes.
 	'MinUsernameLength'    => 4,                        // Minimum username length.
-	'MaxUsernameLength'    => 20,                       // Maximum username length.
-	'MinPasswordLength'    => 6,                        // Minimum password length.
-	'MaxPasswordLength'    => 20,                       // Maximum password length.
+	'MaxUsernameLength'    => 23,                       // Maximum username length.
+	'MinPasswordLength'    => 4,                        // Minimum password length.
+	'MaxPasswordLength'    => 23,                       // Maximum password length.
 	'AllowDuplicateEmails' => false,                    // Whether or not to allow duplicate e-mails to be used in registration.
 	'SessionKey'           => 'fluxSessionData',        // Shouldn't be changed, just specifies the session key to be used for session data.
 	'DefaultModule'        => 'main',                   // This is the module to execute when none has been specified.
