@@ -151,8 +151,11 @@ input[type=text]:hover, input[type=password]:hover, textarea:hover {
 }
 
 .pages {
+	margin-top: 20px;
+	padding-top: 10px;
 	color: #ccc;
 	text-align: center;
+	border-top: 1px solid #ddd;
 }
 
 .pages .page-num {
