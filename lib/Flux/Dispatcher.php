@@ -102,6 +102,7 @@ class Flux_Dispatcher {
 		if (Flux::config('UseCleanUrls')) {
 			$baseURI    = preg_replace('&/+&', '/', rtrim(Flux::config('BaseURI'), '/')).'/';
 			$requestURI = preg_replace('&/+&', '/', rtrim($_SERVER['REQUEST_URI'], '/')).'/';
+			$requestURI = preg_replace('&\?.*?$&', '', $requestURI);
 			$components = explode('/', trim((string)substr($requestURI, strlen($baseURI)), '/'));
 			$moduleName = empty($components[0]) ? $defaultModule : $components[0];
 			$actionName = empty($components[1]) ? $defaultAction : $components[1];
@@ -175,7 +176,7 @@ class Flux_Dispatcher {
 	}
 	
 	/**
-	 * By default, 'index' is the default action for any module, but you may
+	 * (DEPRECATED) By default, 'index' is the default action for any module, but you may
 	 * override that by using this method.
 	 *
 	 * @param string $action Action name
