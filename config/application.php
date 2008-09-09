@@ -6,7 +6,7 @@ return array(
 	'SiteTitle'            => 'Flux Control Panel',     // This value is only used if the theme decides to use it.
 	'ThemeName'            => 'default',                // The theme name of the theme you would like to use.  Themes are in FLUX_ROOT/themes.
 	'DateFormat'           => 'Y-m-d',                  // Default DATE format to be displayed in pages.
-	'DateTimeFormat'       => 'Y-m-d h:i:s',            // Default DATETIME format to be displayed in pages.
+	'DateTimeFormat'       => 'Y-m-d h:i:s A',          // Default DATETIME format to be displayed in pages.
 	'MinUsernameLength'    => 4,                        // Minimum username length.
 	'MaxUsernameLength'    => 23,                       // Maximum username length.
 	'MinPasswordLength'    => 4,                        // Minimum password length.
