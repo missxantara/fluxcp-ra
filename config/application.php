@@ -61,7 +61,6 @@ return array(
 		//'Ranking'       => array('module' => 'ranking'),
 		//'Items'         => array('module' => 'item'),
 		//'Monsters'      => array('module' => 'monster'),
-		'Installation'  => array('module' => 'install'),
 	),
 	
 	// Sub-menu items that are displayed for any action belonging to a
@@ -90,6 +89,19 @@ return array(
 	// (enabled/disabled by the OutputCleanHTML option).
 	'TidyIgnore' => array(
 		array('module' => 'captcha')
+	),
+	
+	// Job classes, loaded from another file to avoid cluttering this one.
+	// There isn't normally a need to modify this file, unless it's been
+	// modified in an update.
+	'JobClasses' => include('jobs.php'),
+	
+	//
+	'FluxTables' => array(
+		'CreditsTable'     => 'cp_credits',
+		'ItemShopTable'    => 'cp_itemshop',
+		'TransactionTable' => 'cp_txnlog',
+		'RedemptionTable'  => 'cp_redeemlog'
 	)
 );
 ?>

@@ -82,9 +82,6 @@ return array(
 		'service'   => array(
 			'tos'      => AccountLevel::ANYONE
 		),
-		'install'   => array(
-			'index'    => AccountLevel::ADMIN
-		),
 		'captcha'   => array(
 			'index'    => AccountLevel::ANYONE
 		),
@@ -96,6 +93,7 @@ return array(
 	'features' => array(
 		'Donate'          => AccountLevel::NORMAL,
 		'Purchase'        => AccountLevel::NORMAL,
+		'ViewAccount'     => AccountLevel::HIGHGM,
 		'DeleteAccount'   => AccountLevel::HIGHGM,
 		'DeleteCharacter' => AccountLevel::HIGHGM
 	)

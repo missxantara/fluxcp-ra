@@ -232,6 +232,11 @@ input[type=text]:hover, input[type=password]:hover, textarea:hover {
 	text-align: right;
 }
 
+.not-applicable {
+	font-style: italic;
+	color: #bbb;
+}
+
 #submenu {
 	color: #bbb;
 }

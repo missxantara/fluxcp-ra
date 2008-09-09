@@ -1,4 +1,4 @@
-CREATE TABLE IF NOT EXISTS `flux_paypal_transactions` (
+CREATE TABLE IF NOT EXISTS `cp_txnlog` (
   `id` int(10) unsigned NOT NULL auto_increment,
   `account_id` int(11) unsigned default '0',
   `server_name` varchar(255) default NULL,
@@ -32,4 +32,4 @@ CREATE TABLE IF NOT EXISTS `flux_paypal_transactions` (
   `referrer_id` varchar(10) default NULL,
   `process_date` datetime default NULL,
   PRIMARY KEY  (`id`)
-) ENGINE=MyISAM COMMENT='All PayPal transactions that go through the IPN handler.' AUTO_INCREMENT=4 ;
+) ENGINE=MyISAM COMMENT='All PayPal transactions that go through the IPN handler.';
