@@ -1,4 +1,6 @@
 <?php
+require_once 'Flux/Paginator.php';
+
 /**
  * The template is mostly responsible for the presentation logic of things, but
  * currently it also carries the task of executing the action files, which are
@@ -633,6 +635,20 @@ class Flux_Template {
 		else {
 			return $proto.$hostname.'/';
 		}
+	}
+	
+	/**
+	 * Convenience method for retrieving a paginator instance.
+	 *
+	 * @param int $total Total number of records.
+	 * @param array $options Paginator options.
+	 * @return Flux_Paginator
+	 * @access public
+	 */
+	public function getPaginator($total, array $options = array())
+	{
+		$paginator = new Flux_Paginator($total, $options);
+		return $paginator;
 	}
 }
 ?>
