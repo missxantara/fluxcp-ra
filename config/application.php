@@ -73,6 +73,8 @@ return array(
 		),
 		'logdata' => array(
 			'paypal'  => 'Transactions',
+			'char'    => 'Characters',
+			'inter'   => 'Interactions',
 			'command' => 'Commands',
 			'branch'  => 'Branches',
 			'chat'    => 'Chats',
