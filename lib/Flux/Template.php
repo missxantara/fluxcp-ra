@@ -669,5 +669,15 @@ class Flux_Template {
 			return false;
 		}
 	}
+	
+	/**
+	 * Deny entry to a page if called. This method should be used from a module
+	 * script, and no where else.
+	 */
+	public function deny()
+	{
+		$location = $this->url('unauthorized');
+		$this->redirect($location);
+	}
 }
 ?>
