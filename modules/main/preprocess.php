@@ -26,8 +26,8 @@ foreach ($params->toArray() as $key => $value) {
 	}
 }
 
-if ($preferred_server = $params->get('preferred_server')) {
-	// Update preferred server.
+// Update preferred server.
+if (($preferred_server = $params->get('preferred_server')) && $session->getAthenaServer($preferred_server)) {
 	$session->setAthenaServerNameData($params->get('preferred_server'));
 	$this->redirect($this->url);
 }
