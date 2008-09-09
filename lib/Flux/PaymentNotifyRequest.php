@@ -50,10 +50,26 @@ class Flux_PaymentNotifyRequest {
 	/**
 	 * PayPal's IPN variables organized into a Flux_Config instance.
 	 *
-	 * @access private
+	 * @access public
 	 * @var Flux_Config
 	 */
 	public $ipnVariables;
+	
+	/**
+	 * Transactions log table.
+	 *
+	 * @access public
+	 * @var string
+	 */
+	public $txnlogTable;
+	
+	/**
+	 * Account credit balance table.
+	 *
+	 * @access public
+	 * @var string
+	 */
+	public $creditsTable;
 	
 	/**
 	 * Construct new PaymentNotifyRequest instance from specified IPN variables.
@@ -68,6 +84,8 @@ class Flux_PaymentNotifyRequest {
 		$this->myBusinessEmail = Flux::config('PayPalBusinessEmail');
 		$this->myCurrencyCode  = strtoupper(Flux::config('DonationCurrency'));
 		$this->ipnVariables    = new Flux_Config($ipnPostVars);
+		$this->txnLogTable     = Flux::config('FluxTables.TransactionTable');
+		$this->creditsTable    = Flux::config('FluxTables.CreditsTable');
 	}
 
 	/**
@@ -165,14 +183,14 @@ class Flux_PaymentNotifyRequest {
 							$this->logPayPal('Unknown account #%s on server %s, cannot exchange for credits.', $accountID, $serverName);
 						}
 						else {
-							$sql = "SELECT * FROM {$servGroup->loginDatabase}.flux_donation_credits WHERE account_id = ?";
+							$sql = "SELECT * FROM {$servGroup->loginDatabase}.{$this->creditsTable} WHERE account_id = ?";
 							$sth = $servGroup->connection->getStatement($sql);
 							$sth->execute(array($accountID));
 							$res = $sth->fetch();
 
 							if (!$res) {
 								$this->logPayPal('Identified as first-time donation to the server from this account.');
-								$sql = "INSERT INTO {$servGroup->loginDatabase}.flux_donation_credits (account_id, balance, last_donation_date, last_donation_amount) VALUES (?, 0, NULL, 0)";
+								$sql = "INSERT INTO {$servGroup->loginDatabase}.{$this->creditsTable} (account_id, balance, last_donation_date, last_donation_amount) VALUES (?, 0, NULL, 0)";
 								$sth = $servGroup->connection->getStatement($sql);
 								$sth->execute(array($accountID));
 							}
@@ -182,7 +200,7 @@ class Flux_PaymentNotifyRequest {
 							$credits = floor($amount / $rate);
 							$this->logPayPal('Updating account credit balance from %s to %s', (int)$res->balance, $res->balance + $credits);
 
-							$sql = "UPDATE {$servGroup->loginDatabase}.flux_donation_credits SET balance = balance + ?, last_donation_amount = ?, last_donation_date = NOW()";
+							$sql = "UPDATE {$servGroup->loginDatabase}.{$this->creditsTable} SET balance = balance + ?, last_donation_amount = ?, last_donation_date = NOW()";
 							$sth = $servGroup->connection->getStatement($sql);
 
 							if ($sth->execute(array($credits, $amount))) {
@@ -345,7 +363,7 @@ class Flux_PaymentNotifyRequest {
 		if ($this->txnIsValid) {
 			$this->logPayPal('Saving transaction details to PayPal transactions table...');
 			$sql = "
-				INSERT INTO {$servGroup->loginDatabase}.flux_paypal_transactions (
+				INSERT INTO {$servGroup->loginDatabase}.{$this->txnLogTable} (
 					account_id,
 					server_name,
 					credits,
