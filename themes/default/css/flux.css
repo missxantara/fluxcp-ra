@@ -30,6 +30,11 @@ a img {
 	border: 0;
 }
 
+a {
+	color: #4083c6;
+	text-decoration: none;
+}
+
 input[type=text], input[type=password], textarea {
 	padding: 2px;
 	font-size: 12pt;
@@ -179,9 +184,34 @@ input[type=text]:hover, input[type=password]:hover, textarea:hover {
 
 .horizontal-table td {
 	padding: 5px 10px;
+	background-color: #fff;
 }
 
 .horizontal-table th, .horizontal-table td {
+	border: 1px solid #ddd;
+}
+
+.vertical-table {
+	border-spacing: 0;
+	border-collapse: collapse;	
+}
+
+.vertical-table th {
+	padding: 5px 10px;
+	background-color: #eee;
+}
+
+.vertical-table th {
+	padding: 5px 10px;
+	background-color: #eee;
+}
+
+.vertical-table td {
+	padding: 5px 10px;
+	background-color: #fff;
+}
+
+.vertical-table th, .vertical-table td {
 	border: 1px solid #ddd;
 }
 
@@ -196,6 +226,10 @@ input[type=text]:hover, input[type=password]:hover, textarea:hover {
 .td-action {
 	color: #ccc;
 	text-align: center;
+}
+
+.vertical-table .td-action {
+	text-align: right;
 }
 
 #submenu {
@@ -234,16 +268,6 @@ input[type=text]:hover, input[type=password]:hover, textarea:hover {
 	width: 147px;
 }
 
-#loginbox a, #content a {
-	color: #4083c6;
-	text-decoration: none;
-}
-
-#loginbox a:hover, #content a:hover {
-	color: #fff;
-	background-color: #8ebceb;
-}
-
 #server_status th, #server_status td {
 	padding: 5px 8px 5px 8px;
 	text-align: left;
@@ -271,4 +295,13 @@ input[type=text]:hover, input[type=password]:hover, textarea:hover {
 	font-size: 8pt;
 	color: #ccc;
 	text-align: right;
+}
+
+.sortable {
+	color: #444;
+	text-decoration: underline;
+}
+
+.sortable:hover {
+	color: #000;
 }
