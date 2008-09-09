@@ -22,6 +22,8 @@ return array(
 	'DebugMode'            => true,                     // Set to false to minimize technical details from being output by Flux.
 	'UseCaptcha'           => true,                     // Use CAPTCHA image for account registration to prevent automated account creations. (Requires GD2)
 	'DisplaySinglePages'   => true,                     // Whether or not to display paging for single page results.
+	'ColumnSortAscending'  => ' ↑',                     // (Visual) Text displayed for ascending sorted column names.
+	'ColumnSortDescending' => ' ↓',                     // (Visual) Text displayed for descending sorted column names.
 	'CreditExchangeRate'   => 1.5,                      // The rate at which credits are exchanged for dollars.
 	'DonationCurrency'     => 'USD',                    // Preferred donation currency. Only donations made in this currency will be processed for credit deposits.
 	'MoneyDecimalPlaces'   => 2,                        // (Visual) Number of decimal places to display in amount.
