@@ -98,13 +98,18 @@ class Flux_Paginator {
 	}
 	
 	/**
-	 * Generate some basic HTML which creates a list of page numbers.
+	 * Generate some basic HTML which creates a list of page numbers. Will
+	 * return an empty string if DisplaySinglePages config is set to false.
 	 *
 	 * @return string
 	 * @access public
 	 */
 	public function getHTML()
 	{
+		if (!Flux::config('DisplaySinglePages') && $this->numberOfPages === 1) {
+			return '';
+		}
+		
 		$pages = array();
 		
 		for ($i = 1; $i < $this->numberOfPages+1; ++$i) {
