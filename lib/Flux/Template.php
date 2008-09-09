@@ -679,5 +679,30 @@ class Flux_Template {
 		$location = $this->url('unauthorized');
 		$this->redirect($location);
 	}
+	
+	/**
+	 * Get the full gender string from a gender letter (e.g. M for Male).
+	 *
+	 * @param string $gender
+	 * @return string
+	 * @access public
+	 */
+	public function genderText($gender)
+	{
+		switch (strtoupper($gender)) {
+			case 'M':
+				return 'Male';
+				break;
+			case 'F':
+				return 'Female';
+				break;
+			case 'S':
+				return 'Server';
+				break;
+			default:
+				return false;
+				break;
+		}
+	}
 }
 ?>
