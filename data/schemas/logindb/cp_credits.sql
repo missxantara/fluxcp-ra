@@ -4,4 +4,4 @@ CREATE TABLE IF NOT EXISTS `cp_credits` (
   `last_donation_date` datetime default NULL,
   `last_donation_amount` float unsigned NOT NULL,
   PRIMARY KEY  (`account_id`)
-) ENGINE=MyISAM DEFAULT COMMENT='Donation credits balance for a given account.';
+) ENGINE=MyISAM COMMENT='Donation credits balance for a given account.';
