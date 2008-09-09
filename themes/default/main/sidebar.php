@@ -6,7 +6,13 @@
 	<?php foreach ($this->getMenuItems() as $menuItem): ?>
 	<tr>
 		<td bgcolor="#e6f0fa" width="13"></td>
-		<td bgcolor="#d7e8f9" class="menuitem"><a href="<?php echo $this->url($menuItem['module'], $menuItem['action']) ?>"><?php echo htmlspecialchars($menuItem['name']) ?></a></td>
+		<td bgcolor="#d7e8f9" class="menuitem">
+			<a href="<?php echo $this->url($menuItem['module'], $menuItem['action']) ?>"<?php
+				if ($menuItem['module'] == 'account' && $menuItem['action'] == 'logout')
+					echo ' onclick="return confirm(\'Are you sure you want to logout?\')"' ?>>
+				<?php echo htmlspecialchars($menuItem['name']) ?>
+			</a>
+		</td>
 		<td bgcolor="#e6f0fa" width="14"></td>
 	</tr>
 	<?php endforeach ?>
