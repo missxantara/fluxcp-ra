@@ -650,5 +650,24 @@ class Flux_Template {
 		$paginator = new Flux_Paginator($total, $options);
 		return $paginator;
 	}
+	
+	/**
+	 * Link to an account view page.
+	 *
+	 * @param int $accountID
+	 * @param string $text
+	 * @return mixed
+	 * @access public
+	 */
+	public function linkToAccount($accountID, $text)
+	{
+		if ($accountID) {
+			$url = $this->url('account', 'view').'?id='.$accountID;
+			return sprintf('<a href="%s" class="link-to-account">%s</a>', $url, htmlentities($text));
+		}
+		else {
+			return false;
+		}
+	}
 }
 ?>
