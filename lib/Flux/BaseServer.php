@@ -35,7 +35,7 @@ class Flux_BaseServer {
 	{
 		$addr = $this->config->getAddress();
 		$port = $this->config->getPort();
-		$sock = @fsockopen($addr, $port);
+		$sock = @fsockopen($addr, $port, $errno, $errstr, (int)Flux::config('ServerStatusTimeout'));
 		
 		if (is_resource($sock)) {
 			fclose($sock);

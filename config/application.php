@@ -12,6 +12,7 @@ return array(
 	'MinPasswordLength'    => 4,                        // Minimum password length.
 	'MaxPasswordLength'    => 23,                       // Maximum password length.
 	'AllowDuplicateEmails' => false,                    // Whether or not to allow duplicate e-mails to be used in registration.
+	'ServerStatusTimeout'  => 2,                        // For each server, spend X amount of seconds to determine whether it's up or not.
 	'SessionKey'           => 'fluxSessionData',        // Shouldn't be changed, just specifies the session key to be used for session data.
 	'DefaultModule'        => 'main',                   // This is the module to execute when none has been specified.
 	'DefaultAction'        => 'index',                  // This is the default action for any module, probably should leave this alone. (Deprecated)
