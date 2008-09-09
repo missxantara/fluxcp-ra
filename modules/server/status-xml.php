@@ -1,6 +1,6 @@
 <?php
 include 'status.php';
-$dom  = new DomDocument();
+$dom  = new DomDocument('1.0', 'utf-8');
 $root = $dom->createElement('ServerStatus'); // Root element.
 
 foreach ($serverStatus as $privServerName => $gameServers) {
