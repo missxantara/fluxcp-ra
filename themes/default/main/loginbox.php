@@ -1,3 +1,4 @@
+<?php if (!defined('FLUX_ROOT')) exit; ?>
 <?php if ($session->isLoggedIn()): ?>
 <table cellspacing="0" cellpadding="0" width="100%" id="loginbox">
 	<tr>

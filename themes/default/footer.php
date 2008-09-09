@@ -1,4 +1,4 @@
-
+<?php if (!defined('FLUX_ROOT')) exit; ?>
 							</td>
 							<td bgcolor="#f8f8f8"></td>
 						</tr>

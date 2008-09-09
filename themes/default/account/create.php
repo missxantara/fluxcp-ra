@@ -1,3 +1,4 @@
+<?php if (!defined('FLUX_ROOT')) exit; ?>
 <h2>Register</h2>
 <p>Please read our <a href="<?php echo $this->url('service', 'tos') ?>">Terms of Service</a> (ToS) before registering for an account, to ensure that you understand the rules of holding an account with our private Ragnarok Online game server.</p>
 <?php if (isset($errorMessage)): ?>

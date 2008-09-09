@@ -1,3 +1,4 @@
+<?php if (!defined('FLUX_ROOT')) exit; ?>
 <h2>Server Status</h2>
 <table id="server_status">
 <?php foreach ($serverStatus as $privServerName => $gameServers): ?>

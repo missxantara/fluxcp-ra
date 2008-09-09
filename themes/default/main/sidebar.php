@@ -1,3 +1,4 @@
+<?php if (!defined('FLUX_ROOT')) exit; ?>
 <table cellspacing="0" cellpadding="0" width="198" id="sidebar">
 	<tr>
 		<td colspan="3"><img src="<?php echo $this->themePath('img/sidebar_complete_top.gif') ?>" alt="[SIDEBAR_TOP]" /></td>

@@ -1,4 +1,6 @@
 <?php
+if (!defined('FLUX_ROOT')) exit;
+
 include 'status.php';
 $dom  = new DomDocument('1.0', 'utf-8');
 $root = $dom->createElement('ServerStatus'); // Root element.

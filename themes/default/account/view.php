@@ -1,3 +1,4 @@
+<?php if (!defined('FLUX_ROOT')) exit; ?>
 <h2>Viewing Account</h2>
 <?php if ($account): ?>
 <table class="vertical-table">

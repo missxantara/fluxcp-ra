@@ -1,4 +1,6 @@
 <?php
+if (!defined('FLUX_ROOT')) exit;
+
 $serverStatus = array();
 foreach (Flux::$loginAthenaGroupRegistry as $groupName => $loginAthenaGroup) {
 	if (!array_key_exists($groupName, $serverStatus)) {

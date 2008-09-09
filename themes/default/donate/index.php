@@ -1,3 +1,4 @@
+<?php if (!defined('FLUX_ROOT')) exit; ?>
 <h2>Donate</h2>
 <?php if (Flux::config('AcceptDonations')): ?>
 	<?php if ($auth->allowedToDonate): ?>

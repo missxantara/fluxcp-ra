@@ -1,4 +1,6 @@
 <?php
+if (!defined('FLUX_ROOT')) exit;
+
 $serverNames = $this->getServerNames();
 
 if (count($_POST)) {

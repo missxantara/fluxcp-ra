@@ -1,4 +1,6 @@
 <?php
+if (!defined('FLUX_ROOT')) exit;
+
 $isMine    = false;
 $accountID = $params->get('id');
 

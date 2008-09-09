@@ -1,4 +1,6 @@
 <?php
+if (!defined('FLUX_ROOT')) exit;
+
 // Check for "special" date fields.
 $__dates = array();
 foreach ($params->toArray() as $key => $value) {
