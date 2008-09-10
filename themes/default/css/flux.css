@@ -245,6 +245,15 @@ input[type=text]:hover, input[type=password]:hover, textarea:hover {
 	color: #bbb;
 }
 
+.state-banned {
+	color: red;
+}
+
+.state-permanently-banned {
+	font-weight: bold;
+	color: red;
+}
+
 #submenu {
 	color: #bbb;
 }

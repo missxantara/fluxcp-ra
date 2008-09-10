@@ -39,6 +39,15 @@ class Flux_SessionData {
 	public $loginServer;
 	
 	/**
+	 * Account object.
+	 *
+	 * @access public
+	 * @var Flux_DataObject
+	 */
+	public $account;
+
+	
+	/**
 	 * Create new SessionData instance.
 	 *
 	 * @param array $sessionData
@@ -47,7 +56,6 @@ class Flux_SessionData {
 	public function __construct(array &$sessionData)
 	{
 		$this->sessionData = &$sessionData;
-		$this->addDataFilter('account', array($this, 'accountSetterFilter'));
 		$this->initialize();
 	}
 	
@@ -59,8 +67,8 @@ class Flux_SessionData {
 	 * @access private
 	 */
 	private function initialize($force = false)
-	{
-		$keysToInit = array('account', 'serverName', 'athenaServerName', 'securityCode');
+	{	
+		$keysToInit = array('username', 'serverName', 'athenaServerName', 'securityCode');
 		foreach ($keysToInit as $key) {
 			if ($force || !$this->{$key}) {
 				$method = ucfirst($key);
@@ -74,6 +82,14 @@ class Flux_SessionData {
 			if (!$this->athenaServerName) {
 				$this->setAthenaServerNameData(current($this->getAthenaServerNames()));
 			}
+		}
+		
+		// Get new account data every request.
+		if ($this->loginAthenaGroup && $this->username && ($account = $this->getAccount($this->loginAthenaGroup, $this->username))) {
+			$this->account = $account;
+		}
+		else {
+			$this->account = new Flux_DataObject(null, array('level' => AccountLevel::UNAUTH));
 		}
 		
 		return true;
@@ -151,14 +167,6 @@ class Flux_SessionData {
 		return $callback;
 	}
 	
-	private function accountSetterFilter($arg)
-	{
-		if (!($arg instanceOf Flux_DataObject)) {
-			$arg = new Flux_DataObject(null, array('level' => AccountLevel::UNAUTH));
-		}
-		return $arg;
-	}
-	
 	/**
 	 * Checks whether the current user is logged in.
 	 */
@@ -187,21 +195,52 @@ class Flux_SessionData {
 			throw new Flux_LoginError('Invalid login', Flux_LoginError::INVALID_LOGIN);
 		}
 		
-		$sql = "SELECT * FROM {$loginAthenaGroup->loginDatabase}.login WHERE sex != 'S' AND level >= 0 AND userid = ? LIMIT 1";
-		$smt = $loginAthenaGroup->connection->getStatement($sql);
-		$res = $smt->execute(array($username));
+		$creditsTable  = Flux::config('FluxTables.CreditsTable');
+		$creditColumns = 'credits.balance, credits.last_donation_date, credits.last_donation_amount';
+		
+		$sql  = "SELECT login.*, {$creditColumns} FROM {$loginAthenaGroup->loginDatabase}.login ";
+		$sql .= "LEFT OUTER JOIN {$creditsTable} AS credits ON login.account_id = credits.account_id ";
+		$sql .= "WHERE login.sex != 'S' AND login.level >= 0 AND login.userid = ? LIMIT 1";
+		$smt  = $loginAthenaGroup->connection->getStatement($sql);
+		$res  = $smt->execute(array($username));
 		
 		if ($res && ($row = $smt->fetch())) {
-			$this->setAccountData(new Flux_DataObject($row));
 			$this->setServerNameData($server);
+			$this->setUsernameData($username);
 			$this->initialize(false);
-			unset($this->account->user_pass);
 		}
 		else {
 			throw new Flux_LoginError('Unexpected error during login.', Flux_LoginError::UNEXPECTED);
 		}
 		
 		return true;
+	}
+	
+	/**
+	 * Get account object for a particular user name.
+	 *
+	 * @param Flux_LoginAthenaGroup $loginAthenaGroup
+	 * @param string $username
+	 * @return mixed
+	 * @access private
+	 */
+	private function getAccount(Flux_LoginAthenaGroup $loginAthenaGroup, $username)
+	{
+		$creditsTable  = Flux::config('FluxTables.CreditsTable');
+		$creditColumns = 'credits.balance, credits.last_donation_date, credits.last_donation_amount';
+		
+		$sql  = "SELECT login.*, {$creditColumns} FROM {$loginAthenaGroup->loginDatabase}.login ";
+		$sql .= "LEFT OUTER JOIN {$creditsTable} AS credits ON login.account_id = credits.account_id ";
+		$sql .= "WHERE login.sex != 'S' AND login.level >= 0 AND login.userid = ? LIMIT 1";
+		$smt  = $loginAthenaGroup->connection->getStatement($sql);
+		$res  = $smt->execute(array($username));
+		
+		if ($res && ($row = $smt->fetch())) {
+			return $row;
+		}
+		else {
+			return false;
+		}
 	}
 	
 	/**
@@ -244,7 +283,10 @@ class Flux_SessionData {
 	}
 	
 	/**
+	 * Get flash message.
 	 *
+	 * @return string
+	 * @access public
 	 */
 	public function getMessage()
 	{

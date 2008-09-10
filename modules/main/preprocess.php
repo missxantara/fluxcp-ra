@@ -33,12 +33,14 @@ if ($installer->updateNeeded() && $params->get('module') != 'install') {
 	$this->redirect($this->url('install'));
 }
 
-// Update preferred server.
-if (($preferred_server = $params->get('preferred_server')) && $session->getAthenaServer($preferred_server)) {
-	$session->setAthenaServerNameData($params->get('preferred_server'));
-	$this->redirect($this->url);
-}
+if ($session->isLoggedIn()) {
+	// Update preferred server.
+	if (($preferred_server = $params->get('preferred_server')) && $session->getAthenaServer($preferred_server)) {
+		$session->setAthenaServerNameData($params->get('preferred_server'));
+		$this->redirect($this->url);
+	}
 
-// Preferred server.
-$server = $session->getAthenaServer();
+	// Preferred server.
+	$server = $session->getAthenaServer();
+}
 ?>

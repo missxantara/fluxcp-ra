@@ -1,8 +1,11 @@
 <?php
 if (!defined('FLUX_ROOT')) exit;
 
-$isMine    = false;
-$accountID = $params->get('id');
+$creditsTable  = Flux::config('FluxTables.CreditsTable');
+$creditColumns = 'credits.balance, credits.last_donation_date, credits.last_donation_amount';
+$isMine        = false;
+$accountID     = $params->get('id');
+$account       = false;
 
 if (!$accountID || $accountID == $session->account->account_id) {
 	$isMine    = true;
@@ -11,18 +14,18 @@ if (!$accountID || $accountID == $session->account->account_id) {
 }
 
 if (!$isMine) {
+	// Allowed to view other peoples' account information?
 	if (!$auth->allowedToViewAccount) {
 		$this->deny();
 	}
 	
-	$sql = "SELECT * FROM {$server->loginDatabase}.login WHERE account_id = ? AND sex != 'S' AND level >= 0 LIMIT 1";
-	$sth = $server->connection->getStatement($sql);
+	$sql  = "SELECT login.*, {$creditColumns} FROM {$server->loginDatabase}.login ";
+	$sql .= "LEFT OUTER JOIN {$creditsTable} AS credits ON login.account_id = credits.account_id ";
+	$sql .= "WHERE login.sex != 'S' AND login.level >= 0 AND login.account_id = ? LIMIT 1";
+	$sth  = $server->connection->getStatement($sql);
 	$sth->execute(array($accountID));
 	
+	// Account object.
 	$account = $sth->fetch();
-}
-
-if (empty($account)) {
-	$account = false;
 }
 ?>

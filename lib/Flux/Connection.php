@@ -1,4 +1,6 @@
 <?php
+require_once 'Flux/DataObject.php';
+
 /**
  * The connection class acts more like a container, or connection manager and
  * anything else, really. It's true that it does establish connections to the
@@ -47,7 +49,11 @@ class Flux_Connection {
 	}
 	
 	/**
+	 * Establish connection to server based on config.
 	 *
+	 * @param Flux_Config $dbConfig
+	 * @return PDO
+	 * @access private
 	 */
 	private function connect(Flux_Config $dbConfig)
 	{
@@ -107,7 +113,11 @@ class Flux_Connection {
 	}
 	
 	/**
+	 * Select database to use.
 	 *
+	 * @param string $dbName
+	 * @return mixed
+	 * @access public
 	 */
 	public function useDatabase($dbName)
 	{
@@ -129,7 +139,7 @@ class Flux_Connection {
 	{
 		$dbh = $this->getConnection();
 		$sth = $dbh->prepare($statement, $options);
-		$sth->setFetchMode(PDO::FETCH_OBJ);
+		$sth->setFetchMode(PDO::FETCH_INTO, new Flux_DataObject());
 		return $sth;
 	}
 	
@@ -143,7 +153,7 @@ class Flux_Connection {
 	{
 		$dbh = $this->getLogsConnection();
 		$sth = $dbh->prepare($statement, $options);
-		$sth->setFetchMode(PDO::FETCH_OBJ);
+		$sth->setFetchMode(PDO::FETCH_INTO, new Flux_DataObject());
 		return $sth;
 	}
 }

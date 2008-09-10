@@ -3,6 +3,12 @@
  * Objectifies a given object.
  */
 class Flux_DataObject {
+	/**
+	 * Storage object.
+	 *
+	 * @access protected
+	 * @var StdClass
+	 */
 	protected $object;
 	
 	/**
@@ -17,7 +23,7 @@ class Flux_DataObject {
 		if (is_null($object)) {
 			$object = new StdClass();
 		}
-		
+
 		$this->object = $object;
 		
 		foreach ($defaults as $prop => $value) {
@@ -25,6 +31,12 @@ class Flux_DataObject {
 				$object->{$prop} = $value;
 			}
 		}
+	}
+	
+	public function __set($prop, $value)
+	{
+		$this->object->{$prop} = $value;
+		return $value;
 	}
 	
 	public function __get($prop)

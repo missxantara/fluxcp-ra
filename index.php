@@ -19,6 +19,7 @@ require_once FLUX_CONFIG_DIR.'/levels.php';
 require_once 'Flux.php';
 require_once 'Flux/Dispatcher.php';
 require_once 'Flux/SessionData.php';
+require_once 'Flux/DataObject.php';
 require_once 'Flux/Authorization.php';
 require_once 'Flux/Installer.php';
 require_once 'Flux/PermissionError.php';

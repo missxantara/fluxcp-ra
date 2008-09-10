@@ -662,7 +662,7 @@ class Flux_Template {
 	public function linkToAccount($accountID, $text)
 	{
 		if ($accountID) {
-			$url = $this->url('account', 'view').'?id='.$accountID;
+			$url = $this->url('account', 'view', array('id' => $accountID));
 			return sprintf('<a href="%s" class="link-to-account">%s</a>', $url, htmlentities($text));
 		}
 		else {
@@ -702,6 +702,34 @@ class Flux_Template {
 			default:
 				return false;
 				break;
+		}
+	}
+	
+	/**
+	 *
+	 */
+	public function accountStateText($state)
+	{
+		$text  = false;
+		$state = (int)$state;
+		
+		switch ($state) {
+			case 0:
+				$text  = 'Normal';
+				$class = 'state-normal';
+				break;
+			case 5:
+				$text  = 'Permanently Banned';
+				$class = 'state-permanently-banned';
+				break;
+		}
+		
+		if ($text) {
+			$text = htmlspecialchars($text);
+			return sprintf('<span class="account-state %s">%s<span>', $class, $text);
+		}
+		else {
+			return false;
 		}
 	}
 }
