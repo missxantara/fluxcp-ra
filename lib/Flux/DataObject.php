@@ -7,7 +7,7 @@ class Flux_DataObject {
 	 * Storage object.
 	 *
 	 * @access protected
-	 * @var StdClass
+	 * @var array
 	 */
 	protected $_data = array();
 	
