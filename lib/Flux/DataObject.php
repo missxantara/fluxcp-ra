@@ -9,7 +9,7 @@ class Flux_DataObject {
 	 * @access protected
 	 * @var StdClass
 	 */
-	protected $object;
+	protected $_data = array();
 	
 	/**
 	 * Create new DataObject.
@@ -18,31 +18,29 @@ class Flux_DataObject {
 	 * @param array $default Default values
 	 * @access public
 	 */ 
-	public function __construct(StdClass $object = null, $defaults = array())
+	public function __construct(array $data = null, $defaults = array())
 	{
-		if (is_null($object)) {
-			$object = new StdClass();
+		if (!is_null($data)) {
+			$this->_data = $data;
 		}
-
-		$this->object = $object;
 		
 		foreach ($defaults as $prop => $value) {
-			if (!isset($object->{$prop})) {
-				$object->{$prop} = $value;
+			if (!isset($this->_data[$prop])) {
+				$this->_data[$prop] = $value;
 			}
 		}
 	}
 	
 	public function __set($prop, $value)
 	{
-		$this->object->{$prop} = $value;
+		$this->_data[$prop] = $value;
 		return $value;
 	}
 	
 	public function __get($prop)
 	{
-		if (isset($this->object->{$prop})) {
-			return $this->object->{$prop};
+		if (isset($this->_data[$prop])) {
+			return $this->_data[$prop];
 		}
 		else {
 			return null;
