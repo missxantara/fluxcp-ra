@@ -13,8 +13,8 @@
 	</form>
 <?php else: ?>
 	<p class="menu">
-		<a href="?logout=1" onclick="return confirm('Are you sure you want to log out?')">Logout</a> |
-		<a href="?update_all=1" onclick="return confirm('By performing this action, changes to your database will be made.\n\nAre you sure you want to continue installing Flux and its associated updates?')"><strong>Install or Update Everything</strong></a>
+		<a href="<?php echo $this->url($params->get('module'), null, array('logout' => 1)) ?>" onclick="return confirm('Are you sure you want to log out?')">Logout</a> |
+		<a href="<?php echo $this->url($params->get('module'), null, array('update_all' => 1)) ?>" onclick="return confirm('By performing this action, changes to your database will be made.\n\nAre you sure you want to continue installing Flux and its associated updates?')"><strong>Install or Update Everything</strong></a>
 	</p>
 	<p>Shown below is a list of currently installed / need-to-be-installed schemas.</p>
 	<table class="schema-info">
