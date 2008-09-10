@@ -24,6 +24,13 @@ require_once 'Flux/Installer.php';
 require_once 'Flux/PermissionError.php';
 
 try {
+	// Initialize Flux.
+	Flux::initialize(array(
+		'appConfigFile'      => FLUX_CONFIG_DIR.'/application.php',
+		'serversConfigFile'  => FLUX_CONFIG_DIR.'/servers.php',
+		'messagesConfigFile' => FLUX_CONFIG_DIR.'/messages.php'
+	));
+	
 	// Create some basic directories.
 	$directories = array(
 		FLUX_DATA_DIR.'/logs/schemas',
@@ -31,29 +38,22 @@ try {
 		FLUX_DATA_DIR.'/logs/schemas/charmapdb',
 		FLUX_DATA_DIR.'/logs/transactions'
 	);
-	
+
 	// Schema log directories.
 	foreach (Flux::$loginAthenaGroupRegistry as $serverName => $loginAthenaGroup) {
 		$directories[] = FLUX_DATA_DIR."/logs/schemas/logindb/$serverName";
 		$directories[] = FLUX_DATA_DIR."/logs/schemas/charmapdb/$serverName";
-		
+	
 		foreach ($loginAthenaGroup->athenaServers as $athenaServer) {
 			$directories[] = FLUX_DATA_DIR."/logs/schemas/charmapdb/$serverName/{$athenaServer->serverName}";
 		}
 	}
-	
+
 	foreach ($directories as $directory) {
 		if (!is_dir($directory)) {
 			mkdir($directory, 0755);
 		}
 	}
-	
-	// Initialize Flux.
-	Flux::initialize(array(
-		'appConfigFile'      => FLUX_CONFIG_DIR.'/application.php',
-		'serversConfigFile'  => FLUX_CONFIG_DIR.'/servers.php',
-		'messagesConfigFile' => FLUX_CONFIG_DIR.'/messages.php'
-	));
 	
 	// Installer library.
 	$installer = Flux_Installer::getInstance();
