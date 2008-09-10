@@ -98,10 +98,11 @@ return array(
 	
 	// Job classes, loaded from another file to avoid cluttering this one.
 	// There isn't normally a need to modify this file, unless it's been
-	// modified in an update.
-	'JobClasses' => include('jobs.php'),
+	// modified in an update. (In English: DON'T TOUCH THIS.)
+	'JobClasses'    => include('jobs.php'),
+	'JobClassIndex' => array_flip(include('jobs.php')),
 	
-	// -- Leave alone --
+	// DON'T TOUCH. THIS IS FOR DEVELOPERS.
 	'FluxTables' => array(
 		'CreditsTable'     => 'cp_credits',
 		'ItemShopTable'    => 'cp_itemshop',

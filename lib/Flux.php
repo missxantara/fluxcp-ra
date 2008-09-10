@@ -423,5 +423,43 @@ class Flux {
 			return false;
 		}
 	}
+	
+	/**
+	 * Get the job class name from a job ID.
+	 *
+	 * @param int $id
+	 * @return mixed Job class or false.
+	 * @access public
+	 */
+	public static function getJobClass($id)
+	{
+		$key   = "JobClasses.$id";
+		$class = self::config($key);
+		
+		if ($class) {
+			return $class;
+		}
+		else {
+			return false;
+		}
+	}
+	
+	/**
+	 * Get the job ID from a job class name.
+	 *
+	 * @param string $class
+	 * @return mixed Job ID or false.
+	 * @access public
+	 */
+	public static function getJobID($class)
+	{
+		$index = self::config('JobClassIndex')->toArray();
+		if (array_key_exists($class, $index)) {
+			return $index[$class];
+		}
+		else {
+			return false;
+		}
+	}
 }
 ?>

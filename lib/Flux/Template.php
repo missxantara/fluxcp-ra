@@ -706,7 +706,11 @@ class Flux_Template {
 	}
 	
 	/**
+	 * Get the account state name corresponding to the state number.
 	 *
+	 * @param int $state
+	 * @return mixed State name or false.
+	 * @access public
 	 */
 	public function accountStateText($state)
 	{
@@ -731,6 +735,18 @@ class Flux_Template {
 		else {
 			return false;
 		}
+	}
+	
+	/**
+	 * Get the job class name from a job ID.
+	 *
+	 * @param int $id
+	 * @return mixed Job class or false.
+	 * @access public
+	 */
+	public function jobClassText($id)
+	{
+		return Flux::getJobClass($id);
 	}
 }
 ?>
