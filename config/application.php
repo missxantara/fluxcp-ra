@@ -105,7 +105,7 @@ return array(
 	// DON'T TOUCH. THIS IS FOR DEVELOPERS.
 	'FluxTables' => array(
 		'CreditsTable'        => 'cp_credits',
-		'CreditTransferTable' => 'cp_xferlog'
+		'CreditTransferTable' => 'cp_xferlog',
 		'ItemShopTable'       => 'cp_itemshop',
 		'TransactionTable'    => 'cp_txnlog',
 		'RedemptionTable'     => 'cp_redeemlog'
