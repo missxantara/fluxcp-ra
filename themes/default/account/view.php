@@ -57,7 +57,7 @@
 	<tr>
 		<th>Last Login Date</th>
 		<td colspan="3">
-			<?php if (!$account->last_ip || $account->lastlogin == '0000-00-00 00:00:00'): ?>
+			<?php if (!$account->lastlogin || $account->lastlogin == '0000-00-00 00:00:00'): ?>
 				<span class="not-applicable">Never</span>
 			<?php else: ?>
 				<?php echo $this->formatDateTime($account->lastlogin) ?>
