@@ -10,7 +10,13 @@
 	</tr>
 	<tr>
 		<th>E-mail</th>
-		<td><?php echo $account->email ?></td>
+		<td>
+			<?php if ($account->email): ?>
+				<?php echo htmlspecialchars($account->email) ?>
+			<?php else: ?>
+				<span class="not-applicable">None</span>
+			<?php endif ?>
+		</td>
 		<th>Account Level</th>
 		<td><?php echo (int)$account->level ?></td>
 	</tr>
