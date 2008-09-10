@@ -254,6 +254,15 @@ input[type=text]:hover, input[type=password]:hover, textarea:hover {
 	color: red;
 }
 
+.raw-txn-log {
+	padding: 10px;
+	font-family: "Monaco", "Lucida Console", "Courier New", monospace;
+	background-color: #fff;
+	border: 1px solid #ddd;
+	width: 96%;
+	overflow: scroll;
+}
+
 #submenu {
 	color: #bbb;
 }
