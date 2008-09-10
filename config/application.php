@@ -53,7 +53,7 @@ return array(
 		'Server Status' => array('module' => 'server', 'action' => 'status'),
 		'Log Data'      => array('module' => 'logdata'),
 		//'IP Ban List'   => array('module' => 'ipban'),
-		//'Accounts'      => array('module' => 'account'),
+		'Accounts'      => array('module' => 'account'),
 		//'Characters'    => array('module' => 'character'),
 		//'Guilds'        => array('module' => 'guild'),
 		//'Castles'       => array('module' => 'castle'),
