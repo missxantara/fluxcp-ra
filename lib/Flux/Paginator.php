@@ -77,7 +77,7 @@ class Flux_Paginator {
 	public function __construct($total, array $options = array())
 	{
 		$options = array_merge(
-			array('perPage' => 25, 'pageVariable' => 'p', 'pageSeparator' => '|'),
+			array('perPage' => 20, 'pageVariable' => 'p', 'pageSeparator' => '|'),
 			$options
 		);
 		
