@@ -410,11 +410,11 @@ class Flux_Template {
 		$queryString = '';
 		
 		if (count($params)) {
-			$queryString .= '?';
+			$queryString .= Flux::config('UseCleanUrls') ? '?' : '&';
 			foreach ($params as $param => $value) {
 				$queryString .= sprintf('%s=%s&', $param, urlencode($value));
 			}
-			$queryString = rtrim('&', $queryString);
+			$queryString = rtrim($queryString, '&');
 		}
 		
 		if ($this->useCleanUrls) {
