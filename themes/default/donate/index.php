@@ -2,7 +2,6 @@
 <h2>Donate</h2>
 <?php if (Flux::config('AcceptDonations')): ?>
 	<?php if ($auth->allowedToDonate): ?>
-	<p>So, you've chosen to donate to our server?  That's great!</p>
 	<p>By donating, you're supporting the costs of <em>running</em> this server and <em>maintaining</em> it.  In return, if you are logged in you will be rewarded <span class="keyword">donation credits</span> that you may use to purchase items from our <a href="<?php echo $this->url('purchase') ?>">item shop</a>.</p>
 <h3>Are you ready to donate?</h3>
 	<p>All donations towards us are received by PayPal, but don't worry!  Even if you don't have an account with PayPal, you can still use your credit card to donate!</p>
