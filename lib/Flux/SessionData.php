@@ -242,5 +242,15 @@ class Flux_SessionData {
 			return false;
 		}
 	}
+	
+	/**
+	 *
+	 */
+	public function getMessage()
+	{
+		$message = $this->message;
+		$this->setMessageData(null);
+		return $message;
+	}
 }
 ?>

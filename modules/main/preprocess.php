@@ -28,6 +28,11 @@ foreach ($params->toArray() as $key => $value) {
 	}
 }
 
+$installer = Flux_Installer::getInstance();
+if ($installer->updateNeeded() && $params->get('module') != 'install') {
+	$this->redirect($this->url('install'));
+}
+
 // Update preferred server.
 if (($preferred_server = $params->get('preferred_server')) && $session->getAthenaServer($preferred_server)) {
 	$session->setAthenaServerNameData($params->get('preferred_server'));

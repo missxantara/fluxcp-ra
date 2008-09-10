@@ -85,8 +85,11 @@ return array(
 		'captcha'   => array(
 			'index'    => AccountLevel::ANYONE
 		),
+		'install'   => array(
+			'index'    => AccountLevel::ANYONE
+		),
 		'test'      => array(
-			'*'       => AccountLevel::ANYONE
+			'*'        => AccountLevel::ANYONE
 		)
 	),
 	// General feature permissions, handled by the modules themselves.

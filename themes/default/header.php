@@ -61,5 +61,10 @@
 						<tr>
 							<td bgcolor="#f8f8f8"></td>
 							<td bgcolor="#f8f8f8">
+								<!-- Messages -->
+								<?php if ($message=$session->getMessage()): ?>
+									<p class="message"><?php echo htmlspecialchars($message) ?></p>
+								<?php endif ?>
+								
 								<!-- Sub menu -->
 								<?php include 'main/submenu.php' ?>
