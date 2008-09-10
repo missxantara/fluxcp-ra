@@ -65,6 +65,7 @@ return array(
 		'logdata'   => array(
 			'index'   => AccountLevel::ADMIN,
 			'paypal'  => AccountLevel::ADMIN,
+			'txnview' => AccountLevel::ADMIN,
 			'char'    => AccountLevel::ADMIN,
 			'inter'   => AccountLevel::ADMIN,
 			'command' => AccountLevel::ADMIN,
