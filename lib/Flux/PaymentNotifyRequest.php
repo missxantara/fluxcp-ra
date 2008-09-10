@@ -61,7 +61,7 @@ class Flux_PaymentNotifyRequest {
 	 * @access public
 	 * @var string
 	 */
-	public $txnlogTable;
+	public $txnLogTable;
 	
 	/**
 	 * Account credit balance table.
