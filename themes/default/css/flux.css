@@ -263,6 +263,14 @@ input[type=text]:hover, input[type=password]:hover, textarea:hover {
 	overflow: scroll;
 }
 
+.online {
+	color: #000;
+}
+
+.offline {
+	color: #aaa;
+}
+
 #submenu {
 	color: #bbb;
 }
