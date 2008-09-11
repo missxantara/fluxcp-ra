@@ -125,8 +125,16 @@ class Flux_Dispatcher {
 		// Authorization handling.
 		$auth = Flux_Authorization::getInstance();
 		if (!$auth->actionAllowed($moduleName, $actionName)) {
-			$moduleName = 'unauthorized';
-			$actionName = $this->defaultAction;
+			if (!Flux::$sessionData->isLoggedIn()) {
+				Flux::$sessionData->setMessageData('Please login to continue.');
+				Flux::$sessionData->setReturnLocationData($_SERVER['REQUEST_URI']);
+				$moduleName = 'account';
+				$actionName = 'login';
+			}
+			else {
+				$moduleName = 'unauthorized';
+				$actionName = $this->defaultAction;
+			}
 		}
 		
 		$params->set('module', $moduleName);

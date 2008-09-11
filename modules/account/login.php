@@ -8,7 +8,14 @@ if (count($_POST)) {
 	
 	try {
 		$session->login($server, $username, $password);
-		$this->redirect();
+		$returnLocation = $session->getReturnLocation();
+		
+		if ($returnLocation) {
+			$this->redirect($returnLocation);
+		}
+		else {
+			$this->redirect();
+		}
 	}
 	catch (Flux_LoginError $e) {
 		switch ($e->getCode()) {
