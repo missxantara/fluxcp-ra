@@ -75,29 +75,33 @@
 		</td>
 	</tr>
 </table>
-<h3>Characters on <?php echo htmlspecialchars($server->serverName) ?></h3>
-<?php if ($characters): ?>
-<table class="vertical-table">
-	<tr>
-		<th>Character Name</th>
-		<th>Job Class</th>
-		<th>Base Level</th>
-		<th>Job Level</th>
-		<th>Zeny</th>
-	</tr>
-	<?php foreach ($characters as $char): ?>
-	<tr>
-		<td><?php echo htmlspecialchars($char->name) ?></td>
-		<td><?php echo htmlspecialchars($this->jobClassText($char->class)) ?></td>
-		<td><?php echo (int)$char->base_level ?></td>
-		<td><?php echo (int)$char->job_level ?></td>
-		<td><?php echo number_format((int)$char->zeny) ?></td>
-	</tr>
+<?php foreach ($characters as $serverName => $chars): ?>
+	<?php foreach ($chars as $char): ?>
+		<h3>Characters on <?php echo htmlspecialchars($serverName) ?></h3>
+		<?php if ($characters): ?>
+		<table class="vertical-table">
+			<tr>
+				<th>Character Name</th>
+				<th>Job Class</th>
+				<th>Base Level</th>
+				<th>Job Level</th>
+				<th>Zeny</th>
+			</tr>
+			<?php foreach ($chars as $char): ?>
+			<tr>
+				<td><?php echo htmlspecialchars($char->name) ?></td>
+				<td><?php echo htmlspecialchars($this->jobClassText($char->class)) ?></td>
+				<td><?php echo (int)$char->base_level ?></td>
+				<td><?php echo (int)$char->job_level ?></td>
+				<td><?php echo number_format((int)$char->zeny) ?></td>
+			</tr>
+			<?php endforeach ?>
+		</table>
+		<?php else: ?>
+		<p>This account has no characters on <?php echo htmlspecialchars($serverName) ?>.</p>
+		<?php endif ?>
 	<?php endforeach ?>
-</table>
-<?php else: ?>
-<p>This account has no characters on <?php echo htmlspecialchars($server->serverName) ?>.</p>
-<?php endif ?>
+<?php endforeach ?>
 
 <?php else: ?>
 <p>
