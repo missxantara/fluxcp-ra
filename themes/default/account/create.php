@@ -5,11 +5,14 @@
 <p class="red" style="font-weight: bold"><?php echo htmlspecialchars($errorMessage) ?></p>
 <?php endif ?>
 <form action="<?php echo $this->url ?>" method="post" id="register_form">
+	<?php if (count($serverNames) === 1): ?>
+	<input type="hidden" name="server" value="<?php echo current($serverNames) ?>">
+	<?php endif ?>
 	<table cellspacing="0" cellpadding="0">
 		<tr>
 			<th><label for="register_server">Choose a Server</label></th>
 			<td>
-				<select name="server" id="register_server">
+				<select name="server" id="register_server"<?php if (count($serverNames) === 1) echo ' disabled="disabled"' ?>>
 				<?php foreach ($serverNames as $serverName): ?>
 					<option value="<?php echo htmlspecialchars($serverName) ?>"<?php if ($params->get('server') == $serverName) echo ' selected="selected"' ?>><?php echo htmlspecialchars($serverName) ?></option>
 				<?php endforeach ?>
