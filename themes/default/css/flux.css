@@ -208,6 +208,10 @@ input[type=text], input[type=password], textarea {
 	border-top: 1px solid #ddd;
 }
 
+.pages .page-prev, .pages .page-next {
+	color: #94b4d5;
+}
+
 .pages .page-num {
 	padding: 0 5px;
 }

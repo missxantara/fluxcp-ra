@@ -9,7 +9,9 @@ return array(
 	'AdminMenuLevel'       => AccountLevel::LOWGM,      // The starting level for which module actions are moved into the admin menu for display.
 	'DateFormat'           => 'Y-m-d',                  // Default DATE format to be displayed in pages.
 	'DateTimeFormat'       => 'Y-m-d H:i:s',            // Default DATETIME format to be displayed in pages.
+	'ShowSinglePage'       => true,                     // Whether or not to show the page numbers even if there's only one page.
 	'ResultsPerPage'       => 20,                       // The number of results to display in a paged set, per page.
+	'PagesToShow'          => 10,                       // The number of page numbers to display at once.
 	'MinUsernameLength'    => 4,                        // Minimum username length.
 	'MaxUsernameLength'    => 23,                       // Maximum username length.
 	'MinPasswordLength'    => 4,                        // Minimum password length.

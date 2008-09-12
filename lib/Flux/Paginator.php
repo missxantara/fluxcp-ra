@@ -28,12 +28,28 @@ class Flux_Paginator {
 	public $numberOfPages = 1;
 	
 	/**
+	 * Whether or not to show the page numbers even if there's only one page.
+	 *
+	 * @access public
+	 * @var bool
+	 */
+	public $showSinglePage;
+	
+	/**
 	 * Records per-age.
 	 *
 	 * @access public
 	 * @var int
 	 */
 	public $perPage;
+	
+	/**
+	 * The number of pages to display at once in the HTML pages output.
+	 *
+	 * @access public
+	 * @var int
+	 */
+	public $pagesToShow;
 	
 	/**
 	 * GET variable holding the current page number.
@@ -81,16 +97,30 @@ class Flux_Paginator {
 			$perPage = 20;
 		}
 		
+		$pagesToShow = Flux::config('PagesToShow');
+		if (!$pagesToShow) {
+			$pagesToShow = 10;
+		}
+		
+		$showSinglePage = (bool)Flux::config('ShowSinglePage');
+		
 		$options = array_merge(
-			array('perPage' => $perPage, 'pageVariable' => 'p', 'pageSeparator' => '|'),
+			array(
+				'showSinglePage' => $showSinglePage,
+				'perPage'        => $perPage,
+				'pagesToShow'    => $pagesToShow,
+				'pageVariable'   => 'p',
+				'pageSeparator'  => '|'),
 			$options
 		);
 		
-		$this->total         = (int)$total;
-		$this->perPage       = $options['perPage'];
-		$this->pageVariable  = $options['pageVariable'];
-		$this->pageSeparator = $options['pageSeparator'];
-		$this->currentPage   = isset($_GET[$this->pageVariable]) ? $_GET[$this->pageVariable] : 1;
+		$this->total          = (int)$total;
+		$this->showSinglePage = $options['showSinglePage'];
+		$this->perPage        = $options['perPage'];
+		$this->pagesToShow    = $options['pagesToShow'];
+		$this->pageVariable   = $options['pageVariable'];
+		$this->pageSeparator  = $options['pageSeparator'];
+		$this->currentPage    = isset($_GET[$this->pageVariable]) ? $_GET[$this->pageVariable] : 1;
 		
 		$this->calculatePages();
 	}
@@ -171,20 +201,22 @@ class Flux_Paginator {
 		}
 		
 		$pages = array();
+		$show  = $this->pagesToShow;
+		$start = (floor(($this->currentPage - 1) / $this->pagesToShow) * $this->pagesToShow) + 1;
+		$end   = $start + $this->pagesToShow + 1;
 		
-		for ($i = 1; $i < $this->numberOfPages+1; ++$i) {
-			$request = $_SERVER['REQUEST_URI'];
-			$pageVar = preg_quote($this->pageVariable);
-			
-			if (preg_match("/$pageVar=(\w*)/", $request)) {
-				$request = preg_replace("/$pageVar=(\w*)/", "{$this->pageVariable}={$i}", $request);
-			}
-			elseif (empty($_SERVER['QUERY_STRING'])) {
-				$request = "$request?{$this->pageVariable}=$i";
-			}
-			else {
-				$request = "$request&{$this->pageVariable}=$i";
-			}
+		if ($end > $this->numberOfPages) {
+			$end = $this->numberOfPages + 1;
+		}
+		else {
+			$end = $end - 1;
+		}
+		
+		$hasPrev = $start > 1;
+		$hasNext = $end < $this->numberOfPages;
+		
+		for ($i = $start; $i < $end; ++$i) {
+			$request = $this->getPageURI($i);
 			
 			if ($i == $this->currentPage) {
 				$pages[] = sprintf(
@@ -200,8 +232,48 @@ class Flux_Paginator {
 			}
 		}
 		
+		if ($hasPrev) {
+			array_unshift($pages, sprintf('<a href="%s" title="Previous Page (#%d)" class="page-prev">&laquo; Prev.</a> ', $this->getPageURI($start - 1), $start - 1));
+		}
+		
+		if ($hasNext) {
+			array_push($pages, sprintf(' <a href="%s" title="Next Page (#%d)" class="page-next">Next &raquo;</a>', $this->getPageURI($end), $end));
+		}
+		
 		$links = sprintf('<div class="pages">%s</div>', implode(" {$this->pageSeparator} ", $pages));
-		return $links;
+		
+		if (!$this->showSinglePage && $this->numberOfPages === 1) {
+			return null;
+		}
+		else {
+			return $links;
+		}
+	}
+	
+	/**
+	 * Create a link to the current request with a different page number.
+	 *
+	 * @param int $pageNumber
+	 * @return string
+	 * @access protected
+	 */
+	protected function getPageURI($pageNumber)
+	{
+		$request = $_SERVER['REQUEST_URI'];
+		$pageVar = preg_quote($this->pageVariable);
+		$pageNum = (int)$pageNumber;
+		
+		if (preg_match("/$pageVar=(\w*)/", $request)) {
+			$request = preg_replace("/$pageVar=(\w*)/", "{$this->pageVariable}={$pageNum}", $request);
+		}
+		elseif (empty($_SERVER['QUERY_STRING'])) {
+			$request = "$request?{$this->pageVariable}=$pageNum";
+		}
+		else {
+			$request = "$request&{$this->pageVariable}=$pageNum";
+		}
+		
+		return $request;
 	}
 	
 	/**
