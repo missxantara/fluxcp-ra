@@ -2,6 +2,7 @@
 <h2>Accounts</h2>
 
 <?php if ($accounts): ?>
+<?php echo $paginator->infoText() ?>
 <table class="horizontal-table">
 	<tr>
 		<th><?php echo $paginator->sortableColumn('account_id', 'Account ID') ?></th>

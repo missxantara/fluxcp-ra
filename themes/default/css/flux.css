@@ -312,6 +312,10 @@ input[type=text], input[type=password], textarea {
 	color: #aaa;
 }
 
+.info-text-total {
+	font-weight: bold;
+}
+
 #logo {
 	display: block;
 }

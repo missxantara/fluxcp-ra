@@ -375,5 +375,20 @@ class Flux_Paginator {
 			}
 		}
 	}
+	
+	/**
+	 *
+	 */
+	public function infoText()
+	{
+		if ($this->total === 1) {
+			$text = 'Retrieved <span class="info-text-total">one</span> record.';
+		}
+		else {
+			$text = "Retrieved a total of <span class=\"info-text-total\">{$this->total}</span> records.";
+		}
+		
+		return sprintf('<p class="info-text">%s</p>', $text);
+	}
 }
 ?>

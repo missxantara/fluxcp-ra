@@ -1,6 +1,7 @@
 <?php if (!defined('FLUX_ROOT')) exit; ?>
 <h2>Transactions</h2>
 <?php if ($transactions): ?>
+<?php echo $paginator->infoText() ?>
 <table class="horizontal-table">
 	<tr>
 		<th><?php echo $paginator->sortableColumn('txn_id', 'Transaction ID') ?></th>
