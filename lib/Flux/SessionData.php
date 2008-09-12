@@ -210,7 +210,9 @@ class Flux_SessionData {
 			$this->initialize(false);
 		}
 		else {
-			throw new Flux_LoginError('Unexpected error during login.', Flux_LoginError::UNEXPECTED);
+			$message  = "Unexpected error during login.\n";
+			$message .= 'PDO error info, if any: '.print_r($smt->errorInfo(), true);
+			throw new Flux_LoginError($message, Flux_LoginError::UNEXPECTED);
 		}
 		
 		return true;

@@ -53,7 +53,7 @@
 		
 		<h2 class="heading">Exception Details</h2>
 		<p>Error: <strong><?php echo get_class($e) ?></strong></p>
-		<p>Message: <em><?php echo htmlspecialchars($e->getMessage()) ?></em></p>
+		<p>Message: <em><?php echo nl2br(htmlspecialchars($e->getMessage())) ?></em></p>
 		<p>File: <?php echo $e->getFile() ?>:<?php echo $e->getLine() ?></p>
 		
 		<?php if (count($e->getTrace())): ?>
