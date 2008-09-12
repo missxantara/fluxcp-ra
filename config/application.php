@@ -73,7 +73,7 @@ return array(
 	'SubMenuItems' => array(
 		'account' => array(
 			'index' => 'List Accounts',
-			'view'  => 'My Account'
+			'view'  => 'View Account'
 		),
 		'server' => array(
 			'status'     => 'View Status',
