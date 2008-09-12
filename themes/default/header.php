@@ -60,7 +60,7 @@
 				<td bgcolor="#8ebceb" width="20"></td>
 				<td bgcolor="#8ebceb" colspan="3">
 					<a href="<?php echo $this->basePath ?>">
-						<img src="<?php echo $this->themePath('img/logo.gif') ?>"
+						<img src="<?php echo $this->themePath($session->account->level >= Flux::config('AdminMenuLevel') ? 'img/logo_admin.gif' : 'img/logo.gif') ?>"
 							title="<?php echo htmlspecialchars(Flux::config('SiteTitle')) ?>" id="logo" />
 					</a>
 				</td>
