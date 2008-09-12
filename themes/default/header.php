@@ -37,9 +37,11 @@
 				$('.menuitem a').hover(
 					function(){
 						$(this).fadeTo(200, 0.85);
+						$(this).css('cursor', 'pointer');
 					},
 					function(){
 						$(this).fadeTo(150, 1.00);
+						$(this).css('cursor', 'normal');
 					}
 				);
 				if ($.browser.mozilla || $.browser.msie) {
