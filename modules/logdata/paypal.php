@@ -11,9 +11,11 @@ $sth->execute(array($session->loginAthenaGroup->serverName));
 $paginator = $this->getPaginator($sth->fetch()->total);
 $paginator->setSortableColumns(
 	array(
-		'process_date' => 'DESC',
 		'txn_id',
+		'process_date' => 'DESC',
+		'payment_date',
 		'payment_status',
+		'payer_email',
 		'payer_email',
 		'mc_gross',
 		'credits',
