@@ -28,7 +28,7 @@
 		<td><?php echo $txn->payment_status ?></td>
 		<td><?php echo htmlspecialchars($txn->payer_email) ?></td>
 		<td><?php echo $txn->mc_gross ?> <?php echo $txn->mc_currency ?></td>
-		<td><?php echo $txn->credits ?></td>
+		<td><?php echo number_format((int)$txn->credits) ?></td>
 		<td><?php echo $txn->server_name ?></td>
 		<td><?php echo $this->linkToAccount($txn->account_id, $txn->userid) ?></td>
 	</tr>

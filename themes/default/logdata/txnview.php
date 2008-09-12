@@ -19,7 +19,7 @@
 			<?php endif ?>
 		</td>
 		<th>Credits Earned</th>
-		<td><?php echo (int)$txn->credits ?></td>
+		<td><?php echo number_format((int)$txn->credits) ?></td>
 	</tr>
 	<tr>
 		<th>Amount</th>

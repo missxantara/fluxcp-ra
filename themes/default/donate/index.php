@@ -11,7 +11,7 @@
 	<?php elseif ($session->isLoggedIn()): ?>
 	<p class="red">You do not meet the account level requirements to make a donation.</p>
 	<?php else: ?>
-	<p>We're sorry, we do not accept donations from unregistered users.  Try <a href="<?php echo $this->url('account', 'login') ?>">logging in</a>.</p>
+	<p>We're sorry, we do not accept donations from unregistered users.  Try <a href="<?php echo $this->url('account', 'login', array('return_url' => $this->url)) ?>">logging in</a>.</p>
 	<?php endif ?>
 <?php else: ?>
 	<p><?php echo Flux::message('NotAcceptingDonations') ?></p>

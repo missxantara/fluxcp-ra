@@ -62,7 +62,7 @@
 				<span class="not-applicable">None</span>
 			<?php endif ?>
 		</td>
-		<td><?php echo (int)$account->logincount ?></td>
+		<td><?php echo number_format((int)$account->logincount) ?></td>
 		<td>
 			<?php if (!$account->lastlogin || $account->lastlogin == '0000-00-00 00:00:00'): ?>
 				<span class="not-applicable">Never</span>
