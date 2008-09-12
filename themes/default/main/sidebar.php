@@ -1,6 +1,7 @@
 <?php
 if (!defined('FLUX_ROOT')) exit;
 $adminMenuItems = $this->getAdminMenuItems();
+$menuItems = $this->getMenuItems();
 ?>
 
 <?php if (!empty($adminMenuItems)): ?>
@@ -25,11 +26,12 @@ $adminMenuItems = $this->getAdminMenuItems();
 </table>
 <?php endif ?>
 
+<?php if (!empty($menuItems)): ?>
 <table id="sidebar">
 	<tr>
 		<td><img src="<?php echo $this->themePath('img/sidebar_complete_top.gif') ?>" /></td>
 	</tr>
-	<?php foreach ($this->getMenuItems() as $menuItem): ?>
+	<?php foreach ($menuItems as $menuItem): ?>
 	<tr>
 		<td class="menuitem">
 			<a href="<?php echo $this->url($menuItem['module'], $menuItem['action']) ?>"<?php
@@ -44,3 +46,4 @@ $adminMenuItems = $this->getAdminMenuItems();
 		<td><img src="<?php echo $this->themePath('img/sidebar_complete_bottom.gif') ?>" /></td>
 	</tr>
 </table>
+<?php endif ?>
