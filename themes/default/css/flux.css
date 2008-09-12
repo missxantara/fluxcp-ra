@@ -245,6 +245,7 @@ input[type=text], input[type=password], textarea {
 }
 
 .horizontal-table th, .horizontal-table td {
+	font-size: 9pt;
 	border: 1px solid #ddd;
 }
 
@@ -269,6 +270,7 @@ input[type=text], input[type=password], textarea {
 }
 
 .vertical-table th, .vertical-table td {
+	font-size: 9pt;
 	border: 1px solid #ddd;
 }
 

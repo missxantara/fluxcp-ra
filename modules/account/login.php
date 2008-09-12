@@ -8,10 +8,10 @@ if (count($_POST)) {
 	
 	try {
 		$session->login($server, $username, $password);
-		$returnLocation = $session->getReturnLocation();
+		$returnURL = $params->get('return_url');
 		
-		if ($returnLocation) {
-			$this->redirect($returnLocation);
+		if ($returnURL) {
+			$this->redirect($returnURL);
 		}
 		else {
 			$this->redirect();

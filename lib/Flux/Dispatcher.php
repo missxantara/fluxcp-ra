@@ -127,7 +127,8 @@ class Flux_Dispatcher {
 		if (!$auth->actionAllowed($moduleName, $actionName)) {
 			if (!Flux::$sessionData->isLoggedIn()) {
 				Flux::$sessionData->setMessageData('Please login to continue.');
-				Flux::$sessionData->setReturnLocationData($_SERVER['REQUEST_URI']);
+				//Flux::$sessionData->setReturnLocationData($_SERVER['REQUEST_URI']);
+				$params->set('return_url', $_SERVER['REQUEST_URI']);
 				$moduleName = 'account';
 				$actionName = 'login';
 			}

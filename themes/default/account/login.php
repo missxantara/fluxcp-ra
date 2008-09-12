@@ -5,7 +5,7 @@
 <?php else: ?>
 <p>If you don't have an account, you may go to the <a href="<?php echo $this->url('account', 'create') ?>">registration page</a> to create one.</p>
 <?php endif ?>
-<form action="<?php echo $this->url ?>" method="post" id="login_form">
+<form action="<?php echo $this->url('account', 'login', array('return_url' => $params->get('return_url'))) ?>" method="post" id="login_form">
 	<?php if (count($serverNames) === 1): ?>
 	<input type="hidden" name="server" value="<?php echo current($serverNames) ?>">
 	<?php endif ?>

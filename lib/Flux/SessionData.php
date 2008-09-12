@@ -294,18 +294,5 @@ class Flux_SessionData {
 		$this->setMessageData(null);
 		return $message;
 	}
-	
-	/**
-	 * Get return location URL (processed in login).
-	 *
-	 * @return string
-	 * @access public
-	 */
-	public function getReturnLocation()
-	{
-		$location = $this->returnLocation;
-		$this->setReturnLocationData(null);
-		return $location;
-	}
 }
 ?>
