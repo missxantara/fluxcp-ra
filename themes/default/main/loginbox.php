@@ -2,9 +2,9 @@
 <?php if ($session->isLoggedIn()): ?>
 <table cellspacing="0" cellpadding="0" width="100%" id="loginbox">
 	<tr>
-		<td width="18"><img src="<?php echo $this->themePath('img/loginbox_tl.gif') ?>" /></td>
+		<td width="18"><img src="<?php echo $this->themePath('img/loginbox_tl.gif') ?>" style="display: block" /></td>
 		<td bgcolor="#e1eaf3"></td>
-		<td width="18"><img src="<?php echo $this->themePath('img/loginbox_tr.gif') ?>" /></td>
+		<td width="18"><img src="<?php echo $this->themePath('img/loginbox_tr.gif') ?>" style="display: block" /></td>
 	</tr>
 	<tr>
 		<td bgcolor="#e1eaf3"></td>
@@ -25,9 +25,9 @@
 		<td bgcolor="#e1eaf3"></td>
 	</tr>
 	<tr>
-		<td><img src="<?php echo $this->themePath('img/loginbox_bl.gif') ?>" /></td>
+		<td><img src="<?php echo $this->themePath('img/loginbox_bl.gif') ?>" style="display: block" /></td>
 		<td bgcolor="#e1eaf3"></td>
-		<td><img src="<?php echo $this->themePath('img/loginbox_br.gif') ?>" /></td>
+		<td><img src="<?php echo $this->themePath('img/loginbox_br.gif') ?>" style="display: block" /></td>
 	</tr>
 </table>
 <?php endif ?>

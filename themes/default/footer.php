@@ -4,9 +4,9 @@
 						</tr>
 
 						<tr>
-							<td><img src="<?php echo $this->themePath('img/content_bl.gif') ?>" alt="[CONTENT_BOTTOM_LEFT]" /></td>
+							<td><img src="<?php echo $this->themePath('img/content_bl.gif') ?>" style="display: block" /></td>
 							<td bgcolor="#f8f8f8"></td>
-							<td><img src="<?php echo $this->themePath('img/content_br.gif') ?>" alt="[CONTENT_BOTTOM_RIGHT]" /></td>
+							<td><img src="<?php echo $this->themePath('img/content_br.gif') ?>" style="display: block" /></td>
 						</tr>
 					</table>
 				</td>
