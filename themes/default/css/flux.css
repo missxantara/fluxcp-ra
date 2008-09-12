@@ -13,9 +13,7 @@ body {
 
 table {
 	font-family: "Lucida Grande", "Lucida Sans", Verdana, Tahoma, sans-serif;
-	font-size: 10pt;
-	border-spacing: 0;
-	border-collapse: collapse;
+	font-size: 9pt;
 }
 
 tr, td, th {
@@ -36,18 +34,18 @@ a {
 }
 
 input[type=text], input[type=password], textarea {
-	padding: 2px;
-	font-size: 12pt;
+	padding: 4px;
+	font-size: 10pt;
 	color: #444;
-	border: 1px solid #aaa;
+	border: 1px solid #ddd;
 	outline-width: 0;
 }
 
-input[type=text]:hover, input[type=password]:hover, textarea:hover {
+/*input[type=text]:hover, input[type=password]:hover, textarea:hover {
 	color: #46a;
 	background-color: #dee;
 	border: 1px solid #8ac;
-}
+}*/
 
 .message {
 	padding: 10px;
@@ -61,31 +59,70 @@ input[type=text]:hover, input[type=password]:hover, textarea:hover {
 	text-align: center;
 }
 
-.menuitem {
-	/*font-weight: bold;*/
-	color: #7ea1c4;
-	background-color: #d7e8f9;
-	text-align: center;
-	text-shadow: #fff 1pt 1pt;
+#admin_sidebar, #sidebar {
+	margin-bottom: 10px;
+	border-collapse: collapse;
+	border-spacing: 0;
 }
 
-.menuitem:hover {
-	color: #fff;
-	background-color: #c4dbf2;
-	text-shadow: #aaa 1pt 1pt;
-	cursor: pointer;
-}
-
-.menuitem a {
+#admin_sidebar img, #sidebar img {
 	display: block;
-	padding: 10px 5px;
-	color: #7ea1c4;
-	text-decoration: none;
-	width: 161px;
 }
 
-.menuitem a:hover {
+#admin_sidebar td, #sidebar td {
+	padding: 0;
+}
+
+#admin_sidebar td.menuitem {
+	display: block;
+	border-width: 0 13px 0 11px;
+	border-style: solid;
+	border-color: #8b8b8b;
+}
+
+#admin_sidebar td.menuitem a {
+	margin: 0 auto;
+	display: block;
+	padding: 8px 5px;
 	color: #fff;
+	background-color: #303030;
+	text-align: center;
+	text-shadow: #000 1pt 1pt;
+	text-decoration: none;
+}
+
+#admin_sidebar td.menuitem a:hover {
+	color: #fff;
+	background-color: #4a5259;
+	text-shadow: #4a5259 1pt 1pt;
+}
+
+#sidebar td.sidebar-left, #sidebar td.sidebar-right {
+	background-color: #e6f0fa;
+}
+
+#sidebar td.menuitem {
+	display: block;
+	border-width: 0 13px 0 11px;
+	border-style: solid;
+	border-color: #c4d9ee;
+}
+
+#sidebar td.menuitem a {
+	margin: 0 auto;
+	display: block;
+	padding: 8px 5px;
+	color: #fff;
+	background-color: #94b4d5;
+	text-align: center;
+	text-shadow: #708fae 1pt 1pt;
+	text-decoration: none;
+}
+
+#sidebar td.menuitem a:hover {
+	color: #fff;
+	background-color: #708fae;
+	text-shadow: #708fae 1pt 1pt;
 }
 
 .request {
@@ -275,10 +312,6 @@ input[type=text]:hover, input[type=password]:hover, textarea:hover {
 	color: #bbb;
 }
 
-#sidebar img {
-	display: block;
-}
-
 #loginbox {
 	margin-bottom: 10px;
 	color: #555;
@@ -311,6 +344,11 @@ input[type=text]:hover, input[type=password]:hover, textarea:hover {
 	padding: 5px 8px 5px 8px;
 	text-align: left;
 	border-bottom: 1px solid #ddd;	
+}
+
+#server_status {
+	border-spacing: 0;
+	border-collapse: collapse;
 }
 
 #server_status th {

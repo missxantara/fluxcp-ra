@@ -15,8 +15,35 @@
 		<!--[if lt IE 7]>
 		<script src="<?php echo $this->themePath('js/ie7.js') ?>" type="text/javascript"></script>
 		<![endif]-->
-		<?php if ($session->isLoggedIn()): ?>
 		<script type="text/javascript" src="<?php echo $this->themePath('js/jquery-1.2.6.min.js') ?>"></script>
+		<script type="text/javascript">
+			$(document).ready(function(){
+				var inputs = 'input[type=text],input[type=password]';
+				$(inputs).focus(function(){
+					$(this).css({
+						'background-color': '#f9f5e7',
+						'border-color': '#dcd7c7',
+						'color': '#726c58'
+					});
+				});
+				$(inputs).blur(function(){
+					$(this).css({
+						'backgroundColor': '#ffffff',
+						'borderColor': '#dddddd',
+						'color': '#444444'
+					}, 500);
+				});
+				$('.menuitem a').hover(
+					function(){
+						$(this).fadeTo(200, 0.85);
+					},
+					function(){
+						$(this).fadeTo(150, 1.00);
+					}
+				);
+			});
+		</script>
+		<?php if ($session->isLoggedIn()): ?>
 		<script type="text/javascript">
 			function updatePreferredServer(sel){
 				var preferred = sel.options[sel.selectedIndex].value;
@@ -31,7 +58,7 @@
 			<tr>
 				<!-- Header -->
 				<td bgcolor="#8ebceb" width="20"></td>
-				<td bgcolor="#8ebceb" colspan="3"><a href="<?php echo $this->basePath ?>"><img src="<?php echo $this->themePath('img/logo.gif') ?>" alt="[LOGO]" title="Flux Control Panel" /></a></td>
+				<td bgcolor="#8ebceb" colspan="3"><a href="<?php echo $this->basePath ?>"><img src="<?php echo $this->themePath('img/logo.gif') ?>" title="<?php echo htmlspecialchars(Flux::config('SiteTitle')) ?>" /></a></td>
 				<td bgcolor="#8ebceb" width="20"></td>
 			</tr>
 			<tr>
@@ -53,9 +80,9 @@
 					<!-- Content -->
 					<table cellspacing="0" cellpadding="0" width="100%" id="content">
 						<tr>
-							<td width="18"><img src="<?php echo $this->themePath('img/content_tl.gif') ?>" alt="[CONTENT_TOP_LEFT]" /></td>
+							<td width="18"><img src="<?php echo $this->themePath('img/content_tl.gif') ?>" /></td>
 							<td bgcolor="#f8f8f8"></td>
-							<td width="18"><img src="<?php echo $this->themePath('img/content_tr.gif') ?>" alt="[CONTENT_TOP_RIGHT]" /></td>
+							<td width="18"><img src="<?php echo $this->themePath('img/content_tr.gif') ?>" /></td>
 						</tr>
 						
 						<tr>

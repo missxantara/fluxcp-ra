@@ -3,9 +3,10 @@
 // the default, and should be changed as needed.
 return array(
 	'BaseURI'              => '/~kuja/flux',            // The base URI is the base web root on which your application lies.
-	'InstallerPassword'    => 'secretpassword',         //
+	'InstallerPassword'    => 'secretpassword',         // Installer/updater password.
 	'SiteTitle'            => 'Flux Control Panel',     // This value is only used if the theme decides to use it.
 	'ThemeName'            => 'default',                // The theme name of the theme you would like to use.  Themes are in FLUX_ROOT/themes.
+	'AdminMenuLevel'       => AccountLevel::LOWGM,      // 
 	'DateFormat'           => 'Y-m-d',                  // Default DATE format to be displayed in pages.
 	'DateTimeFormat'       => 'Y-m-d H:i:s',            // Default DATETIME format to be displayed in pages.
 	'MinUsernameLength'    => 4,                        // Minimum username length.

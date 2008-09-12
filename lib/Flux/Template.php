@@ -291,12 +291,14 @@ class Flux_Template {
 	 *
 	 * @return array
 	 */
-	public function getMenuItems()
+	public function getMenuItems($adminMenus = false)
 	{
-		$auth          = Flux_Authorization::getInstance();
-		$defaultAction = Flux_Dispatcher::getInstance()->defaultAction;
-		$menuItems     = Flux::config('MenuItems');
-		$allowedItems  = array();
+		$auth           = Flux_Authorization::getInstance();
+		$accountLevel   = Flux::$sessionData->account->level;
+		$adminMenuLevel = Flux::config('AdminMenuLevel');
+		$defaultAction  = Flux_Dispatcher::getInstance()->defaultAction;
+		$menuItems      = Flux::config('MenuItems');
+		$allowedItems   = array();
 		
 		if (!($menuItems instanceOf Flux_Config)) {
 			return array();
@@ -306,12 +308,27 @@ class Flux_Template {
 			$module = array_key_exists('module', $menuItem) ? $menuItem['module'] : false;
 			$action = array_key_exists('action', $menuItem) ? $menuItem['action'] : $defaultAction;
 			
-			if ($auth->actionAllowed($module, $action)) {
+			if ($adminMenus) {
+				$cond = $auth->config("modules.$module.$action") >= $adminMenuLevel;
+			}
+			else {
+				$cond = $auth->config("modules.$module.$action") < $adminMenuLevel;
+			}
+			
+			if ($auth->actionAllowed($module, $action) && $cond) {
 				$allowedItems[] = array('name' => $menuName, 'module' => $module, 'action' => $action);
 			}
 		}
 		
 		return $allowedItems;
+	}
+	
+	/**
+	 * @see Flux_Template::getMenuItems()
+	 */
+	public function getAdminMenuItems()
+	{
+		return $this->getMenuItems(true);
 	}
 	
 	/**

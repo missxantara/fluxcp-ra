@@ -134,5 +134,23 @@ class Flux_Authorization {
 			}
 		}
 	}
+	
+	/**
+	 * Wrapper method for setting and getting values from the access config.
+	 *
+	 * @param string $key
+	 * @param mixed $value
+	 * @param arary $options
+	 * @access public
+	 */
+	public function config($key, $value = null, $options = array())
+	{
+		if (!is_null($value)) {
+			return $this->config->set($key, $value, $options);
+		}
+		else {
+			return $this->config->get($key);
+		}
+	}
 }
 ?>
