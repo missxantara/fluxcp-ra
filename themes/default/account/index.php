@@ -12,7 +12,10 @@
 		<th><?php echo $paginator->sortableColumn('level', 'Account Level') ?></th>
 		<th><?php echo $paginator->sortableColumn('state', 'Account State') ?></th>
 		<th><?php echo $paginator->sortableColumn('balance', 'Credit Balance') ?></th>
+		<th><?php echo $paginator->sortableColumn('email', 'E-mail') ?></th>
+		<th><?php echo $paginator->sortableColumn('logincount', 'Login Count') ?></th>
 		<th><?php echo $paginator->sortableColumn('lastlogin', 'Last Login Date') ?></th>
+		<th><?php echo $paginator->sortableColumn('last_ip', 'Last Used IP') ?></th>
 	</tr>
 	<?php foreach ($accounts as $account): ?>
 	<tr>
@@ -53,10 +56,25 @@
 		</td>
 		<td><?php echo number_format((int)$account->balance) ?></td>
 		<td>
+			<?php if ($account->email): ?>
+				<?php echo htmlspecialchars($account->email) ?>
+			<?php else: ?>
+				<span class="not-applicable">None</span>
+			<?php endif ?>
+		</td>
+		<td><?php echo (int)$account->logincount ?></td>
+		<td>
 			<?php if (!$account->lastlogin || $account->lastlogin == '0000-00-00 00:00:00'): ?>
 				<span class="not-applicable">Never</span>
 			<?php else: ?>
 				<?php echo $this->formatDateTime($account->lastlogin) ?>
+			<?php endif ?>
+		</td>
+		<td>
+			<?php if ($account->last_ip): ?>
+				<?php echo htmlspecialchars($account->last_ip) ?>
+			<?php else: ?>
+				<span class="not-applicable">None</span>
 			<?php endif ?>
 		</td>
 	</tr>

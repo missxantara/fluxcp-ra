@@ -11,7 +11,7 @@ $sth  = $server->connection->getStatement($sql);
 $sth->execute();
 
 $paginator = $this->getPaginator($sth->fetch()->total);
-$paginator->setSortableColumns(array('account_id', 'userid' => 'asc', 'sex', 'level', 'state', 'balance', 'email', 'lastlogin'));
+$paginator->setSortableColumns(array('account_id', 'userid' => 'asc', 'sex', 'level', 'state', 'balance', 'email', 'logincount', 'lastlogin', 'last_ip'));
 
 $sql  = $paginator->getSQL("SELECT login.*, {$creditColumns} FROM {$server->loginDatabase}.login $sqlpartial");
 $sth  = $server->connection->getStatement($sql);
