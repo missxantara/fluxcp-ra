@@ -97,6 +97,10 @@ input[type=text], input[type=password], textarea {
 	text-shadow: #4a5259 1pt 1pt;
 }
 
+#admin_sidebar td.menuitem a span {
+	display: block;
+}
+
 #sidebar td.sidebar-left, #sidebar td.sidebar-right {
 	background-color: #e6f0fa;
 }
@@ -123,6 +127,10 @@ input[type=text], input[type=password], textarea {
 	color: #fff;
 	background-color: #708fae;
 	text-shadow: #708fae 1pt 1pt;
+}
+
+#sidebar td.menuitem a span {
+	display: block;
 }
 
 .request {

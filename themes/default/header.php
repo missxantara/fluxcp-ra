@@ -16,6 +16,7 @@
 		<script src="<?php echo $this->themePath('js/ie7.js') ?>" type="text/javascript"></script>
 		<![endif]-->
 		<script type="text/javascript" src="<?php echo $this->themePath('js/jquery-1.2.6.min.js') ?>"></script>
+		<script type="text/javascript" src="<?php echo $this->themePath('js/jquery.dropshadow.js') ?>"></script>
 		<script type="text/javascript">
 			$(document).ready(function(){
 				var inputs = 'input[type=text],input[type=password]';
@@ -41,8 +42,13 @@
 						$(this).fadeTo(150, 1.00);
 					}
 				);
+				if ($.browser.mozilla || $.browser.msie) {
+					$('#admin_sidebar td.menuitem a span').dropShadow({left: 1, top: 1, blur: 0, opacity: 1, color: 'black'});
+					$('#sidebar td.menuitem a span').dropShadow({left: 1, top: 1, blur: 0, opacity: 1, color: '#708fae'});
+				}
 			});
 		</script>
+		
 		<?php if ($session->isLoggedIn()): ?>
 		<script type="text/javascript">
 			function updatePreferredServer(sel){
