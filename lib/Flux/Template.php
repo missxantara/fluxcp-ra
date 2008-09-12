@@ -150,6 +150,14 @@ class Flux_Template {
 	protected $url;
 	
 	/**
+	 * URL of the current module/action being viewed. (including query string)
+	 *
+	 * @access protected
+	 * @var string
+	 */
+	protected $urlWithQs;
+	
+	/**
 	 * Module/action for missing action's event.
 	 *
 	 * @access protected
@@ -230,6 +238,11 @@ class Flux_Template {
 		$this->headerPath = sprintf('%s/%s.php', $this->themePath, $this->headerName);
 		$this->footerPath = sprintf('%s/%s.php', $this->themePath, $this->footerName);
 		$this->url        = $this->url($this->moduleName, $this->actionName);
+		$this->urlWithQS  = $this->url;
+		
+		if (!empty($_SERVER['QUERY_STRING'])) {
+			$this->urlWithQS .= "?{$_SERVER['QUERY_STRING']}";
+		}
 		
 		// Tidy up!
 		if (Flux::config('OutputCleanHTML')) {
