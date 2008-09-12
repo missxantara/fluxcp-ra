@@ -327,6 +327,58 @@ input[type=text], input[type=password], textarea {
 	font-weight: bold;
 }
 
+.search-form {
+	margin: 0;
+	padding: 5px 0 0 0;
+	border-top: 1px dotted #ccc;
+	border-bottom: 1px dotted #ccc;
+}
+
+.search-form p {
+	margin: 0 0 5px 0;
+	padding: 0;
+	color: #aaa;
+}
+
+.search-form label {
+	display: inline-block;
+	margin: 0 0 3px 0;
+	font-size: 8pt;
+	color: #222;
+	vertical-align: center;
+}
+
+.search-form input[type=text] {
+	display: inline-block;
+	margin: 0 0 2px 0;
+	padding: 2px;
+	font-size: 8pt;
+	width: 80px;
+}
+
+.search-form input[type=submit] {
+	display: inline-block;
+	margin: 0 0 2px 0;
+	font-size: 8pt;
+	font-weight: bold;
+}
+
+.search-form input[type=button], .search-form input[type=reset] {
+	display: inline-block;
+	margin: 0 0 2px 0;
+	font-size: 8pt;
+}
+
+.search-form input[type=checkbox] {
+	display: inline-block;
+	margin: 0 0 2px 0;
+}
+
+.search-form select {
+	display: inline-block;
+	margin: 2px 0;
+}
+
 #logo {
 	display: block;
 }
