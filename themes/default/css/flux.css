@@ -308,6 +308,10 @@ input[type=text], input[type=password], textarea {
 	color: #aaa;
 }
 
+#logo {
+	display: block;
+}
+
 #submenu {
 	color: #bbb;
 }
