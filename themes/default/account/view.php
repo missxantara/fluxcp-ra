@@ -76,39 +76,37 @@
 	</tr>
 </table>
 <?php foreach ($characters as $serverName => $chars): ?>
-	<?php foreach ($chars as $char): ?>
-		<h3>Characters on <?php echo htmlspecialchars($serverName) ?></h3>
-		<?php if ($characters): ?>
-		<table class="vertical-table">
-			<tr>
-				<th>Character Name</th>
-				<th>Job Class</th>
-				<th>Base Level</th>
-				<th>Job Level</th>
-				<th>Zeny</th>
-				<th>Status</th>
-			</tr>
-			<?php foreach ($chars as $char): ?>
-			<tr>
-				<td><?php echo htmlspecialchars($char->name) ?></td>
-				<td><?php echo htmlspecialchars($this->jobClassText($char->class)) ?></td>
-				<td><?php echo (int)$char->base_level ?></td>
-				<td><?php echo (int)$char->job_level ?></td>
-				<td><?php echo number_format((int)$char->zeny) ?></td>
-				<td>
-					<?php if ($char->online): ?>
-						<span class="online">Online</span>
-					<?php else: ?>
-						<span class="offline">Offline</span>
-					<?php endif ?>
-				</td>
-			</tr>
-			<?php endforeach ?>
+	<h3>Characters on <?php echo htmlspecialchars($serverName) ?></h3>
+	<?php if ($chars): ?>
+	<table class="vertical-table">
+		<tr>
+			<th>Character Name</th>
+			<th>Job Class</th>
+			<th>Base Level</th>
+			<th>Job Level</th>
+			<th>Zeny</th>
+			<th>Status</th>
+		</tr>
+		<?php foreach ($chars as $char): ?>
+		<tr>
+			<td><?php echo htmlspecialchars($char->name) ?></td>
+			<td><?php echo htmlspecialchars($this->jobClassText($char->class)) ?></td>
+			<td><?php echo (int)$char->base_level ?></td>
+			<td><?php echo (int)$char->job_level ?></td>
+			<td><?php echo number_format((int)$char->zeny) ?></td>
+			<td>
+				<?php if ($char->online): ?>
+					<span class="online">Online</span>
+				<?php else: ?>
+					<span class="offline">Offline</span>
+				<?php endif ?>
+			</td>
+		</tr>
+		<?php endforeach ?>
 		</table>
-		<?php else: ?>
-		<p>This account has no characters on <?php echo htmlspecialchars($serverName) ?>.</p>
-		<?php endif ?>
-	<?php endforeach ?>
+	<?php else: ?>
+	<p>This account has no characters on <?php echo htmlspecialchars($serverName) ?>.</p>
+	<?php endif ?>
 <?php endforeach ?>
 
 <?php else: ?>
