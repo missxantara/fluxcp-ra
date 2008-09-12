@@ -232,6 +232,7 @@ input[type=text], input[type=password], textarea {
 .horizontal-table {
 	border-spacing: 0;
 	border-collapse: collapse;
+	width: 100%;
 }
 
 .horizontal-table th {
