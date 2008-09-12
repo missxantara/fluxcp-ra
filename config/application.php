@@ -6,9 +6,10 @@ return array(
 	'InstallerPassword'    => 'secretpassword',         // Installer/updater password.
 	'SiteTitle'            => 'Flux Control Panel',     // This value is only used if the theme decides to use it.
 	'ThemeName'            => 'default',                // The theme name of the theme you would like to use.  Themes are in FLUX_ROOT/themes.
-	'AdminMenuLevel'       => AccountLevel::LOWGM,      // 
+	'AdminMenuLevel'       => AccountLevel::LOWGM,      // The starting level for which module actions are moved into the admin menu for display.
 	'DateFormat'           => 'Y-m-d',                  // Default DATE format to be displayed in pages.
 	'DateTimeFormat'       => 'Y-m-d H:i:s',            // Default DATETIME format to be displayed in pages.
+	'ResultsPerPage'       => 20,                       // The number of results to display in a paged set, per page.
 	'MinUsernameLength'    => 4,                        // Minimum username length.
 	'MaxUsernameLength'    => 23,                       // Maximum username length.
 	'MinPasswordLength'    => 4,                        // Minimum password length.

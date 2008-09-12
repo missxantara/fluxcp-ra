@@ -76,8 +76,13 @@ class Flux_Paginator {
 	 */
 	public function __construct($total, array $options = array())
 	{
+		$perPage = Flux::config('ResultsPerPage');
+		if (!$perPage) {
+			$perPage = 20;
+		}
+		
 		$options = array_merge(
-			array('perPage' => 20, 'pageVariable' => 'p', 'pageSeparator' => '|'),
+			array('perPage' => $perPage, 'pageVariable' => 'p', 'pageSeparator' => '|'),
 			$options
 		);
 		
