@@ -44,10 +44,10 @@
 						$(this).css('cursor', 'normal');
 					}
 				);
-				if ($.browser.mozilla || $.browser.msie) {
+				/*if ($.browser.mozilla || $.browser.msie) {
 					$('#admin_sidebar td.menuitem a span').dropShadow({left: 1, top: 1, blur: 0, opacity: 1, color: 'black'});
 					$('#sidebar td.menuitem a span').dropShadow({left: 1, top: 1, blur: 0, opacity: 1, color: '#708fae'});
-				}
+				}*/
 			});
 		</script>
 		

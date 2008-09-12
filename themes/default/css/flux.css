@@ -98,7 +98,7 @@ input[type=text], input[type=password], textarea {
 }
 
 #admin_sidebar td.menuitem a span {
-	display: block;
+	/*display: block;*/
 }
 
 #sidebar td.sidebar-left, #sidebar td.sidebar-right {
