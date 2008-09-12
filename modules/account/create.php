@@ -24,6 +24,7 @@ if (count($_POST)) {
 
 		if ($result) {
 			$session->login($server->serverName, $username, $password);
+			$session->setMessageData('Congratulations, you have been registered successfully and automatically logged in.');
 			$this->redirect();
 		}
 		else {
