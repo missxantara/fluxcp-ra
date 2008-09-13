@@ -1,6 +1,7 @@
 <?php
 if (!defined('FLUX_ROOT')) exit;
 
+$showPassword  = !$server->loginServer->config->get('UseMD5') && $auth->allowedToSeeAccountPassword;
 $bind          = array();
 $creditsTable  = Flux::config('FluxTables.CreditsTable');
 $creditColumns = 'credits.balance, credits.last_donation_date, credits.last_donation_amount';
@@ -16,6 +17,7 @@ else {
 	$opMapping      = array('eq' => '=', 'gt' => '>', 'lt' => '<');
 	$opValues       = array_keys($opMapping);
 	$username       = $params->get('username');
+	$password       = $params->get('password');
 	$email          = $params->get('email');
 	$lastIP         = $params->get('last_ip');
 	$gender         = $params->get('gender');
@@ -32,6 +34,12 @@ else {
 		$sqlpartial .= "AND (login.userid LIKE ? OR login.userid = ?) ";
 		$bind[]      = "%$username%";
 		$bind[]      = $username;
+	}
+	
+	if ($showPassword && $password) {
+		$sqlpartial .= "AND (login.user_pass LIKE ? OR login.user_pass = ?) ";
+		$bind[]      = "%$password%";
+		$bind[]      = $password;
 	}
 	
 	if ($email) {
@@ -97,7 +105,11 @@ $sth  = $server->connection->getStatement($sql);
 $sth->execute($bind);
 
 $paginator = $this->getPaginator($sth->fetch()->total);
-$paginator->setSortableColumns(array('account_id', 'userid' => 'asc', 'sex', 'level', 'state', 'balance', 'email', 'logincount', 'lastlogin', 'last_ip'));
+$paginator->setSortableColumns(array(
+	'account_id' => 'asc', 'userid', 'user_pass',
+	'sex', 'level', 'state', 'balance',
+	'email', 'logincount', 'lastlogin', 'last_ip'
+));
 
 $sql  = $paginator->getSQL("SELECT login.*, {$creditColumns} FROM {$server->loginDatabase}.login $sqlpartial");
 $sth  = $server->connection->getStatement($sql);

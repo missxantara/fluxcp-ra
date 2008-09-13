@@ -1,6 +1,6 @@
 <?php if (!defined('FLUX_ROOT')) exit; ?>
 <h2>Accounts</h2>
-<form action="<?php echo $this->url ?>" method="get" class="search-form">
+<form action="<?php echo $this->url ?>" method="post" class="search-form">
 	<p>Search for account(s):</p>
 	<p>
 		<label for="account_id">Account ID:</label>
@@ -8,6 +8,11 @@
 		…
 		<label for="username">Username:</label>
 		<input type="text" name="username" id="username" value="<?php echo htmlspecialchars($params->get('username')) ?>" />
+		<?php if ($showPassword): ?>
+		…
+		<label for="password">Password:</label>
+		<input type="text" name="password" id="password" value="<?php echo htmlspecialchars($params->get('password')) ?>" />
+		<?php endif ?>
 		…
 		<label for="email">E-mail:</label>
 		<input type="text" name="email" id="email" value="<?php echo htmlspecialchars($params->get('email')) ?>" />
@@ -70,8 +75,8 @@
 	<tr>
 		<th><?php echo $paginator->sortableColumn('account_id', 'Account ID') ?></th>
 		<th><?php echo $paginator->sortableColumn('userid', 'Username') ?></th>
+		<?php if ($showPassword): ?><th><?php echo $paginator->sortableColumn('user_pass', 'Password') ?></th><?php endif ?>
 		<th><?php echo $paginator->sortableColumn('sex', 'Gender') ?></th>
-		<!-- <th><?php echo $paginator->sortableColumn('email', 'E-Mail Address') ?></th> -->
 		<th><?php echo $paginator->sortableColumn('level', 'Account Level') ?></th>
 		<th><?php echo $paginator->sortableColumn('state', 'Account State') ?></th>
 		<th><?php echo $paginator->sortableColumn('balance', 'Credit Balance') ?></th>
@@ -90,6 +95,7 @@
 			<?php endif ?>
 		</td>
 		<td><?php echo htmlspecialchars($account->userid) ?></td>
+		<?php if ($showPassword): ?><td><?php echo htmlspecialchars($account->user_pass) ?></td><?php endif ?>
 		<td>
 			<?php if ($gender = $this->genderText($account->sex)): ?>
 				<?php echo htmlspecialchars($gender) ?>
@@ -145,5 +151,5 @@
 </table>
 <?php echo $paginator->getHTML() ?>
 <?php else: ?>
-<p>No accounts found. <a href="javascript:history.go(-1)">Go back</a>.</p>
+<p>No accounts found. <a href="javascript:reload()">Go back</a>.</p>
 <?php endif ?>
