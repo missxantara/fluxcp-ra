@@ -112,7 +112,8 @@ return array(
 		'CreditTransferTable' => 'cp_xferlog',
 		'ItemShopTable'       => 'cp_itemshop',
 		'TransactionTable'    => 'cp_txnlog',
-		'RedemptionTable'     => 'cp_redeemlog'
+		'RedemptionTable'     => 'cp_redeemlog',
+		'AccountCreateTable'  => 'cp_createlog'
 	)
 );
 ?>
