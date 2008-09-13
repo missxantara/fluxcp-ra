@@ -205,10 +205,18 @@ class Flux_SessionData {
 		$res  = $smt->execute(array($username));
 		
 		if ($res && ($row = $smt->fetch())) {
-			if (!Flux::config('AllowTempBanLogin') && $row->unban_time > 0) {
-				throw new Flux_LoginError('Temporarily banned', Flux_LoginError::BANNED);
+			if ($row->unban_time > 0) {
+				if (time() >= $row->unban_time) {
+					$row->unban_time = 0;
+					$sql = "UPDATE {$loginAthenaGroup->loginDatabase}.login SET unban_time = 0 WHERE account_id = ?";
+					$sth = $loginAthenaGroup->connection->getStatement($sql);
+					$sth->execute(array($row->account_id));
+				}
+				elseif (!Flux::config('AllowTempBanLogin')) {
+					throw new Flux_LoginError('Temporarily banned', Flux_LoginError::BANNED);
+				}
 			}
-			elseif (!Flux::config('AllowPermBanLogin') && $row->state == 5) {
+			if (!Flux::config('AllowPermBanLogin') && $row->state == 5) {
 				throw new Flux_LoginError('Permanently banned', Flux_LoginError::PERMABANNED);
 			}
 			
