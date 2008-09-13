@@ -1,6 +1,12 @@
 <?php
 if (!defined('FLUX_ROOT')) exit;
 
+if (Flux::config('AutoRemoveTempBans')) {
+	$sql = "UPDATE {$server->loginDatabase}.login SET unban_time = 0 WHERE unban_time <= UNIX_TIMESTAMP()";
+	$sth = $server->connection->getStatement($sql);
+	$sth->execute();
+}
+
 $showPassword  = !$server->loginServer->config->get('UseMD5') && $auth->allowedToSeeAccountPassword;
 $bind          = array();
 $creditsTable  = Flux::config('FluxTables.CreditsTable');

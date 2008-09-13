@@ -43,6 +43,7 @@ return array(
 	),
 	'AllowTempBanLogin'    => false,                    // Allow logging in of temporarily banned accounts.
 	'AllowPermBanLogin'    => false,                    // Allow logging in of permanently banned accounts.
+	'AutoRemoveTempBans'   => true,                     // Automatically remove expired temporary bans on certain pages.
 	
 	// These are the main menu items that should be displayed by themes.
 	// They route to modules and actions.  Whether they are displayed or
