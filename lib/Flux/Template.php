@@ -780,18 +780,23 @@ class Flux_Template {
 	}
 	
 	/**
+	 * Return hidden input fields containing module and action names based on
+	 * the setting of UseCleanUrls.
 	 *
+	 * @param string $moduleName
+	 * @param string $actionName
+	 * @return string
+	 * @access public
 	 */
-	public function moduleActionFormInputs($moduleName = null, $actionName = null)
+	public function moduleActionFormInputs($moduleName, $actionName = null)
 	{	
 		$inputs = '';
-		if (Flux::config('UseCleanUrls')) {
+		if (!Flux::config('UseCleanUrls')) {
 			if (!$actionName) {
 				$dispatcher = Flux_Dispatcher::getInstance();
 				$actionName = $dispatcher->defaultAction;
 			}
-			
-			$inputs .= sprintf('<input type="hidden" name="module" value="%s" />', htmlspecialchars($moduleName));
+			$inputs .= sprintf('<input type="hidden" name="module" value="%s" />', htmlspecialchars($moduleName))."\n";
 			$inputs .= sprintf('<input type="hidden" name="action" value="%s" />', htmlspecialchars($actionName));
 		}
 		return $inputs;
