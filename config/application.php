@@ -41,6 +41,8 @@ return array(
 		'admin2@localhost',                             // -- This array may be empty if you only use one e-mail
 		'admin3@localhost'                              // -- because your Business Email is also checked.
 	),
+	'AllowTempBanLogin'    => false,                    // Allow logging in of temporarily banned accounts.
+	'AllowPermBanLogin'    => false,                    // Allow logging in of permanently banned accounts.
 	
 	// These are the main menu items that should be displayed by themes.
 	// They route to modules and actions.  Whether they are displayed or

@@ -48,6 +48,7 @@ input[type=text], input[type=password], textarea {
 }*/
 
 .message {
+	display: block;
 	padding: 10px;
 	font-weight: bold;
 	font-size: 120%;
@@ -148,7 +149,12 @@ input[type=text], input[type=password], textarea {
 }
 
 .red {
-	color: #f00;
+	display: block;
+	padding: 10px;
+	font-weight: bold;
+	font-size: 120%;
+	color: #fff;
+	background-color: #f00;
 }
 
 .note {

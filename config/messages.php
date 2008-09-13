@@ -17,6 +17,8 @@ return array(
 	'InvalidGender'           => 'Gender should be "M" or "F"',
 	'InvalidServer'           => "The server you've selected does not exist.",
 	'InvalidSecurityCode'     => 'Please enter the security code as it is, case-sensitively.',
-	'CriticalRegisterError'   => 'Something bad happened.  Report to an administrator ASAP.'
+	'CriticalRegisterError'   => 'Something bad happened.  Report to an administrator ASAP.',
+	'TemporarilyBanned'       => 'Your account is temporarily banned.',
+	'PermanentlyBanned'       => 'Your account is permanently banned.'
 );
 ?>

@@ -205,6 +205,13 @@ class Flux_SessionData {
 		$res  = $smt->execute(array($username));
 		
 		if ($res && ($row = $smt->fetch())) {
+			if (!Flux::config('AllowTempBanLogin') && $row->unban_time > 0) {
+				throw new Flux_LoginError('Temporarily banned', Flux_LoginError::BANNED);
+			}
+			elseif (!Flux::config('AllowPermBanLogin') && $row->state == 5) {
+				throw new Flux_LoginError('Permanently banned', Flux_LoginError::PERMABANNED);
+			}
+			
 			$this->setServerNameData($server);
 			$this->setUsernameData($username);
 			$this->initialize(false);

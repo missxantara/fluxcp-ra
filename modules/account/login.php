@@ -31,6 +31,14 @@ if (count($_POST)) {
 				$errorMessage = Flux::message('InvalidLoginCredentials');
 				break;
 				
+			case Flux_LoginError::BANNED:
+				$errorMessage = Flux::message('TemporarilyBanned');
+				break;
+				
+			case Flux_LoginError::PERMABANNED:
+				$errorMessage = Flux::message('PermanentlyBanned');
+				break;
+				
 			default:
 				$errorMessage = Flux::message('CriticalLoginError');
 				break;
