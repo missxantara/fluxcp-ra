@@ -1,6 +1,7 @@
 <?php if (!defined('FLUX_ROOT')) exit; ?>
 <h2>Accounts</h2>
-<form action="<?php echo $this->url ?>" method="post" class="search-form">
+<form action="<?php echo $this->url ?>" method="get" class="search-form">
+	<?php echo $this->moduleActionFormInputs($params->get('module')) ?>
 	<p>Search for account(s):</p>
 	<p>
 		<label for="account_id">Account ID:</label>
@@ -103,13 +104,6 @@
 				<span class="not-applicable">Unknown</span>
 			<?php endif ?>
 		</td>
-		<!-- <td>
-			<?php if ($account->email): ?>
-				<?php echo htmlspecialchars($account->email) ?>
-			<?php else: ?>
-				<span class="not-applicable">None</span>
-			<?php endif ?>
-		</td> -->
 		<td><?php echo (int)$account->level ?></td>
 		<td>
 			<?php if (($state = $this->accountStateText($account->state)) && !$account->unban_time): ?>
@@ -151,5 +145,5 @@
 </table>
 <?php echo $paginator->getHTML() ?>
 <?php else: ?>
-<p>No accounts found. <a href="javascript:reload()">Go back</a>.</p>
+<p>No accounts found. <a href="javascript:history.go(-1)">Go back</a>.</p>
 <?php endif ?>

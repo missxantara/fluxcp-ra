@@ -778,5 +778,23 @@ class Flux_Template {
 	{
 		return Flux::getJobClass($id);
 	}
+	
+	/**
+	 *
+	 */
+	public function moduleActionFormInputs($moduleName = null, $actionName = null)
+	{	
+		$inputs = '';
+		if (Flux::config('UseCleanUrls')) {
+			if (!$actionName) {
+				$dispatcher = Flux_Dispatcher::getInstance();
+				$actionName = $dispatcher->defaultAction;
+			}
+			
+			$inputs .= sprintf('<input type="hidden" name="module" value="%s" />', htmlspecialchars($moduleName));
+			$inputs .= sprintf('<input type="hidden" name="action" value="%s" />', htmlspecialchars($actionName));
+		}
+		return $inputs;
+	}
 }
 ?>
