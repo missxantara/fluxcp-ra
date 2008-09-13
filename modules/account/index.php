@@ -78,9 +78,14 @@ else {
 	}
 	
 	if (in_array($balanceOp, $opValues) && trim($balance) != '') {
-		$op          = $opMapping[$balanceOp];
-		$sqlpartial .= "AND credits.balance $op ? ";
-		$bind[]      = $balance;
+		$op  = $opMapping[$balanceOp];
+		if ($op == '=' && $balance === '0') {
+			$sqlpartial .= "AND (credits.balance IS NULL OR credits.balance = 0) ";
+		}
+		else {
+			$sqlpartial .= "AND credits.balance $op ? ";
+			$bind[]      = $balance;
+		}
 	}
 	
 	if (in_array($loginCountOp, $opValues) && trim($loginCount) != '') {
