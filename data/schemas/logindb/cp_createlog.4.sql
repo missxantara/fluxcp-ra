@@ -1,0 +1,1 @@
+ALTER TABLE `cp_createlog` ADD `id` INT( 11 ) UNSIGNED NOT NULL FIRST;
