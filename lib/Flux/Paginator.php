@@ -259,21 +259,29 @@ class Flux_Paginator {
 	 */
 	protected function getPageURI($pageNumber)
 	{
-		$request = $_SERVER['REQUEST_URI'];
+		$request = preg_replace('/(\?.*)$/', '', $_SERVER['REQUEST_URI']);
+		$qString = $_SERVER['QUERY_STRING'];
 		$pageVar = preg_quote($this->pageVariable);
 		$pageNum = (int)$pageNumber;
 		
-		if (preg_match("/$pageVar=(\w*)/", $request)) {
-			$request = preg_replace("/$pageVar=(\w*)/", "{$this->pageVariable}={$pageNum}", $request);
-		}
-		elseif (empty($_SERVER['QUERY_STRING'])) {
-			$request = "$request?{$this->pageVariable}=$pageNum";
-		}
-		else {
-			$request = "$request&{$this->pageVariable}=$pageNum";
+		$qStringVars  = array();
+		$qStringLines = preg_split('/&/', $qString, -1, PREG_SPLIT_NO_EMPTY);
+		
+		foreach ($qStringLines as $qStringVar) {
+			list($qStringKey, $qStringVal) = explode('=', $qStringVar, 2);
+			$qStringVars[$qStringKey] = $qStringVal;
 		}
 		
-		return $request;
+		$qStringVars[$pageVar] = $pageNum;
+		$qStringLines = array();
+		
+		foreach ($qStringVars as $qStringKey => $qStringVal) {
+			$qStringLines[] = sprintf('%s=%s', $qStringKey, $qStringVal);
+		}
+		
+		var_dump($request);echo "<br>";
+		
+		return sprintf('%s?%s', $request, implode('&', $qStringLines));
 	}
 	
 	/**
