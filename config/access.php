@@ -100,7 +100,12 @@ return array(
 		'ViewAccount'        => AccountLevel::HIGHGM,
 		'DeleteAccount'      => AccountLevel::HIGHGM,
 		'DeleteCharacter'    => AccountLevel::HIGHGM,
-		'SeeAccountPassword' => AccountLevel::ADMIN
+		'SeeAccountPassword' => AccountLevel::ADMIN,
+		'TempBanAccount'     => AccountLevel::LOWGM,
+		'TempUnbanAccount'   => AccountLevel::LOWGM,
+		'PermBanAccount'     => AccountLevel::HIGHGM,
+		'PermUnbanAccount'   => AccountLevel::HIGHGM,
+		'SearchMD5Passwords' => AccountLevel::ADMIN
 	)
 );
 ?>

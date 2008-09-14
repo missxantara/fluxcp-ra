@@ -8,7 +8,7 @@ if (Flux::config('AutoRemoveTempBans')) {
 }
 
 $useMD5         = $server->loginServer->config->get('UseMD5');
-$searchMD5      = Flux::config('AllowMD5PasswordSearch') && Flux::config('ReallyAllowMD5PasswordSearch');
+$searchMD5      = Flux::config('AllowMD5PasswordSearch') && Flux::config('ReallyAllowMD5PasswordSearch') && $auth->allowedToSearchMD5Passwords;
 $searchPassword = (($useMD5 && $searchMD5) || !$useMD5) && $auth->allowedToSeeAccountPassword;
 $showPassword   = !$useMD5 && $auth->allowedToSeeAccountPassword;
 $bind           = array();
