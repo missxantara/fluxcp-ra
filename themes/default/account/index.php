@@ -9,7 +9,7 @@
 		…
 		<label for="username">Username:</label>
 		<input type="text" name="username" id="username" value="<?php echo htmlspecialchars($params->get('username')) ?>" />
-		<?php if ($showPassword): ?>
+		<?php if ($searchPassword): ?>
 		…
 		<label for="password">Password:</label>
 		<input type="text" name="password" id="password" value="<?php echo htmlspecialchars($params->get('password')) ?>" />

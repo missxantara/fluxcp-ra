@@ -7,12 +7,15 @@ if (Flux::config('AutoRemoveTempBans')) {
 	$sth->execute();
 }
 
-$showPassword  = !$server->loginServer->config->get('UseMD5') && $auth->allowedToSeeAccountPassword;
-$bind          = array();
-$creditsTable  = Flux::config('FluxTables.CreditsTable');
-$creditColumns = 'credits.balance, credits.last_donation_date, credits.last_donation_amount';
-$sqlpartial    = "LEFT OUTER JOIN {$server->loginDatabase}.{$creditsTable} AS credits ON login.account_id = credits.account_id ";
-$sqlpartial   .= "WHERE login.sex != 'S' AND login.level >= 0 ";
+$useMD5         = $server->loginServer->config->get('UseMD5');
+$searchMD5      = Flux::config('AllowMD5PasswordSearch') && Flux::config('ReallyAllowMD5PasswordSearch');
+$searchPassword = (($useMD5 && $searchMD5) || !$useMD5) && $auth->allowedToSeeAccountPassword;
+$showPassword   = !$useMD5 && $auth->allowedToSeeAccountPassword;
+$bind           = array();
+$creditsTable   = Flux::config('FluxTables.CreditsTable');
+$creditColumns  = 'credits.balance, credits.last_donation_date, credits.last_donation_amount';
+$sqlpartial     = "LEFT OUTER JOIN {$server->loginDatabase}.{$creditsTable} AS credits ON login.account_id = credits.account_id ";
+$sqlpartial    .= "WHERE login.sex != 'S' AND login.level >= 0 ";
 
 $accountID = $params->get('account_id');
 if ($accountID) {
@@ -42,10 +45,16 @@ else {
 		$bind[]      = $username;
 	}
 	
-	if ($showPassword && $password) {
-		$sqlpartial .= "AND (login.user_pass LIKE ? OR login.user_pass = ?) ";
-		$bind[]      = "%$password%";
-		$bind[]      = $password;
+	if ($searchPassword && $password) {
+		if ($useMD5) {
+			$sqlpartial .= "AND login.user_pass = MD5(?) ";
+			$bind[]      = $password;
+		}
+		else {
+			$sqlpartial .= "AND (login.user_pass LIKE ? OR login.user_pass = ?) ";
+			$bind[]      = "%$password%";
+			$bind[]      = $password;
+		}
 	}
 	
 	if ($email) {
