@@ -51,7 +51,7 @@ try {
 	}
 
 	foreach ($directories as $directory) {
-		if (!is_dir($directory)) {
+		if (is_writable(dirname($directory)) && !is_dir($directory)) {
 			mkdir($directory, 0755);
 		}
 	}
