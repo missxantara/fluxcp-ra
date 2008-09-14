@@ -279,8 +279,6 @@ class Flux_Paginator {
 			$qStringLines[] = sprintf('%s=%s', $qStringKey, $qStringVal);
 		}
 		
-		var_dump($request);echo "<br>";
-		
 		return sprintf('%s?%s', $request, implode('&', $qStringLines));
 	}
 	
