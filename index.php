@@ -69,6 +69,9 @@ try {
 	elseif (!is_writable($dir=realpath(FLUX_DATA_DIR.'/logs'))) {
 		throw new Flux_PermissionError("The log storage directory '$dir' is not writable.  Remedy with `chmod 0707 $dir`");
 	}
+	elseif (ini_get('session.use_trans_sid')) {
+		throw new Flux_Error("The 'session.use_trans_sid' php.ini configuration must be turned off for Flux to work.");
+	}
 	else {
 		session_start();
 	}
