@@ -80,6 +80,7 @@
 	<?php if ($chars): ?>
 	<table class="vertical-table">
 		<tr>
+			<th>Slot</th>
 			<th>Character Name</th>
 			<th>Job Class</th>
 			<th>Base Level</th>
@@ -89,6 +90,7 @@
 		</tr>
 		<?php foreach ($chars as $char): ?>
 		<tr>
+			<td align="right"><?php echo $char->char_num+1 ?></td>
 			<td><?php echo htmlspecialchars($char->name) ?></td>
 			<td><?php echo htmlspecialchars($this->jobClassText($char->class)) ?></td>
 			<td><?php echo (int)$char->base_level ?></td>
