@@ -79,7 +79,7 @@ class Flux_PaymentNotifyRequest {
 	 */
 	public function __construct(array $ipnPostVars)
 	{
-		$this->ppLogFile       = new Flux_LogFile(realpath(FLUX_DATA_DIR.'/logs/paypal.log'));
+		$this->ppLogFile       = new Flux_LogFile(FLUX_DATA_DIR.'/logs/paypal.log');
 		$this->ppServer        = Flux::config('PayPalIpnUrl');
 		$this->myBusinessEmail = Flux::config('PayPalBusinessEmail');
 		$this->myCurrencyCode  = strtoupper(Flux::config('DonationCurrency'));
@@ -329,7 +329,7 @@ class Flux_PaymentNotifyRequest {
 			$logDir1 = realpath(FLUX_DATA_DIR.'/logs/transactions');
 			$logDir2 = $logDir1.'/'.$this->ipnVariables->get('txn_type');
 			$logDir3 = $logDir2.'/'.$this->ipnVariables->get('payment_status');
-			$logFile = $logDir3.'/'.$this->ipnVariables->get('txn_id').'.log';
+			$logFile = $logDir3.'/'.$this->ipnVariables->get('txn_id').'.log.php';
 			
 			if (!is_dir($logDir2)) {
 				mkdir($logDir2, 0755);

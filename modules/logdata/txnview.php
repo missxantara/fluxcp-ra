@@ -14,9 +14,15 @@ $sth->execute(array($txnID));
 $txn = $sth->fetch();
 
 if ($txn) {
-	$txnLogFile = FLUX_DATA_DIR."/logs/transactions/{$txn->txn_type}/{$txn->payment_status}/{$txn->txn_id}.log";
+	$txnLogFile = FLUX_DATA_DIR."/logs/transactions/{$txn->txn_type}/{$txn->payment_status}/{$txn->txn_id}.log.php";
 	if (file_exists($txnLogFile)) {
-		$txnFileLog = file_get_contents($txnLogFile);
+		$txnFileLog = file($txnLogFile);
+		
+		if (count($txnFileLog) && preg_match('/<\?php.*?\?>/', $txnFileLog[0])) {
+			array_shift($txnFileLog);
+		}
+		
+		$txnFileLog = implode('', $txnFileLog);
 	}
 }
 ?>
