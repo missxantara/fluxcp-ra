@@ -79,7 +79,7 @@ class Flux_SessionData {
 		
 		if ($this->serverName && ($this->loginAthenaGroup = Flux::getServerGroupByName($this->serverName))) {
 			$this->loginServer = $this->loginAthenaGroup->loginServer;
-			if (!$this->athenaServerName) {
+			if (!$this->athenaServerName || !$this->getAthenaServer($this->athenaServerName)) {
 				$this->setAthenaServerNameData(current($this->getAthenaServerNames()));
 			}
 		}
