@@ -16,7 +16,8 @@
 		<script src="<?php echo $this->themePath('js/ie7.js') ?>" type="text/javascript"></script>
 		<![endif]-->
 		<script type="text/javascript" src="<?php echo $this->themePath('js/jquery-1.2.6.min.js') ?>"></script>
-		<script type="text/javascript" src="<?php echo $this->themePath('js/jquery.dropshadow.js') ?>"></script>
+		<!--<script type="text/javascript" src="<?php echo $this->themePath('js/jquery.dropshadow.js') ?>"></script>-->
+		<script type="text/javascript" src="<?php echo $this->themePath('js/flux.datefields.js') ?>"></script>
 		<script type="text/javascript">
 			$(document).ready(function(){
 				var inputs = 'input[type=text],input[type=password]';
@@ -44,37 +45,9 @@
 						$(this).css('cursor', 'normal');
 					}
 				);
-				/*if ($.browser.mozilla || $.browser.msie) {
-					$('#admin_sidebar td.menuitem a span').dropShadow({left: 1, top: 1, blur: 0, opacity: 1, color: 'black'});
-					$('#sidebar td.menuitem a span').dropShadow({left: 1, top: 1, blur: 0, opacity: 1, color: '#708fae'});
-				}*/
 				
-				var dateFields  = new Array('last_login');
-				var dateEnable  = function(sel){ sel.attr('disabled', false) };
-				var dateDisable = function(sel){ sel.attr('disabled', 'disabled') };
-				var dateCheckBox;
-				var dateSelects;
-				
-				for (var i = 0; i < dateFields.length; ++i) {
-					dateCheckBox = $('#use_'+dateFields[i]);
-					dateSelects  = $('select[name='+dateFields[i]+'_year],select[name='+dateFields[i]+'_month],select[name='+dateFields[i]+'_day]');
-					
-					if (dateCheckBox.attr('checked')) {
-						dateEnable(dateSelects);
-					}
-					else {
-						dateDisable(dateSelects);
-					}
-					
-					dateCheckBox.click(function(){
-						if (this.checked) {
-							dateEnable(dateSelects);
-						}
-						else {
-							dateDisable(dateSelects);
-						}
-					});
-				}
+				// In: js/flux.datefields.js
+				processDateFields();
 			});
 			
 			function reload(){
