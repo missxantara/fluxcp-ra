@@ -1,10 +1,10 @@
 <?php
 if (!defined('FLUX_ROOT')) exit;
 
-$sqlpartial  = "LEFT OUTER JOIN guild_member ON guild_member.char_id = ch.char_id ";
-$sqlpartial .= "LEFT OUTER JOIN guild ON guild.guild_id = guild_member.guild_id ";
-$sqlpartial .= "LEFT OUTER JOIN login ON login.account_id = ch.account_id ";
-$sqlpartial .= "LEFT OUTER JOIN `char` AS partner ON partner.char_id = ch.partner_id ";
+$sqlpartial  = "LEFT OUTER JOIN {$server->charMapDatabase}.guild_member ON guild_member.char_id = ch.char_id ";
+$sqlpartial .= "LEFT OUTER JOIN {$server->charMapDatabase}.guild ON guild.guild_id = guild_member.guild_id ";
+$sqlpartial .= "LEFT OUTER JOIN {$server->loginDatabase}.login ON login.account_id = ch.account_id ";
+$sqlpartial .= "LEFT OUTER JOIN {$server->charMapDatabase}.`char` AS partner ON partner.char_id = ch.partner_id ";
 
 $sql  = "SELECT COUNT(ch.char_id) AS total FROM {$server->charMapDatabase}.`char` AS ch $sqlpartial";
 $sth  = $server->connection->getStatement($sql);
