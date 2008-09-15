@@ -30,13 +30,13 @@ if (!$isMine) {
 }
 
 $banSuperior = $account && (($account->level > $session->account->level && $auth->allowedToBanHigherPower) || $account->level <= $session->account->level);
-$canTempBan  = $banSuperior && $auth->allowedToTempBanAccount;
-$canPermBan  = $banSuperior && $auth->allowedToPermBanAccount;
+$canTempBan  = !$isMine && $banSuperior && $auth->allowedToTempBanAccount;
+$canPermBan  = !$isMine && $banSuperior && $auth->allowedToPermBanAccount;
 $tempBanned  = $account && $account->unban_time > 0;
 $permBanned  = $account && $account->state == 5;
-$showTempBan = !$tempBanned && !$permBanned && $auth->allowedToTempBanAccount;
-$showPermBan = !$permBanned && $auth->allowedToPermBanAccount;
-$showUnban   = ($tempBanned && $auth->allowedToTempUnbanAccount) || ($permBanned && $auth->allowedToPermUnbanAccount);
+$showTempBan = !$isMine && !$tempBanned && !$permBanned && $auth->allowedToTempBanAccount;
+$showPermBan = !$isMine && !$permBanned && $auth->allowedToPermBanAccount;
+$showUnban   = !$isMine && ($tempBanned && $auth->allowedToTempUnbanAccount) || ($permBanned && $auth->allowedToPermUnbanAccount);
 
 if (count($_POST) && $account) {
 	if ($params->get('tempban') && ($tempBanDate=$params->get('tempban_date'))) {
