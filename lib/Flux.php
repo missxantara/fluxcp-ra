@@ -243,6 +243,10 @@ class Flux {
 		$serverNames       = array();
 		$athenaServerNames = array();
 		
+		if (!count($config->toArray())) {
+			self::raise('At least one server configuration must be present.');
+		}
+		
 		foreach ($config->getChildrenConfigs() as $topConfig) {
 			//
 			// Top-level normalization.
@@ -283,6 +287,10 @@ class Flux {
 			}
 			elseif (!$loginServer->getPort()) {
 				self::raise('Port is required for each LoginServer section in your servers configuration.');
+			}
+			
+			if (!$topConfig->getCharMapServers() || !count($topConfig->getCharMapServers()->toArray())) {
+				self::raise('CharMapServers must be an array and contain at least 1 char/map server entry.');
 			}
 			
 			foreach ($topConfig->getCharMapServers()->getChildrenConfigs() as $charMapServer) {
