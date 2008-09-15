@@ -85,6 +85,7 @@
 		<th><?php echo $paginator->sortableColumn('logincount', 'Login Count') ?></th>
 		<th><?php echo $paginator->sortableColumn('lastlogin', 'Last Login Date') ?></th>
 		<th><?php echo $paginator->sortableColumn('last_ip', 'Last Used IP') ?></th>
+		<!-- <th><?php echo $paginator->sortableColumn('reg_date', 'Register Date') ?></th> -->
 	</tr>
 	<?php foreach ($accounts as $account): ?>
 	<tr>
@@ -140,6 +141,13 @@
 				<span class="not-applicable">None</span>
 			<?php endif ?>
 		</td>
+		<!-- <td>
+			<?php if (!$account->reg_date || $account->reg_date == '0000-00-00 00:00:00'): ?>
+				<span class="not-applicable">Unknown</span>
+			<?php else: ?>
+				<?php echo $this->formatDateTime($account->reg_date) ?>
+			<?php endif ?>
+		</td> -->
 	</tr>
 	<?php endforeach ?>
 </table>

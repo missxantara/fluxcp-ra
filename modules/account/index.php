@@ -14,7 +14,10 @@ $showPassword   = !$useMD5 && $auth->allowedToSeeAccountPassword;
 $bind           = array();
 $creditsTable   = Flux::config('FluxTables.CreditsTable');
 $creditColumns  = 'credits.balance, credits.last_donation_date, credits.last_donation_amount';
+$accountTable    = Flux::config('FluxTables.AccountCreateTable');
+$accountColumns  = 'createlog.reg_date';
 $sqlpartial     = "LEFT OUTER JOIN {$server->loginDatabase}.{$creditsTable} AS credits ON login.account_id = credits.account_id ";
+$sqlpartial    .= "LEFT OUTER JOIN {$server->loginDatabase}.{$accountTable} AS createlog ON login.account_id = createlog.account_id ";
 $sqlpartial    .= "WHERE login.sex != 'S' AND login.level >= 0 ";
 
 $accountID = $params->get('account_id');
@@ -128,10 +131,11 @@ $paginator = $this->getPaginator($sth->fetch()->total);
 $paginator->setSortableColumns(array(
 	'account_id' => 'asc', 'userid', 'user_pass',
 	'sex', 'level', 'state', 'balance',
-	'email', 'logincount', 'lastlogin', 'last_ip'
+	'email', 'logincount', 'lastlogin', 'last_ip',
+	'reg_date'
 ));
 
-$sql  = $paginator->getSQL("SELECT login.*, {$creditColumns} FROM {$server->loginDatabase}.login $sqlpartial");
+$sql  = $paginator->getSQL("SELECT login.*, {$creditColumns}, {$accountColumns} FROM {$server->loginDatabase}.login $sqlpartial");
 $sth  = $server->connection->getStatement($sql);
 $sth->execute($bind);
 
