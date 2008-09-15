@@ -133,7 +133,24 @@ class Flux_LoginServer extends Flux_BaseServer {
 		
 		$sql = "INSERT INTO {$this->loginDatabase}.login (userid, user_pass, email, sex) VALUES (?, ?, ?, ?)";
 		$sth = $this->connection->getStatement($sql);
-		return $sth->execute(array($username, $password, $email, $gender));
+		$res = $sth->execute(array($username, $password, $email, $gender));
+		
+		if ($res) {
+			$idsth = $this->connection->getStatement("SELECT LAST_INSERT_ID() AS account_id");
+			$idsth->execute();
+			
+			$idres = $idsth->fetch();
+			$createTable = Flux::config('FluxTables.AccountCreateTable');
+			
+			$sql  = "INSERT INTO {$this->loginDatabase}.{$createTable} (account_id, userid, user_pass, sex, email, reg_date, reg_ip) ";
+			$sql .= "VALUES (?, ?, ?, ?, ?, NOW(), ?)";
+			$sth  = $this->connection->getStatement($sql);
+			
+			return (bool)$sth->execute(array($idres->account_id, $username, $password, $gender, $email, $_SERVER['REMOTE_ADDR']));
+		}
+		else {
+			return false;
+		}
 	}
 }
 ?>
