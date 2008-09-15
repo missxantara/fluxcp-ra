@@ -14,40 +14,30 @@ return array(
 			'notify'   => AccountLevel::ANYONE,
 		),
 		'purchase'  => array(
-			'index'    => AccountLevel::ANYONE,
-			'checkout' => AccountLevel::NORMAL
+			'index'    => AccountLevel::ANYONE
 		),
 		'account'   => array(
 			'index'    => AccountLevel::LOWGM,
-			'search'   => AccountLevel::LOWGM,
 			'view'     => AccountLevel::NORMAL,
 			'create'   => AccountLevel::UNAUTH,
-			'update'   => AccountLevel::NORMAL,
 			'login'    => AccountLevel::UNAUTH,
 			'logout'   => AccountLevel::NORMAL,
 		),
 		'character' => array(
 			'index'    => AccountLevel::LOWGM,
-			'search'   => AccountLevel::LOWGM,
-			'view'     => AccountLevel::NORMAL,
-			'update'   => AccountLevel::NORMAL
+			'view'     => AccountLevel::NORMAL
 		),
 		'guild'     => array(
-			'index'    => AccountLevel::LOWGM,
-			'search'   => AccountLevel::LOWGM,
-			'view'     => AccountLevel::NORMAL,
-			'save'     => AccountLevel::NORMAL
+			'index'    => AccountLevel::LOWGM
 		),
 		'castle'    => array(
-			'index'    => AccountLevel::LOWGM,
-			'view'     => AccountLevel::NORMAL,
-			'save'     => AccountLevel::NORMAL
+			'index'    => AccountLevel::LOWGM
 		),
 		'economy'   => array(
 			'index'    => AccountLevel::NORMAL
 		),
 		'auction'   => array(
-			'index'    => AccountLevel::LOWGM,
+			'index'    => AccountLevel::LOWGM
 		),
 		'ranking'   => array(
 			'index'    => AccountLevel::NORMAL
@@ -60,7 +50,7 @@ return array(
 		),
 		'server'    => array(
 			'status'     => AccountLevel::ANYONE,
-			'status-xml' => AccountLevel::ANYONE,
+			'status-xml' => AccountLevel::ANYONE
 		),
 		'logdata'   => array(
 			'index'   => AccountLevel::ADMIN,
