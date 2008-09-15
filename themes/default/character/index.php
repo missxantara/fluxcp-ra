@@ -52,7 +52,7 @@
 				<span class="offline">Offline</span>
 			<?php endif ?>
 		</td>
-		<td><?php echo (int)$char->char_num ?></td>
+		<td><?php echo $char->char_num + 1 ?></td>
 	</tr>
 	<?php endforeach ?>
 </table>
