@@ -83,8 +83,8 @@
 		<td colspan="3">
 			<form action="<?php echo $this->urlWithQs ?>" method="post">
 				<input type="hidden" name="tempban" value="1" />
-				<label>Ban Until:
-				<?php echo $this->dateTimeField('tempban'); ?></label>
+				<label>Ban Until:</label>
+				<?php echo $this->dateTimeField('tempban'); ?>
 				<input type="submit" value="Ban Account" onclick="return confirm('Are you sure?')" />
 			</form>
 		</td>
