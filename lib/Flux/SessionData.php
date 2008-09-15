@@ -87,6 +87,14 @@ class Flux_SessionData {
 		// Get new account data every request.
 		if ($this->loginAthenaGroup && $this->username && ($account = $this->getAccount($this->loginAthenaGroup, $this->username))) {
 			$this->account = $account;
+			
+			// Automatically log out of account when detected as banned.
+			$permBan = ($account->state == 5 && !Flux::config('AllowPermBanLogin'));
+			$tempBan = (($account->unban_time > 0 && $account->unban_time < time()) && !Flux::config('AllowTempBanLogin'));
+			
+			if ($permBan || $tempBan) {
+				$this->logout();
+			}
 		}
 		else {
 			$this->account = new Flux_DataObject(null, array('level' => AccountLevel::UNAUTH));
