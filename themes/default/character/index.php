@@ -14,7 +14,7 @@
 		<th><?php echo $paginator->sortableColumn('guild_name', 'Guild') ?></th>
 		<th><?php echo $paginator->sortableColumn('partner_name', 'Partner') ?></th>
 		<th><?php echo $paginator->sortableColumn('online', 'Online') ?></th>
-		<th><?php echo $paginator->sortableColumn('char_num', 'Slot') ?></th>
+		<th><?php echo $paginator->sortableColumn('ch.char_num', 'Slot') ?></th>
 	</tr>
 	<?php foreach ($characters as $char): ?>
 	<tr>

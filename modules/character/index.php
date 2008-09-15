@@ -13,7 +13,7 @@ $sth->execute();
 $paginator = $this->getPaginator($sth->fetch()->total);
 $paginator->setSortableColumns(array(
 	'ch.char_id' => 'asc', 'userid', 'char_name', 'base_level', 'job_level',
-	'zeny', 'guild_name', 'partner_name', 'online', 'char_num'
+	'zeny', 'guild_name', 'partner_name', 'online', 'ch.char_num'
 ));
 
 $col  = "ch.account_id, ch.char_id, ch.name AS char_name, ch.char_num, ";
@@ -25,6 +25,6 @@ $sql  = $paginator->getSQL($sql);
 $sth  = $server->connection->getStatement($sql);
 
 $sth->execute();
-
+var_dump($sth->errorInfo());
 $characters = $sth->fetchAll();
 ?>
