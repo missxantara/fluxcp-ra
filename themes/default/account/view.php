@@ -1,5 +1,8 @@
 <?php if (!defined('FLUX_ROOT')) exit; ?>
 <h2>Viewing Account</h2>
+<?php if (!empty($errorMessage)): ?>
+<p class="red"><?php echo htmlspecialchars($errorMessage) ?></p>
+<?php endif ?>
 <?php if ($account): ?>
 <table class="vertical-table">
 	<tr>
@@ -74,6 +77,45 @@
 			<?php endif ?>
 		</td>
 	</tr>
+	<?php if ($showTempBan): ?>
+	<tr>
+		<th>Temporary Ban</th>
+		<td colspan="3">
+			<form action="<?php echo $this->urlWithQs ?>" method="post">
+				<input type="hidden" name="tempban" value="1" />
+				<label>Ban Until:
+				<?php echo $this->dateTimeField('tempban'); ?></label>
+				<input type="submit" value="Ban Account" onclick="return confirm('Are you sure?')" />
+			</form>
+		</td>
+	</tr>
+	<?php endif ?>
+	<?php if ($showPermBan): ?>
+	<tr>
+		<th>Permanent Ban</th>
+		<td colspan="3">
+			<form action="<?php echo $this->urlWithQs ?>" method="post">
+				<input type="hidden" name="permban" value="1" />
+				<input type="submit" value="Permanently Ban Account" onclick="return confirm('Are you sure?')" />
+			</form>
+		</td>
+	</tr>
+	<?php endif ?>
+	<?php if ($showUnban): ?>
+	<tr>
+		<th>Remove Ban</th>
+		<td colspan="3">
+			<form action="<?php echo $this->urlWithQs ?>" method="post">
+				<input type="hidden" name="unban" value="1" />
+			<?php if ($tempBanned && $auth->allowedToTempUnbanAccount): ?>
+				<input type="submit" value="Remove Temporary Ban" />
+			<?php elseif ($permBanned && $auth->allowedToPermUnbanAccount): ?>
+				<input type="submit" value="Remove Permanent Ban" />
+			<?php endif ?>
+			</form>
+		</td>
+	</tr>
+	<?php endif ?>
 </table>
 <?php foreach ($characters as $serverName => $chars): ?>
 	<h3>Characters on <?php echo htmlspecialchars($serverName) ?></h3>

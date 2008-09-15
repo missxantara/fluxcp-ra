@@ -152,5 +152,36 @@ class Flux_LoginServer extends Flux_BaseServer {
 			return false;
 		}
 	}
+	
+	/**
+	 *
+	 */
+	public function temporarilyBan($accountID, $until)
+	{
+		$ts  = strtotime($until);
+		$sql = "UPDATE {$this->loginDatabase}.login SET state = 0, unban_time = '$ts' WHERE account_id = ?";
+		$sth = $this->connection->getStatement($sql);
+		return (bool)$sth->execute(array($accountID));
+	}
+	
+	/**
+	 *
+	 */
+	public function permanentlyBan($accountID)
+	{
+		$sql = "UPDATE {$this->loginDatabase}.login SET state = 5, unban_time = 0 WHERE account_id = ?";
+		$sth = $this->connection->getStatement($sql);
+		return (bool)$sth->execute(array($accountID));
+	}
+	
+	/**
+	 *
+	 */
+	public function unban($accountID)
+	{
+		$sql = "UPDATE {$this->loginDatabase}.login SET state = 0, unban_time = 0 WHERE account_id = ?";
+		$sth = $this->connection->getStatement($sql);
+		return (bool)$sth->execute(array($accountID));
+	}
 }
 ?>

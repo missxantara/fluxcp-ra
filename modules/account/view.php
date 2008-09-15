@@ -29,6 +29,60 @@ if (!$isMine) {
 	$account = $sth->fetch();
 }
 
+$banSuperior = $account && (($account->level > $session->account->level && $auth->allowedToBanHigherPower) || $account->level <= $session->account->level);
+$canTempBan  = $banSuperior && $auth->allowedToTempBanAccount;
+$canPermBan  = $banSuperior && $auth->allowedToPermBanAccount;
+$tempBanned  = $account && $account->unban_time > 0;
+$permBanned  = $account && $account->state == 5;
+$showTempBan = !$tempBanned && !$permBanned && $auth->allowedToTempBanAccount;
+$showPermBan = !$permBanned && $auth->allowedToPermBanAccount;
+$showUnban   = ($tempBanned && $auth->allowedToTempUnbanAccount) || ($permBanned && $auth->allowedToPermUnbanAccount);
+
+if (count($_POST) && $account) {
+	if ($params->get('tempban') && ($tempBanDate=$params->get('tempban_date'))) {
+		if ($canTempBan) {
+			if ($server->loginServer->temporarilyBan($account->account_id, $tempBanDate)) {
+				$formattedDate = $this->formatDateTime($tempBanDate);
+				$session->setMessageData("Account has been temporarily banned until $formattedDate.");
+				$this->redirect($this->url('account', 'view', array('id' => $account->account_id)));
+			}
+			else {
+				$errorMessage = 'Failed to temporarily ban account.';
+			}
+		}
+		else {
+			$errorMessage = 'You are unauthorized to place temporary bans on this account.';
+		}
+	}
+	elseif ($params->get('permban')) {
+		if ($canPermBan) {
+			if ($server->loginServer->permanentlyBan($account->account_id)) {
+				$session->setMessageData("Account has been permanently banned.");
+				$this->redirect($this->url('account', 'view', array('id' => $account->account_id)));
+			}
+			else {
+				$errorMessage = 'Failed to permanently ban account.';
+			}
+		}
+		else {
+			$errorMessage = 'You are unauthorized to place permanent bans on this account.';
+		}
+	}
+	elseif ($params->get('unban')) {
+		if ($tempBanned && $auth->allowedToTempUnbanAccount && $server->loginServer->unban($account->account_id)) {
+			$session->setMessageData('Account has been unbanned.');
+			$this->redirect($this->url('account', 'view', array('id' => $account->account_id)));
+		}
+		elseif ($permBanned && $auth->allowedToPermUnbanAccount && $server->loginServer->unban($account->account_id)) {
+			$session->setMessageData('Account has been unbanned.');
+			$this->redirect($this->url('account', 'view', array('id' => $account->account_id)));
+		}
+		else {
+			$errorMessage = "You are unauthorized to remove this account's ban status.";
+		}
+	}
+}
+
 $characters = array();
 foreach ($session->getAthenaServerNames() as $serverName) {
 	$athena = $session->getAthenaServer($serverName);

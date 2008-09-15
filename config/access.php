@@ -105,7 +105,9 @@ return array(
 		'TempUnbanAccount'   => AccountLevel::LOWGM,
 		'PermBanAccount'     => AccountLevel::HIGHGM,
 		'PermUnbanAccount'   => AccountLevel::HIGHGM,
-		'SearchMD5Passwords' => AccountLevel::ADMIN
+		'SearchMD5Passwords' => AccountLevel::ADMIN,
+		
+		'BanHigherPower'     => 5000
 	)
 );
 ?>
