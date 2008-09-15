@@ -84,16 +84,16 @@ return array(
 		),
 		'logdata' => array(
 			'paypal'  => 'Transactions',
-			'char'    => 'Characters',
-			'inter'   => 'Interactions',
-			'command' => 'Commands',
-			'branch'  => 'Branches',
-			'chat'    => 'Chats',
-			'login'   => 'Logins',
-			'mvp'     => 'MVP',
-			'npc'     => 'NPC',
-			'pick'    => 'Item Picks',
-			'zeny'    => 'Zeny'
+			//'char'    => 'Characters',
+			//'inter'   => 'Interactions',
+			//'command' => 'Commands',
+			//'branch'  => 'Branches',
+			//'chat'    => 'Chats',
+			//'login'   => 'Logins',
+			//'mvp'     => 'MVP',
+			//'npc'     => 'NPC',
+			//'pick'    => 'Item Picks',
+			//'zeny'    => 'Zeny'
 		)
 	),
 	
