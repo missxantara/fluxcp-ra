@@ -13,8 +13,8 @@
 				You are currently logged in as <strong><a href="<?php echo $this->url('account', 'view') ?>" title="View account"><?php echo htmlspecialchars($session->account->userid) ?></a></strong>
 				on <?php echo htmlspecialchars($session->serverName) ?>.  Your preferred server is:
 			</span>
-			<select name="preferred_server" onchange="updatePreferredServer(this)">
-				<?php foreach ($session->getAthenaServerNames() as $serverName): ?>
+			<select name="preferred_server" onchange="updatePreferredServer(this)"<?php if (count($athenaServerNames=$session->getAthenaServerNames()) === 1) echo ' disabled="disabled"'  ?>>
+				<?php foreach ($athenaServerNames as $serverName): ?>
 				<option value="<?php echo htmlspecialchars($serverName) ?>"<?php if ($server->serverName == $serverName) echo ' selected="selected"' ?>><?php echo htmlspecialchars($serverName) ?></option>
 				<?php endforeach ?>
 			</select>.
