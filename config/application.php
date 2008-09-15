@@ -61,7 +61,7 @@ return array(
 		'Log Data'      => array('module' => 'logdata'),
 		//'IP Ban List'   => array('module' => 'ipban'),
 		'Accounts'      => array('module' => 'account'),
-		//'Characters'    => array('module' => 'character'),
+		'Characters'    => array('module' => 'character'),
 		//'Guilds'        => array('module' => 'guild'),
 		//'Castles'       => array('module' => 'castle'),
 		//'Auction'       => array('module' => 'auction'),
