@@ -390,10 +390,6 @@ input[type=text], input[type=password], textarea {
 	margin: 2px 0;
 }
 
-#logo {
-	display: block;
-}
-
 #submenu {
 	color: #bbb;
 }
