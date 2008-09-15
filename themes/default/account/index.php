@@ -74,7 +74,7 @@
 <?php echo $paginator->infoText() ?>
 <table class="horizontal-table">
 	<tr>
-		<th><?php echo $paginator->sortableColumn('account_id', 'Account ID') ?></th>
+		<th><?php echo $paginator->sortableColumn('login.account_id', 'Account ID') ?></th>
 		<th><?php echo $paginator->sortableColumn('userid', 'Username') ?></th>
 		<?php if ($showPassword): ?><th><?php echo $paginator->sortableColumn('user_pass', 'Password') ?></th><?php endif ?>
 		<th><?php echo $paginator->sortableColumn('sex', 'Gender') ?></th>
