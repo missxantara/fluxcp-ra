@@ -175,7 +175,14 @@ class Flux_Paginator {
 					$orderBy = true;
 				}
 				
-				$sql .= " $columnName $value,";
+				if ($value == 'ASC') {
+					$sql .= " (CASE WHEN $columnName IS NULL THEN 1 ELSE 0 END) ASC, $columnName ASC,";
+					//ORDER BY CASE WHEN myColumn IS NULL THEN 1 ELSE 0 END ASC, myColumn ASC
+					//$sql .= " ch.$columnName ASC,";
+				}
+				else {
+					$sql .= " $columnName $value,";
+				}
 			}
 		}
 		
