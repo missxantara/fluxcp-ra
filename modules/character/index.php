@@ -25,6 +25,6 @@ $sql  = $paginator->getSQL($sql);
 $sth  = $server->connection->getStatement($sql);
 
 $sth->execute();
-var_dump($sth->errorInfo());
+
 $characters = $sth->fetchAll();
 ?>
