@@ -32,6 +32,13 @@ require_once 'Flux/Installer.php';
 require_once 'Flux/PermissionError.php';
 
 try {
+	if (!extension_loaded('pdo')) {
+		throw new Flux_Error('The PDO extension is required to use Flux, please make sure it is installed along with the PDO_MYSQL driver.');
+	}
+	elseif (!extension_loaded('pdo_mysql')) {
+		throw new Flux_Error('The PDO_MYSQL driver for the PDO extension must be installed to use Flux.  Please consult the PHP manual for installation instructions.');
+	}
+	
 	// Initialize Flux.
 	Flux::initialize(array(
 		'appConfigFile'      => FLUX_CONFIG_DIR.'/application.php',
