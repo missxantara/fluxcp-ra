@@ -1,4 +1,11 @@
 <?php
+if (version_compare(PHP_VERSION, '5.1', '<')) {
+	echo '<h2>Error</h2>';
+	echo '<p>PHP 5.1 or higher is required to use Flux Control Panel.</p>';
+	echo '<p>You are running '.PHP_VERSION.'</p>';
+	exit;
+}
+
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
