@@ -3,7 +3,7 @@ error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
 define('FLUX_ROOT',       str_replace('\\', '/', dirname(__FILE__)));
-define('FLUX_DATA_DIR',   'data');
+//define('FLUX_DATA_DIR',   'data');
 define('FLUX_CONFIG_DIR', 'config');
 define('FLUX_LIB_DIR',    'lib');
 define('FLUX_MODULE_DIR', 'modules');
@@ -31,6 +31,7 @@ try {
 		'serversConfigFile'  => FLUX_CONFIG_DIR.'/servers.php',
 		'messagesConfigFile' => FLUX_CONFIG_DIR.'/messages.php'
 	));
+	define('FLUX_DATA_DIR', Flux::config('DataDirectory'));
 	
 	// Create some basic directories.
 	$directories = array(
