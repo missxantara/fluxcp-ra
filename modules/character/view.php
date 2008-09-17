@@ -48,7 +48,15 @@ $sth  = $server->connection->getStatement($sql);
 $sth->execute(array($charID));
 
 $char = $sth->fetch();
-//echo '<pre>';
-//print_r($char);
-//echo '</pre>';
+
+if ($char && $char->char_account_id == $session->account->account_id) {
+	$isMine = true;
+}
+else {
+	$isMine = false;
+}
+
+if (!$isMine && !$auth->allowedToViewCharacter) {
+	$this->deny();
+}
 ?>

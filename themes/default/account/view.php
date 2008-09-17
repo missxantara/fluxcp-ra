@@ -133,7 +133,13 @@
 		<?php foreach ($chars as $char): ?>
 		<tr>
 			<td align="right"><?php echo $char->char_num+1 ?></td>
-			<td><a href="<?php echo $this->url('character', 'view', array('id' => $char->char_id, 'preferred_server' => $serverName)) ?>"><?php echo htmlspecialchars($char->name) ?></a></td>
+			<td>
+				<?php if ($isMine || (!$isMine && $auth->allowedToViewCharacter)): ?>
+					<?php echo $this->linkToCharacter($char->char_id, $char->name, $serverName) ?>
+				<?php else: ?>
+					<?php echo htmlspecialchars($char->name) ?>
+				<?php endif ?>
+			</td>
 			<td><?php echo htmlspecialchars($this->jobClassText($char->class)) ?></td>
 			<td><?php echo (int)$char->base_level ?></td>
 			<td><?php echo (int)$char->job_level ?></td>

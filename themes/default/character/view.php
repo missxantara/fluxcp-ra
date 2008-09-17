@@ -33,7 +33,11 @@
 		<th>Partner</th>
 		<td>
 			<?php if ($char->partner_name): ?>
-				<?php echo $this->linkToCharacter($char->partner_id, $char->partner_name) ?>
+				<?php if ($auth->allowedToViewCharacter): ?>
+					<?php echo $this->linkToCharacter($char->partner_id, $char->partner_name) ?>
+				<?php else: ?>
+					<?php echo htmlspecialchars($char->parter_name) ?>
+				<?php endif ?>
 			<?php else: ?>
 				<span class="not-applicable">None</span>
 			<?php endif ?>
@@ -47,7 +51,11 @@
 		<th>Child</th>
 		<td>
 			<?php if ($char->child_name): ?>
-				<?php echo $this->linkToCharacter($char->child_id, $char->child_name) ?>
+				<?php if ($auth->allowedToViewCharacter): ?>
+					<?php echo $this->linkToCharacter($char->child_id, $char->child_name) ?>
+				<?php else: ?>
+					<?php echo htmlspecialchars($char->child_name) ?>
+				<?php endif ?>
 			<?php else: ?>
 				<span class="not-applicable">None</span>
 			<?php endif ?>
@@ -61,7 +69,11 @@
 		<th>Mother</th>
 		<td>
 			<?php if ($char->mother_name): ?>
-				<?php echo $this->linkToCharacter($char->mother_id, $char->mother_name) ?>
+				<?php if ($auth->allowedToViewCharacter): ?>
+					<?php echo $this->linkToCharacter($char->mother_id, $char->mother_name) ?>
+				<?php else: ?>
+					<?php echo htmlspecialchars($char->mother_name) ?>
+				<?php endif ?>
 			<?php else: ?>
 				<span class="not-applicable">None</span>
 			<?php endif ?>
@@ -75,7 +87,11 @@
 		<th>Father</th>
 		<td>
 			<?php if ($char->father_name): ?>
-				<?php echo $this->linkToCharacter($char->father_id, $char->father_name) ?>
+				<?php if ($auth->allowedToViewCharacter): ?>
+					<?php echo $this->linkToCharacter($char->father_id, $char->father_name) ?>
+				<?php else: ?>
+					<?php echo htmlspecialchars($char->father_name) ?>
+				<?php endif ?>
 			<?php else: ?>
 				<span class="not-applicable">None</span>
 			<?php endif ?>
@@ -173,4 +189,6 @@
 		</td>
 	</tr>
 </table>
+<?php else: ?>
+<p>No such character was found. <a href="javascript:history.go(-1)">Go back</a>.</p>
 <?php endif ?>

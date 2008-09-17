@@ -96,6 +96,7 @@ return array(
 		'PermBanAccount'     => AccountLevel::HIGHGM,
 		'PermUnbanAccount'   => AccountLevel::HIGHGM,
 		'SearchMD5Passwords' => AccountLevel::ADMIN,
+		'ViewCharacter'      => AccountLevel::HIGHGM,
 		
 		'BanHigherPower'     => 5000
 	)
