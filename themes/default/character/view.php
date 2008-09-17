@@ -197,7 +197,7 @@
 <?php if ($char->party_name): ?>
 <h3>Other Party Members of “<?php echo htmlspecialchars($char->party_name) ?>”</h3>
 	<?php if ($partyMembers): ?>
-		<p><?php echo htmlspecialchars($char->party_name) ?> has <?php echo count($partyMembers) ?> party member(s).</p>
+		<p><?php echo htmlspecialchars($char->party_name) ?> has <?php echo count($partyMembers) ?> other party member(s) besides <?php echo htmlspecialchars($char->char_name) ?>.</p>
 		<table class="vertical-table">
 			<tr>
 				<th>Character Name</th>
