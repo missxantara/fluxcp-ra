@@ -21,7 +21,10 @@
 	</tr>
 	<?php foreach ($characters as $char): ?>
 	<tr>
-		<td align="right"><?php echo $this->linkToCharacter($char->char_id, $char->char_id) ?></td>
+		<td align="right">
+			<?php /*echo $this->linkToCharacter($char->char_id, $char->char_id)*/ ?>
+			<?php echo htmlspecialchars($char->char_id) ?>
+		</td>
 		<td><?php echo $this->linkToAccount($char->account_id, $char->userid) ?></td>
 		<td><?php echo htmlspecialchars($char->char_name) ?></td>
 		<td>
