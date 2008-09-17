@@ -166,4 +166,8 @@ $sth  = $server->connection->getStatement($sql);
 $sth->execute($bind);
 
 $characters = $sth->fetchAll();
+
+if ($characters && count($characters) === 1) {
+	$this->redirect($this->url('character', 'view', array('id' => $characters[0]->char_id)));
+}
 ?>
