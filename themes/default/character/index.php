@@ -13,12 +13,15 @@
 		<th><?php echo $paginator->sortableColumn('zeny', 'Zeny') ?></th>
 		<th><?php echo $paginator->sortableColumn('guild_name', 'Guild') ?></th>
 		<th><?php echo $paginator->sortableColumn('partner_name', 'Partner') ?></th>
+		<th><?php echo $paginator->sortableColumn('mother_name', 'Mother') ?></th>
+		<th><?php echo $paginator->sortableColumn('father_name', 'Father') ?></th>
+		<th><?php echo $paginator->sortableColumn('child_name', 'Child') ?></th>
 		<th><?php echo $paginator->sortableColumn('online', 'Online') ?></th>
 		<th><?php echo $paginator->sortableColumn('ch.char_num', 'Slot') ?></th>
 	</tr>
 	<?php foreach ($characters as $char): ?>
 	<tr>
-		<td align="right"><?php echo htmlspecialchars($char->char_id) ?></td>
+		<td align="right"><?php echo $this->linkToCharacter($char->char_id, $char->char_id) ?></td>
 		<td><?php echo $this->linkToAccount($char->account_id, $char->userid) ?></td>
 		<td><?php echo htmlspecialchars($char->char_name) ?></td>
 		<td>
@@ -41,6 +44,27 @@
 		<td>
 			<?php if ($char->partner_name): ?>
 				<?php echo htmlspecialchars($char->partner_name) ?>
+			<?php else: ?>
+				<span class="not-applicable">None</span>
+			<?php endif ?>
+		</td>
+		<td>
+			<?php if ($char->mother_name): ?>
+				<?php echo htmlspecialchars($char->mother_name) ?>
+			<?php else: ?>
+				<span class="not-applicable">None</span>
+			<?php endif ?>
+		</td>
+		<td>
+			<?php if ($char->father_name): ?>
+				<?php echo htmlspecialchars($char->father_name) ?>
+			<?php else: ?>
+				<span class="not-applicable">None</span>
+			<?php endif ?>
+		</td>
+		<td>
+			<?php if ($char->child_name): ?>
+				<?php echo htmlspecialchars($char->child_name) ?>
 			<?php else: ?>
 				<span class="not-applicable">None</span>
 			<?php endif ?>
