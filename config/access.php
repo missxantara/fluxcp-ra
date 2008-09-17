@@ -86,8 +86,6 @@ return array(
 	),
 	// General feature permissions, handled by the modules themselves.
 	'features' => array(
-		'Donate'             => AccountLevel::NORMAL,
-		'Purchase'           => AccountLevel::NORMAL,
 		'ViewAccount'        => AccountLevel::HIGHGM,
 		'DeleteAccount'      => AccountLevel::HIGHGM,
 		'DeleteCharacter'    => AccountLevel::HIGHGM,
