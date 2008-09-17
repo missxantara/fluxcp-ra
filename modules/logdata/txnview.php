@@ -1,6 +1,8 @@
 <?php
 if (!defined('FLUX_ROOT')) exit;
 
+$this->loginRequired();
+
 $txnLogTable = Flux::config('FluxTables.TransactionTable');
 $txnID       = $params->get('id');
 $txnFileLog  = '';

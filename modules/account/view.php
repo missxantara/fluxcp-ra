@@ -1,6 +1,8 @@
 <?php
 if (!defined('FLUX_ROOT')) exit;
 
+$this->loginRequired();
+
 $creditsTable  = Flux::config('FluxTables.CreditsTable');
 $creditColumns = 'credits.balance, credits.last_donation_date, credits.last_donation_amount';
 $isMine        = false;

@@ -1,6 +1,8 @@
 <?php
 if (!defined('FLUX_ROOT')) exit;
 
+$this->loginRequired();
+
 $charID = $params->get('id');
 
 $col  = "ch.char_id, ch.account_id, ch.char_num, ch.name AS char_name, ch.class AS char_class, ch.base_level AS char_base_level, ";
