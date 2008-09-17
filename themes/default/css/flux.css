@@ -464,3 +464,23 @@ input[type=text], input[type=password], textarea {
 .sortable:hover {
 	color: #000;
 }
+
+.character-stats {
+	border-spacing: 0;
+	border-collapse: collapse;
+	color: #ccc;
+}
+
+.character-stats td {
+	padding: 0px 10px 5px 0;
+	border: 0;
+	text-align: center;
+}
+
+.character-stats .stat-name {
+	color: #666;
+}
+
+.character-stats .stat-value {
+	color: #000;
+}

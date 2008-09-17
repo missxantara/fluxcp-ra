@@ -37,7 +37,9 @@ if ($session->isLoggedIn()) {
 	// Update preferred server.
 	if (($preferred_server = $params->get('preferred_server')) && $session->getAthenaServer($preferred_server)) {
 		$session->setAthenaServerNameData($params->get('preferred_server'));
-		$this->redirect($this->url);
+		if (!array_key_exists('preferred_server', $_GET)) {
+			$this->redirect($this->url);
+		}
 	}
 
 	// Preferred server.
