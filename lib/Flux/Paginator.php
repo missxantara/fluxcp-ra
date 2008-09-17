@@ -394,11 +394,16 @@ class Flux_Paginator {
 	 */
 	public function infoText()
 	{
+		$currPage = $this->currentPage;
 		if ($this->total === 1) {
 			$text = 'Retrieved <span class="info-text-total">one</span> record.';
 		}
 		else {
 			$text = "Retrieved a total of <span class=\"info-text-total\">{$this->total}</span> records.";
+			if ($currPage * 20 < $this->total)
+				$text .= ' Displaying results <span class="info-text-results">'.($currPage*20-19).'-'.($currPage*20).'</span>.';
+			else
+				$text .= ' Displaying results <span class="info-text-results">'.($currPage*20-19).'-'.($this->total).'</span>.';
 		}
 		
 		return sprintf('<p class="info-text">%s</p>', $text);
