@@ -487,3 +487,23 @@ input[type=text], input[type=password], textarea {
 .character-stats .stat-value {
 	color: #000;
 }
+
+.credit-balance {
+	float: right;
+	display: inline-block;
+	padding: 10px;
+	color: #000;
+	background-color: #eee;
+	border: 1px dotted #ddd;
+}
+
+.credit-balance .balance-text {
+	display: inline-block;
+	margin-right: 5px;
+	color: #bbb;
+	text-transform: uppercase;
+}
+
+.credit-balance .balance-amount {
+	font-weight: bold;
+}

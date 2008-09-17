@@ -112,3 +112,6 @@
 								
 								<!-- Sub menu -->
 								<?php include 'main/submenu.php' ?>
+								
+								<!-- Credit balance -->
+								<?php if (in_array($params->get('module'), array('donate', 'purchase'))) include 'main/balance.php' ?>
