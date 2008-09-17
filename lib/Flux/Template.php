@@ -402,7 +402,7 @@ class Flux_Template {
 		if (is_array($path)) {
 			$path = implode('/', $path);
 		}
-		return "{$this->basePath}/$path";
+		return preg_replace('&/{2,}&', '/', "{$this->basePath}/$path");
 	}
 	
 	/**
