@@ -15,9 +15,9 @@ $sth  = $server->connection->getStatement($sql);
 $sth->execute();
 $paginator = $this->getPaginator($sth->fetch()->total);
 $paginator->setSortableColumns(array(
-	'ch.char_id' => 'asc', 'userid', 'char_name', 'base_level', 'job_level',
-	'zeny', 'guild_name', 'partner_name', 'mother_name', 'father_name', 'child_name',
-	'online', 'ch.char_num'
+	'ch.char_id' => 'asc', 'userid', 'char_name', 'ch.base_level', 'ch.job_level',
+	'ch.zeny', 'guild_name', 'partner_name', 'mother_name', 'father_name', 'child_name',
+	'ch.online', 'ch.char_num'
 ));
 
 $col  = "ch.account_id, ch.char_id, ch.name AS char_name, ch.char_num, ";

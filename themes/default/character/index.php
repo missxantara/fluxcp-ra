@@ -8,22 +8,22 @@
 		<th><?php echo $paginator->sortableColumn('userid', 'Account') ?></th>
 		<th><?php echo $paginator->sortableColumn('char_name', 'Character') ?></th>
 		<th>Job Class</th>
-		<th><?php echo $paginator->sortableColumn('base_level', 'Base Level') ?></th>
-		<th><?php echo $paginator->sortableColumn('job_level', 'Job Level') ?></th>
-		<th><?php echo $paginator->sortableColumn('zeny', 'Zeny') ?></th>
+		<th><?php echo $paginator->sortableColumn('ch.base_level', 'Base Level') ?></th>
+		<th><?php echo $paginator->sortableColumn('ch.job_level', 'Job Level') ?></th>
+		<th><?php echo $paginator->sortableColumn('ch.zeny', 'Zeny') ?></th>
 		<th><?php echo $paginator->sortableColumn('guild_name', 'Guild') ?></th>
 		<th><?php echo $paginator->sortableColumn('partner_name', 'Partner') ?></th>
 		<th><?php echo $paginator->sortableColumn('mother_name', 'Mother') ?></th>
 		<th><?php echo $paginator->sortableColumn('father_name', 'Father') ?></th>
 		<th><?php echo $paginator->sortableColumn('child_name', 'Child') ?></th>
-		<th><?php echo $paginator->sortableColumn('online', 'Online') ?></th>
+		<th><?php echo $paginator->sortableColumn('ch.online', 'Online') ?></th>
 		<th><?php echo $paginator->sortableColumn('ch.char_num', 'Slot') ?></th>
 	</tr>
 	<?php foreach ($characters as $char): ?>
 	<tr>
 		<td align="right">
-			<?php /*echo $this->linkToCharacter($char->char_id, $char->char_id)*/ ?>
-			<?php echo htmlspecialchars($char->char_id) ?>
+			<?php echo $this->linkToCharacter($char->char_id, $char->char_id) ?>
+			<?php /*echo htmlspecialchars($char->char_id)*/ ?>
 		</td>
 		<td><?php echo $this->linkToAccount($char->account_id, $char->userid) ?></td>
 		<td><?php echo htmlspecialchars($char->char_name) ?></td>
