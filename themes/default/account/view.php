@@ -117,7 +117,7 @@
 	</tr>
 	<?php endif ?>
 </table>
-<?php foreach ($characters as $serverName => $chars): ?>
+<?php foreach ($characters as $serverName => $chars): $zeny = 0; ?>
 	<h3>Characters on <?php echo htmlspecialchars($serverName) ?></h3>
 	<?php if ($chars): ?>
 	<table class="vertical-table">
@@ -130,7 +130,7 @@
 			<th>Zeny</th>
 			<th>Status</th>
 		</tr>
-		<?php foreach ($chars as $char): ?>
+		<?php foreach ($chars as $char): $zeny += $char->zeny; ?>
 		<tr>
 			<td align="right"><?php echo $char->char_num+1 ?></td>
 			<td>
@@ -154,6 +154,7 @@
 		</tr>
 		<?php endforeach ?>
 		</table>
+		<p>Total Zeny: <strong><?php echo number_format($zeny) ?></strong></p>
 	<?php else: ?>
 	<p>This account has no characters on <?php echo htmlspecialchars($serverName) ?>.</p>
 	<?php endif ?>
