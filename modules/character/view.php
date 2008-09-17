@@ -8,7 +8,7 @@ $col .= "ch.job_level AS char_job_level, ch.base_exp AS char_base_exp, ch.job_ex
 $col .= "ch.str AS char_str, ch.agi AS char_agi, ch.vit AS char_vit, ";
 $col .= "ch.int AS char_int, ch.dex AS char_dex, ch.luk AS char_luk, ch.max_hp AS char_max_hp, ch.hp AS char_hp, ";
 $col .= "ch.max_sp AS char_max_sp, ch.sp AS char_sp, ch.status_point AS char_status_point, ";
-$col .= "ch.skill_point AS char_skill_point, ch.online AS char_online, ";
+$col .= "ch.skill_point AS char_skill_point, ch.online AS char_online, ch.party_id AS char_party_id, ";
 
 $col .= "login.userid, login.account_id AS char_account_id, ";
 $col .= "partner.name AS partner_name, partner.char_id AS partner_id, ";
@@ -58,5 +58,26 @@ else {
 
 if (!$isMine && !$auth->allowedToViewCharacter) {
 	$this->deny();
+}
+
+if ($char) {
+	$sql  = "SELECT fr.char_id, fr.name, fr.class, fr.base_level, fr.job_level, fr.online FROM {$server->charMapDatabase}.`char` AS fr ";
+	$sql .= "LEFT OUTER JOIN friends ON friends.friend_id = fr.char_id WHERE friends.char_id = ? ORDER BY fr.name ASC";
+	$sth  = $server->connection->getStatement($sql);
+	
+	$sth->execute(array($char->char_id));
+	$friends = $sth->fetchAll();
+	
+	if ($char->party_leader_id) {
+		$sql  = "SELECT p.char_id, p.name, p.class, p.base_level, p.job_level, p.online FROM {$server->charMapDatabase}.`char` AS p ";
+		$sql .= "WHERE p.party_id = ? AND p.char_id != ? ORDER BY p.name ASC";
+		$sth  = $server->connection->getStatement($sql);
+		
+		$sth->execute(array($char->char_party_id, $char->char_id));
+		$partyMembers = $sth->fetchAll();
+	}
+	else {
+		$partyMembers = array();
+	}
 }
 ?>

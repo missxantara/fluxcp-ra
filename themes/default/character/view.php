@@ -163,7 +163,7 @@
 		</td>
 		<th>Online Status</th>
 		<td>
-			<?php if ($char->online): ?>
+			<?php if ($char->char_online): ?>
 				<span class="online">Online</span>
 			<?php else: ?>
 				<span class="offline">Offline</span>
@@ -194,6 +194,92 @@
 		</td>
 	</tr>
 </table>
+<?php if ($char->party_name): ?>
+<h3>Other Party Members of “<?php echo htmlspecialchars($char->party_name) ?>”</h3>
+	<?php if ($partyMembers): ?>
+		<p><?php echo htmlspecialchars($char->party_name) ?> has <?php echo count($partyMembers) ?> party member(s).</p>
+		<table class="vertical-table">
+			<tr>
+				<th>Character Name</th>
+				<th>Job Class</th>
+				<th>Base Level</th>
+				<th>Job Level</th>
+				<th>Status</th>
+			</tr>
+			<?php foreach ($partyMembers as $partyMember): ?>
+			<tr>
+				<td align="right">
+					<?php if ($auth->allowedToViewCharacter): ?>
+						<?php echo $this->linkToCharacter($partyMember->char_id, $partyMember->name) ?>
+					<?php else: ?>
+						<?php echo htmlspecialchars($partyMember->name) ?>
+					<?php endif ?>
+				</td>
+				<td>
+					<?php if ($job=$this->jobClassText($partyMember->class)): ?>
+						<?php echo htmlspecialchars($job) ?>
+					<?php else: ?>
+						<span class="not-applicable">Unknown</span>
+					<?php endif ?>
+				</td>
+				<td><?php echo number_format((int)$partyMember->base_level) ?></td>
+				<td><?php echo number_format((int)$partyMember->job_level) ?></td>
+				<td>
+					<?php if ($partyMember->online): ?>
+						<span class="online">Online</span>
+					<?php else: ?>
+						<span class="offline">Offline</span>
+					<?php endif ?>
+				</td>
+			</tr>
+			<?php endforeach ?>
+		</table>
+	<?php else: ?>
+		<p>There are no other members in this party.</p>
+	<?php endif ?>
+<?php endif ?>
+<h3>Friends of “<?php echo htmlspecialchars($char->char_name) ?>”</h3>
+<?php if ($friends): ?>
+	<p><?php echo htmlspecialchars($char->char_name) ?> has <?php echo count($friends) ?> friend(s).</p>
+	<table class="vertical-table">
+		<tr>
+			<th>Character Name</th>
+			<th>Job Class</th>
+			<th>Base Level</th>
+			<th>Job Level</th>
+			<th>Status</th>
+		</tr>
+		<?php foreach ($friends as $friend): ?>
+		<tr>
+			<td align="right">
+				<?php if ($auth->allowedToViewCharacter): ?>
+					<?php echo $this->linkToCharacter($friend->char_id, $friend->name) ?>
+				<?php else: ?>
+					<?php echo htmlspecialchars($friend->name) ?>
+				<?php endif ?>
+			</td>
+			<td>
+				<?php if ($job=$this->jobClassText($friend->class)): ?>
+					<?php echo htmlspecialchars($job) ?>
+				<?php else: ?>
+					<span class="not-applicable">Unknown</span>
+				<?php endif ?>
+			</td>
+			<td><?php echo number_format((int)$friend->base_level) ?></td>
+			<td><?php echo number_format((int)$friend->job_level) ?></td>
+			<td>
+				<?php if ($friend->online): ?>
+					<span class="online">Online</span>
+				<?php else: ?>
+					<span class="offline">Offline</span>
+				<?php endif ?>
+			</td>
+		</tr>
+		<?php endforeach ?>
+	</table>
+<?php else: ?>
+	<p><?php echo htmlspecialchars($char->char_name) ?> has no friends.</p>
+<?php endif ?>
 <?php else: ?>
 <p>No such character was found. <a href="javascript:history.go(-1)">Go back</a>.</p>
 <?php endif ?>
