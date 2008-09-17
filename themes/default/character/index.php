@@ -104,7 +104,13 @@
 				<?php echo htmlspecialchars($char->char_id) ?>
 			<?php endif ?>
 		</td>
-		<td><?php echo $this->linkToAccount($char->account_id, $char->userid) ?></td>
+		<td>
+			<?php if ($auth->allowedToViewAccount): ?>
+				<?php echo $this->linkToAccount($char->account_id, $char->userid) ?>
+			<?php else: ?>
+				<?php echo htmlspecialchars($char->userid) ?>
+			<?php endif ?>
+		</td>
 		<td><?php echo htmlspecialchars($char->char_name) ?></td>
 		<td>
 			<?php if ($job=$this->jobClassText($char->class)): ?>
