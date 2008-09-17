@@ -28,6 +28,7 @@ return array(
 			'view'     => AccountLevel::NORMAL
 		),
 		'guild'     => array(
+			'emblem'   => AccountLevel::ANYONE,
 			'index'    => AccountLevel::LOWGM
 		),
 		'castle'    => array(

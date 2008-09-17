@@ -15,7 +15,7 @@ $col .= "partner.name AS partner_name, partner.char_id AS partner_id, ";
 $col .= "mother.name AS mother_name, mother.char_id AS mother_id, ";
 $col .= "father.name AS father_name, father.char_id AS father_id, ";
 $col .= "child.name AS child_name, child.char_id AS child_id, ";
-$col .= "guild.name AS guild_name, ";
+$col .= "guild.guild_id, guild.name AS guild_name, ";
 $col .= "guild_position.name AS guild_position, ";
 $col .= "party.name AS party_name, party.leader_char AS party_leader_id, party_leader.name AS party_leader_name, ";
 

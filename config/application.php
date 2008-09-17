@@ -7,6 +7,7 @@ return array(
 	'SiteTitle'            => 'Flux Control Panel',     // This value is only used if the theme decides to use it.
 	'ThemeName'            => 'default',                // The theme name of the theme you would like to use.  Themes are in FLUX_ROOT/themes.
 	'DataDirectory'        => 'data',                   // Configurable location for where your data directory is located.  `data' is default.
+	'MissingEmblemBMP'     => 'empty.bmp',              //
 	'AdminMenuLevel'       => AccountLevel::LOWGM,      // The starting level for which module actions are moved into the admin menu for display.
 	'DateFormat'           => 'Y-m-d',                  // Default DATE format to be displayed in pages.
 	'DateTimeFormat'       => 'Y-m-d H:i:s',            // Default DATETIME format to be displayed in pages.
@@ -104,7 +105,8 @@ return array(
 	// Specifies which modules and actions should be ignored by Tidy
 	// (enabled/disabled by the OutputCleanHTML option).
 	'TidyIgnore' => array(
-		array('module' => 'captcha')
+		array('module' => 'captcha'),
+		array('module' => 'guild', 'action' => 'emblem')
 	),
 	
 	// Job classes, loaded from another file to avoid cluttering this one.

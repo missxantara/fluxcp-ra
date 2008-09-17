@@ -118,6 +118,7 @@
 		<td><?php echo number_format((int)$char->zeny) ?></td>
 		<td>
 			<?php if ($char->guild_name): ?>
+				<img src="<?php echo $this->emblem($char->guild_id) ?>" />
 				<?php echo htmlspecialchars($char->guild_name) ?>
 			<?php else: ?>
 				<span class="not-applicable">None</span>

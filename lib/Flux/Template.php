@@ -838,5 +838,23 @@ class Flux_Template {
 	{
 		return Flux::getHomunClass($id);
 	}
+	
+	/**
+	 *
+	 *
+	 */
+	public function emblem($guildID, $serverName = null, $athenaServerName = null)
+	{
+		if (Flux::$sessionData->isLoggedIn() && !$serverName) {
+			$serverName = Flux::$sessionData->loginAthenaGroup->serverName;
+		}
+		
+		if (Flux::$sessionData->isLoggedIn() && !$athenaServerName) {
+			$athenaServerName = Flux::$sessionData->getAthenaServer(Flux::$sessionData->athenaServerName);
+		}
+		
+		return $this->url('guild', 'emblem',
+			array('login' => $serverName, 'charmap' => $athenaServerName, 'id' => $guildID));
+	}
 }
 ?>
