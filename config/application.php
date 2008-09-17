@@ -113,6 +113,10 @@ return array(
 	'JobClasses'    => include('jobs.php'),
 	'JobClassIndex' => array_flip(include('jobs.php')),
 	
+	// Homunculus class IDs and their corresponding names.
+	// Best not to mess with this either.
+	'HomunClasses' => include('homunculus.php'),
+	
 	// DON'T TOUCH. THIS IS FOR DEVELOPERS.
 	'FluxTables' => array(
 		'CreditsTable'        => 'cp_credits',

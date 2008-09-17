@@ -826,5 +826,17 @@ class Flux_Template {
 		}
 		return $inputs;
 	}
+	
+	/**
+	 * Get the homun class name from a class ID.
+	 *
+	 * @param int $id
+	 * @return mixed Job class or false.
+	 * @access public
+	 */
+	public function homunClassText($id)
+	{
+		return Flux::getHomunClass($id);
+	}
 }
 ?>

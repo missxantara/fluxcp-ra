@@ -469,5 +469,25 @@ class Flux {
 			return false;
 		}
 	}
+	
+	/**
+	 * Get the homunculus class name from a homun class ID.
+	 *
+	 * @param int $id
+	 * @return mixed Class name or false.
+	 * @access public
+	 */
+	public static function getHomunClass($id)
+	{
+		$key   = "HomunClasses.$id";
+		$class = self::config($key);
+		
+		if ($class) {
+			return $class;
+		}
+		else {
+			return false;
+		}
+	}
 }
 ?>
