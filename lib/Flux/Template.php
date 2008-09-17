@@ -449,20 +449,21 @@ class Flux_Template {
 		
 		if ($this->useCleanUrls) {
 			if ($actionName && $actionName != $defaultAction) {
-				return sprintf('%s/%s/%s/%s', $this->basePath, $moduleName, $actionName, $queryString);
+				$url = sprintf('%s/%s/%s/%s', $this->basePath, $moduleName, $actionName, $queryString);
 			}
 			else {
-				return sprintf('%s/%s/%s', $this->basePath, $moduleName, $queryString);
+				$url = sprintf('%s/%s/%s', $this->basePath, $moduleName, $queryString);
 			}
 		}
 		else {
 			if ($actionName && $actionName != $defaultAction) {
-				return sprintf('%s/?module=%s&action=%s%s', $this->basePath, $moduleName, $actionName, $queryString);
+				$url = sprintf('%s/?module=%s&action=%s%s', $this->basePath, $moduleName, $actionName, $queryString);
 			}
 			else {
-				return sprintf('%s/?module=%s%s', $this->basePath, $moduleName, $queryString);
+				$url = sprintf('%s/?module=%s%s', $this->basePath, $moduleName, $queryString);
 			}
 		}
+		return preg_replace('&/{2,}&', '/', $url);
 	}
 	
 	/**
@@ -694,6 +695,30 @@ class Flux_Template {
 		if ($accountID) {
 			$url = $this->url('account', 'view', array('id' => $accountID));
 			return sprintf('<a href="%s" class="link-to-account">%s</a>', $url, htmlentities($text));
+		}
+		else {
+			return false;
+		}
+	}
+	
+	/**
+	 * Link to a character view page.
+	 *
+	 * @param int $accountID
+	 * @param string $text
+	 * @return mixed
+	 * @access public
+	 */
+	public function linkToCharacter($charID, $text, $server = null)
+	{
+		if ($charID) {
+			$params = array('id' => $charID);
+			if ($server) {
+				$params['preferred_server'] = $server;
+			}
+			
+			$url = $this->url('character', 'view', $params);
+			return sprintf('<a href="%s" class="link-to-character">%s</a>', $url, htmlentities($text));
 		}
 		else {
 			return false;
