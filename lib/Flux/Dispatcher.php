@@ -127,10 +127,7 @@ class Flux_Dispatcher {
 		if (!$auth->actionAllowed($moduleName, $actionName)) {
 			if (!Flux::$sessionData->isLoggedIn()) {
 				Flux::$sessionData->setMessageData('Please login to continue.');
-				//Flux::$sessionData->setReturnLocationData($_SERVER['REQUEST_URI']);
-				$params->set('return_url', $_SERVER['REQUEST_URI']);
-				$moduleName = 'account';
-				$actionName = 'login';
+				$this->loginRequired($baseURI);
 			}
 			else {
 				$moduleName = 'unauthorized';
@@ -196,6 +193,34 @@ class Flux_Dispatcher {
 	{
 		$this->defaultAction = $action;
 		return $action;
+	}
+	
+	/**
+	 * Redirect to login page if the user is not currently logged in.
+	 *
+	 * @param string $baseURI
+	 * @param string $loginModule
+	 * @param string $loginAction
+	 * @access private
+	 */
+	public function loginRequired($baseURI, $loginModule = 'account', $loginAction = 'login')
+	{
+		$session = Flux::$sessionData;
+		
+		if (!$session->isLoggedIn()) {
+			if (Flux::config('UseCleanUrls')) {
+				$loginURL = sprintf('%s/%s/%s/?return_url=%s',
+					$baseURI, $loginModule, $loginAction, rawurlencode($_SERVER['REQUEST_URI']));
+			}
+			else {
+				$loginURL = sprintf('%s/?module=%s&$action=%s&return_url=%s',
+					$baseURI, rawurlencode($loginModule), rawurlencode($loginAction), rawurlencode($_SERVER['REQUEST_URI']));
+			}
+			
+			$session->setMessageData('Please login to continue.');
+			header('Location: '.preg_replace('&/{2,}&', '/', $loginURL));
+			exit;
+		}
 	}
 }
 ?>

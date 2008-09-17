@@ -856,5 +856,14 @@ class Flux_Template {
 		return $this->url('guild', 'emblem',
 			array('login' => $serverName, 'charmap' => $athenaServerName, 'id' => $guildID));
 	}
+	
+	/**
+	 * Redirect to login page if the user is not currently logged in.
+	 */
+	public function loginRequired()
+	{
+		$dispatcher = Flux_Dispatcher::getInstance();
+		$dispatcher->loginRequired($this->basePath);
+	}
 }
 ?>
