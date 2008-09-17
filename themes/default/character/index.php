@@ -46,28 +46,28 @@
 		</td>
 		<td>
 			<?php if ($char->partner_name): ?>
-				<?php echo htmlspecialchars($char->partner_name) ?>
+				<?php echo $this->linkToCharacter($char->partner_id, $char->partner_name) ?>
 			<?php else: ?>
 				<span class="not-applicable">None</span>
 			<?php endif ?>
 		</td>
 		<td>
 			<?php if ($char->mother_name): ?>
-				<?php echo htmlspecialchars($char->mother_name) ?>
+				<?php echo $this->linkToCharacter($char->mother_id, $char->mother_name) ?>
 			<?php else: ?>
 				<span class="not-applicable">None</span>
 			<?php endif ?>
 		</td>
 		<td>
 			<?php if ($char->father_name): ?>
-				<?php echo htmlspecialchars($char->father_name) ?>
+				<?php echo $this->linkToCharacter($char->father_id, $char->father_name) ?>
 			<?php else: ?>
 				<span class="not-applicable">None</span>
 			<?php endif ?>
 		</td>
 		<td>
 			<?php if ($char->child_name): ?>
-				<?php echo htmlspecialchars($char->child_name) ?>
+				<?php echo $this->linkToCharacter($char->child_id, $char->child_name) ?>
 			<?php else: ?>
 				<span class="not-applicable">None</span>
 			<?php endif ?>
