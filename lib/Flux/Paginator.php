@@ -227,8 +227,8 @@ class Flux_Paginator {
 			
 			if ($i == $this->currentPage) {
 				$pages[] = sprintf(
-					'<a href="%s" title="Page #%d" class="page-num current-page">%d</a>',
-					$request, $i, $i
+					'<a title="Page #%d" class="page-num current-page">%d</a>',
+					$i, $i
 				);
 			}
 			else {

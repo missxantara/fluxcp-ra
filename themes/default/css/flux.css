@@ -231,8 +231,8 @@ input[type=text], input[type=password], textarea {
 }
 
 .pages .current-page {
+	color: #000000;
 	font-weight: bold;
-	font-style: italic;
 }
 
 .horizontal-table {
