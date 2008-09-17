@@ -151,7 +151,11 @@
 		<th>Party Leader</th>
 		<td>
 			<?php if ($char->party_leader_name): ?>
-				<?php echo $this->linkToCharacter($char->party_leader_id, $char->party_leader_name) ?>
+				<?php if ($auth->allowedToViewCharacter): ?>
+					<?php echo $this->linkToCharacter($char->party_leader_id, $char->party_leader_name) ?>
+				<?php else: ?>
+					<?php echo htmlspecialchars($char->party_leader_name) ?>
+				<?php endif ?>
 			<?php else: ?>	
 				<span class="not-applicable">None</span>
 			<?php endif ?>
