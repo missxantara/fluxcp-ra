@@ -1,0 +1,1 @@
+ALTER TABLE `cp_itemshop` DROP `refine`, DROP `attribute`, DROP `card0`, DROP `card1`, DROP `card2`, DROP `card3`;
