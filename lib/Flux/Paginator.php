@@ -399,7 +399,14 @@ class Flux_Paginator {
 			$text = 'Retrieved <span class="info-text-total">one</span> record.';
 		}
 		else {
-			$text = "Retrieved a total of <span class=\"info-text-total\">{$this->total}</span> records.";
+			$text = "Retrieved a total of <span class=\"info-text-total\">{$this->total}</span> records";
+			if ($this->numberOfPages > 1) {
+				$text .= " across <span class=\"info-text-pages\">{$this->numberOfPages}</span> pages.";
+			}
+			else {
+				$text .= '.';
+			}
+			
 			if ($currPage * 20 < $this->total)
 				$text .= ' Displaying results <span class="info-text-results">'.($currPage*20-19).'-'.($currPage*20).'</span>.';
 			else
