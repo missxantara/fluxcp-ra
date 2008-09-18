@@ -213,7 +213,7 @@ class Flux_Dispatcher {
 					$baseURI, $loginModule, $loginAction, rawurlencode($_SERVER['REQUEST_URI']));
 			}
 			else {
-				$loginURL = sprintf('%s/?module=%s&$action=%s&return_url=%s',
+				$loginURL = sprintf('%s/?module=%s&action=%s&return_url=%s',
 					$baseURI, rawurlencode($loginModule), rawurlencode($loginAction), rawurlencode($_SERVER['REQUEST_URI']));
 			}
 			
