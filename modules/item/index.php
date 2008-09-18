@@ -127,7 +127,7 @@ try {
 				$sqlpartial .= "AND refineable > 0 ";
 			}
 			elseif ($refineable == 'no') {
-				$sqlpartial .= "AND refineable < 1 ";
+				$sqlpartial .= "AND IFNULL(refineable, 0) < 1 ";
 			}
 		}
 	}
