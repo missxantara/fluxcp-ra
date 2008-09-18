@@ -507,3 +507,18 @@ input[type=text], input[type=password], textarea {
 .credit-balance .balance-amount {
 	font-weight: bold;
 }
+
+.emblem-server {
+	margin: 0 0 2px 0;
+	padding: 0 0 2px 0;
+	font-size: 120%;
+	border-bottom: 1px solid #ddd;
+}
+
+.emblem-server label {
+	display: block;
+}
+
+.emblem-server label:hover {
+	cursor: pointer;
+}
