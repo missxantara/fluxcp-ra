@@ -148,7 +148,7 @@ try {
 	$sql  = $paginator->getSQL("SELECT $col FROM $tableName $sqlpartial");
 	$sth  = $server->connection->getStatement($sql);
 	
-	$sth->execute($bind); var_dump($sth->errorInfo());
+	$sth->execute($bind);
 	$items = $sth->fetchAll();
 }
 catch (Exception $e) {
