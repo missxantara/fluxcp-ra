@@ -52,7 +52,7 @@ else {
 	}
 	
 	if ($charName) {
-		$sqlpartial .= "AND (ch.name LIKE ? OR ch.name = ?)";
+		$sqlpartial .= "AND (ch.name LIKE ? OR ch.name = ?) ";
 		$bind[]      = "%$charName%";
 		$bind[]      = $charName;
 	}
