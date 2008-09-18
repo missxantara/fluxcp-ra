@@ -122,6 +122,10 @@ return array(
 	// Homunculus class IDs and their corresponding names.
 	// Best not to mess with this either.
 	'HomunClasses' => include('homunculus.php'),
+
+	// Item Types with their corresponding names.
+	// Shouldn't touch this either.
+	'ItemTypes' => include('itemtypes.php'),
 	
 	// DON'T TOUCH. THIS IS FOR DEVELOPERS.
 	'FluxTables' => array(

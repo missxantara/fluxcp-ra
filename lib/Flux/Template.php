@@ -838,6 +838,18 @@ class Flux_Template {
 	{
 		return Flux::getHomunClass($id);
 	}
+
+	/**
+	 * Get the item type name from an item type.
+	 *
+	 * @param int $id
+	 * @return mixed Item type or false.
+	 * @access public
+	 */
+	public function itemTypeText($id)
+	{
+		return Flux::getItemType($id);
+	}
 	
 	/**
 	 *

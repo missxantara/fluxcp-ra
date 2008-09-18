@@ -489,5 +489,25 @@ class Flux {
 			return false;
 		}
 	}
+
+	/**
+	 * Get the item type name from an item type.
+	 *
+	 * @param int $id
+	 * @return mixed Item Type or false.
+	 * @access public
+	 */
+	public static function getItemType($id)
+	{
+		$key   = "ItemTypes.$id";
+		$type = self::config($key);
+		
+		if ($type) {
+			return $type;
+		}
+		else {
+			return false;
+		}
+	}
 }
 ?>

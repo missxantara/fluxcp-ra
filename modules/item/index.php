@@ -23,6 +23,7 @@ try {
 		$opMapping    = array('eq' => '=', 'gt' => '>', 'lt' => '<');
 		$opValues     = array_keys($opMapping);
 		$itemName     = $params->get('name');
+		$itemType     = $params->get('type');
 		$npcBuy       = $params->get('npc_buy');
 		$npcBuyOp     = $params->get('npc_buy_op');
 		$npcSell      = $params->get('npc_sell');
@@ -43,6 +44,28 @@ try {
 			$sqlpartial .= "AND (name_japanese LIKE ? OR name_japanese = ?) ";
 			$bind[]      = "%$itemName%";
 			$bind[]      = $itemName;
+		}
+
+		if ($itemType) {
+			$typeName   = preg_quote($itemType);
+			$itemTypes  = preg_grep("/.*?$typeName.*?/", Flux::config('ItemTypes')->toArray());
+			
+			if (count($itemTypes)) {
+				$itemTypes    = array_keys($itemTypes);
+				$sqlpartial .= "AND (";
+				$partial     = '';
+				
+				foreach ($itemTypes as $id) {
+					$partial .= "type = ? OR ";
+					$bind[]   = $id;
+				}
+				
+				$partial     = preg_replace('/\s*OR\s*$/', '', $partial);
+				$sqlpartial .= "$partial) ";
+			}
+			else {
+				$sqlpartial .= 'AND type IS NULL ';
+			}
 		}
 		
 		if (in_array($npcBuyOp, $opValues) && trim($npcBuy) != '') {
@@ -138,11 +161,11 @@ try {
 	
 	$paginator = $this->getPaginator($sth->fetch()->total);
 	$paginator->setSortableColumns(array(
-		'id' => 'asc', 'name', 'price_buy', 'price_sell', 'weight', 'attack', 'defense',
+		'id' => 'asc', 'name', 'type', 'price_buy', 'price_sell', 'weight', 'attack', 'defense',
 		'range', 'slots', 'refineable'
 	));
 	
-	$col  = "origin_table, id, name_japanese AS name, price_buy, price_sell, weight, attack, defence AS defense, ";
+	$col  = "origin_table, id, name_japanese AS name, type, price_buy, price_sell, weight, attack, defence AS defense, ";
 	$col .= "range, slots, refineable";
 	
 	$sql  = $paginator->getSQL("SELECT $col FROM $tableName $sqlpartial");

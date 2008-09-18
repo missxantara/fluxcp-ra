@@ -10,6 +10,9 @@
 		<label for="name">Name:</label>
 		<input type="text" name="name" id="name" value="<?php echo htmlspecialchars($params->get('name')) ?>" />
 		…
+		<label for="type">Type:</label>
+		<input type="text" name="type" id="type" value="<?php echo htmlspecialchars($params->get('type')) ?>" />
+		…
 		<label for="npc_buy">NPC Buy:</label>
 		<select name="npc_buy_op">
 			<option value="eq"<?php if (($npc_buy_op=$params->get('npc_buy_op')) == 'eq') echo ' selected="selected"' ?>>is equal to</option>
@@ -85,6 +88,7 @@
 	<tr>
 		<th><?php echo $paginator->sortableColumn('id', 'Item ID') ?></th>
 		<th><?php echo $paginator->sortableColumn('name', 'Name') ?></th>
+		<th>Type</th>
 		<th><?php echo $paginator->sortableColumn('price_buy', 'NPC Buy') ?></th>
 		<th><?php echo $paginator->sortableColumn('price_sell', 'NPC Sell') ?></th>
 		<th><?php echo $paginator->sortableColumn('weight', 'Weight') ?></th>
@@ -98,6 +102,13 @@
 	<tr>
 		<td align="right"><?php echo htmlspecialchars($item->id) ?></td>
 		<td><?php echo htmlspecialchars($item->name) ?></td>
+		<td>
+			<?php if ($type=$this->itemTypeText($item->type)): ?>
+				<?php echo htmlspecialchars($type) ?>
+			<?php else: ?>
+				<span class="not-applicable">Unknown</span>
+			<?php endif ?>
+		</td>
 		<td><?php echo number_format((int)$item->price_buy) ?></td>
 		<td><?php echo number_format((int)$item->price_sell) ?></td>
 		<td><?php echo number_format((int)$item->weight) ?></td>
