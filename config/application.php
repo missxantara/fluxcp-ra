@@ -64,7 +64,7 @@ return array(
 		//'IP Ban List'   => array('module' => 'ipban'),
 		'Accounts'      => array('module' => 'account'),
 		'Characters'    => array('module' => 'character'),
-		//'Guilds'        => array('module' => 'guild'),
+		'Guilds'        => array('module' => 'guild'),
 		//'Castles'       => array('module' => 'castle'),
 		//'Auction'       => array('module' => 'auction'),
 		//'Economy'       => array('module' => 'economy'),
@@ -79,6 +79,10 @@ return array(
 		'account' => array(
 			'index' => 'List Accounts',
 			'view'  => 'View Account'
+		),
+		'guild' => array(
+			'index'  => 'List Guilds',
+			'export' => 'Export Guild Emblems'
 		),
 		'server' => array(
 			'status'     => 'View Status',
