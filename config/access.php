@@ -29,7 +29,8 @@ return array(
 		),
 		'guild'     => array(
 			'emblem'   => AccountLevel::ANYONE,
-			'index'    => AccountLevel::LOWGM
+			'index'    => AccountLevel::LOWGM,
+			'export'   => AccountLevel::ADMIN
 		),
 		'castle'    => array(
 			'index'    => AccountLevel::LOWGM
