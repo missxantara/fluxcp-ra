@@ -69,7 +69,7 @@ return array(
 		//'Auction'       => array('module' => 'auction'),
 		//'Economy'       => array('module' => 'economy'),
 		//'Ranking'       => array('module' => 'ranking'),
-		//'Items'         => array('module' => 'item'),
+		'Items'         => array('module' => 'item'),
 		//'Monsters'      => array('module' => 'monster'),
 	),
 	
