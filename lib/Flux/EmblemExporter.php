@@ -26,7 +26,7 @@ class Flux_EmblemExporter {
 	 */
 	public function addAthenaServer(Flux_Athena $athenaServer)
 	{
-		if ($athenaServer->loginServer != $this->loginAthenaGroup->loginServer) {
+		if (!in_array($athenaServer, $this->loginAthenaGroup->athenaServers)) {
 			throw new Flux_Error(
 				"{$athenaServer->serverName} is not a valid char/map server defined in the {$this->loginAthenaGroup->serverName} group.");
 		}
@@ -76,10 +76,9 @@ class Flux_EmblemExporter {
 		header("Content-Disposition: attachment; filename=$filename");
 		
 		// Read contents of the file.
-		$fp = fopen($tmpFile, 'r');
-		fpassthru($fp);
-		fclose($fp);
+		readfile($tmpFile);
 		
+		// Remove temporary file.
 		unlink($tmpFile);
 		exit;
 	}
