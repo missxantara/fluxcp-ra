@@ -97,10 +97,11 @@ class Flux_Dispatcher {
 		}
 		
 		// Provide easier access to parameters.
-		$params = new Flux_Config($paramsArr);
+		$params  = new Flux_Config($paramsArr);
+		$baseURI = Flux::config('BaseURI');
 		
 		if (Flux::config('UseCleanUrls')) {
-			$baseURI    = preg_replace('&/+&', '/', rtrim(Flux::config('BaseURI'), '/')).'/';
+			$baseURI    = preg_replace('&/+&', '/', rtrim($baseURI, '/')).'/';
 			$requestURI = preg_replace('&/+&', '/', rtrim($_SERVER['REQUEST_URI'], '/')).'/';
 			$requestURI = preg_replace('&\?.*?$&', '', $requestURI);
 			$components = explode('/', trim((string)substr($requestURI, strlen($baseURI)), '/'));
