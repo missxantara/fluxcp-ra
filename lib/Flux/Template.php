@@ -860,10 +860,10 @@ class Flux_Template {
 	/**
 	 * Redirect to login page if the user is not currently logged in.
 	 */
-	public function loginRequired()
+	public function loginRequired($message = null)
 	{
 		$dispatcher = Flux_Dispatcher::getInstance();
-		$dispatcher->loginRequired($this->basePath);
+		$dispatcher->loginRequired($this->basePath, $message);
 	}
 }
 ?>

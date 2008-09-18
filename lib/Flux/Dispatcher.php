@@ -203,9 +203,12 @@ class Flux_Dispatcher {
 	 * @param string $loginAction
 	 * @access private
 	 */
-	public function loginRequired($baseURI, $loginModule = 'account', $loginAction = 'login')
+	public function loginRequired($baseURI, $message = null, $loginModule = 'account', $loginAction = 'login')
 	{
 		$session = Flux::$sessionData;
+		if (!$message) {
+			$message = 'Please login to continue.';
+		}
 		
 		if (!$session->isLoggedIn()) {
 			if (Flux::config('UseCleanUrls')) {
@@ -217,7 +220,7 @@ class Flux_Dispatcher {
 					$baseURI, rawurlencode($loginModule), rawurlencode($loginAction), rawurlencode($_SERVER['REQUEST_URI']));
 			}
 			
-			$session->setMessageData('Please login to continue.');
+			$session->setMessageData($message);
 			header('Location: '.preg_replace('&/{2,}&', '/', $loginURL));
 			exit;
 		}
