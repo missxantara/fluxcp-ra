@@ -102,7 +102,7 @@ try {
 		
 		if (in_array($rangeOp, $opValues) && trim($range) != '') {
 			$op = $opMapping[$rangeOp];
-			if ($op == '=' && $attack === '0') {
+			if ($op == '=' && $range === '0') {
 				$sqlpartial .= "AND (range IS NULL OR range = 0) ";
 			}
 			else {
@@ -113,12 +113,12 @@ try {
 		
 		if (in_array($slotsOp, $opValues) && trim($slots) != '') {
 			$op = $opMapping[$slotsOp];
-			if ($op == '=' && $attack === '0') {
+			if ($op == '=' && $slots === '0') {
 				$sqlpartial .= "AND (slots IS NULL OR slots = 0) ";
 			}
 			else {
 				$sqlpartial .= "AND slots $op ? ";
-				$bind[]      = $attack;
+				$bind[]      = $slots;
 			}
 		}
 		
@@ -126,7 +126,7 @@ try {
 			if ($refineable == 'yes') {
 				$sqlpartial .= "AND refineable > 0 ";
 			}
-			elseif ($refienable == 'no') {
+			elseif ($refineable == 'no') {
 				$sqlpartial .= "AND refineable < 1 ";
 			}
 		}
