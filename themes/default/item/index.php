@@ -57,9 +57,16 @@
 	<p>
 		<label for="refineable">Refineable:</label>
 		<select name="refineable" id="refineable">
-			<option value=""<?php if (!($account_state=$params->get('refineable'))) echo ' selected="selected"' ?>>All</option>
-			<option value="yes"<?php if ($account_state == 'yes') echo ' selected="selected"' ?>>Yes</option>
-			<option value="no"<?php if ($account_state == 'no') echo ' selected="selected"' ?>>No</option>
+			<option value=""<?php if (!($refineable=$params->get('refineable'))) echo ' selected="selected"' ?>>All</option>
+			<option value="yes"<?php if ($refineable == 'yes') echo ' selected="selected"' ?>>Yes</option>
+			<option value="no"<?php if ($refineable == 'no') echo ' selected="selected"' ?>>No</option>
+		</select>
+		…
+		<label for="for_sale">For Sale:</label>
+		<select name="for_sale" id="for_sale">
+			<option value=""<?php if (!($for_sale=$params->get('for_sale'))) echo ' selected="selected"' ?>>All</option>
+			<option value="yes"<?php if ($for_sale == 'yes') echo ' selected="selected"' ?>>Yes</option>
+			<option value="no"<?php if ($for_sale == 'no') echo ' selected="selected"' ?>>No</option>
 		</select>
 		…
 		<label for="range">Range:</label>
@@ -97,10 +104,11 @@
 		<th><?php echo $paginator->sortableColumn('range', 'Range') ?></th>
 		<th><?php echo $paginator->sortableColumn('slots', 'Slots') ?></th>
 		<th><?php echo $paginator->sortableColumn('refineable', 'Refineable') ?></th>
+		<th><?php echo $paginator->sortableColumn('cost', 'For Sale') ?></th>
 	</tr>
 	<?php foreach ($items as $item): ?>
 	<tr>
-		<td align="right"><?php echo htmlspecialchars($item->id) ?></td>
+		<td align="right"><?php echo htmlspecialchars($item->item_id) ?></td>
 		<td><?php echo htmlspecialchars($item->name) ?></td>
 		<td>
 			<?php if ($type=$this->itemTypeText($item->type)): ?>
@@ -121,6 +129,13 @@
 				<span class="refineable yes">Yes</span>
 			<?php else: ?>
 				<span class="refineable no">No</span>
+			<?php endif ?>
+		</td>
+		<td>
+			<?php if ($item->cost): ?>
+				<span class="for-sale yes">Yes</span>
+			<?php else: ?>
+				<span class="for-sale no">No</span>
 			<?php endif ?>
 		</td>
 	</tr>

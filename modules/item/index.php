@@ -9,14 +9,16 @@ try {
 	$tableName  = "{$server->charMapDatabase}.items";
 	$fromTables = array("{$server->charMapDatabase}.item_db", "{$server->charMapDatabase}.item_db2");
 	$tempTable  = new Flux_TemporaryTable($server->connection, $tableName, $fromTables);
+	$shopTable  = Flux::config('FluxTables.ItemShopTable');
 	
 	// Statement paramters, joins and conditions.
-	$bind       = array();
-	$sqlpartial = "WHERE 1=1 ";
-	$itemID     = $params->get('item_id');
+	$bind        = array();
+	$sqlpartial  = "LEFT OUTER JOIN {$server->charMapDatabase}.$shopTable ON $shopTable.nameid = items.id ";
+	$sqlpartial .= "WHERE 1=1 ";
+	$itemID      = $params->get('item_id');
 	
 	if ($itemID) {
-		$sqlpartial .= "AND id = ? ";
+		$sqlpartial .= "AND items.id = ? ";
 		$bind[]      = $itemID;
 	}
 	else {
@@ -39,6 +41,7 @@ try {
 		$slots        = $params->get('slots');
 		$slotsOp      = $params->get('slots_op');
 		$refineable   = $params->get('refineable');
+		$forSale      = $params->get('for_sale');
 		
 		if ($itemName) {
 			$sqlpartial .= "AND (name_japanese LIKE ? OR name_japanese = ?) ";
@@ -153,6 +156,15 @@ try {
 				$sqlpartial .= "AND IFNULL(refineable, 0) < 1 ";
 			}
 		}
+		
+		if ($forSale) {
+			if ($forSale == 'yes') {
+				$sqlpartial .= "AND $shopTable.cost > 0 ";
+			}
+			elseif ($forSale == 'no') {
+				$sqlpartial .= "AND IFNULL($shopTable.cost, 0) < 1 ";
+			}
+		}
 	}
 	
 	// Get total count and feed back to the paginator.
@@ -161,17 +173,17 @@ try {
 	
 	$paginator = $this->getPaginator($sth->fetch()->total);
 	$paginator->setSortableColumns(array(
-		'id' => 'asc', 'name', 'type', 'price_buy', 'price_sell', 'weight', 'attack', 'defense',
-		'range', 'slots', 'refineable'
+		'item_id' => 'asc', 'name', 'type', 'price_buy', 'price_sell', 'weight', 'attack', 'defense',
+		'range', 'slots', 'refineable', 'cost'
 	));
 	
-	$col  = "origin_table, id, name_japanese AS name, type, price_buy, price_sell, weight, attack, defence AS defense, ";
-	$col .= "range, slots, refineable";
+	$col  = "origin_table, items.id AS item_id, name_japanese AS name, type, price_buy, price_sell, weight, attack,  ";
+	$col .= "defence AS defense, range, slots, refineable, cost, $shopTable.id AS shop_item_id";
 	
 	$sql  = $paginator->getSQL("SELECT $col FROM $tableName $sqlpartial");
 	$sth  = $server->connection->getStatement($sql);
 	
-	$sth->execute($bind);
+	$sth->execute($bind); var_dump($sth->errorInfo());
 	$items = $sth->fetchAll();
 }
 catch (Exception $e) {
