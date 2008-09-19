@@ -20,7 +20,8 @@
 			<option value="lt"<?php if ($npc_buy_op == 'lt') echo ' selected="selected"' ?>>is less than</option>
 		</select>
 		<input type="text" name="npc_buy" id="npc_buy" value="<?php echo htmlspecialchars($params->get('npc_buy')) ?>" />
-		…
+	</p>
+	<p>
 		<label for="npc_sell">NPC Sell:</label>
 		<select name="npc_sell_op">
 			<option value="eq"<?php if (($npc_sell_op=$params->get('npc_sell_op')) == 'eq') echo ' selected="selected"' ?>>is equal to</option>
@@ -28,8 +29,7 @@
 			<option value="lt"<?php if ($npc_sell_op == 'lt') echo ' selected="selected"' ?>>is less than</option>
 		</select>
 		<input type="text" name="npc_sell" id="npc_sell" value="<?php echo htmlspecialchars($params->get('npc_sell')) ?>" />
-	</p>
-	<p>
+		…
 		<label for="weight">Weight:</label>
 		<select name="weight_op">
 			<option value="eq"<?php if (($weight_op=$params->get('weight_op')) == 'eq') echo ' selected="selected"' ?>>is equal to</option>
@@ -45,7 +45,8 @@
 			<option value="lt"<?php if ($attack_op == 'lt') echo ' selected="selected"' ?>>is less than</option>
 		</select>
 		<input type="text" name="attack" id="attack" value="<?php echo htmlspecialchars($params->get('attack')) ?>" />
-		…
+	</p>
+	<p>
 		<label for="defense">Defense:</label>
 		<select name="defense_op">
 			<option value="eq"<?php if (($defense_op=$params->get('defense_op')) == 'eq') echo ' selected="selected"' ?>>is equal to</option>
@@ -53,21 +54,6 @@
 			<option value="lt"<?php if ($defense_op == 'lt') echo ' selected="selected"' ?>>is less than</option>
 		</select>
 		<input type="text" name="defense" id="defense" value="<?php echo htmlspecialchars($params->get('defense')) ?>" />
-	</p>
-	<p>
-		<label for="refineable">Refineable:</label>
-		<select name="refineable" id="refineable">
-			<option value=""<?php if (!($refineable=$params->get('refineable'))) echo ' selected="selected"' ?>>All</option>
-			<option value="yes"<?php if ($refineable == 'yes') echo ' selected="selected"' ?>>Yes</option>
-			<option value="no"<?php if ($refineable == 'no') echo ' selected="selected"' ?>>No</option>
-		</select>
-		…
-		<label for="for_sale">For Sale:</label>
-		<select name="for_sale" id="for_sale">
-			<option value=""<?php if (!($for_sale=$params->get('for_sale'))) echo ' selected="selected"' ?>>All</option>
-			<option value="yes"<?php if ($for_sale == 'yes') echo ' selected="selected"' ?>>Yes</option>
-			<option value="no"<?php if ($for_sale == 'no') echo ' selected="selected"' ?>>No</option>
-		</select>
 		…
 		<label for="range">Range:</label>
 		<select name="range_op">
@@ -84,6 +70,21 @@
 			<option value="lt"<?php if ($slots_op == 'lt') echo ' selected="selected"' ?>>is less than</option>
 		</select>
 		<input type="text" name="slots" id="slots" value="<?php echo htmlspecialchars($params->get('slots')) ?>" />
+	</p>
+	<p>
+		<label for="refineable">Refineable:</label>
+		<select name="refineable" id="refineable">
+			<option value=""<?php if (!($refineable=$params->get('refineable'))) echo ' selected="selected"' ?>>All</option>
+			<option value="yes"<?php if ($refineable == 'yes') echo ' selected="selected"' ?>>Yes</option>
+			<option value="no"<?php if ($refineable == 'no') echo ' selected="selected"' ?>>No</option>
+		</select>
+		…
+		<label for="for_sale">For Sale:</label>
+		<select name="for_sale" id="for_sale">
+			<option value=""<?php if (!($for_sale=$params->get('for_sale'))) echo ' selected="selected"' ?>>All</option>
+			<option value="yes"<?php if ($for_sale == 'yes') echo ' selected="selected"' ?>>Yes</option>
+			<option value="no"<?php if ($for_sale == 'no') echo ' selected="selected"' ?>>No</option>
+		</select>
 		
 		<input type="submit" value="Search" />
 		<input type="button" value="Reset" onclick="reload()" />
