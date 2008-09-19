@@ -704,7 +704,7 @@ class Flux_Template {
 	/**
 	 * Link to a character view page.
 	 *
-	 * @param int $accountID
+	 * @param int $charID
 	 * @param string $text
 	 * @return mixed
 	 * @access public
@@ -876,6 +876,30 @@ class Flux_Template {
 	{
 		$dispatcher = Flux_Dispatcher::getInstance();
 		$dispatcher->loginRequired($this->basePath, $message);
+	}
+	
+	/**
+	 * Link to a character view page.
+	 *
+	 * @param int $itemID
+	 * @param string $text
+	 * @return mixed
+	 * @access public
+	 */
+	public function linkToItem($charID, $text, $server = null)
+	{
+		if ($charID) {
+			$params = array('id' => $charID);
+			if ($server) {
+				$params['preferred_server'] = $server;
+			}
+			
+			$url = $this->url('item', 'view', $params);
+			return sprintf('<a href="%s" class="link-to-item">%s</a>', $url, htmlentities($text));
+		}
+		else {
+			return false;
+		}
 	}
 }
 ?>

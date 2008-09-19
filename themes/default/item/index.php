@@ -108,7 +108,7 @@
 	</tr>
 	<?php foreach ($items as $item): ?>
 	<tr>
-		<td align="right"><?php echo htmlspecialchars($item->item_id) ?></td>
+		<td align="right"><?php echo $this->linkToItem($item->item_id, $item->item_id) ?></td>
 		<td><?php echo htmlspecialchars($item->name) ?></td>
 		<td>
 			<?php if ($type=$this->itemTypeText($item->type)): ?>

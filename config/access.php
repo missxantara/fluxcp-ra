@@ -45,7 +45,8 @@ return array(
 			'index'    => AccountLevel::NORMAL
 		),
 		'item'      => array(
-			'index'    => AccountLevel::NORMAL
+			'index'    => AccountLevel::NORMAL,
+			'view'     => AccountLevel::NORMAL
 		),
 		'monster'   => array(
 			'index'    => AccountLevel::NORMAL
