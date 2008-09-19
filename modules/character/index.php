@@ -59,7 +59,7 @@ else {
 	
 	if ($charClass) {
 		$className = preg_quote($charClass);
-		$classIDs  = preg_grep("/.*?$className.*?/", Flux::config('JobClasses')->toArray());
+		$classIDs  = preg_grep("/.*?$className.*?/i", Flux::config('JobClasses')->toArray());
 		
 		if (count($classIDs)) {
 			$classIDs    = array_keys($classIDs);
