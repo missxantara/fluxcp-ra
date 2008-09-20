@@ -18,7 +18,7 @@ $col .= "mother.name AS mother_name, mother.char_id AS mother_id, ";
 $col .= "father.name AS father_name, father.char_id AS father_id, ";
 $col .= "child.name AS child_name, child.char_id AS child_id, ";
 $col .= "guild.guild_id, guild.name AS guild_name, ";
-$col .= "guild_position.name AS guild_position, ";
+$col .= "guild_position.name AS guild_position, guild_position.exp_mode AS guild_tax, ";
 $col .= "party.name AS party_name, party.leader_char AS party_leader_id, party_leader.name AS party_leader_name, ";
 
 $col .= "homun.name AS homun_name, homun.class AS homun_class, homun.level AS homun_level, homun.exp AS homun_exp, ";
@@ -28,7 +28,9 @@ $col .= "homun.hp AS homun_hp, homun.max_hp As homun_max_hp, homun.sp AS homun_s
 $col .= "homun.skill_point AS homun_skill_point, homun.alive AS homun_alive, ";
 
 $col .= "pet.class AS pet_class, pet.name AS pet_name, pet.level AS pet_level, pet.intimate AS pet_intimacy, ";
-$col .= "pet.hungry AS pet_hungry, pet_mob.kName AS pet_mob_name";
+$col .= "pet.hungry AS pet_hungry, pet_mob.kName AS pet_mob_name, ";
+
+$col .= "SUM(reg.value) AS death_count";
 
 $sql  = "SELECT $col FROM {$server->charMapDatabase}.`char` AS ch ";
 $sql .= "LEFT OUTER JOIN {$server->loginDatabase}.login ON login.account_id = ch.account_id ";
@@ -36,15 +38,17 @@ $sql .= "LEFT OUTER JOIN {$server->charMapDatabase}.`char` AS partner ON partner
 $sql .= "LEFT OUTER JOIN {$server->charMapDatabase}.`char` AS mother ON mother.char_id = ch.mother ";
 $sql .= "LEFT OUTER JOIN {$server->charMapDatabase}.`char` AS father ON father.char_id = ch.father ";
 $sql .= "LEFT OUTER JOIN {$server->charMapDatabase}.`char` AS child ON child.char_id = ch.child ";
-$sql .= "LEFT OUTER JOIN {$server->charMapDatabase}.guild_member ON guild_member.char_id = ch.char_id ";
-$sql .= "LEFT OUTER JOIN {$server->charMapDatabase}.guild ON guild.guild_id = guild_member.guild_id ";
-$sql .= "LEFT OUTER JOIN {$server->charMapDatabase}.guild_position ON guild_member.position = guild_position.position ";
-$sql .= "LEFT OUTER JOIN {$server->charMapDatabase}.party ON ch.party_id = party.party_id ";
+$sql .= "LEFT OUTER JOIN {$server->charMapDatabase}.`guild_member` ON guild_member.char_id = ch.char_id ";
+$sql .= "LEFT OUTER JOIN {$server->charMapDatabase}.`guild` ON guild.guild_id = guild_member.guild_id ";
+$sql .= "LEFT OUTER JOIN {$server->charMapDatabase}.`guild_position` ON ";
+$sql .= "(guild_member.position = guild_position.position AND guild_member.guild_id = guild_position.guild_id) ";
+$sql .= "LEFT OUTER JOIN {$server->charMapDatabase}.`party` ON ch.party_id = party.party_id ";
 $sql .= "LEFT OUTER JOIN {$server->charMapDatabase}.`char` AS party_leader ON party.leader_char = party_leader.char_id ";
-$sql .= "LEFT OUTER JOIN {$server->charMapDatabase}.homunculus AS homun ON ch.homun_id = homun.homun_id ";
-$sql .= "LEFT OUTER JOIN {$server->charMapDatabase}.pet ON ch.pet_id = pet.pet_id ";
-$sql .= "LEFT OUTER JOIN {$server->charMapDatabase}.mob_db AS pet_mob ON pet_mob.ID = pet.class ";
-$sql .= "WHERE ch.char_id = ?";
+$sql .= "LEFT OUTER JOIN {$server->charMapDatabase}.`homunculus` AS homun ON ch.homun_id = homun.homun_id ";
+$sql .= "LEFT OUTER JOIN {$server->charMapDatabase}.`pet` ON ch.pet_id = pet.pet_id ";
+$sql .= "LEFT OUTER JOIN {$server->charMapDatabase}.`mob_db` AS pet_mob ON pet_mob.ID = pet.class ";
+$sql .= "LEFT OUTER JOIN {$server->charMapDatabase}.`global_reg_value` AS reg ON reg.char_id = ch.char_id ";
+$sql .= "WHERE ch.char_id = ? AND reg.str = 'PC_DIE_COUNTER'";
 
 $sth  = $server->connection->getStatement($sql);
 $sth->execute(array($charID));

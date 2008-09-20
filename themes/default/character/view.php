@@ -8,8 +8,8 @@
 		<td><?php echo htmlspecialchars($char->char_id) ?></td>
 		<th>Account ID</th>
 		<td><?php echo htmlspecialchars($char->char_account_id) ?></td>
-		<th>Zeny</th>
-		<td><?php echo number_format((int)$char->char_zeny) ?></td>
+		<th>Character Slot</th>
+		<td><?php echo number_format((int)$char->char_num) ?></td>
 	</tr>
 	<tr>
 		<th>Character</th>
@@ -98,19 +98,12 @@
 		</td>
 	</tr>
 	<tr>
+		<th>Zeny</th>
+		<td><?php echo number_format((int)$char->char_zeny) ?></td>
 		<th>Status Points</th>
 		<td><?php echo number_format((int)$char->char_status_point) ?></td>
 		<th>Skill Points</th>
 		<td><?php echo number_format((int)$char->char_skill_point) ?></td>
-		<th>Pet</th>
-		<td>
-			<?php if ($char->pet_name): ?>
-				<?php echo htmlspecialchars($char->pet_name) ?>
-				(<?php echo htmlspecialchars($char->pet_mob_name) ?>)
-			<?php else: ?>
-				<span class="not-applicable">None</span>
-			<?php endif ?>
-		</td>
 	</tr>
 	<tr>
 		<th>Guild Name</th>
@@ -130,15 +123,8 @@
 				<span class="not-applicable">None</span>
 			<?php endif ?>
 		</td>
-		<th>Homunculus</th>
-		<td>
-			<?php if ($char->homun_name): ?>
-				<?php echo htmlspecialchars($char->homun_name) ?>
-				(<?php echo htmlspecialchars($this->homunClassText($char->homun_class)) ?>)
-			<?php else: ?>
-				<span class="not-applicable">None</span>
-			<?php endif ?>
-		</td>
+		<th>Tax Level</th>
+		<td><?php echo number_format((int)$char->guild_tax)."%" ?></td>
 	</tr>
 	<tr>
 		<th>Party Name</th>
@@ -161,12 +147,34 @@
 				<span class="not-applicable">None</span>
 			<?php endif ?>
 		</td>
+		<th>Pet</th>
+		<td>
+			<?php if ($char->pet_name): ?>
+				<?php echo htmlspecialchars($char->pet_name) ?>
+				(<?php echo htmlspecialchars($char->pet_mob_name) ?>)
+			<?php else: ?>
+				<span class="not-applicable">None</span>
+			<?php endif ?>
+		</td>
+	</tr>
+	<tr>
+		<th>Death Count</th>
+		<td><?php echo number_format((int)$char->death_count) ?></td>
 		<th>Online Status</th>
 		<td>
 			<?php if ($char->char_online): ?>
 				<span class="online">Online</span>
 			<?php else: ?>
 				<span class="offline">Offline</span>
+			<?php endif ?>
+		</td>
+		<th>Homunculus</th>
+		<td>
+			<?php if ($char->homun_name): ?>
+				<?php echo htmlspecialchars($char->homun_name) ?>
+				(<?php echo htmlspecialchars($this->homunClassText($char->homun_class)) ?>)
+			<?php else: ?>
+				<span class="not-applicable">None</span>
 			<?php endif ?>
 		</td>
 	</tr>
