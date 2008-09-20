@@ -9,7 +9,7 @@
 		<th>Account ID</th>
 		<td><?php echo htmlspecialchars($char->char_account_id) ?></td>
 		<th>Character Slot</th>
-		<td><?php echo number_format((int)$char->char_num) ?></td>
+		<td><?php echo number_format($char->char_num+1) ?></td>
 	</tr>
 	<tr>
 		<th>Character</th>
