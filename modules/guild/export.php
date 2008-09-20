@@ -28,5 +28,8 @@ if (count($_POST)) {
 		
 		$exporter->exportArchive();
 	}
+	else {
+		$session->setMessageData('You must select a server first.');
+	}
 }
 ?>
