@@ -187,8 +187,10 @@ try {
 	$items = $sth->fetchAll();
 }
 catch (Exception $e) {
-	// Ensure table gets dropped.
-	$tempTable->drop();
+	if (isset($tempTable) && $tempTable) {
+		// Ensure table gets dropped.
+		$tempTable->drop();
+	}
 	
 	// Raise the original exception.
 	$class = get_class($e);
