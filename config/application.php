@@ -70,7 +70,7 @@ return array(
 		//'Economy'       => array('module' => 'economy'),
 		//'Ranking'       => array('module' => 'ranking'),
 		'Items'         => array('module' => 'item'),
-		//'Monsters'      => array('module' => 'monster'),
+		'Monsters'      => array('module' => 'monster'),
 	),
 	
 	// Sub-menu items that are displayed for any action belonging to a
