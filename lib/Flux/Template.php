@@ -983,7 +983,12 @@ class Flux_Template {
 			}
 		}
 		
-		return $jobs;
+		if (count($jobs) === count($table)) {
+			return array('All Jobs');
+		}
+		else {
+			return $jobs;
+		}
 	}
 	
 	/**
