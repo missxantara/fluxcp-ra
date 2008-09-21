@@ -1,7 +1,8 @@
 <?php if (!defined('FLUX_ROOT')) exit; ?>
 <h2>Viewing Monster</h2>
 <?php if ($monster): ?>
-<h3>#<?php echo htmlspecialchars($monster->monster_id) ?>: “<?php echo htmlspecialchars($monster->kName) ?>” / “<?php echo htmlspecialchars($monster->iName) ?>”</h3>
+<h3>#<?php echo htmlspecialchars($monster->monster_id) ?>: “<?php echo htmlspecialchars($monster->kName) ?>” / “<?php echo htmlspecialchars($monster->iName) ?>”
+<?php if ($monster->MEXP): ?>: MvP<?php endif ?></h3>
 <table class="vertical-table">
 	<tr>
 		<th>Monster ID</th>
@@ -83,90 +84,74 @@
 		<th>dMotion</th>
 		<td><?php echo number_format((int)$monster->dMotion) ?></td>
 	</tr>
+	
+	<?php
+	$rewards       = array();
+	$rewards[]     = $monster->MVP1id;
+	$rewards[]     = $monster->MVP2id;
+	$rewards[]     = $monster->MVP3id;
+	$rewards[]     = $monster->Drop1id;
+	$rewards[]     = $monster->Drop2id;
+	$rewards[]     = $monster->Drop3id;
+	$rewards[]     = $monster->Drop4id;
+	$rewards[]     = $monster->Drop5id;
+	$rewards[]     = $monster->Drop6id;
+	$rewards[]     = $monster->Drop7id;
+	$rewards[]     = $monster->Drop8id;
+	$rewards[]     = $monster->Drop9id;
+	$rewards[]     = $monster->DropCardid;
+
+	$rewardsPer    = array();
+	$rewardsPer[]  = $monster->MVP1per * $server->mvpDropRates / 100;
+	$rewardsPer[]  = $monster->MVP2per * $server->mvpDropRates / 100;
+	$rewardsPer[]  = $monster->MVP3per * $server->mvpDropRates / 100;
+	$rewardsPer[]  = $monster->Drop1per * $server->dropRates / 100;
+	$rewardsPer[]  = $monster->Drop2per * $server->dropRates / 100;
+	$rewardsPer[]  = $monster->Drop3per * $server->dropRates / 100;
+	$rewardsPer[]  = $monster->Drop4per * $server->dropRates / 100;
+	$rewardsPer[]  = $monster->Drop5per * $server->dropRates / 100;
+	$rewardsPer[]  = $monster->Drop6per * $server->dropRates / 100;
+	$rewardsPer[]  = $monster->Drop7per * $server->dropRates / 100;
+	$rewardsPer[]  = $monster->Drop8per * $server->dropRates / 100;
+	$rewardsPer[]  = $monster->Drop9per * $server->dropRates / 100;
+	$rewardsPer[]  = $monster->DropCardper * $server->cardDropRates / 100.000;
+	
+	$rewardsList   = array();
+	$rewardsList[] = "MvP Reward 1";
+	$rewardsList[] = "MvP Reward 2";
+	$rewardsList[] = "MvP Reward 3";
+	$rewardsList[] = "Drop 1";
+	$rewardsList[] = "Drop 2";
+	$rewardsList[] = "Drop 3";
+	$rewardsList[] = "Drop 4";
+	$rewardsList[] = "Drop 5";
+	$rewardsList[] = "Drop 6";
+	$rewardsList[] = "Drop 7";
+	$rewardsList[] = "Drop 8";
+	$rewardsList[] = "Drop 9";
+	$rewardsList[] = "Card";
+	
+	if ($monster->MEXP): ?>
 	<tr>
 		<th colspan="2">MvP EXP Reward</th>
 		<td><?php echo number_format((int)$monster->MEXP * $server->mvpExpRates) ?></td>
 		<th colspan="2">Reward Chance</th>
 		<td><?php echo number_format((int)$monster->ExpPer/100)."%" ?></td>
 	</tr>
+	<?php endif ?>
+	<?php for ($reward = 0; $reward <= 12; $reward++) {
+	if ($rewards[$reward]) {
+	echo "
 	<tr>
-		<th colspan="2">MvP Reward 1 ID</th>
-		<td><?php echo $this->linkToItem($monster->MVP1id, $monster->MVP1id) ?></td>
-		<th colspan="2">MvP Reward 1 Chance</th>
-		<td><?php echo number_format((int)$monster->MVP1per * $server->mvpDropRates / 100)."%" ?></td>
+		<th colspan=\"2\">$rewardsList[$reward] ID</th>
+		<td>".$this->linkToItem($rewards[$reward], $rewards[$reward])."</td>
+		<th colspan=\"2\">$rewardsList[$reward] Chance</th>";
+		if ($rewardsPer[$reward] > 100)
+			$rewardsPer[$reward] = 100;
+	echo "
+		<td>".$rewardsPer[$reward]."%</td>
 	</tr>
-	<tr>
-		<th colspan="2">MvP Reward 2 ID</th>
-		<td><?php echo $this->linkToItem($monster->MVP2id, $monster->MVP2id) ?></td>
-		<th colspan="2">MvP Reward 2 Chance</th>
-		<td><?php echo number_format((int)$monster->MVP2per * $server->mvpDropRates / 100)."%" ?></td>
-	</tr>
-	<tr>
-		<th colspan="2">MvP Reward 3 ID</th>
-		<td><?php echo $this->linkToItem($monster->MVP3id, $monster->MVP3id) ?></td>
-		<th colspan="2">MvP Reward 3 Chance</th>
-		<td><?php echo number_format((int)$monster->MVP3per * $server->mvpDropRates / 100)."%" ?></td>
-	</tr>
-	<tr>
-		<th colspan="2">Reward 1 ID</th>
-		<td><?php echo $this->linkToItem($monster->Drop1id, $monster->Drop1id) ?></td>
-		<th colspan="2">Reward 1 Chance</th>
-		<td><?php echo number_format((int)$monster->Drop1per * $server->dropRates / 100)."%" ?></td>
-	</tr>
-	<tr>
-		<th colspan="2">Reward 2 ID</th>
-		<td><?php echo $this->linkToItem($monster->Drop2id, $monster->Drop2id) ?></td>
-		<th colspan="2">Reward 2 Chance</th>
-		<td><?php echo number_format((int)$monster->Drop2per * $server->dropRates / 100)."%" ?></td>
-	</tr>
-	<tr>
-		<th colspan="2">Reward 3 ID</th>
-		<td><?php echo $this->linkToItem($monster->Drop3id, $monster->Drop3id) ?></td>
-		<th colspan="2">Reward 3 Chance</th>
-		<td><?php echo number_format((int)$monster->Drop3per * $server->dropRates / 100)."%" ?></td>
-	</tr>
-	<tr>
-		<th colspan="2">Reward 4 ID</th>
-		<td><?php echo $this->linkToItem($monster->Drop4id, $monster->Drop4id) ?></td>
-		<th colspan="2">Reward 4 Chance</th>
-		<td><?php echo number_format((int)$monster->Drop4per * $server->dropRates / 100)."%" ?></td>
-	</tr>
-	<tr>
-		<th colspan="2">Reward 5 ID</th>
-		<td><?php echo $this->linkToItem($monster->Drop5id, $monster->Drop5id) ?></td>
-		<th colspan="2">Reward 5 Chance</th>
-		<td><?php echo number_format((int)$monster->Drop5per * $server->dropRates / 100)."%" ?></td>
-	</tr>
-	<tr>
-		<th colspan="2">Reward 6 ID</th>
-		<td><?php echo $this->linkToItem($monster->Drop6id, $monster->Drop6id) ?></td>
-		<th colspan="2">Reward 6 Chance</th>
-		<td><?php echo number_format((int)$monster->Drop6per * $server->dropRates / 100)."%" ?></td>
-	</tr>
-	<tr>
-		<th colspan="2">Reward 7 ID</th>
-		<td><?php echo $this->linkToItem($monster->Drop7id, $monster->Drop7id) ?></td>
-		<th colspan="2">Reward 7 Chance</th>
-		<td><?php echo number_format((int)$monster->Drop7per * $server->dropRates / 100)."%" ?></td>
-	</tr>
-	<tr>
-		<th colspan="2">Reward 8 ID</th>
-		<td><?php echo $this->linkToItem($monster->Drop8id, $monster->Drop8id) ?></td>
-		<th colspan="2">Reward 8 Chance</th>
-		<td><?php echo number_format((int)$monster->Drop8per * $server->dropRates / 100)."%" ?></td>
-	</tr>
-	<tr>
-		<th colspan="2">Reward 9 ID</th>
-		<td><?php echo $this->linkToItem($monster->Drop9id, $monster->Drop9id) ?></td>
-		<th colspan="2">Reward 9 Chance</th>
-		<td><?php echo number_format((int)$monster->Drop9per * $server->dropRates / 100)."%" ?></td>
-	</tr>
-	<tr>
-		<th colspan="2">Card ID</th>
-		<td><?php echo $this->linkToItem($monster->DropCardid, $monster->DropCardid) ?></td>
-		<th colspan="2">Card Chance</th>
-		<td><?php echo number_format((int)$monster->DropCardper * $server->cardDropRates / 100)."%" ?></td>
-	</tr>
+	"; } } ?>
 </table>
 <?php else: ?>
 <p>No such monster was found. <a href="javascript:history.go(-1)">Go back</a>.</p>
