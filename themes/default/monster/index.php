@@ -28,7 +28,7 @@
 	</tr>
 	<?php foreach ($monsters as $monster): ?>
 	<tr>
-		<td align="right">"><?php echo $this->linkToMonster($monster->monster_id, $monster->monster_id) ?></td>
+		<td align="right"><?php echo $this->linkToMonster($monster->monster_id, $monster->monster_id) ?></td>
 		<td><?php echo htmlspecialchars($monster->kName) ?></td>
 		<td><?php echo htmlspecialchars($monster->iName) ?></td>
 		<td><?php echo htmlspecialchars($monster->LV) ?></td>
