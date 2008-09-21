@@ -180,7 +180,7 @@ class Flux_TemporaryTable {
 	 */
 	public function drop()
 	{
-		$sql = "DROP TEMPORARY TABLE {$this->tableName}";
+		$sql = "DROP TEMPORARY TABLE IF EXISTS {$this->tableName}";
 		$sth = $this->connection->getStatement($sql);
 		
 		return $sth->execute();
