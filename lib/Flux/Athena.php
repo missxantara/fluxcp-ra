@@ -115,7 +115,7 @@ class Flux_Athena {
 		$this->charMapDatabase = $charMapConfig->getDatabase();
 		$this->baseExpRates    = (int)$charMapConfig->getBaseExpRates();
 		$this->jobExpRates     = (int)$charMapConfig->getJobExpRates();
-		$this->mvpExpRates     = (int))$charMapConfig->getMvpExpRates();
+		$this->mvpExpRates     = (int)$charMapConfig->getMvpExpRates();
 		$this->dropRates       = (int)$charMapConfig->getDropRates();
 	}
 	
