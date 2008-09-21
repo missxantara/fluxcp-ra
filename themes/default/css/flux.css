@@ -522,3 +522,9 @@ input[type=text], input[type=password], textarea {
 .emblem-server label:hover {
 	cursor: pointer;
 }
+
+.block {
+	display: block;
+	width: 80%;
+	height: 40px;
+}

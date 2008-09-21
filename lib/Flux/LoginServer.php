@@ -156,32 +156,104 @@ class Flux_LoginServer extends Flux_BaseServer {
 	/**
 	 *
 	 */
-	public function temporarilyBan($accountID, $until)
+	public function temporarilyBan($bannedBy, $banReason, $accountID, $until)
 	{
-		$ts  = strtotime($until);
-		$sql = "UPDATE {$this->loginDatabase}.login SET state = 0, unban_time = '$ts' WHERE account_id = ?";
-		$sth = $this->connection->getStatement($sql);
-		return (bool)$sth->execute(array($accountID));
+		$info  = $this->getBanInfo($accountID);
+		$table = Flux::config('FluxTables.AccountBanTable');
+		
+		if (!$info || $info->ban_type !== '1') {
+			$sql  = "INSERT INTO {$this->loginDatabase}.$table (account_id, banned_by, ban_type, ban_until, ban_date, ban_reason) ";
+			$sql .= "VALUES (?, ?, 1, ?, NOW(), ?)";
+			$sth  = $this->connection->getStatement($sql);
+			$res  = $sth->execute(array($accountID, $bannedBy, $until, $banReason));
+			
+			$ts   = strtotime($until);
+			$sql  = "UPDATE {$this->loginDatabase}.login SET state = 0, unban_time = '$ts' WHERE account_id = ?";
+			$sth  = $this->connection->getStatement($sql);
+			return $sth->execute(array($accountID));
+		}
+		else {
+			return false;
+		}
 	}
 	
 	/**
 	 *
 	 */
-	public function permanentlyBan($accountID)
+	public function permanentlyBan($bannedBy, $banReason, $accountID)
 	{
-		$sql = "UPDATE {$this->loginDatabase}.login SET state = 5, unban_time = 0 WHERE account_id = ?";
-		$sth = $this->connection->getStatement($sql);
-		return (bool)$sth->execute(array($accountID));
+		$info  = $this->getBanInfo($accountID);
+		$table = Flux::config('FluxTables.AccountBanTable');
+		
+		if (!$info || $info->ban_type !== '2') {
+			$sql  = "INSERT INTO {$this->loginDatabase}.$table (account_id, banned_by, ban_type, ban_until, ban_date, ban_reason) ";
+			$sql .= "VALUES (?, ?, 2, '0000-00-00 00:00:00', NOW(), ?)";
+			$sth  = $this->connection->getStatement($sql);
+			$res  = $sth->execute(array($accountID, $bannedBy, $banReason));
+			
+			if ($res) {
+				$sql  = "UPDATE {$this->loginDatabase}.login SET state = 5, unban_time = 0 WHERE account_id = ?";
+				$sth  = $this->connection->getStatement($sql);
+				return $sth->execute(array($accountID));
+			}
+			else {
+				return false;
+			}
+		}
+		else {
+			return false;
+		}
 	}
 	
 	/**
 	 *
 	 */
-	public function unban($accountID)
+	public function unban($unbannedBy, $unbanReason, $accountID)
 	{
-		$sql = "UPDATE {$this->loginDatabase}.login SET state = 0, unban_time = 0 WHERE account_id = ?";
-		$sth = $this->connection->getStatement($sql);
-		return (bool)$sth->execute(array($accountID));
+		$info = $this->getBanInfo($accountID);
+		$table = Flux::config('FluxTables.AccountBanTable');
+		
+		if (!$info || !$info->ban_type) {
+			$sql  = "INSERT INTO {$this->loginDatabase}.$table (account_id, banned_by, ban_type, ban_until, ban_date, ban_reason) ";
+			$sql .= "VALUES (?, ?, 0, '0000-00-00 00:00:00', NOW(), ?)";
+			$sth  = $this->connection->getStatement($sql);
+			$res  = $sth->execute(array($accountID, $unbannedBy, $unbanReason));
+			
+			if ($res) {
+				$sql  = "UPDATE {$this->loginDatabase}.login SET state = 0, unban_time = 0 WHERE account_id = ?";
+				$sth  = $this->connection->getStatement($sql);
+				return $sth->execute(array($accountID));
+			}
+			else {
+				return false;
+			}
+		}
+		else {
+			return false;
+		}
+	}
+	
+	/**
+	 *
+	 */
+	public function getBanInfo($accountID)
+	{
+		$table = Flux::config('FluxTables.AccountBanTable');
+		$col   = "$table.id, $table.account_id, $table.banned_by, $table.ban_type, ";
+		$col  .= "$table.ban_until, $table.ban_date, $table.ban_reason, login.userid";
+		$sql   = "SELECT $col FROM {$this->loginDatabase}.$table ";
+		$sql  .= "LEFT OUTER JOIN {$this->loginDatabase}.login ON login.account_id = $table.banned_by ";
+		$sql  .= "WHERE $table.account_id = ? ORDER BY $table.ban_date DESC ";
+		$sth   = $this->connection->getStatement($sql);
+		$res   = $sth->execute(array($accountID));
+		
+		if ($res) {
+			$ban = $sth->fetchAll();
+			return $ban;
+		}
+		else {
+			return false;
+		}
 	}
 }
 ?>

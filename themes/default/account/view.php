@@ -83,6 +83,7 @@
 		<td colspan="3">
 			<form action="<?php echo $this->urlWithQs ?>" method="post">
 				<input type="hidden" name="tempban" value="1" />
+				<label>Reason:<br /><textarea name="reason" class="block reason"></textarea></label>
 				<label>Ban Until:</label>
 				<?php echo $this->dateTimeField('tempban'); ?>
 				<input type="submit" value="Ban Account" onclick="return confirm('Are you sure?')" />
@@ -96,6 +97,7 @@
 		<td colspan="3">
 			<form action="<?php echo $this->urlWithQs ?>" method="post">
 				<input type="hidden" name="permban" value="1" />
+				<label>Reason:<br /><textarea name="reason" class="block reason"></textarea></label>
 				<input type="submit" value="Permanently Ban Account" onclick="return confirm('Are you sure?')" />
 			</form>
 		</td>
@@ -108,8 +110,10 @@
 			<form action="<?php echo $this->urlWithQs ?>" method="post">
 				<input type="hidden" name="unban" value="1" />
 			<?php if ($tempBanned && $auth->allowedToTempUnbanAccount): ?>
+				<label>Reason:<br /><textarea name="reason" class="block reason"></textarea></label>
 				<input type="submit" value="Remove Temporary Ban" />
 			<?php elseif ($permBanned && $auth->allowedToPermUnbanAccount): ?>
+				<label>Reason:<br /><textarea name="reason" class="block reason"></textarea></label>
 				<input type="submit" value="Remove Permanent Ban" />
 			<?php endif ?>
 			</form>
@@ -117,6 +121,33 @@
 	</tr>
 	<?php endif ?>
 </table>
+
+<?php if ($banInfo): ?>
+<h3>Ban Log for “<?php echo htmlspecialchars($account->userid) ?>”</h3>
+<table class="vertical-table">
+	<tr>
+		<th>Ban Type</th>
+		<th>Ban Date</th>
+		<th>Ban Reason</th>
+		<th>Banned By</th>
+	</tr>
+	<?php foreach ($banInfo as $ban): ?>
+	<tr>
+		<td align="right"><?php echo htmlspecialchars($this->banTypeText($ban->ban_type)) ?></td>
+		<td><?php echo htmlspecialchars($this->formatDateTime($ban->ban_date)) ?></td>
+		<td><?php echo nl2br(htmlspecialchars($ban->ban_reason)) ?></td>
+		<td>
+			<?php if ($auth->allowedToViewAccount): ?>
+				<?php echo $this->linkToAccount($ban->banned_by, $ban->userid) ?>
+			<?php else: ?>
+				<?php echo htmlspecialchars($ban->userid) ?>
+			<?php endif ?>
+		</td>
+	</tr>
+	<?php endforeach ?>
+</table>
+<?php endif ?>
+
 <?php foreach ($characters as $serverName => $chars): $zeny = 0; ?>
 	<h3>Characters on <?php echo htmlspecialchars($serverName) ?></h3>
 	<?php if ($chars): ?>

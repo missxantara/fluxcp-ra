@@ -920,5 +920,25 @@ class Flux_Template {
 		
 		return trim($text) == '' ? '' : implode("\n", $script);
 	}
+	
+	/**
+	 *
+	 */
+	public function banTypeText($banType)
+	{
+		$banType = (int)$banType;
+		if (!$banType) {
+			return 'Unbanned';
+		}
+		elseif ($banType === 2) {
+			return 'Permanently Banned';
+		}
+		elseif ($banType === 1) {
+			return 'Temporarily Banned';
+		}
+		else {
+			return 'Unknown';
+		}
+	}
 }
 ?>

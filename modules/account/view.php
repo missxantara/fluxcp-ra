@@ -41,9 +41,11 @@ $showPermBan = !$isMine && !$permBanned && $auth->allowedToPermBanAccount;
 $showUnban   = !$isMine && ($tempBanned && $auth->allowedToTempUnbanAccount) || ($permBanned && $auth->allowedToPermUnbanAccount);
 
 if (count($_POST) && $account) {
+	$reason = (string)$params->get('reason');
+	
 	if ($params->get('tempban') && ($tempBanDate=$params->get('tempban_date'))) {
 		if ($canTempBan) {
-			if ($server->loginServer->temporarilyBan($account->account_id, $tempBanDate)) {
+			if ($server->loginServer->temporarilyBan($session->account->account_id, $reason, $account->account_id, $tempBanDate)) {
 				$formattedDate = $this->formatDateTime($tempBanDate);
 				$session->setMessageData("Account has been temporarily banned until $formattedDate.");
 				$this->redirect($this->url('account', 'view', array('id' => $account->account_id)));
@@ -58,7 +60,7 @@ if (count($_POST) && $account) {
 	}
 	elseif ($params->get('permban')) {
 		if ($canPermBan) {
-			if ($server->loginServer->permanentlyBan($account->account_id)) {
+			if ($server->loginServer->permanentlyBan($session->account->account_id, $reason, $account->account_id)) {
 				$session->setMessageData("Account has been permanently banned.");
 				$this->redirect($this->url('account', 'view', array('id' => $account->account_id)));
 			}
@@ -71,11 +73,15 @@ if (count($_POST) && $account) {
 		}
 	}
 	elseif ($params->get('unban')) {
-		if ($tempBanned && $auth->allowedToTempUnbanAccount && $server->loginServer->unban($account->account_id)) {
+		if ($tempBanned && $auth->allowedToTempUnbanAccount &&
+				$server->loginServer->unban($session->account->account_id, $reason, $account->account_id)) {
+					
 			$session->setMessageData('Account has been unbanned.');
 			$this->redirect($this->url('account', 'view', array('id' => $account->account_id)));
 		}
-		elseif ($permBanned && $auth->allowedToPermUnbanAccount && $server->loginServer->unban($account->account_id)) {
+		elseif ($permBanned && $auth->allowedToPermUnbanAccount &&
+				$server->loginServer->unban($session->account->account_id, $reason, $account->account_id)) {
+					
 			$session->setMessageData('Account has been unbanned.');
 			$this->redirect($this->url('account', 'view', array('id' => $account->account_id)));
 		}
@@ -83,6 +89,11 @@ if (count($_POST) && $account) {
 			$errorMessage = "You are unauthorized to remove this account's ban status.";
 		}
 	}
+}
+
+$banInfo = false;
+if ($account) {
+	$banInfo = $server->loginServer->getBanInfo($account->account_id);
 }
 
 $characters = array();
