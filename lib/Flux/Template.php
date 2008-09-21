@@ -1002,7 +1002,7 @@ class Flux_Template {
 				$params['preferred_server'] = $server;
 			}
 			
-			$url = $this->url('item', 'view', $params);
+			$url = $this->url('monster', 'view', $params);
 			return sprintf('<a href="%s" class="link-to-monster">%s</a>', $url, htmlentities($text));
 		}
 		else {

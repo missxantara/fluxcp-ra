@@ -49,7 +49,8 @@ return array(
 			'view'     => AccountLevel::NORMAL
 		),
 		'monster'   => array(
-			'index'    => AccountLevel::NORMAL
+			'index'    => AccountLevel::NORMAL,
+			'view'     => AccountLevel::NORMAL
 		),
 		'server'    => array(
 			'status'     => AccountLevel::ANYONE,
