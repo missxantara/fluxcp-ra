@@ -39,10 +39,10 @@ try {
 	
 	$paginator = $this->getPaginator($sth->fetch()->total);
 	$paginator->setSortableColumns(array(
-		'monster_id' => 'asc', 'kName', 'iName', 'LV', 'HP', 'SP', 'EXP', 'JEXP'
+		'monster_id' => 'asc', 'kName', 'iName', 'LV', 'HP', 'EXP', 'JEXP'
 	));
 	
-	$col  = "origin_table, monsters.ID AS monster_id, kName, iName, LV, HP, SP, EXP, JEXP";
+	$col  = "origin_table, monsters.ID AS monster_id, kName, iName, LV, HP, EXP, JEXP";
 	
 	$sql  = $paginator->getSQL("SELECT $col FROM $tableName $sqlpartial");
 	$sth  = $server->connection->getStatement($sql);

@@ -22,7 +22,6 @@
 		<th><?php echo $paginator->sortableColumn('iName', 'iRO Name') ?></th>
 		<th><?php echo $paginator->sortableColumn('LV', 'Level') ?></th>
 		<th><?php echo $paginator->sortableColumn('HP', 'HP') ?></th>
-		<th><?php echo $paginator->sortableColumn('SP', 'SP') ?></th>
 		<th><?php echo $paginator->sortableColumn('EXP', 'Base EXP') ?></th>
 		<th><?php echo $paginator->sortableColumn('JEXP', 'Job EXP') ?></th>
 	</tr>
@@ -33,7 +32,6 @@
 		<td><?php echo htmlspecialchars($monster->iName) ?></td>
 		<td><?php echo number_format($monster->LV) ?></td>
 		<td><?php echo number_format($monster->HP) ?></td>
-		<td><?php echo number_format($monster->SP) ?></td>
 		<td><?php echo number_format($monster->EXP * $server->baseExpRates) ?></td>
 		<td><?php echo number_format($monster->JEXP * $server->jobExpRates) ?></td>
 	</tr>
