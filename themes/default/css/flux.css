@@ -528,3 +528,21 @@ input[type=text], input[type=password], textarea {
 	width: 80%;
 	height: 40px;
 }
+
+.script-line {
+	font-family: Monaco, "Lucida Console", monospace;
+}
+
+.script-line-num {
+	display: inline-block;
+	margin: 0;
+	padding: 5px;
+	background-color: #eee;
+	border-right: 1px solid #ddd;
+}
+
+.script-line-code {
+	display: inline-block;
+	margin: 0;
+	padding: 5px;
+}
