@@ -123,7 +123,7 @@
 </table>
 
 <?php if ($banInfo): ?>
-<h3>Ban Log for “<?php echo htmlspecialchars($account->userid) ?>”</h3>
+<h3>Ban Log for “<?php echo htmlspecialchars($account->userid) ?>” (recent to oldest)</h3>
 <table class="vertical-table">
 	<tr>
 		<th>Ban Type</th>
