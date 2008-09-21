@@ -41,6 +41,7 @@ return array(
 				'JobExpRates'  => 200,
 				'MvpExpRates'  => 200,
 				'DropRates'    => 25,
+				'MvpDropRates' => 25,
 				//'Database'     => 'ragnarok', // Defaults to DbConfig.Database
 				'CharServer'   => array(
 					'Address'  => '127.0.0.1',
@@ -57,6 +58,7 @@ return array(
 				'JobExpRates'  => 200,
 				'MvpExpRates'  => 200,
 				'DropRates'    => 25,
+				'MvpDropRates' => 25,
 				//'Database'     => 'ragnarok', // Defaults to DbConfig.Database
 				'CharServer'   => array(
 					'Address'  => '127.0.0.1',
