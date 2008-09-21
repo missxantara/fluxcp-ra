@@ -18,8 +18,8 @@
 <table class="horizontal-table">
 	<tr>
 		<th><?php echo $paginator->sortableColumn('id', 'Monster ID') ?></th>
-		<th><?php echo $paginator->sortableColumn('kName', 'kName') ?></th>
-		<th><?php echo $paginator->sortableColumn('iName', 'iName') ?></th>
+		<th><?php echo $paginator->sortableColumn('kName', 'kRO Name') ?></th>
+		<th><?php echo $paginator->sortableColumn('iName', 'iRO Name') ?></th>
 		<th><?php echo $paginator->sortableColumn('LV', 'Level') ?></th>
 		<th><?php echo $paginator->sortableColumn('HP', 'HP') ?></th>
 		<th><?php echo $paginator->sortableColumn('SP', 'SP') ?></th>
