@@ -1,0 +1,9 @@
+CREATE TABLE `cp_banlog` (
+ `id` INT( 10 ) UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY ,
+ `account_id` INT( 11 ) UNSIGNED NOT NULL ,
+ `banned_by` INT( 11 ) UNSIGNED NOT NULL ,
+ `ban_type` TINYINT( 1 ) UNSIGNED NOT NULL ,
+ `ban_until` DATETIME NOT NULL ,
+ `ban_date` DATETIME NOT NULL ,
+ `ban_reason` TEXT NOT NULL
+) ENGINE = MYISAM ;
