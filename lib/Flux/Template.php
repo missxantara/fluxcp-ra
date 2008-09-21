@@ -879,17 +879,17 @@ class Flux_Template {
 	}
 	
 	/**
-	 * Link to a character view page.
+	 * Link to a item view page.
 	 *
 	 * @param int $itemID
 	 * @param string $text
 	 * @return mixed
 	 * @access public
 	 */
-	public function linkToItem($charID, $text, $server = null)
+	public function linkToItem($itemID, $text, $server = null)
 	{
-		if ($charID) {
-			$params = array('id' => $charID);
+		if ($itemID) {
+			$params = array('id' => $itemID);
 			if ($server) {
 				$params['preferred_server'] = $server;
 			}
@@ -938,6 +938,75 @@ class Flux_Template {
 		}
 		else {
 			return 'Unknown';
+		}
+	}
+	
+	/**
+	 *
+	 */
+	public function equippableJobs($equipJobs)
+	{
+		$jobs    = array();
+		$table   = array();
+		$table[] = array(0x00000001, 'Novice');
+		$table[] = array(0x00000002, 'Swordmans');
+		$table[] = array(0x00000004, 'Mage');
+		$table[] = array(0x00000008, 'Archer');
+		$table[] = array(0x00000010, 'Acolyte');
+		$table[] = array(0x00000020, 'Merchant');
+		$table[] = array(0x00000040, 'Thief');
+		$table[] = array(0x00000080, 'Knight');
+		$table[] = array(0x00000100, 'Priest');
+		$table[] = array(0x00000200, 'Wizard');
+		$table[] = array(0x00000400, 'Blacksmith');
+		$table[] = array(0x00000800, 'Hunter');
+		$table[] = array(0x00001000, 'Assassin');
+		$table[] = array(0x00002000, 'Unused');
+		$table[] = array(0x00004000, 'Crusader');
+		$table[] = array(0x00008000, 'Monk');
+		$table[] = array(0x00010000, 'Sage');
+		$table[] = array(0x00020000, 'Rogue');
+		$table[] = array(0x00040000, 'Alchemist');
+		$table[] = array(0x00080000, 'Bard/Dancer');
+		$table[] = array(0x00100000, 'Unused');
+		$table[] = array(0x00200000, 'Taekwon');
+		$table[] = array(0x00400000, 'Star Gladiator');
+		$table[] = array(0x00800000, 'Soul Linker');
+		$table[] = array(0x01000000, 'Gunslinger');
+		$table[] = array(0x02000000, 'Ninja');
+		
+		foreach ($table as $job) {
+			list ($bit, $name) = $job;
+			
+			if ($equipJobs & $bit) {
+				$jobs[] = $name;
+			}
+		}
+		
+		return $jobs;
+	}
+	
+	/**
+	 * Link to a monster view page.
+	 *
+	 * @param int $monsterID
+	 * @param string $text
+	 * @return mixed
+	 * @access public
+	 */
+	public function linkToMonster($monsterID, $text, $server = null)
+	{
+		if ($monsterID) {
+			$params = array('id' => $monsterID);
+			if ($server) {
+				$params['preferred_server'] = $server;
+			}
+			
+			$url = $this->url('item', 'view', $params);
+			return sprintf('<a href="%s" class="link-to-monster">%s</a>', $url, htmlentities($text));
+		}
+		else {
+			return false;
 		}
 	}
 }
