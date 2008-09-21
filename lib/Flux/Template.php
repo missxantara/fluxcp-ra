@@ -901,5 +901,24 @@ class Flux_Template {
 			return false;
 		}
 	}
+	
+	/**
+	 *
+	 */
+	public function displayScript($scriptText)
+	{
+		$lines  = preg_split('/(\r?\n)/', $scriptText, -1);
+		$text   = '';
+		$script = array();
+		
+		foreach ($lines as $num => $line) {
+			$text    .= "$line\n";
+			$lineNum  = sprintf('<span class="script-line-num">%d</span>', $num + 1);
+			$lineCode = sprintf('<span class="script-line-code">%s</span>', htmlspecialchars($line));
+			$script[] = sprintf('<p class="script-line">%s %s</p>', $lineNum, $lineCode);
+		}
+		
+		return trim($text) == '' ? '' : implode("\n", $script);
+	}
 }
 ?>
