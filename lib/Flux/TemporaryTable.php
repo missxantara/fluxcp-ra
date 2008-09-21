@@ -117,6 +117,9 @@ class Flux_TemporaryTable {
 			$message .= sprintf('Error info: %s', print_r($sth->errorInfo(), true));
 			self::raise($message);
 		}
+		else {
+			return true;
+		}
 	}
 	
 	/**
