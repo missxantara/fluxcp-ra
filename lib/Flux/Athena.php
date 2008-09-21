@@ -63,6 +63,14 @@ class Flux_Athena {
 	 * @var int
 	 */
 	public $mvpDropRates;
+
+	/**
+	 * Card Drop rate. Same rules as $baseExpRates apply.
+	 *
+	 * @access public
+	 * @var int
+	 */
+	public $cardDropRates;
 	
 	/**
 	 * Database used for the login-related SQL operations.
@@ -126,6 +134,7 @@ class Flux_Athena {
 		$this->mvpExpRates     = (int)$charMapConfig->getMvpExpRates();
 		$this->dropRates       = (int)$charMapConfig->getDropRates();
 		$this->mvpDropRates    = (int)$charMapConfig->getMvpDropRates();
+		$this->cardDropRates   = (int)$charMapConfig->getCardDropRates();
 	}
 	
 	/**
