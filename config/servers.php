@@ -39,6 +39,7 @@ return array(
 				'ServerName'   => 'Fluxia',
 				'BaseExpRates' => 200,
 				'JobExpRates'  => 200,
+				'MvpExpRates'  => 200,
 				'DropRates'    => 25,
 				//'Database'     => 'ragnarok', // Defaults to DbConfig.Database
 				'CharServer'   => array(
@@ -54,6 +55,7 @@ return array(
 				'ServerName'   => 'Utopia',
 				'BaseExpRates' => 200,
 				'JobExpRates'  => 200,
+				'MvpExpRates'  => 200,
 				'DropRates'    => 25,
 				//'Database'     => 'ragnarok', // Defaults to DbConfig.Database
 				'CharServer'   => array(

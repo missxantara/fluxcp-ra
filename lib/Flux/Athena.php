@@ -33,7 +33,7 @@ class Flux_Athena {
 	public $baseExpRates;
 	
 	/**
-	 * Base job experience rate. Same rules as $baseExpRates applies.
+	 * Job experience rate. Same rules as $baseExpRates apply.
 	 *
 	 * @access public
 	 * @var int
@@ -41,7 +41,15 @@ class Flux_Athena {
 	public $jobExpRates;
 	
 	/**
-	 * Drop rate. Same rules as $baseExpRates and $jobExpRates applies.
+	 * Base MvP bonus experience rate. Same rules as $baseExpRates apply.
+	 *
+	 * @access public
+	 * @var int
+	 */
+	public $mvpExpRates;
+	
+	/**
+	 * Drop rate. Same rules as $baseExpRates apply.
 	 *
 	 * @access public
 	 * @var int
@@ -107,6 +115,7 @@ class Flux_Athena {
 		$this->charMapDatabase = $charMapConfig->getDatabase();
 		$this->baseExpRates    = (int)$charMapConfig->getBaseExpRates();
 		$this->jobExpRates     = (int)$charMapConfig->getJobExpRates();
+		$this->mvpExpRates     = (int))$charMapConfig->getMvpExpRates();
 		$this->dropRates       = (int)$charMapConfig->getDropRates();
 	}
 	

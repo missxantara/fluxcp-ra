@@ -300,6 +300,7 @@ class Flux {
 				
 				$charMapServer->setBaseExpRates(1, $options);
 				$charMapServer->setJobExpRates(1, $options);
+				$charMapServer->setMvpExpRates(1, $options);
 				$charMapServer->setDropRates(1, $options);
 				$charMapServer->setCharServer(array(), $options);
 				$charMapServer->setMapServer(array(), $options);
