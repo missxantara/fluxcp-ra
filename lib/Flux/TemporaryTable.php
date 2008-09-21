@@ -81,9 +81,6 @@ class Flux_TemporaryTable {
 				}
 			}
 		}
-		else {
-			self::raise("Failed to create temporary table '$tableName'");
-		}
 	}
 	
 	/**
@@ -100,16 +97,25 @@ class Flux_TemporaryTable {
 		$sth = $this->connection->getStatement($sql);
 		$res = $sth->execute();
 		
+		if (!$res) {
+			$message  = "Failed to create temporary table '{$this->tableName}'.\n";
+			$message .= sprintf('Error info: %s', print_r($sth->errorInfo(), true));
+			self::raise($message);
+		}
+		
 		// Add `origin_table' column.
 		$len = $this->findVarcharLength();
 		$sql = "ALTER TABLE {$this->tableName} ADD COLUMN origin_table VARCHAR($len) NOT NULL";
 		$sth = $this->connection->getStatement($sql);
+		$res = $sth->execute();
 		
-		if ($res && $sth->execute()) {
-			return true;
-		}
-		else {
+		if (!$res) {
+			// Drop first.
 			$this->drop();
+			
+			$message  = "Failed to add `origin_table` column to '{$this->tableName}'.\n";
+			$message .= sprintf('Error info: %s', print_r($sth->errorInfo(), true));
+			self::raise($message);
 		}
 	}
 	
