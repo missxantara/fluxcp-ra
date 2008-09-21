@@ -92,6 +92,9 @@ class Flux_TemporaryTable {
 	 */
 	private function create($firstTable)
 	{
+		// Drop temporary table before hand.
+		$this->drop();
+		
 		// Attempt to create temporary table.
 		$sql = "CREATE TEMPORARY TABLE {$this->tableName} LIKE $firstTable";
 		$sth = $this->connection->getStatement($sql);
