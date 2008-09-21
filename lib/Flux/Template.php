@@ -1014,5 +1014,56 @@ class Flux_Template {
 			return false;
 		}
 	}
+	
+	/**
+	 *
+	 */
+	public function equipLocations($equipLoc)
+	{
+		$locations   = array();
+		$equipLocs   = array();
+		$equipLocs[] = array('256', 'Upper Headgear');
+		$equipLocs[] = array('512', 'Middle Headgear');
+		$equipLocs[] = array('001', 'Lower Headgear');
+		$equipLocs[] = array('016', 'Armor');
+		$equipLocs[] = array('002', 'Weapon');
+		$equipLocs[] = array('032', 'Shield');
+		$equipLocs[] = array('004', 'Garment');
+		$equipLocs[] = array('064', 'Footgear');
+		$equipLocs[] = array('008', 'Accessory 1');
+		$equipLocs[] = array('128', 'Accessory 2');
+		
+		foreach ($equipLocs as $loc) {
+			list ($value, $name) = $loc;
+			
+			if (intval($equipLoc) === intval($value)) {
+				$locations[] = $name;
+			}
+		}
+		
+		return $locations;
+	}
+	
+	/**
+	 *
+	 */
+	public function equipUpper($equipUpper)
+	{
+		$upper   = array();
+		$table   = array();
+		$table[] = array(1, 'Normal');
+		$table[] = array(2, 'Reborn');
+		$table[] = array(3, 'Baby');
+		
+		foreach ($table as $up) {
+			list ($bit, $name) = $up;
+			
+			if ($equipUpper & $bit) {
+				$classes[] = $name;
+			}
+		}
+		
+		return $classes;
+	}
 }
 ?>
