@@ -31,11 +31,11 @@
 		<td align="right"><?php echo $this->linkToMonster($monster->monster_id, $monster->monster_id) ?></td>
 		<td><?php echo htmlspecialchars($monster->kName) ?></td>
 		<td><?php echo htmlspecialchars($monster->iName) ?></td>
-		<td><?php echo htmlspecialchars($monster->LV) ?></td>
-		<td><?php echo htmlspecialchars($monster->HP) ?></td>
-		<td><?php echo htmlspecialchars($monster->SP) ?></td>
-		<td><?php echo htmlspecialchars($monster->EXP) ?></td>
-		<td><?php echo htmlspecialchars($monster->JEXP) ?></td>
+		<td><?php echo number_format($monster->LV) ?></td>
+		<td><?php echo number_format($monster->HP) ?></td>
+		<td><?php echo number_format($monster->SP) ?></td>
+		<td><?php echo number_format($monster->EXP * $server->baseExpRates) ?></td>
+		<td><?php echo number_format($monster->JEXP * $server->jobExpRates) ?></td>
 	</tr>
 	<?php endforeach ?>
 </table>
