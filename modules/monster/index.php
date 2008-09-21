@@ -23,6 +23,7 @@ try {
 		$opMapping      = array('eq' => '=', 'gt' => '>', 'lt' => '<');
 		$opValues       = array_keys($opMapping);
 		$monsterName    = $params->get('name');
+		$cardID         = $params->get('card_id');
 		
 		if ($monsterName) {
 			$sqlpartial .= "AND ((kName LIKE ? OR kName = ?) OR (iName LIKE ? OR iName = ?)) ";
@@ -30,6 +31,11 @@ try {
 			$bind[]      = $monsterName;
 			$bind[]      = "%$monsterName%";
 			$bind[]      = $monsterName;
+		}
+		
+		if ($cardID) {
+			$sqlpartial .= "AND DropCardid = ? ";
+			$bind[]      = $cardID;
 		}
 	}
 	
@@ -39,10 +45,10 @@ try {
 	
 	$paginator = $this->getPaginator($sth->fetch()->total);
 	$paginator->setSortableColumns(array(
-		'monster_id' => 'asc', 'kName', 'iName', 'LV', 'HP', 'EXP', 'JEXP'
+		'monster_id' => 'asc', 'kName', 'iName', 'LV', 'HP', 'EXP', 'JEXP', 'DropCardid'
 	));
 	
-	$col  = "origin_table, monsters.ID AS monster_id, kName, iName, LV, HP, EXP, JEXP";
+	$col  = "origin_table, monsters.ID AS monster_id, kName, iName, LV, HP, EXP, JEXP, DropCardid";
 	
 	$sql  = $paginator->getSQL("SELECT $col FROM $tableName $sqlpartial");
 	$sth  = $server->connection->getStatement($sql);
