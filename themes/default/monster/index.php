@@ -17,7 +17,7 @@
 <?php echo $paginator->infoText() ?>
 <table class="horizontal-table">
 	<tr>
-		<th><?php echo $paginator->sortableColumn('id', 'Monster ID') ?></th>
+		<th><?php echo $paginator->sortableColumn('monster_id', 'Monster ID') ?></th>
 		<th><?php echo $paginator->sortableColumn('kName', 'kRO Name') ?></th>
 		<th><?php echo $paginator->sortableColumn('iName', 'iRO Name') ?></th>
 		<th><?php echo $paginator->sortableColumn('LV', 'Level') ?></th>
