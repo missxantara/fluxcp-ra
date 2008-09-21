@@ -16,6 +16,18 @@ define('FLUX_LIB_DIR',    'lib');
 define('FLUX_MODULE_DIR', 'modules');
 define('FLUX_THEME_DIR',  'themes');
 
+// Clean GPC arrays in the event magic_quotes_gpc is enabled.
+if (ini_get('magic_quotes_gpc')) {
+	$gpc = array(&$_GET, &$_POST, &$_REQUEST, &$_COOKIE);
+	foreach ($gpc as &$arr) {
+		foreach ($arr as $key => $value) {
+			if (is_string($value)) {
+				$arr[$key] = stripslashes($value);
+			}
+		}
+	}
+}
+
 set_include_path(FLUX_LIB_DIR.PATH_SEPARATOR.get_include_path());
 //ini_set('session.save_path', 'data/sessions');
 
