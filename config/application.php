@@ -134,7 +134,8 @@ return array(
 		'ItemShopTable'       => 'cp_itemshop',
 		'TransactionTable'    => 'cp_txnlog',
 		'RedemptionTable'     => 'cp_redeemlog',
-		'AccountCreateTable'  => 'cp_createlog'
+		'AccountCreateTable'  => 'cp_createlog',
+		'AccountBanTable'     => 'cp_banlog'
 	)
 );
 ?>
