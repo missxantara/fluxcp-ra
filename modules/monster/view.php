@@ -3,6 +3,12 @@ if (!defined('FLUX_ROOT')) exit;
 
 $this->loginRequired();
 
+require_once 'Flux/TemporaryTable.php';
+
+$tableName  = "{$server->charMapDatabase}.monsters";
+$fromTables = array("{$server->charMapDatabase}.mob_db", "{$server->charMapDatabase}.mob_db2");
+$tempTable  = new Flux_TemporaryTable($server->connection, $tableName, $fromTables);
+
 $monsterID = $params->get('id');
 
 $col  = "origin_table, monsters.ID AS monster_id, Sprite, kName, iName, LV, HP, SP, EXP, JEXP, Range1, Range2, Range3, ";
