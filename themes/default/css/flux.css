@@ -546,3 +546,64 @@ input[type=text], input[type=password], textarea {
 	margin: 0;
 	padding: 5px;
 }
+
+.shop-item {
+	margin: 10px;
+	padding: 10px;
+	background-color: #fff;
+	border: 1px solid #ddd;
+}
+
+.shop-item-name {
+	margin: 0 0 5px 0;
+	padding: 0 0 2px 0;
+	font-size: 140%;
+	color: #222;
+	border-bottom: 1px solid #eee;
+}
+
+.shop-item-cost {
+	margin: 0;
+	color: #aaa;
+	text-transform: uppercase;
+}
+
+.shop-item .cost {
+	font-size: 120%;
+	font-weight: bold;
+	color: #000;
+}
+
+.shop-item-qty {
+	margin: 0 0 2px 0;
+	color: #aaa;
+	font-size: 8pt;
+	font-style: italic;
+}
+
+.shop-item .qty {
+	color: #888;
+	font-size: 10pt;
+}
+
+.shop-item-action {
+	color: #ddd;
+}
+
+.shop-item-action a {
+	color: #80a2c8;
+	border-bottom: 1px solid #eee;
+}
+
+.shop-item-action a:hover {
+	border-bottom: 1px solid #80a2c8;
+}
+
+.short {
+	width: 40px;
+}
+
+textarea {
+	width: 280px;
+	height: 120px;
+}

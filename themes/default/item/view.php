@@ -9,9 +9,17 @@
 		<th>For Sale</th>
 		<td>
 			<?php if ($item->cost): ?>
-				<span class="for-sale yes">Yes</span>
+				<span class="for-sale yes">
+					Yes
+					<a href="<?php echo $this->url('purchase') ?>">(Go to Item Shop)</a>
+				</span>
 			<?php else: ?>
-				<span class="for-sale no">No</span>
+				<span class="for-sale no">
+					No
+					<?php if ($auth->allowedToAddShopItem): ?>
+					<a href="<?php echo $this->url('itemshop', 'add', array('id' => $item->item_id)) ?>">(Add to Item Shop)</a>
+					<?php endif ?>
+				</span>
 			<?php endif ?>
 		</td>
 	</tr>

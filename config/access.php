@@ -14,14 +14,21 @@ return array(
 			'notify'   => AccountLevel::ANYONE,
 		),
 		'purchase'  => array(
-			'index'    => AccountLevel::ANYONE
+			'index'    => AccountLevel::ANYONE,
+			'buy'      => AccountLevel::NORMAL,
+			'add'      => AccountLevel::NORMAL,
+		),
+		'itemshop'  => array(
+			'add'      => AccountLevel::ADMIN,
+			'edit'     => AccountLevel::ADMIN,
+			'delete'   => AccountLevel::ADMIN
 		),
 		'account'   => array(
 			'index'    => AccountLevel::LOWGM,
 			'view'     => AccountLevel::NORMAL,
 			'create'   => AccountLevel::UNAUTH,
 			'login'    => AccountLevel::UNAUTH,
-			'logout'   => AccountLevel::NORMAL,
+			'logout'   => AccountLevel::NORMAL
 		),
 		'character' => array(
 			'index'    => AccountLevel::LOWGM,
@@ -99,6 +106,9 @@ return array(
 		'PermUnbanAccount'   => AccountLevel::HIGHGM,
 		'SearchMD5Passwords' => AccountLevel::ADMIN,
 		'ViewCharacter'      => AccountLevel::HIGHGM,
+		'AddShopItem'        => AccountLevel::ADMIN,
+		'EditShopItem'       => AccountLevel::ADMIN,
+		'DeleteShopItem'     => AccountLevel::ADMIN,
 		
 		'BanHigherPower'     => 5000
 	)

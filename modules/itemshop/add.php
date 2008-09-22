@@ -1,0 +1,48 @@
+<?php
+if (!defined('FLUX_ROOT')) exit; 
+
+$this->loginRequired();
+
+require_once 'Flux/TemporaryTable.php';
+require_once 'Flux/ItemShop.php';
+
+$itemID = $params->get('id');
+
+$tableName  = "{$server->charMapDatabase}.items";
+$fromTables = array("{$server->charMapDatabase}.item_db", "{$server->charMapDatabase}.item_db2");
+$tempTable  = new Flux_TemporaryTable($server->connection, $tableName, $fromTables);
+$shopTable  = Flux::config('FluxTables.ItemShopTable');
+
+$col = "id AS item_id, name_japanese AS item_name";
+$sql = "SELECT $col FROM $tableName WHERE items.id = ?";
+$sth = $server->connection->getStatement($sql);
+
+$sth->execute(array($itemID));
+$item = $sth->fetch();
+
+if ($item && count($_POST)) {
+	$shop     = new Flux_ItemShop($server);
+	$cost     = (int)$params->get('cost');
+	$quantity = (int)$params->get('qty');
+	$info     = trim($params->get('info'));
+	
+	if (!$cost) {
+		$errorMessage = 'You must input a credit cost greater than zero.';
+	}
+	elseif (!$quantity) {
+		$errorMessage = 'You must input a quantity greater than zero.';
+	}
+	elseif (!$info) {
+		$errorMessage = 'You must input at least some info text.';
+	}
+	else {
+		if ($shop->add($itemID, $cost, $quantity, $info)) {
+			$session->setMessageData('Item has been successfully added to the shop.');
+			$this->redirect($this->url('purchase'));
+		}
+		else {
+			$errorMessage = 'Failed to add the item to the shop.';
+		}
+	}
+}
+?>
