@@ -1,150 +1,135 @@
 <?php if (!defined('FLUX_ROOT')) exit; ?>
 <h2>Viewing Monster</h2>
 <?php if ($monster): ?>
-<h3>#<?php echo htmlspecialchars($monster->monster_id) ?>: “<?php echo htmlspecialchars($monster->kName) ?>” / “<?php echo htmlspecialchars($monster->iName) ?>”
-<?php if ($monster->MEXP): ?>: MvP<?php endif ?></h3>
+<h3>#<?php echo htmlspecialchars($monster[0]->monster_id) ?>: “<?php echo htmlspecialchars($monster[0]->kName) ?>” / “<?php echo htmlspecialchars($monster[0]->iName) ?>”
+<?php if ($monster[0]->MEXP): ?>: MvP<?php endif ?></h3>
 <table class="vertical-table">
 	<tr>
 		<th>Monster ID</th>
-		<td><?php echo htmlspecialchars($monster->monster_id) ?></td>
+		<td><?php echo htmlspecialchars($monster[0]->monster_id) ?></td>
 		<th>kRO Name</th>
-		<td><?php echo htmlspecialchars($monster->kName) ?></td>
+		<td><?php echo htmlspecialchars($monster[0]->kName) ?></td>
 		<th>iRO Name</th>
-		<td><?php echo htmlspecialchars($monster->iName) ?></td>
+		<td><?php echo htmlspecialchars($monster[0]->iName) ?></td>
 	</tr>
 	<tr>
 		<th>Sprite</th>
-		<td><?php echo htmlspecialchars($monster->Sprite) ?></td>
+		<td><?php echo htmlspecialchars($monster[0]->Sprite) ?></td>
 		<th>HP</th>
-		<td><?php echo number_format((int)$monster->HP) ?></td>
+		<td><?php echo number_format((int)$monster[0]->HP) ?></td>
 		<th>SP</th>
-		<td><?php echo number_format((int)$monster->SP) ?></td>
+		<td><?php echo number_format((int)$monster[0]->SP) ?></td>
 	</tr>
 	<tr>
 		<th>Level</th>
-		<td><?php echo number_format((int)$monster->LV) ?></td>
+		<td><?php echo number_format((int)$monster[0]->LV) ?></td>
 		<th>ATK1</th>
-		<td><?php echo number_format((int)$monster->ATK1) ?></td>
+		<td><?php echo number_format((int)$monster[0]->ATK1) ?></td>
 		<th>ATK2</th>
-		<td><?php echo number_format((int)$monster->ATK2) ?></td>
+		<td><?php echo number_format((int)$monster[0]->ATK2) ?></td>
 	</tr>
 	<tr>
 		<th>Range1</th>
-		<td><?php echo number_format((int)$monster->Range1) ?></td>
+		<td><?php echo number_format((int)$monster[0]->Range1) ?></td>
 		<th>Range2</th>
-		<td><?php echo number_format((int)$monster->Range2) ?></td>
+		<td><?php echo number_format((int)$monster[0]->Range2) ?></td>
 		<th>Range3</th>
-		<td><?php echo number_format((int)$monster->Range3) ?></td>
+		<td><?php echo number_format((int)$monster[0]->Range3) ?></td>
 	</tr>
 	<tr>
 		<th>STR</th>
-		<td><?php echo number_format((int)$monster->STR) ?></td>
+		<td><?php echo number_format((int)$monster[0]->STR) ?></td>
 		<th>AGI</th>
-		<td><?php echo number_format((int)$monster->AGI) ?></td>
+		<td><?php echo number_format((int)$monster[0]->AGI) ?></td>
 		<th>VIT</th>
-		<td><?php echo number_format((int)$monster->VIT) ?></td>
+		<td><?php echo number_format((int)$monster[0]->VIT) ?></td>
 	</tr>
 	<tr>
 		<th>INT</th>
-		<td><?php echo number_format((int)$monster->INT) ?></td>
+		<td><?php echo number_format((int)$monster[0]->INT) ?></td>
 		<th>DEX</th>
-		<td><?php echo number_format((int)$monster->DEX) ?></td>
+		<td><?php echo number_format((int)$monster[0]->DEX) ?></td>
 		<th>LUK</th>
-		<td><?php echo number_format((int)$monster->LUK) ?></td>
+		<td><?php echo number_format((int)$monster[0]->LUK) ?></td>
 	</tr>
 	<tr>
 		<th>DEF</th>
-		<td><?php echo number_format((int)$monster->DEF) ?></td>
+		<td><?php echo number_format((int)$monster[0]->DEF) ?></td>
 		<th>MDEF</th>
-		<td><?php echo number_format((int)$monster->MDEF) ?></td>
+		<td><?php echo number_format((int)$monster[0]->MDEF) ?></td>
 		<th>Scale</th>
-		<td><?php echo number_format((int)$monster->Scale) ?></td>
+		<td><?php echo number_format((int)$monster[0]->Scale) ?></td>
 	</tr>
 	<tr>
 		<th>Base EXP</th>
-		<td><?php echo number_format((int)$monster->EXP * $server->baseExpRates) ?></td>
+		<td><?php echo number_format((int)$monster[0]->EXP * $server->baseExpRates) ?></td>
 		<th>Job EXP</th>
-		<td><?php echo number_format((int)$monster->JEXP * $server->jobExpRates) ?></td>
+		<td><?php echo number_format((int)$monster[0]->JEXP * $server->jobExpRates) ?></td>
 		<th>Race</th>
-		<td><?php echo number_format((int)$monster->Race) ?></td>
+		<td><?php echo number_format((int)$monster[0]->Race) ?></td>
 	</tr>
 	<tr>
 		<th>Element</th>
-		<td><?php echo number_format((int)$monster->Element) ?></td>
+		<td><?php echo number_format((int)$monster[0]->Element) ?></td>
 		<th>Mode</th>
-		<td><?php echo number_format((int)$monster->Mode) ?></td>
+		<td><?php echo number_format((int)$monster[0]->Mode) ?></td>
 		<th>Speed</th>
-		<td><?php echo number_format((int)$monster->Speed) ?></td>
+		<td><?php echo number_format((int)$monster[0]->Speed) ?></td>
 	</tr>
 	<tr>
 		<th>aDelay</th>
-		<td><?php echo number_format((int)$monster->aDelay) ?></td>
+		<td><?php echo number_format((int)$monster[0]->aDelay) ?></td>
 		<th>aMotion</th>
-		<td><?php echo number_format((int)$monster->aMotion) ?></td>
+		<td><?php echo number_format((int)$monster[0]->aMotion) ?></td>
 		<th>dMotion</th>
-		<td><?php echo number_format((int)$monster->dMotion) ?></td>
+		<td><?php echo number_format((int)$monster[0]->dMotion) ?></td>
 	</tr>
 	
 	<?php
 	$rewards       = array();
-	$rewards[]     = $monster->MVP1id;
-	$rewards[]     = $monster->MVP2id;
-	$rewards[]     = $monster->MVP3id;
-	$rewards[]     = $monster->Drop1id;
-	$rewards[]     = $monster->Drop2id;
-	$rewards[]     = $monster->Drop3id;
-	$rewards[]     = $monster->Drop4id;
-	$rewards[]     = $monster->Drop5id;
-	$rewards[]     = $monster->Drop6id;
-	$rewards[]     = $monster->Drop7id;
-	$rewards[]     = $monster->Drop8id;
-	$rewards[]     = $monster->Drop9id;
-	$rewards[]     = $monster->DropCardid;
-
 	$rewardsPer    = array();
-	$rewardsPer[]  = $monster->MVP1per * $server->mvpDropRates / 100;
-	$rewardsPer[]  = $monster->MVP2per * $server->mvpDropRates / 100;
-	$rewardsPer[]  = $monster->MVP3per * $server->mvpDropRates / 100;
-	$rewardsPer[]  = $monster->Drop1per * $server->dropRates / 100;
-	$rewardsPer[]  = $monster->Drop2per * $server->dropRates / 100;
-	$rewardsPer[]  = $monster->Drop3per * $server->dropRates / 100;
-	$rewardsPer[]  = $monster->Drop4per * $server->dropRates / 100;
-	$rewardsPer[]  = $monster->Drop5per * $server->dropRates / 100;
-	$rewardsPer[]  = $monster->Drop6per * $server->dropRates / 100;
-	$rewardsPer[]  = $monster->Drop7per * $server->dropRates / 100;
-	$rewardsPer[]  = $monster->Drop8per * $server->dropRates / 100;
-	$rewardsPer[]  = $monster->Drop9per * $server->dropRates / 100;
-	$rewardsPer[]  = $monster->DropCardper * $server->cardDropRates / 100.000;
-	
 	$rewardsList   = array();
-	$rewardsList[] = "MvP Reward 1";
-	$rewardsList[] = "MvP Reward 2";
-	$rewardsList[] = "MvP Reward 3";
-	$rewardsList[] = "Drop 1";
-	$rewardsList[] = "Drop 2";
-	$rewardsList[] = "Drop 3";
-	$rewardsList[] = "Drop 4";
-	$rewardsList[] = "Drop 5";
-	$rewardsList[] = "Drop 6";
-	$rewardsList[] = "Drop 7";
-	$rewardsList[] = "Drop 8";
-	$rewardsList[] = "Drop 9";
-	$rewardsList[] = "Card";
+	$rewardsName   = array();
 	
-	if ($monster->MEXP): ?>
+	for ($loop = 1; $loop <= 3; $loop++) {
+		$id            = "MVP".$loop."id";
+		$Per           = "MVP".$loop."per";
+		$Name          = "MVP".$loop."name";
+		$rewards[]     = $monster[0]->$id;
+		$rewardsPer[]  = $monster[0]->$Per * $server->mvpDropRates / 100;
+		$rewardsList[] = "MvP Reward ".$loop;
+		$rewardsName[] = $monster[$loop]->$Name;
+	}
+	
+		for ($loop = 1; $loop <= 9; $loop++) {
+		$id            = "Drop".$loop."id";
+		$Per           = "Drop".$loop."per";
+		$Name          = "Drop".$loop."name";
+		$rewards[]     = $monster[0]->$id;
+		$rewardsPer[]  = $monster[0]->$Per * $server->dropRates / 100;
+		$rewardsList[] = "Drop".$loop;
+		$rewardsName[] = $monster[$loop+3]->$Name;
+	}
+	
+	$rewards[]     = $monster[0]->DropCardid;
+	$rewardsPer[]  = $monster[0]->DropCardper * $server->cardDropRates / 100.000;
+	$rewardsList[] = "Card";
+	$rewardsName[] = $monster[13]->DropCardname;
+	
+	if ($monster[0]->MEXP): ?>
 	<tr>
 		<th>MvP EXP Reward</th>
-		<td colspan="3"><?php echo number_format((int)$monster->MEXP * $server->mvpExpRates) ?></td>
+		<td colspan="3"><?php echo number_format((int)$monster[0]->MEXP * $server->mvpExpRates) ?></td>
 		<th>Reward Chance</th>
-		<td><?php echo number_format((int)$monster->ExpPer/100)."%" ?></td>
+		<td><?php echo number_format((int)$monster[0]->ExpPer/100)."%" ?></td>
 	</tr>
 	<?php endif ?>
 	<?php for ($reward = 0; $reward <= 12; $reward++) {
 	if ($rewards[$reward]) {
 	echo "
 	<tr>
-		<th>$rewardsList[$reward] ID</th>
-		<td colspan=\"3\">".$this->linkToItem($rewards[$reward], $rewards[$reward])."</td>
+		<th>$rewardsList[$reward]</th>
+		<td colspan=\"3\">".$this->linkToItem($rewards[$reward], $rewardsName[$reward]." (#".$rewards[$reward].")")."</td>
 		<th>$rewardsList[$reward] Chance</th>";
 		if ($rewardsPer[$reward] > 100)
 			$rewardsPer[$reward] = 100;
