@@ -1,0 +1,1 @@
+ALTER TABLE `cp_itemshop` ADD `info` TEXT NULL AFTER `cost` ;
