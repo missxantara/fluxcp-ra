@@ -1,0 +1,29 @@
+<?php
+require_once 'Flux/LogFile.php';
+
+class Flux_Connection_Statement {
+	public $stmt;
+	private $errorLog;
+	
+	public function __construct(PDOStatement $stmt)
+	{
+		$this->stmt     = $stmt;
+		$this->errorLog = new Flux_LogFile(FLUX_DATA_DIR.'/logs/mysql/errors/'.date('Ymd').'.log', 'a');
+	}
+	
+	public function execute(array $inputParameters = array())
+	{
+		$res = $this->stmt->execute($inputParameters);
+		if ((int)$this->stmt->errorCode()) {
+			$info = $this->stmt->errorInfo();
+			$this->errorLog->puts('[SQLSTATE=%s] Err %s: %s', $info[0], $info[1], $info[2]);
+		}
+		return $res;
+	}
+	
+	public function __call($method, $args)
+	{
+		return call_user_func_array(array($this->stmt, $method), $args);
+	}
+}
+?>

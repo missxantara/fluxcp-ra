@@ -1,4 +1,5 @@
 <?php
+require_once 'Flux/Connection/Statement.php';
 require_once 'Flux/DataObject.php';
 
 /**
@@ -140,7 +141,13 @@ class Flux_Connection {
 		$dbh = $this->getConnection();
 		$sth = $dbh->prepare($statement, $options);
 		$sth->setFetchMode(PDO::FETCH_CLASS, 'Flux_DataObject', array(null));
-		return $sth;
+		
+		if ($sth) {
+			return new Flux_Connection_Statement($sth);
+		}
+		else {
+			return false;
+		}
 	}
 	
 	/**
@@ -154,7 +161,13 @@ class Flux_Connection {
 		$dbh = $this->getLogsConnection();
 		$sth = $dbh->prepare($statement, $options);
 		$sth->setFetchMode(PDO::FETCH_CLASS, 'Flux_DataObject', array(null));
-		return $sth;
+		
+		if ($sth) {
+			return new Flux_Connection_Statement($sth);
+		}
+		else {
+			return false;
+		}
 	}
 }
 ?>
