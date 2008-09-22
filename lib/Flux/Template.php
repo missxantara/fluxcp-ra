@@ -1059,11 +1059,11 @@ class Flux_Template {
 			list ($bit, $name) = $up;
 			
 			if ($equipUpper & $bit) {
-				$classes[] = $name;
+				$upper[] = $name;
 			}
 		}
 		
-		return $classes;
+		return $upper;
 	}
 }
 ?>
