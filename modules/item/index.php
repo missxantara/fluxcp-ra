@@ -178,7 +178,7 @@ try {
 	));
 	
 	$col  = "origin_table, items.id AS item_id, name_japanese AS name, type, price_buy, price_sell, weight, attack,  ";
-	$col .= "defence AS defense, range, slots, refineable, cost, $shopTable.id AS shop_item_id";
+	$col .= "defence AS defense, `range`, slots, refineable, cost, $shopTable.id AS shop_item_id";
 	
 	$sql  = $paginator->getSQL("SELECT $col FROM $tableName $sqlpartial");
 	$sth  = $server->connection->getStatement($sql);
