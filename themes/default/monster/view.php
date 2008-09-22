@@ -133,9 +133,9 @@
 	
 	if ($monster->MEXP): ?>
 	<tr>
-		<th colspan="2">MvP EXP Reward</th>
-		<td><?php echo number_format((int)$monster->MEXP * $server->mvpExpRates) ?></td>
-		<th colspan="2">Reward Chance</th>
+		<th>MvP EXP Reward</th>
+		<td colspan="3"><?php echo number_format((int)$monster->MEXP * $server->mvpExpRates) ?></td>
+		<th>Reward Chance</th>
 		<td><?php echo number_format((int)$monster->ExpPer/100)."%" ?></td>
 	</tr>
 	<?php endif ?>
@@ -143,9 +143,9 @@
 	if ($rewards[$reward]) {
 	echo "
 	<tr>
-		<th colspan=\"2\">$rewardsList[$reward] ID</th>
-		<td>".$this->linkToItem($rewards[$reward], $rewards[$reward])."</td>
-		<th colspan=\"2\">$rewardsList[$reward] Chance</th>";
+		<th>$rewardsList[$reward] ID</th>
+		<td colspan=\"3\">".$this->linkToItem($rewards[$reward], $rewards[$reward])."</td>
+		<th>$rewardsList[$reward] Chance</th>";
 		if ($rewardsPer[$reward] > 100)
 			$rewardsPer[$reward] = 100;
 	echo "
