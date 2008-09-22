@@ -64,7 +64,9 @@ try {
 		FLUX_DATA_DIR.'/logs/schemas',
 		FLUX_DATA_DIR.'/logs/schemas/logindb',
 		FLUX_DATA_DIR.'/logs/schemas/charmapdb',
-		FLUX_DATA_DIR.'/logs/transactions'
+		FLUX_DATA_DIR.'/logs/transactions',
+		FLUX_DATA_DIR.'/logs/mysql',
+		FLUX_DATA_DIR.'/logs/mysql/errors'
 	);
 
 	// Schema log directories.
