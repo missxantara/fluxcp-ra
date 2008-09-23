@@ -48,4 +48,18 @@ for ($loop = 0; $loop <= 13; $loop++) {
 	$sth[$loop]->execute(array($monsterID));
 	$monster[$loop]   = $sth[$loop]->fetch();
 }
+
+$mobDB = Flux::config('MobSkillDb');
+
+if (is_readable($mobDB)) {
+	$fdb    = fopen($mobDB, 'r');
+	$skills = array();
+	
+	while ($lines = fgets($fdb)) {
+		$parts = explode(',', $lines);
+		if ($parts[0] == $monsterID)
+			$skills[] = $lines;
+	}
+	fclose($fdb);
+}
 ?>

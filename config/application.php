@@ -68,6 +68,7 @@ return array(
 		'Accounts'      => array('module' => 'account'),
 		'Characters'    => array('module' => 'character'),
 		'Guilds'        => array('module' => 'guild'),
+		'Reload'        => array('module' => 'reload'),
 		//'Castles'       => array('module' => 'castle'),
 		//'Auction'       => array('module' => 'auction'),
 		//'Economy'       => array('module' => 'economy'),
@@ -104,6 +105,9 @@ return array(
 			//'npc'     => 'NPC',
 			//'pick'    => 'Item Picks',
 			//'zeny'    => 'Zeny'
+		),
+		'reload' => array(
+			'mobskill' => 'Mob Skills'
 		)
 	),
 	
@@ -140,6 +144,13 @@ return array(
 		'RedemptionTable'     => 'cp_redeemlog',
 		'AccountCreateTable'  => 'cp_createlog',
 		'AccountBanTable'     => 'cp_banlog'
-	)
+	),
+
+	// Do not change these unless you also rename the files in FLUX_ROOT/lib/eA/
+	'MobSkillDb1' => FLUX_ROOT.'/lib/eA/mob_skill_db.txt',
+	'MobSkillDb2' => FLUX_ROOT.'/lib/eA/mob_skill_db2.txt',
+
+	// This is the combined file of the Mob Skill DBs minus the comments and clutter.
+	'MobSkillDb'  => FLUX_ROOT.'/lib/eA/mob_skills.txt'
 );
 ?>

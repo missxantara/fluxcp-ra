@@ -136,7 +136,59 @@
 	echo "
 		<td>".$rewardsPer[$reward]."%</td>
 	</tr>
-	"; } } ?>
+	";
+	} }
+	echo "
+	</table>
+	<br />
+	<h3>Monster Skills</h3>
+	<table class=\"vertical-table\">
+	<tr>
+	";
+	if (!is_readable($mobDB)) {
+		echo "<td colspan=\"6\" align=\"center\">Mob Skill DB could not be read.</td>";
+	} else {
+		echo "
+		<th>Info</th>
+		<th>State</th>
+		<th>Skill ID</th>
+		<th>Skill Level</th>
+		<th>Rate</th>
+		<th>Cast Time</th>
+		<th>Delay</th>
+		<th>Cancelable</th>
+		<th>Target</th>
+		<th>Condition</th>
+		<th>Value</th>
+		<th>Val1</th>
+		<th>Val2</th>
+		<th>Val3</th>
+		<th>Val4</th>
+		<th>Val5</th>
+		<th>Emotion</th>
+		</tr>";
+		foreach ($skills as $skill) {
+			$skill = explode(',', $skill);
+			$info = explode('@', $skill[1],2);
+			$skill[1] = $info[1];
+			echo "
+			<tr>";
+			$skill[5] = ($skill[5]/100.00)."%";
+			$skill[6] = ($skill[6]/100.00)." sec";
+			$skill[7] = ($skill[7]/100.00)." sec";
+			for ($a = 1; $a <= 17; $a++) {
+				if (trim($skill[$a]) != "")
+					echo "<td>$skill[$a]</td>";
+				else
+					echo "<td><span class=\"not-applicable\">None</span></td>";
+			}
+			echo "
+			</tr>";
+		}
+	}
+	echo "
+	</tr>";
+	?>
 </table>
 <?php else: ?>
 <p>No such monster was found. <a href="javascript:history.go(-1)">Go back</a>.</p>

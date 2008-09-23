@@ -92,6 +92,10 @@ return array(
 		),
 		'test'      => array(
 			'*'        => AccountLevel::ANYONE
+		),
+		'reload'    => array(
+			'index'   => AccountLevel::ADMIN,
+			'mobskill' => AccountLevel::ADMIN
 		)
 	),
 	// General feature permissions, handled by the modules themselves.
