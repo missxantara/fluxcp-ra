@@ -17,8 +17,8 @@ else {
 	$guildName    = $params->get('guild_name');
 	$charID       = $params->get('char_id');
 	$charName     = $params->get('master');
-	$guildLevel   = $params->get('guild_lv');
-	$guildLevelOp = $params->get('guild_lv_op');
+	$guildLevel   = $params->get('guild_level');
+	$guildLevelOp = $params->get('guild_level_op');
 	$connectMem   = $params->get('connect_member');
 	$connectMemOp = $params->get('connect_member_op');
 	$maxMem       = $params->get('max_member');
