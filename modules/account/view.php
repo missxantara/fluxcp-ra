@@ -100,8 +100,11 @@ $characters = array();
 foreach ($session->getAthenaServerNames() as $serverName) {
 	$athena = $session->getAthenaServer($serverName);
 	
-	$sql = "SELECT ch.* FROM {$athena->charMapDatabase}.`char` AS ch WHERE ch.account_id = ? ORDER BY ch.char_num ASC";
-	$sth = $server->connection->getStatement($sql);
+	$sql  = "SELECT ch.*, guild.name AS guild_name ";
+	$sql .= "FROM {$athena->charMapDatabase}.`char` AS ch ";
+	$sql .= "LEFT OUTER JOIN guild ON guild.guild_id = ch.guild_id ";
+	$sql .= "WHERE ch.account_id = ? ORDER BY ch.char_num ASC";
+	$sth  = $server->connection->getStatement($sql);
 	$sth->execute(array($accountID));
 
 	$chars = $sth->fetchAll();

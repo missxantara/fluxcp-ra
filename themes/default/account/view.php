@@ -159,6 +159,7 @@
 			<th>Base Level</th>
 			<th>Job Level</th>
 			<th>Zeny</th>
+			<th colspan="2">Guild</th>
 			<th>Status</th>
 		</tr>
 		<?php foreach ($chars as $char): $zeny += $char->zeny; ?>
@@ -175,6 +176,18 @@
 			<td><?php echo (int)$char->base_level ?></td>
 			<td><?php echo (int)$char->job_level ?></td>
 			<td><?php echo number_format((int)$char->zeny) ?></td>
+			<?php if ($char->guild_name): ?>
+				<td><img src="<?php echo $this->emblem($char->guild_id) ?>" /></td>
+				<td>
+					<?php if ($auth->allowedToViewGuild): ?>
+						<?php echo $this->linkToGuild($char->guild_id, $char->guild_name) ?>
+					<?php else: ?>
+						<?php echo htmlspecialchars($char->guild_name) ?>
+					<?php endif ?>
+				</td>
+			<?php else: ?>	
+				<td colspan="2" align="center"><span class="not-applicable">None</span></td>
+			<?php endif ?>
 			<td>
 				<?php if ($char->online): ?>
 					<span class="online">Online</span>
