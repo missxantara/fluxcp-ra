@@ -322,8 +322,14 @@ class Flux_Template {
 			$action = array_key_exists('action', $menuItem) ? $menuItem['action'] : $defaultAction;
 			$exturl = array_key_exists('exturl', $menuItem) ? $menuItem['exturl'] : null;
 			
-			if ($exturl) {
-				$allowedItems[] = array('name' => $menuName, 'exturl' => $exturl, 'module' => null, 'action' => null);
+			if ($exturl && !$adminMenus) {
+				$allowedItems[] = array(
+					'name'   => $menuName,
+					'exturl' => $exturl,
+					'module' => null,
+					'action' => null,
+					'url'    => $exturl
+				);
 			}
 			else {
 				if ($adminMenus) {
@@ -334,7 +340,13 @@ class Flux_Template {
 				}
 
 				if ($auth->actionAllowed($module, $action) && $cond) {
-					$allowedItems[] = array('name' => $menuName, 'exturl' => null, 'module' => $module, 'action' => $action);
+					$allowedItems[] = array(
+						'name'   => $menuName,
+						'exturl' => null,
+						'module' => $module,
+						'action' => $action,
+						'url'    => $this->url($module, $action)
+					);
 				}
 			}
 		}
