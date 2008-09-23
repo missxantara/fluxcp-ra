@@ -12,6 +12,7 @@
 				<span class="for-sale yes">
 					Yes
 					<a href="<?php echo $this->url('purchase') ?>">(Go to Item Shop)</a>
+					<a href="<?php echo $this->url('itemshop', 'add', array('id' => $item->item_id)) ?>">(Add Again)</a>
 				</span>
 			<?php else: ?>
 				<span class="for-sale no">
@@ -31,7 +32,7 @@
 			<?php if ($item->cost): ?>
 				<?php echo number_format((int)$item->cost) ?>
 			<?php else: ?>
-				<span class="not-applicable">None</span>
+				<span class="not-applicable">Not For Sale</span>
 			<?php endif ?>
 		</td>
 	</tr>
