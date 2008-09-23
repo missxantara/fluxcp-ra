@@ -46,6 +46,8 @@ return array(
 	'AllowTempBanLogin'    => false,                    // Allow logging in of temporarily banned accounts.
 	'AllowPermBanLogin'    => false,                    // Allow logging in of permanently banned accounts.
 	'AutoRemoveTempBans'   => true,                     // Automatically remove expired temporary bans on certain pages.
+	'ItemShopMaxCost'      => 99,                       // Max price an item can be sold for.
+	'ItemShopMaxQuantity'  => 99,                       // Max quantity the item may be sold at once for.
 	
 	// These are the main menu items that should be displayed by themes.
 	// They route to modules and actions.  Whether they are displayed or

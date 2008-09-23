@@ -21,6 +21,8 @@ $sth->execute(array($itemID));
 $item = $sth->fetch();
 
 if ($item && count($_POST)) {
+	$maxCost  = (int)Flux::config('ItemShopMaxCost');
+	$maxQty   = (int)Flux::config('ItemShopMaxQuantity');
 	$shop     = new Flux_ItemShop($server);
 	$cost     = (int)$params->get('cost');
 	$quantity = (int)$params->get('qty');
@@ -29,8 +31,14 @@ if ($item && count($_POST)) {
 	if (!$cost) {
 		$errorMessage = 'You must input a credit cost greater than zero.';
 	}
+	elseif ($cost > $maxCost) {
+		$errorMessage = "The credit cost must not exceed $maxCost.";
+	}
 	elseif (!$quantity) {
 		$errorMessage = 'You must input a quantity greater than zero.';
+	}
+	elseif ($quantity > $maxQty) {
+		$errorMessage = "The item quantity must not exceed $maxQty.";
 	}
 	elseif (!$info) {
 		$errorMessage = 'You must input at least some info text.';
