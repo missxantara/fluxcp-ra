@@ -320,16 +320,22 @@ class Flux_Template {
 		foreach ($menuItems->toArray() as $menuName => $menuItem) {
 			$module = array_key_exists('module', $menuItem) ? $menuItem['module'] : false;
 			$action = array_key_exists('action', $menuItem) ? $menuItem['action'] : $defaultAction;
+			$exturl = array_key_exists('exturl', $menuItem) ? $menuItem['exturl'] : null;
 			
-			if ($adminMenus) {
-				$cond = $auth->config("modules.$module.$action") >= $adminMenuLevel;
+			if ($exturl) {
+				$allowedItems[] = array('name' => $menuName, 'exturl' => $exturl, 'module' => null, 'action' => null);
 			}
 			else {
-				$cond = $auth->config("modules.$module.$action") < $adminMenuLevel;
-			}
-			
-			if ($auth->actionAllowed($module, $action) && $cond) {
-				$allowedItems[] = array('name' => $menuName, 'module' => $module, 'action' => $action);
+				if ($adminMenus) {
+					$cond = $auth->config("modules.$module.$action") >= $adminMenuLevel;
+				}
+				else {
+					$cond = $auth->config("modules.$module.$action") < $adminMenuLevel;
+				}
+
+				if ($auth->actionAllowed($module, $action) && $cond) {
+					$allowedItems[] = array('name' => $menuName, 'exturl' => null, 'module' => $module, 'action' => $action);
+				}
 			}
 		}
 		

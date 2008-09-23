@@ -74,6 +74,7 @@ return array(
 		//'Ranking'       => array('module' => 'ranking'),
 		'Items'         => array('module' => 'item'),
 		'Monsters'      => array('module' => 'monster'),
+		//'Google'        => array('exturl' => 'http://www.google.com')
 	),
 	
 	// Sub-menu items that are displayed for any action belonging to a

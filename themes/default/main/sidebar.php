@@ -32,9 +32,10 @@ $menuItems = $this->getMenuItems();
 		<td><img src="<?php echo $this->themePath('img/sidebar_complete_top.gif') ?>" /></td>
 	</tr>
 	<?php foreach ($menuItems as $menuItem): ?>
+	<?php $exturl = $menuItem['exturl'] ?>
 	<tr>
 		<td class="menuitem">
-			<a href="<?php echo $this->url($menuItem['module'], $menuItem['action']) ?>"<?php
+			<a href="<?php echo $exturl ? $exturl : $this->url($menuItem['module'], $menuItem['action']) ?>"<?php
 				if ($menuItem['module'] == 'account' && $menuItem['action'] == 'logout')
 					echo ' onclick="return confirm(\'Are you sure you want to logout?\')"' ?>>
 				<span><?php echo htmlspecialchars($menuItem['name']) ?></span>
