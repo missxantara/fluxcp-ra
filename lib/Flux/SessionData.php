@@ -165,7 +165,7 @@ class Flux_SessionData {
 	{
 		$value = null;
 		if (array_key_exists($prop, $this->sessionData)) {
-			$value = $this->sessionData[$prop];
+			$value = &$this->sessionData[$prop];
 		}
 		return $value;
 	}
