@@ -1083,5 +1083,29 @@ class Flux_Template {
 		
 		return $upper;
 	}
+
+	/**
+	 * Link to a guild view page.
+	 *
+	 * @param int $guildID
+	 * @param string $text
+	 * @return mixed
+	 * @access public
+	 */
+	public function linkToGuild($guild_id, $text, $server = null)
+	{
+		if ($guild_id) {
+			$params = array('id' => $guild_id);
+			if ($server) {
+				$params['preferred_server'] = $server;
+			}
+			
+			$url = $this->url('guild', 'view', $params);
+			return sprintf('<a href="%s" class="link-to-guild">%s</a>', $url, htmlentities($text));
+		}
+		else {
+			return false;
+		}
+	}
 }
 ?>

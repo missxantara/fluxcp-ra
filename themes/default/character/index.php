@@ -88,7 +88,7 @@
 		<th><?php echo $paginator->sortableColumn('ch.base_level', 'Base Level') ?></th>
 		<th><?php echo $paginator->sortableColumn('ch.job_level', 'Job Level') ?></th>
 		<th><?php echo $paginator->sortableColumn('ch.zeny', 'Zeny') ?></th>
-		<th><?php echo $paginator->sortableColumn('guild_name', 'Guild') ?></th>
+		<th colspan="2"><?php echo $paginator->sortableColumn('guild_name', 'Guild') ?></th>
 		<th><?php echo $paginator->sortableColumn('partner_name', 'Partner') ?></th>
 		<th><?php echo $paginator->sortableColumn('mother_name', 'Mother') ?></th>
 		<th><?php echo $paginator->sortableColumn('father_name', 'Father') ?></th>
@@ -123,14 +123,18 @@
 		<td><?php echo number_format((int)$char->base_level) ?></td>
 		<td><?php echo number_format((int)$char->job_level) ?></td>
 		<td><?php echo number_format((int)$char->zeny) ?></td>
-		<td>
-			<?php if ($char->guild_name): ?>
-				<img src="<?php echo $this->emblem($char->guild_id) ?>" />
-				<?php echo htmlspecialchars($char->guild_name) ?>
-			<?php else: ?>
-				<span class="not-applicable">None</span>
-			<?php endif ?>
-		</td>
+		<?php if ($char->guild_name): ?>
+			<td><img src="<?php echo $this->emblem($char->guild_id) ?>" /></td>
+			<td>
+				<?php if ($auth->allowedToViewGuild): ?>
+					<?php echo $this->linkToGuild($char->guild_id, $char->guild_name) ?>
+				<?php else: ?>
+					<?php echo htmlspecialchars($char->guild_name) ?>
+				<?php endif ?>
+			</td>
+		<?php else: ?>
+			<td colspan="2" align="center"><span class="not-applicable">None</span></td>
+		<?php endif ?>
 		<td>
 			<?php if ($char->partner_name): ?>
 				<?php if ($auth->allowedToViewCharacter): ?>

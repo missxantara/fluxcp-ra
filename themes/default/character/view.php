@@ -5,7 +5,7 @@
 <table class="vertical-table">
 	<tr>
 		<th>Character ID</th>
-		<td><?php echo htmlspecialchars($char->char_id) ?></td>
+		<td colspan="2"><?php echo htmlspecialchars($char->char_id) ?></td>
 		<th>Account ID</th>
 		<td><?php echo htmlspecialchars($char->char_account_id) ?></td>
 		<th>Character Slot</th>
@@ -13,7 +13,7 @@
 	</tr>
 	<tr>
 		<th>Character</th>
-		<td><?php echo htmlspecialchars($char->char_name) ?></td>
+		<td colspan="2"><?php echo htmlspecialchars($char->char_name) ?></td>
 		<th>Account</th>
 		<td><?php echo $this->linkToAccount($char->char_account_id, $char->userid) ?></td>
 		<th>Job Class</th>
@@ -27,7 +27,7 @@
 	</tr>
 	<tr>
 		<th>Base Level</th>
-		<td><?php echo number_format((int)$char->char_base_level) ?></td>
+		<td colspan="2"><?php echo number_format((int)$char->char_base_level) ?></td>
 		<th>B. Experience</th>
 		<td><?php echo number_format((int)$char->char_base_exp) ?></td>
 		<th>Partner</th>
@@ -45,7 +45,7 @@
 	</tr>
 	<tr>
 		<th>Job Level</th>
-		<td><?php echo number_format((int)$char->char_job_level) ?></td>
+		<td colspan="2"><?php echo number_format((int)$char->char_job_level) ?></td>
 		<th>J. Experience</th>
 		<td><?php echo number_format((int)$char->char_job_exp) ?></td>
 		<th>Child</th>
@@ -63,7 +63,7 @@
 	</tr>
 	<tr>
 		<th>Current HP</th>
-		<td><?php echo number_format((int)$char->char_hp) ?></td>
+		<td colspan="2"><?php echo number_format((int)$char->char_hp) ?></td>
 		<th>Max HP</th>
 		<td><?php echo number_format((int)$char->char_max_hp) ?></td>
 		<th>Mother</th>
@@ -81,7 +81,7 @@
 	</tr>
 	<tr>
 		<th>Current SP</th>
-		<td><?php echo number_format((int)$char->char_sp) ?></td>
+		<td colspan="2"><?php echo number_format((int)$char->char_sp) ?></td>
 		<th>Max SP</th>
 		<td><?php echo number_format((int)$char->char_max_sp) ?></td>
 		<th>Father</th>
@@ -99,7 +99,7 @@
 	</tr>
 	<tr>
 		<th>Zeny</th>
-		<td><?php echo number_format((int)$char->char_zeny) ?></td>
+		<td colspan="2"><?php echo number_format((int)$char->char_zeny) ?></td>
 		<th>Status Points</th>
 		<td><?php echo number_format((int)$char->char_status_point) ?></td>
 		<th>Skill Points</th>
@@ -107,14 +107,18 @@
 	</tr>
 	<tr>
 		<th>Guild Name</th>
-		<td>
 			<?php if ($char->guild_name): ?>
-				<img src="<?php echo $this->emblem($char->guild_id) ?>" />
-				<?php echo htmlspecialchars($char->guild_name) ?>
+				<td><img src="<?php echo $this->emblem($char->guild_id) ?>" /></td>
+				<td>
+					<?php if ($auth->allowedToViewGuild): ?>
+						<?php echo $this->linkToGuild($char->guild_id, $char->guild_name) ?>
+					<?php else: ?>
+						<?php echo htmlspecialchars($char->guild_name) ?>
+					<?php endif ?>
+				</td>
 			<?php else: ?>	
-				<span class="not-applicable">None</span>
+				<td colspan="2" align="center"><span class="not-applicable">None</span></td>
 			<?php endif ?>
-		</td>
 		<th>Guild Position</th>
 		<td>
 			<?php if ($char->guild_position): ?>
@@ -128,7 +132,7 @@
 	</tr>
 	<tr>
 		<th>Party Name</th>
-		<td>
+		<td colspan="2">
 			<?php if ($char->party_name): ?>
 				<?php echo htmlspecialchars($char->party_name) ?>
 			<?php else: ?>	
@@ -159,7 +163,7 @@
 	</tr>
 	<tr>
 		<th>Death Count</th>
-		<td><?php echo number_format((int)$char->death_count) ?></td>
+		<td colspan="2"><?php echo number_format((int)$char->death_count) ?></td>
 		<th>Online Status</th>
 		<td>
 			<?php if ($char->char_online): ?>
@@ -180,7 +184,7 @@
 	</tr>
 	<tr>
 		<th>Character Stats</th>
-		<td colspan="5">
+		<td colspan="6">
 			<table class="character-stats">
 				<tr>
 					<td><span class="stat-name">STR</span></td>
@@ -212,6 +216,7 @@
 				<th>Job Class</th>
 				<th>Base Level</th>
 				<th>Job Level</th>
+				<th colspan="2">Guild</th>
 				<th>Status</th>
 			</tr>
 			<?php foreach ($partyMembers as $partyMember): ?>
@@ -232,6 +237,18 @@
 				</td>
 				<td><?php echo number_format((int)$partyMember->base_level) ?></td>
 				<td><?php echo number_format((int)$partyMember->job_level) ?></td>
+				<?php if ($partyMember->guild_name): ?>
+					<td><img src="<?php echo $this->emblem($partyMember->guild_id) ?>" /></td>
+					<td>
+						<?php if ($auth->allowedToViewGuild): ?>
+							<?php echo $this->linkToGuild($partyMember->guild_id, $partyMember->guild_name) ?>
+						<?php else: ?>
+							<?php echo htmlspecialchars($partyMember->guild_name) ?>
+						<?php endif ?>
+					</td>
+				<?php else: ?>	
+					<td colspan="2" align="center"><span class="not-applicable">None</span></td>
+				<?php endif ?>
 				<td>
 					<?php if ($partyMember->online): ?>
 						<span class="online">Online</span>
@@ -255,6 +272,7 @@
 			<th>Job Class</th>
 			<th>Base Level</th>
 			<th>Job Level</th>
+			<th colspan="2">Guild</th>
 			<th>Status</th>
 		</tr>
 		<?php foreach ($friends as $friend): ?>
@@ -275,6 +293,18 @@
 			</td>
 			<td><?php echo number_format((int)$friend->base_level) ?></td>
 			<td><?php echo number_format((int)$friend->job_level) ?></td>
+			<?php if ($friend->guild_name): ?>
+				<td><img src="<?php echo $this->emblem($friend->guild_id) ?>" /></td>
+				<td>
+					<?php if ($auth->allowedToViewGuild): ?>
+						<?php echo $this->linkToGuild($friend->guild_id, $friend->guild_name) ?>
+					<?php else: ?>
+						<?php echo htmlspecialchars($friend->guild_name) ?>
+					<?php endif ?>
+				</td>
+			<?php else: ?>	
+				<td colspan="2" align="center"><span class="not-applicable">None</span></td>
+			<?php endif ?>
 			<td>
 				<?php if ($friend->online): ?>
 					<span class="online">Online</span>

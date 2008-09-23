@@ -37,7 +37,8 @@ return array(
 		'guild'     => array(
 			'emblem'   => AccountLevel::ANYONE,
 			'index'    => AccountLevel::LOWGM,
-			'export'   => AccountLevel::ADMIN
+			'export'   => AccountLevel::ADMIN,
+			'view'     => AccountLevel::ADMIN
 		),
 		'castle'    => array(
 			'index'    => AccountLevel::LOWGM
@@ -113,6 +114,7 @@ return array(
 		'AddShopItem'        => AccountLevel::ADMIN,
 		'EditShopItem'       => AccountLevel::ADMIN,
 		'DeleteShopItem'     => AccountLevel::ADMIN,
+		'ViewGuild'          => AccountLevel::ADMIN,
 		
 		'BanHigherPower'     => 5000
 	)
