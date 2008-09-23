@@ -134,7 +134,7 @@
 		</td>
 		<td>
 			<?php if ($item->cost): ?>
-				<span class="for-sale yes">Yes</span>
+				<span class="for-sale yes"><a href="<?php echo $this->url('purchase') ?>" title="Go to Item Shop">Yes</a></span>
 			<?php else: ?>
 				<span class="for-sale no">No</span>
 			<?php endif ?>
