@@ -1,3 +1,5 @@
-<?php if (!defined('FLUX_ROOT')) exit; ?>
+<?php
+if (!defined('FLUX_ROOT')) exit;
 
 $this->loginRequired();
+?>
