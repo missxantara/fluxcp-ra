@@ -11,7 +11,7 @@ $sqlpartial .= "LEFT OUTER JOIN {$server->charMapDatabase}.`char` AS partner ON 
 $sqlpartial .= "LEFT OUTER JOIN {$server->charMapDatabase}.`char` AS mother ON mother.char_id = ch.mother ";
 $sqlpartial .= "LEFT OUTER JOIN {$server->charMapDatabase}.`char` AS father ON father.char_id = ch.father ";
 $sqlpartial .= "LEFT OUTER JOIN {$server->charMapDatabase}.`char` AS child ON child.char_id = ch.child ";
-$sqlpartial .= "WHERE 1=1 ";
+$sqlpartial .= "WHERE 1=1";
 
 $charID = $params->get('char_id');
 if ($charID) {
@@ -160,7 +160,8 @@ $col .= "guild.guild_id, guild.name AS guild_name, ";
 $col .= "login.userid, partner.name AS partner_name, partner.char_id AS partner_id, ";
 $col .= "mother.name AS mother_name, mother.char_id AS mother_id, ";
 $col .= "father.name AS father_name, father.char_id AS father_id, ";
-$col .= "child.name AS child_name, child.char_id AS child_id ";
+$col .= "child.name AS child_name, child.char_id AS child_id";
+
 $sql  = "SELECT $col FROM {$server->charMapDatabase}.`char` AS ch $sqlpartial";
 $sql  = $paginator->getSQL($sql);
 $sth  = $server->connection->getStatement($sql);
