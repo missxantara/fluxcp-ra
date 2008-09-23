@@ -1,4 +1,5 @@
-<?php if (!defined('FLUX_ROOT')) exit; ?>
+<?php
+if (!defined('FLUX_ROOT')) exit;
 if (!is_readable($mobDB1)) {
 	echo "Error: '{$mobDB1}' is unreadable or does not exist.";
 	exit;
@@ -13,7 +14,7 @@ if (!is_readable($mobDB1)) {
 		echo "Error: '{$mobDB}' is unreadable or does not exist.";
 		exit;
 	} else {
-		echo "<h3>Mob Skills Successfully Reloaded!</h3>";
+		echo "<h3>Mob Skills (".number_format(filesize($mobDB))." B) Successfully Reloaded!</h3>";
 	}
 }
 ?>

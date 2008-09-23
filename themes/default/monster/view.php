@@ -1,6 +1,6 @@
 <?php if (!defined('FLUX_ROOT')) exit; ?>
 <h2>Viewing Monster</h2>
-<?php if ($monster): ?>
+<?php if ($monster[0]): ?>
 <h3>#<?php echo htmlspecialchars($monster[0]->monster_id) ?>: “<?php echo htmlspecialchars($monster[0]->kName) ?>” / “<?php echo htmlspecialchars($monster[0]->iName) ?>”
 <?php if ($monster[0]->MEXP): ?>: MvP<?php endif ?></h3>
 <table class="vertical-table">
@@ -138,17 +138,17 @@
 	</tr>
 	";
 	} }
-	echo "
-	</table>
-	<br />
-	<h3>Monster Skills</h3>
-	<table class=\"vertical-table\">
-	<tr>
-	";
 	if (!is_readable($mobDB)) {
-		echo "<td colspan=\"6\" align=\"center\">Mob Skill DB could not be read.</td>";
+		echo "<td colspan=\"17\" align=\"center\">Mob Skill DB could not be read.</td>";
+	} else if (filesize($mobDB) == 0) {
+		echo "<td colspan=\"6\" align=\"center\">The Mob Skill DB needs to be reloaded by an Admin.</td>";
 	} else {
 		echo "
+		</table>
+		<br />
+		<h3>Monster Skills</h3>
+		<table class=\"vertical-table\">
+		<tr>
 		<th>Info</th>
 		<th>State</th>
 		<th>Skill ID</th>
@@ -167,6 +167,8 @@
 		<th>Val5</th>
 		<th>Emotion</th>
 		</tr>";
+		if (count($skills) == 0)
+			echo "<td colspan=\"17\" align=\"center\">This monster has no skills.</td>";
 		foreach ($skills as $skill) {
 			$skill = explode(',', $skill);
 			$info = explode('@', $skill[1],2);
