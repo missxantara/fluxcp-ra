@@ -604,6 +604,11 @@ input[type=text], input[type=password], textarea {
 	width: 40px;
 }
 
+.shop-server-name {
+	color: #888;
+	border-bottom: 1px solid #ddd;
+}
+
 textarea {
 	width: 280px;
 	height: 120px;
