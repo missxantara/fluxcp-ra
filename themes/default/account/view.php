@@ -122,7 +122,7 @@
 	<?php endif ?>
 </table>
 
-<?php if ($banInfo): ?>
+<?php if ($auth->allowedToViewAccountBanLog && $banInfo): ?>
 <h3>Ban Log for “<?php echo htmlspecialchars($account->userid) ?>” (recent to oldest)</h3>
 <table class="vertical-table">
 	<tr>

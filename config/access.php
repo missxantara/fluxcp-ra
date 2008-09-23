@@ -105,6 +105,7 @@ return array(
 	// General feature permissions, handled by the modules themselves.
 	'features' => array(
 		'ViewAccount'        => AccountLevel::HIGHGM,
+		'ViewAccountBanLog'  => AccountLevel::HIGHGM,
 		'DeleteAccount'      => AccountLevel::HIGHGM,
 		'DeleteCharacter'    => AccountLevel::HIGHGM,
 		'SeeAccountPassword' => AccountLevel::ADMIN,
