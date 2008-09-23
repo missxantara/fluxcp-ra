@@ -59,6 +59,12 @@ try {
 	));
 	define('FLUX_DATA_DIR', Flux::config('DataDirectory'));
 	
+	// Set default timezone for entire app.
+	$timezone = Flux::config('DateDefaultTimezone');
+	if (!@date_default_timezone_set($timezone)) {
+		throw new Flux_Error("'$timezone' is not a valid timezone.  Consult http://php.net/timezones for a list of valid timezones.");
+	}
+	
 	// Create some basic directories.
 	$directories = array(
 		FLUX_DATA_DIR.'/logs/schemas',
