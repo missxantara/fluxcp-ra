@@ -1,5 +1,6 @@
 <?php
 require_once 'Flux/DataObject.php';
+require_once 'Flux/ItemShop/Cart.php';
 require_once 'Flux/LoginError.php';
 
 /**
@@ -79,6 +80,7 @@ class Flux_SessionData {
 		
 		if ($this->serverName && ($this->loginAthenaGroup = Flux::getServerGroupByName($this->serverName))) {
 			$this->loginServer = $this->loginAthenaGroup->loginServer;
+			
 			if (!$this->athenaServerName || !$this->getAthenaServer($this->athenaServerName)) {
 				$this->setAthenaServerNameData(current($this->getAthenaServerNames()));
 			}
@@ -98,6 +100,32 @@ class Flux_SessionData {
 		}
 		else {
 			$this->account = new Flux_DataObject(null, array('level' => AccountLevel::UNAUTH));
+		}
+		
+		if (!is_array($this->cart)) {
+			$this->setCartData(array());
+		}
+		
+		if ($this->account->account_id && $this->loginAthenaGroup) {
+			if (!array_key_exists($this->loginAthenaGroup->serverName, $this->cart)) {
+				$this->cart[$this->loginAthenaGroup->serverName] = array();
+			}
+
+			foreach ($this->getAthenaServerNames() as $athenaServerName) {
+				$athenaServer = $this->getAthenaServer($athenaServerName);
+				$cartArray    = &$this->cart[$this->loginAthenaGroup->serverName];
+				$accountID    = $this->account->account_id;
+				
+				if (!array_key_exists($accountID, $cartArray)) {
+					$cartArray[$accountID] = array();
+				}
+				
+				if (!array_key_exists($athenaServerName, $cartArray[$accountID])) {
+					$cartArray[$accountID][$athenaServerName] = new Flux_ItemShop_Cart($this->account);
+				}
+				
+				$athenaServer->setCart($cartArray[$accountID][$athenaServerName]);
+			}
 		}
 		
 		return true;
@@ -133,7 +161,7 @@ class Flux_SessionData {
 		}
 	}
 	
-	public function __get($prop)
+	public function &__get($prop)
 	{
 		if (array_key_exists($prop, $this->sessionData)) {
 			return $this->sessionData[$prop];

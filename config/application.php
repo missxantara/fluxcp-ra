@@ -108,6 +108,11 @@ return array(
 		),
 		'reload' => array(
 			'mobskill' => 'Mob Skills'
+		),
+		'purchase' => array(
+			'clear'    => 'Empty Cart',
+			'view'     => 'View Cart',
+			'checkout' => 'Checkout'
 		)
 	),
 	

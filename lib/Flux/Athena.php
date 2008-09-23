@@ -114,6 +114,14 @@ class Flux_Athena {
 	public $mapServer;
 	
 	/**
+	 * Item shop cart.
+	 *
+	 * @access public
+	 * @var Flux_ItemShop_Cart
+	 */
+	public $cart;
+	
+	/**
 	 * @param Flux_Connection $connection
 	 * @param Flux_Config $charMapConfig
 	 * @param Flux_LoginServer $loginServer
@@ -144,6 +152,15 @@ class Flux_Athena {
 	{
 		$this->connection = $connection;
 		return $connection;
+	}
+	
+	/**
+	 *
+	 */
+	public function setCart(Flux_ItemShop_Cart $cart)
+	{
+		$this->cart = $cart;
+		return $cart;
 	}
 	
 	/**

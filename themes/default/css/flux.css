@@ -617,3 +617,36 @@ textarea {
 	width: 280px;
 	height: 120px;
 }
+
+.cart-items-text {
+	margin: 0 0 5px 0;
+	padding: 5px;
+	color: #ddd;
+	background-color: #888;
+	border: 5px solid #777;
+}
+
+.cart-info-text {
+	margin: 0 0 5px 0;
+	padding: 0;
+}
+
+.cart-total-text {
+	margin: 0;
+	padding: 0;
+}
+
+.cart-item-name {
+	color: #fff;
+	border-bottom: 1px dotted #aaa;
+}
+
+.cart-item-count {
+	font-size: 120%;
+	font-weight: bold;
+	color: #000;
+}
+
+.cart-sub-total {
+	color: #000;
+}

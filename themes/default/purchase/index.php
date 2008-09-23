@@ -15,14 +15,18 @@ foreach ($items as $i => $item) {
 	}
 }
 ?>
-	
+
+<?php if ($cartItems=$server->cart->getCartItemNames()): ?><p class="cart-items-text">Items in your cart: <span class="cart-item-name"><?php echo implode('</span>, <span class="cart-item-name">', array_map('htmlspecialchars', $cartItems)) ?></span>.</p><?php endif ?>
+<p class="cart-info-text">You have <span class="cart-item-count"><?php echo number_format(count($cartItems)) ?></span> item(s) in your cart.</p>
+<p class="cart-total-text">Your current subtotal is <span class="cart-sub-total"><?php echo number_format($server->cart->getTotal()) ?></span> credit(s).</p>
+
 <table>
 	<tr>
 		<td width="50%">
 			<?php foreach ($evens as $i => $item): ?>
 				<div class="shop-item <?php echo (!($i % 2) ? 'even' : 'odd') ?>">
 					<h4 class="shop-item-name"><?php echo htmlspecialchars($item->shop_item_name) ?></h4>
-					<?php if ($item->shop_item_qty): ?>
+					<?php if ($item->shop_item_qty > 1): ?>
 					<p class="shop-item-qty">Quantity: <span class="qty"><?php echo number_format($item->shop_item_qty) ?></span></p>
 					<?php endif ?>
 					<p class="shop-item-cost"><span class="cost"><?php echo number_format($item->shop_item_cost) ?></span> credits</p>
@@ -47,7 +51,7 @@ foreach ($items as $i => $item) {
 			<?php foreach ($odds as $i => $item): ?>
 				<div class="shop-item <?php echo (!($i % 2) ? 'even' : 'odd') ?>">
 					<h4 class="shop-item-name"><?php echo htmlspecialchars($item->shop_item_name) ?></h4>
-					<?php if ($item->shop_item_qty): ?>
+					<?php if ($item->shop_item_qty > 1): ?>
 					<p class="shop-item-qty">Quantity: <span class="qty"><?php echo number_format($item->shop_item_qty) ?></span></p>
 					<?php endif ?>
 					<p class="shop-item-cost"><span class="cost"><?php echo number_format($item->shop_item_cost) ?></span> credits</p>
