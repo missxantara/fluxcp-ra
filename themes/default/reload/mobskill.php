@@ -1,17 +1,14 @@
 <?php
 if (!defined('FLUX_ROOT')) exit;
 if (!is_readable($mobDB1)) {
-	echo "Error: '{$mobDB1}' is unreadable or does not exist.";
-	exit;
+	echo "<p>Error: '{$mobDB1}' is unreadable or does not exist.</p>";
 } else if (!is_readable($mobDB2)) {
-	echo "Error: '{$mobDB2}' is unreadable or does not exist.";
-	exit;
+	echo "<p>Error: '{$mobDB2}' is unreadable or does not exist.</p>";
 } else if (!is_writeable($mobDB)) {
-	echo "Error: '{$mobDB}' is unwriteable or does not exist.";
-	exit;
+	echo "<p>Error: '{$mobDB}' is unwriteable or does not exist.</p>";
 } else {
 	if (!is_readable($mobDB)) {
-		echo "Error: '{$mobDB}' is unreadable or does not exist.";
+		echo "<p>Error: '{$mobDB}' is unreadable or does not exist.</p>";
 		exit;
 	} else {
 		echo "<h3>Mob Skills (".number_format(filesize($mobDB))." B) Successfully Reloaded!</h3>";
