@@ -91,7 +91,7 @@ $sth->execute($bind);
 $guilds = $sth->fetchAll();
 
 if ($guilds && count($guilds) === 1) {
-	$this->redirect($this->url('guild', 'view', array('id' => $guilds[0]->id)));
+	$this->redirect($this->url('guild', 'view', array('id' => $guilds[0]->guild_id)));
 }
 
 ?>
