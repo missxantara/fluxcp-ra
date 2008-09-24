@@ -196,18 +196,25 @@ class Flux_PaymentNotifyRequest {
 							}
 
 							$amount  = (float)$this->ipnVariables->get('mc_gross');
-							$rate    = Flux::config('CreditExchangeRate');
-							$credits = floor($amount / $rate);
-							$this->logPayPal('Updating account credit balance from %s to %s', (int)$res->balance, $res->balance + $credits);
+							$minimum = (float)Flux::config('MinDonationAmount');
+							
+							if ($amount >= $minimum) {
+								$rate    = Flux::config('CreditExchangeRate');
+								$credits = floor($amount / $rate);
+								$this->logPayPal('Updating account credit balance from %s to %s', (int)$res->balance, $res->balance + $credits);
 
-							$sql = "UPDATE {$servGroup->loginDatabase}.{$this->creditsTable} SET balance = balance + ?, last_donation_amount = ?, last_donation_date = NOW()";
-							$sth = $servGroup->connection->getStatement($sql);
+								$sql = "UPDATE {$servGroup->loginDatabase}.{$this->creditsTable} SET balance = balance + ?, last_donation_amount = ?, last_donation_date = NOW()";
+								$sth = $servGroup->connection->getStatement($sql);
 
-							if ($sth->execute(array($credits, $amount))) {
-								$this->logPayPal('Deposited credits.');
+								if ($sth->execute(array($credits, $amount))) {
+									$this->logPayPal('Deposited credits.');
+								}
+								else {
+									$this->logPayPal('Failed to deposit credits.');
+								}
 							}
 							else {
-								$this->logPayPal('Failed to deposit credits.');
+								$this->logPayPal('User has donated less than the configured minimum, not exchanging credits.');
 							}
 						}
 					}
