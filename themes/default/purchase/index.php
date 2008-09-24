@@ -32,8 +32,7 @@ foreach ($items as $i => $item) {
 					<p class="shop-item-cost"><span class="cost"><?php echo number_format($item->shop_item_cost) ?></span> credits</p>
 					<p class="shop-item-info"><?php echo nl2br(htmlspecialchars($item->shop_item_info)) ?></p>
 					<p class="shop-item-action">
-						<a href="<?php echo $this->url('purchase', 'buy', array('id' => $item->shop_item_id)) ?>"><strong>Buy</strong></a>
-						/ <a href="<?php echo $this->url('purchase', 'add', array('id' => $item->shop_item_id)) ?>">Add to Cart</a>
+						<a href="<?php echo $this->url('purchase', 'add', array('id' => $item->shop_item_id)) ?>"><strong>Add to Cart</strong></a>
 						/ <?php echo $this->linkToItem($item->shop_item_nameid, 'View Item') ?>
 						<?php if ($auth->allowedToEditShopItem): ?>
 						/ <a href="<?php echo $this->url('itemshop', 'edit', array('id' => $item->shop_item_id)) ?>">Modify</a>
@@ -57,8 +56,7 @@ foreach ($items as $i => $item) {
 					<p class="shop-item-cost"><span class="cost"><?php echo number_format($item->shop_item_cost) ?></span> credits</p>
 					<p class="shop-item-info"><?php echo nl2br(htmlspecialchars($item->shop_item_info)) ?></p>
 					<p class="shop-item-action">
-						<a href="<?php echo $this->url('purchase', 'buy', array('id' => $item->shop_item_id)) ?>"><strong>Buy</strong></a>
-						/ <a href="<?php echo $this->url('purchase', 'add', array('id' => $item->shop_item_id)) ?>">Add to Cart</a>
+						<a href="<?php echo $this->url('purchase', 'add', array('id' => $item->shop_item_id)) ?>"><strong>Add to Cart</strong></a>
 						/ <?php echo $this->linkToItem($item->shop_item_nameid, 'View Item') ?>
 						<?php if ($auth->allowedToEditShopItem): ?>
 						/ <a href="<?php echo $this->url('itemshop', 'edit', array('id' => $item->shop_item_id)) ?>">Modify</a>
