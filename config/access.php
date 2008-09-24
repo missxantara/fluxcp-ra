@@ -19,7 +19,8 @@ return array(
 			'add'      => AccountLevel::NORMAL,
 			'clear'    => AccountLevel::NORMAL,
 			'view'     => AccountLevel::NORMAL,
-			'checkout' => AccountLevel::NORMAL
+			'checkout' => AccountLevel::NORMAL,
+			'remove'   => AccountLevel::NORMAL
 		),
 		'itemshop'  => array(
 			'add'      => AccountLevel::ADMIN,
