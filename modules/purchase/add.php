@@ -17,5 +17,6 @@ else {
 	$session->setMessageData("Couldn't add item to your cart.");
 }
 
-$this->redirect($this->url('purchase'));
+$action = $params->get('cart') ? 'cart' : 'index';
+$this->redirect($this->url('purchase', $action));
 ?>

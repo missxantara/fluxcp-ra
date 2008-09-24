@@ -569,7 +569,7 @@ input[type=text], input[type=password], textarea {
 	text-transform: uppercase;
 }
 
-.shop-item .cost {
+.cost {
 	font-size: 120%;
 	font-weight: bold;
 	color: #000;
@@ -582,7 +582,7 @@ input[type=text], input[type=password], textarea {
 	font-style: italic;
 }
 
-.shop-item .qty {
+.qty {
 	color: #888;
 	font-size: 10pt;
 }
@@ -649,4 +649,35 @@ textarea {
 
 .cart-sub-total {
 	color: #000;
+}
+
+.cart {
+	width: 100%;
+}
+
+.cart label {
+	display: block;
+}
+
+.cart h4 {
+	margin: 10px 0 2px 0;
+	font-size: 140%;
+}
+
+.remove-from-cart {
+	text-align: right;
+}
+
+.checkout-text {
+	font-size: 120%;
+	font-weight: bold;
+}
+
+.checkout-text a {
+	border-bottom: 1px dotted #ccc;
+}
+
+.checkout-text a:hover {
+	color: #000;
+	border-bottom: 1px solid #aaa;
 }
