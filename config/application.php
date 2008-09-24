@@ -110,6 +110,7 @@ return array(
 			'mobskill' => 'Mob Skills'
 		),
 		'purchase' => array(
+			'index'    => 'Shop',
 			'clear'    => 'Empty Cart',
 			'view'     => 'View Cart',
 			'checkout' => 'Checkout'
