@@ -11,7 +11,7 @@
 		
 	<?php if (!$donationAmount): ?>
 	<form action="<?php echo $this->url ?>" method="post">
-		<?php echo $this->moduleActionFormInputs($this->url($params->get('module'))) ?>
+		<?php echo $this->moduleActionFormInputs($params->get('module')) ?>
 		<input type="hidden" name="setamount" value="1" />
 		<p class="enter-donation-amount">
 			<label>
