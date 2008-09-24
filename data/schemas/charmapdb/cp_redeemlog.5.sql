@@ -1,0 +1,1 @@
+ALTER TABLE `cp_redeemlog` ADD `purchase_date` DATETIME NOT NULL AFTER `redemption_date` ;
