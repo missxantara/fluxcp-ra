@@ -122,5 +122,26 @@ class Flux_ItemShop_Cart {
 		$empty = !count($this->cart);
 		return $empty;
 	}
+	
+	public function deleteByItemNum($num)
+	{
+		if (!is_array($num)) {
+			$num = array((int)$num);
+		}
+		else {
+			$num = array_map('intval', $num);
+		}
+		
+		$nDeleted = 0;
+		
+		foreach ($num as $n) {
+			if (array_key_exists($n, $this->cart)) {
+				unset($this->cart[$n]);
+				$nDeleted += 1;
+			}
+		}
+		
+		return $nDeleted;
+	}
 }
 ?>
