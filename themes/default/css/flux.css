@@ -706,3 +706,12 @@ textarea {
 	font-size: 8pt;
 	text-align: center;
 }
+
+.checkout-info-text {
+	margin: 0 0 5px 0;
+	padding: 0;
+}
+
+.remaining-balance {
+	color: #000;
+}
