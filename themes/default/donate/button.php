@@ -6,7 +6,15 @@ $customDataEscaped  = htmlspecialchars(base64_encode(serialize($customDataArray)
 $businessEmail      = htmlspecialchars(Flux::config('PayPalBusinessEmail'));
 $donationCurrency   = htmlspecialchars(Flux::config('DonationCurrency'));
 $creditExchangeRate = Flux::config('CreditExchangeRate');
-$itemName           = htmlspecialchars('Donation Credits (1 credit per '.$this->formatDollar($creditExchangeRate).' '.$donationCurrency.')');
+$creditMultiplier   = 1;
+
+while ($creditExchangeRate < 1) {
+	$creditExchangeRate *= 10;
+	$creditMultiplier   *= 10;
+}
+
+$itemName = htmlspecialchars(sprintf('Donation Credits: %s CREDIT(s) PER %s %s',
+	number_format($creditMultiplier), $this->formatDollar($creditExchangeRate), $donationCurrency));
 ?>
 <form action="https://www.paypal.com/cgi-bin/webscr" method="post">
 <input type="hidden" name="cmd" value="_donations" />
