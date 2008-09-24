@@ -111,7 +111,7 @@ return array(
 		),
 		'purchase' => array(
 			'index'    => 'Shop',
-			'view'     => 'View Cart',
+			'cart'     => 'Go to Cart',
 			'checkout' => 'Checkout',
 			'clear'    => 'Empty Cart'
 		)
