@@ -26,7 +26,7 @@ return array(
 	'DefaultAction'        => 'index',                  // This is the default action for any module, probably should leave this alone. (Deprecated)
 	'OutputCleanHTML'      => true,                     // Use this if you have Tidy installed to clean your HTML output when serving pages.
 	'ShowCopyright'        => true,                     // Whether or not to show the copyright footer.
-	'UseCleanUrls'         => true,                     // Set to true if you're running Apache and it supports mod_rewrite and .htaccess files.
+	'UseCleanUrls'         => false,                    // Set to true if you're running Apache and it supports mod_rewrite and .htaccess files.
 	'DebugMode'            => true,                     // Set to false to minimize technical details from being output by Flux.
 	'UseCaptcha'           => true,                     // Use CAPTCHA image for account registration to prevent automated account creations. (Requires GD2)
 	'DisplaySinglePages'   => true,                     // Whether or not to display paging for single page results.
