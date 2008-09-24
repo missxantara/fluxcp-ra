@@ -1,20 +1,18 @@
 <?php
 if (!defined('FLUX_ROOT')) exit;
 
+if (empty($amount)) {
+	return false;
+}
+
+$session            = Flux::$sessionData;
 $customDataArray    = array('server_name' => $session->loginAthenaGroup->serverName, 'account_id' => $session->account->account_id);
 $customDataEscaped  = htmlspecialchars(base64_encode(serialize($customDataArray)));
 $businessEmail      = htmlspecialchars(Flux::config('PayPalBusinessEmail'));
 $donationCurrency   = htmlspecialchars(Flux::config('DonationCurrency'));
 $creditExchangeRate = Flux::config('CreditExchangeRate');
-$creditMultiplier   = 1;
-
-while ($creditExchangeRate < 1) {
-	$creditExchangeRate *= 10;
-	$creditMultiplier   *= 10;
-}
-
-$itemName = htmlspecialchars(sprintf('Donation Credits: %s CREDIT(s) PER %s %s',
-	number_format($creditMultiplier), $this->formatDollar($creditExchangeRate), $donationCurrency));
+$donationCredits    = floor($amount / $creditExchangeRate);
+$itemName           = htmlspecialchars(sprintf('Donation Credits: %s CREDIT(s)', number_format($donationCredits)));
 ?>
 <form action="https://www.paypal.com/cgi-bin/webscr" method="post">
 <input type="hidden" name="cmd" value="_donations" />
@@ -22,6 +20,7 @@ $itemName = htmlspecialchars(sprintf('Donation Credits: %s CREDIT(s) PER %s %s',
 <input type="hidden" name="custom" value="<?php echo $customDataEscaped ?>" />
 <input type="hidden" name="business" value="<?php echo $businessEmail ?>" />
 <input type="hidden" name="item_name" value="<?php echo $itemName ?>" />
+<input type="hidden" name="amount" value="<?php echo (float)$amount ?>" />
 <input type="hidden" name="no_shipping" value="0" />
 <input type="hidden" name="no_note" value="1" />
 <input type="hidden" name="currency_code" value="<?php echo $donationCurrency ?>" />

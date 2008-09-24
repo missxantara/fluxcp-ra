@@ -681,3 +681,28 @@ textarea {
 	color: #000;
 	border-bottom: 1px solid #aaa;
 }
+
+.enter-donation-amount {
+	margin: 0;
+	padding: 0 0 5px 0;
+	font-size: 120%;
+}
+
+.donation-amount-text {
+	margin: 0;
+	padding: 0;
+	font-size: 120%;
+	text-align: center;
+}
+
+.donation-amount {
+	font-weight: bold;
+	color: #000;
+}
+
+.reset-amount-text {
+	margin: 0;
+	padding: 0;
+	font-size: 8pt;
+	text-align: center;
+}

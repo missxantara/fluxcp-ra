@@ -1107,5 +1107,16 @@ class Flux_Template {
 			return false;
 		}
 	}
+	
+	/**
+	 *
+	 */
+	public function donateButton($amount)
+	{
+		ob_start();
+		include FLUX_DATA_DIR.'/paypal/button.php';
+		$button = ob_get_clean();
+		return $button;
+	}
 }
 ?>
