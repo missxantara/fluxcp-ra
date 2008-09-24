@@ -9,7 +9,7 @@ $txnFileLog  = '';
 
 $sql  = "SELECT * FROM {$server->loginDatabase}.{$txnLogTable} AS txnlog ";
 $sql .= "LEFT JOIN {$server->loginDatabase}.login ON txnlog.account_id = login.account_id ";
-$sql .= "WHERE txn_id = ? LIMIT 1";
+$sql .= "WHERE id = ? LIMIT 1";
 $sth  = $server->connection->getStatement($sql);
 $sth->execute(array($txnID));
 

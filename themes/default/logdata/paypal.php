@@ -18,7 +18,7 @@
 	<tr>
 		<td align="right">
 			<strong>
-				<a href="<?php echo $this->url($params->get('module'), 'txnview', array('id' => $txn->txn_id)) ?>">
+				<a href="<?php echo $this->url($params->get('module'), 'txnview', array('id' => $txn->id)) ?>">
 					<?php echo $txn->txn_id ?>
 				</a>
 			</strong>
