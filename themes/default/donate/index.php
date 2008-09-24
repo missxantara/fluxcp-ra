@@ -9,6 +9,22 @@
 	<h3>Are you ready to donate?</h3>
 	<p>All donations towards us are received by PayPal, but don't worry!  Even if you don't have an account with PayPal, you can still use your credit card to donate!</p>
 		
+	<?php
+	$currency         = Flux::config('DonationCurrency');
+	$dollarAmount     = (float)+Flux::config('CreditExchangeRate');
+	$creditAmount     = 1;
+	$rateMultiplier   = 10;
+	
+	while ($dollarAmount < 1) {
+		$dollarAmount  *= $rateMultiplier;
+		$creditAmount  *= $rateMultiplier;
+	}
+	?>
+		
+	<p>The current credit exchange rate is:
+		<span class="exchange-rate"><?php echo $this->formatDollar($dollarAmount) ?> <?php echo htmlspecialchars($currency) ?>
+		= <?php echo number_format($creditAmount) ?> credit(s).</span></p>
+		
 	<?php if (!$donationAmount): ?>
 	<form action="<?php echo $this->url ?>" method="post">
 		<?php echo $this->moduleActionFormInputs($params->get('module')) ?>
@@ -17,7 +33,7 @@
 			<label>
 				Enter an amount you would like to donate:
 				<input type="text" name="amount" value="<?php echo htmlspecialchars($params->get('amount')) ?>"
-					size="<?php echo (strlen((string)Flux::config('CreditExchangeRate')) * 2) + 2 ?>" />
+					size="<?php echo (strlen((string)+Flux::config('CreditExchangeRate')) * 2) + 2 ?>" />
 				<?php echo htmlspecialchars(Flux::config('DonationCurrency')) ?>
 			</label>
 		</p>
@@ -27,12 +43,17 @@
 	<p>When you're ready to donate, click the big “Donate” button to proceed with your transaction.
 		(You can choose to donate from your existing PayPal balance or use your credit card if you don't have an account).</p>
 		
+	<p class="credit-amount-text">
+		&mdash;
+		<span class="credit-amount"><?php echo number_format(floor($donationAmount / Flux::config('CreditExchangeRate'))) ?></span> credits
+		&mdash;
+	</p>
+		
 	<p class="donation-amount-text">Amount:
 		<span class="donation-amount">
 		<?php echo $this->formatDollar($donationAmount) ?>
 		<?php echo htmlspecialchars(Flux::config('DonationCurrency')) ?>
 		</span>
-		
 	</p>
 	<p class="reset-amount-text">
 		<a href="<?php echo $this->url('donate', 'index', array('resetamount' => true)) ?>">(Reset Amount)</a>

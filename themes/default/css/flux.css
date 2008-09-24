@@ -24,6 +24,11 @@ h3 {
 	font-style: italic;
 }
 
+p {
+	margin: 2px 0 5px 0;
+	padding: 0;
+}
+
 a img {
 	border: 0;
 }
@@ -695,9 +700,21 @@ textarea {
 	text-align: center;
 }
 
+.credit-amount-text {
+	font-size: 8pt;
+	text-transform: uppercase;
+	color: #bbb;
+	text-align: center;
+	letter-spacing: 1px;
+}
+
 .donation-amount {
 	font-weight: bold;
 	color: #000;
+}
+
+.credit-amount {
+	color: #555;
 }
 
 .reset-amount-text {
@@ -713,5 +730,11 @@ textarea {
 }
 
 .remaining-balance {
+	color: #000;
+}
+
+.exchange-rate {
+	font-size: 120%;
+	font-weight: bold;
 	color: #000;
 }
