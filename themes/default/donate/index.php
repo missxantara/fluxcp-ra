@@ -9,7 +9,7 @@
 	<h3>Are you ready to donate?</h3>
 	<p>All donations towards us are received by PayPal, but don't worry!  Even if you don't have an account with PayPal, you can still use your credit card to donate!</p>
 		
-	<?php if (!$session->donationAmount): ?>
+	<?php if (!$donationAmount): ?>
 	<form action="<?php echo $this->url ?>" method="post">
 		<?php echo $this->moduleActionFormInputs($this->url($params->get('module'))) ?>
 		<input type="hidden" name="setamount" value="1" />
@@ -29,7 +29,7 @@
 		
 	<p class="donation-amount-text">Amount:
 		<span class="donation-amount">
-		<?php echo $this->formatDollar($session->donationAmount) ?>
+		<?php echo $this->formatDollar($donationAmount) ?>
 		<?php echo htmlspecialchars(Flux::config('DonationCurrency')) ?>
 		</span>
 		
@@ -37,7 +37,7 @@
 	<p class="reset-amount-text">
 		<a href="<?php echo $this->url('donate', 'index', array('resetamount' => true)) ?>">(Reset Amount)</a>
 	</p>
-	<p><?php echo $this->donateButton($session->donationAmount) ?></p>
+	<p><?php echo $this->donateButton($donationAmount) ?></p>
 	<?php endif ?>
 <?php else: ?>
 	<p><?php echo Flux::message('NotAcceptingDonations') ?></p>
