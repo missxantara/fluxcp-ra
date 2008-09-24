@@ -19,8 +19,9 @@ if (count($_POST) && $params->get('process')) {
 	$creditTable = Flux::config('FluxTables.CreditsTable');
 	$deduct      = 0;
 	
-	$sql  = "INSERT INTO {$server->charMapDatabase}.$redeemTable (nameid, quantity, cost, account_id, char_id, redeemed, redemption_date) ";
-	$sql .= "VALUES (?, ?, ?, ?, NULL, 0, NULL)";
+	$sql  = "INSERT INTO {$server->charMapDatabase}.$redeemTable ";
+	$sql .= "(nameid, quantity, cost, account_id, char_id, redeemed, redemption_date, purchase_date) ";
+	$sql .= "VALUES (?, ?, ?, ?, NULL, 0, NULL, NOW())";
 	$sth  = $server->connection->getStatement($sql);
 	
 	foreach ($items as $item) {
