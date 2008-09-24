@@ -1,0 +1,1 @@
+ALTER TABLE `cp_redeemlog` CHANGE `char_id` `char_id` INT( 11 ) UNSIGNED NULL  
