@@ -113,5 +113,14 @@ class Flux_ItemShop_Cart {
 			return true;
 		}
 	}
+	
+	/**
+	 * Check if the cart is empty.
+	 */
+	public function isEmpty()
+	{
+		$empty = !count($this->cart);
+		return $empty;
+	}
 }
 ?>
