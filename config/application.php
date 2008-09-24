@@ -50,6 +50,10 @@ return array(
 	'AutoRemoveTempBans'   => true,                     // Automatically remove expired temporary bans on certain pages.
 	'ItemShopMaxCost'      => 99,                       // Max price an item can be sold for.
 	'ItemShopMaxQuantity'  => 99,                       // Max quantity the item may be sold at once for.
+	'BanPaymentStatuses'   => array(                    // Payment statuses that will automatically ban the account owner if received.
+		'Cancelled_Reversal',                           // -- 'Cancelled_Reversal'
+		'Reversed',                                     // -- 'Reversed'
+	),
 	
 	// These are the main menu items that should be displayed by themes.
 	// They route to modules and actions.  Whether they are displayed or

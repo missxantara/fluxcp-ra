@@ -1,0 +1,1 @@
+ALTER TABLE `cp_banlog` CHANGE `banned_by` `banned_by` INT( 11 ) UNSIGNED NULL ;

@@ -221,6 +221,33 @@ class Flux_PaymentNotifyRequest {
 				}
 				else {
 					$this->logPayPal('Incomplete payment status: %s (exchanging for credits will not take place)', $paymentStatus);
+					
+					$banStatuses = Flux::config('BanPaymentStatuses');
+					
+					if ($banStatuses instanceOf Flux_Config) {
+						$banStatuses = $banStatuses->toArray();
+					}
+					else {
+						$banStatuses = array();
+					}
+					
+					$pymntStatus = strtolower($paymentStatus);
+					$banStatuses = array_map('strtolower', $banStatuses);
+					
+					if (in_array($pymntStatus, $banStatuses)) {
+						$this->logPayPal('Auto-ban payment status detected: %s', $paymentStatus);
+						
+						if ($servGroup && $serverName && $accountID) {
+							$this->logPayPal('Banning account! (serv: %s, account_id: %s)', $serverName, $accountID);
+							$servGroup->loginServer->permanentlyBan(
+								null, "Banned for invalid payment status: $paymentStatus",
+								$accountID
+							);
+						}
+						else {
+							$this->logPayPal("Couldn't ban account, it's unknown.");
+						}
+					}
 				}
 				
 				if (!$servGroup) {
@@ -385,6 +412,7 @@ class Flux_PaymentNotifyRequest {
 					mc_fee,
 					tax,
 					mc_currency,
+					parent_txn_id,
 					txn_id,
 					txn_type,
 					first_name,
@@ -403,7 +431,7 @@ class Flux_PaymentNotifyRequest {
 					referrer_id,
 					process_date
 				) VALUES (
-					?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,
+					?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,
 					?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, NOW()
 				)
 			";
@@ -424,6 +452,7 @@ class Flux_PaymentNotifyRequest {
 				$var->get('mc_fee'),
 				$var->get('tax'),
 				$var->get('mc_currency'),
+				$var->get('parent_txn_id'),
 				$var->get('txn_id'),
 				$var->get('txn_type'),
 				$var->get('first_name'),
