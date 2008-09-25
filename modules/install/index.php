@@ -1,6 +1,9 @@
 <?php
 if (!defined('FLUX_ROOT')) exit;
 
+// Force debug mode off here.
+Flux::config('DebugMode', false);
+
 if ($session->installerAuth) {
 	if ($params->get('logout')) {
 		$session->setInstallerAuthData(false);
