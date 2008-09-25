@@ -4,14 +4,15 @@
 <?php echo $paginator->infoText() ?>
 <table class="horizontal-table">
 	<tr>
-		<th><?php echo $paginator->sortableColumn('txn_id', 'Transaction ID') ?></th>
-		<th><?php echo $paginator->sortableColumn('process_date', 'Date Processed') ?></th>
-		<th><?php echo $paginator->sortableColumn('payment_date', 'Payment Date') ?></th>
+		<th><?php echo $paginator->sortableColumn('txn_id', 'Transaction') ?></th>
+		<th><?php echo $paginator->sortableColumn('parent_txn_id', 'Parent') ?></th>
+		<th><?php echo $paginator->sortableColumn('process_date', 'Processed') ?></th>
+		<th><?php echo $paginator->sortableColumn('payment_date', 'Received') ?></th>
 		<th><?php echo $paginator->sortableColumn('payment_status', 'Status') ?></th>
-		<th><?php echo $paginator->sortableColumn('payer_email', 'Payer E-mail') ?></th>
-		<th><?php echo $paginator->sortableColumn('mc_gross', 'Donation Amount') ?></th>
-		<th><?php echo $paginator->sortableColumn('credits', 'Credits Earned') ?></th>
-		<th><?php echo $paginator->sortableColumn('server_name', 'Server') ?></th>
+		<th><?php echo $paginator->sortableColumn('payer_email', 'E-mail') ?></th>
+		<th><?php echo $paginator->sortableColumn('mc_gross', 'Amount') ?></th>
+		<th><?php echo $paginator->sortableColumn('credits', 'Credits') ?></th>
+		<!--<th><?php echo $paginator->sortableColumn('server_name', 'Server') ?></th>-->
 		<th><?php echo $paginator->sortableColumn('userid', 'Account') ?></th>
 	</tr>
 	<?php foreach ($transactions as $txn): ?>
@@ -23,14 +24,27 @@
 				</a>
 			</strong>
 		</td>
+		<td>
+			<?php if ($txn->parent_id): ?>
+				<a href="<?php echo $this->url($params->get('module'), 'txnview', array('id' => $txn->parent_id)) ?>"><?php echo $txn->parent_txn_id ?></a>
+			<?php else: ?>
+				<span class="not-applicable">None</span>
+			<?php endif ?>
+		</td>
 		<td><?php echo $this->formatDateTime($txn->process_date) ?></td>
 		<td><?php echo $this->formatDateTime($txn->payment_date) ?></td>
 		<td><?php echo $txn->payment_status ?></td>
 		<td><?php echo htmlspecialchars($txn->payer_email) ?></td>
 		<td><?php echo $txn->mc_gross ?> <?php echo $txn->mc_currency ?></td>
 		<td><?php echo number_format((int)$txn->credits) ?></td>
-		<td><?php echo $txn->server_name ?></td>
-		<td><?php echo $this->linkToAccount($txn->account_id, $txn->userid) ?></td>
+		<!--<td><?php echo htmlspecialchars($txn->server_name) ?></td>-->
+		<td>
+			<?php if ($txn->account_id): ?>
+				<?php echo $this->linkToAccount($txn->account_id, $txn->userid) ?>
+			<?php else: ?>
+				<span class="not-applicable">Unknown</span>
+			<?php endif ?>
+		</td>
 	</tr>
 	<?php endforeach ?>
 </table>
