@@ -512,5 +512,74 @@ class Flux {
 			return false;
 		}
 	}
+	
+	/**
+	 *
+	 */
+	public static function processHeldCredits()
+	{
+		$txnLogTable            = self::config('FluxTables.TransactionTable');
+		$creditsTable           = self::config('FluxTables.CreditsTable');
+		$trustTable             = self::config('FluxTables.DonationTrustTable');
+		$loginAthenaGroups      = self::$loginAthenaGroupRegistry;
+		list ($cancel, $accept) = array(array(), array());
+		
+		foreach ($loginAthenaGroups as $loginAthenaGroup) {
+			$sql  = "SELECT account_id, payer_email, credits, mc_gross, txn_id, hold_until ";
+			$sql .= "FROM {$loginAthenaGroup->loginDatabase}.$txnLogTable ";
+			$sql .= "WHERE hold_until IS NOT NULL AND payment_status = 'Completed'";
+			$sth  = $loginAthenaGroup->connection->getStatement($sql);
+			
+			if ($sth->execute() && ($txn=$sth->fetchAll())) {
+				foreach ($txn as $t) {
+					$sql  = "SELECT id FROM {$loginAthenaGroup->loginDatabase}.$txnLogTable ";
+					$sql .= "WHERE payment_status IN ('Cancelled_Reversed', 'Reversed', 'Refunded') AND parent_txn_id = ? LIMIT 1";
+					$sth  = $loginAthenaGroup->connection->getStatement($sql);
+					
+					if ($sth->execute(array($t->txn_id)) && ($r=$sth->fetch()) && $r->id) {
+						$cancel[] = $t->txn_id;
+					}
+					elseif (strtotime($t->hold_until) <= time()) {
+						$accept[] = $t;
+					}
+				}
+			}
+			
+			if (!empty($cancel)) {
+				$ids  = implode(', ', array_fill(0, count($cancel), '?'));
+				$sql  = "UPDATE {$loginAthenaGroup->loginDatabase}.$txnLogTable ";
+				$sql .= "SET credits = 0, hold_until = NULL WHERE txn_id IN ($ids)";
+				$sth  = $loginAthenaGroup->connection->getStatement($sql);
+				$sth->execute($cancel);
+			}
+			
+			$sql    = "UPDATE {$loginAthenaGroup->loginDatabase}.$creditsTable ";
+			$sql   .= "SET balance = ?, last_donation_amount = ?, last_donation_date = NOW() ";
+			$sth    = $loginAthenaGroup->connection->getStatement($sql);
+			
+			$sql2   = "INSERT INTO {$loginAthenaGroup->loginDatabase}.$trustTable (account_id, email, create_date)";
+			$sql2  .= "VALUES (?, ?, NOW())";
+			$sth2   = $loginAthenaGroup->connection->getStatement($sql2);
+			
+			$idvals = array();
+			
+			foreach ($accept as $txn) {
+				if ($sth->execute(array($txn->credits, $txn->mc_gross)) &&
+					$sth2->execute(array($txn->account_id, $txn->payer_email))) {
+						
+					$idvals[] = $txn->txn_id;
+				}
+			}
+			
+			if (!empty($idvals)) {
+				$ids  = implode(', ', array_fill(0, count($idvals), '?'));
+				$sql  = "UPDATE {$loginAthenaGroup->loginDatabase}.$txnLogTable ";
+				$sql .= "SET hold_until = NULL WHERE txn_id IN ($ids)";
+				$sth  = $loginAthenaGroup->connection->getStatement($sql);
+
+				$sth->execute($idvals);
+			}
+		}
+	}
 }
 ?>

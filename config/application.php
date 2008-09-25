@@ -55,6 +55,17 @@ return array(
 		'Reversed',                                     // -- 'Reversed'
 	),
 	
+	'HoldUntrustedAccount' => 0,                        // This is the time in hours to hold a donation crediting process for, if the account
+	                                                    // isn't a trusted account. Specify 0 or false to disable this feature.
+	
+	'AutoUnholdAccount'    => false,                    // Enable this to auto-unhold an account and credit it if the transaction is still
+	                                                    // valid.  This only applies if you are using the HoldUnstrustedAccount feature.
+	                                                    // If you want to run a cron job instead, you can make a request to the '/donate/update'
+	                                                    // module/action with the InstallerPassword as the password to run the update task.
+	                                                    // With clean URLs: http://<server>/<baseURI>/donate/update?password=<InstallerPassword>
+	                                                    // Without clean URLs: http://<server>/<baseURI>?module=donate&action=update&password=<InstallerPassword>
+	                                                    // NOTE: This option is HIGHLY inefficient, it's recommended to run a cron job instead.
+	
 	// These are the main menu items that should be displayed by themes.
 	// They route to modules and actions.  Whether they are displayed or
 	// not at any given time depends on the user's account level and/or

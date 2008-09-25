@@ -33,6 +33,10 @@ if ($installer->updateNeeded() && $params->get('module') != 'install') {
 	$this->redirect($this->url('install'));
 }
 
+if (Flux::config('HoldUntrustedAccount') && Flux::config('AutoUnholdAccount')) {
+	Flux::processHeldCredits();
+}
+
 if ($session->isLoggedIn()) {
 	// Update preferred server.
 	if (($preferred_server = $params->get('preferred_server')) && $session->getAthenaServer($preferred_server)) {

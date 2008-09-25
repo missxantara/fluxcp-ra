@@ -120,7 +120,9 @@ class Flux_PaymentNotifyRequest {
 			$receiverEmail = $this->ipnVariables->get('receiver_email');
 			$transactionID = $this->ipnVariables->get('txn_id');
 			$paymentStatus = $this->ipnVariables->get('payment_status');
+			$payerEmail    = $this->ipnVariables->get('payer_email');
 			$currencyCode  = strtoupper(substr($this->ipnVariables->get('mc_currency'), 0, 3));
+			$trusted       = true;
 			
 			// Identify transaction number.
 			$this->logPayPal('Transaction identified as %s.', $transactionID);
@@ -186,9 +188,9 @@ class Flux_PaymentNotifyRequest {
 							$sql = "SELECT * FROM {$servGroup->loginDatabase}.{$this->creditsTable} WHERE account_id = ?";
 							$sth = $servGroup->connection->getStatement($sql);
 							$sth->execute(array($accountID));
-							$res = $sth->fetch();
+							$acc = $sth->fetch();
 
-							if (!$res) {
+							if (!$acc) {
 								$this->logPayPal('Identified as first-time donation to the server from this account.');
 								$sql = "INSERT INTO {$servGroup->loginDatabase}.{$this->creditsTable} (account_id, balance, last_donation_date, last_donation_amount) VALUES (?, 0, NULL, 0)";
 								$sth = $servGroup->connection->getStatement($sql);
@@ -199,18 +201,41 @@ class Flux_PaymentNotifyRequest {
 							$minimum = (float)Flux::config('MinDonationAmount');
 							
 							if ($amount >= $minimum) {
+								$trustTable = Flux::config('FluxTables.DonationTrustTable');
+								$holdHours  = +(int)Flux::config('HoldUntrustedAccount');
+								
+								if ($holdHours) {
+									$sql = "SELECT account_id, email FROM {$servGroup->loginDatabase}.$trustTable WHERE account_id = ? AND email = ? LIMIT 1";
+									$sth = $servGroup->connection->getStatement($sql);
+									$res = $sth->execute(array($accountID, $payerEmail));
+									
+									if ($res && $sth->fetch()->account_id) {
+										$this->logPayPal('Account ID and e-mail are trusted.');
+										$trusted = true;
+									}
+									else {
+										$trusted = false;
+									}
+								}
+								
 								$rate    = Flux::config('CreditExchangeRate');
 								$credits = floor($amount / $rate);
-								$this->logPayPal('Updating account credit balance from %s to %s', (int)$res->balance, $res->balance + $credits);
+								
+								if ($trusted) {
+									$this->logPayPal('Updating account credit balance from %s to %s', (int)$acc->balance, $acc->balance + $credits);
 
-								$sql = "UPDATE {$servGroup->loginDatabase}.{$this->creditsTable} SET balance = balance + ?, last_donation_amount = ?, last_donation_date = NOW()";
-								$sth = $servGroup->connection->getStatement($sql);
+									$sql = "UPDATE {$servGroup->loginDatabase}.{$this->creditsTable} SET balance = balance + ?, last_donation_amount = ?, last_donation_date = NOW()";
+									$sth = $servGroup->connection->getStatement($sql);
 
-								if ($sth->execute(array($credits, $amount))) {
-									$this->logPayPal('Deposited credits.');
+									if ($sth->execute(array($credits, $amount))) {
+										$this->logPayPal('Deposited credits.');
+									}
+									else {
+										$this->logPayPal('Failed to deposit credits.');
+									}
 								}
 								else {
-									$this->logPayPal('Failed to deposit credits.');
+									$this->logPayPal('Account/e-mail is not trusted, holding donation credits for %d hours.', $holdHours);
 								}
 							}
 							else {
@@ -252,14 +277,14 @@ class Flux_PaymentNotifyRequest {
 				
 				if (!$servGroup) {
 					foreach (Flux::$loginAthenaGroupRegistry as $servGroup) {
-						$this->logToPayPalTable($servGroup, $accountID, $serverName);
+						$this->logToPayPalTable($servGroup, $accountID, $serverName, $trusted);
 					}
 				}
 				else {
 					if (empty($credits)) {
 						$credits = 0;
 					}
-					$this->logToPayPalTable($servGroup, $accountID, $serverName, $credits);
+					$this->logToPayPalTable($servGroup, $accountID, $serverName, $trusted, $credits);
 				}
 				
 				$this->logPayPal('Saving transaction details for %s...', $transactionID);
@@ -392,9 +417,15 @@ class Flux_PaymentNotifyRequest {
 	 * @param string $serverName
 	 * @access private
 	 */
-	private function logToPayPalTable(Flux_LoginAthenaGroup $servGroup, $accountID, $serverName, $credits = 0)
+	private function logToPayPalTable(Flux_LoginAthenaGroup $servGroup, $accountID, $serverName, $trusted, $credits = 0)
 	{
 		if ($this->txnIsValid) {
+			$holdUntil = null;
+			if (!$trusted) {
+				$hours     = +(int)Flux::config('HoldUntrustedAccount');
+				$holdUntil = date('Y-m-d H:i:s', time()+($hours*60*60));
+			}
+			
 			$this->logPayPal('Saving transaction details to PayPal transactions table...');
 			$sql = "
 				INSERT INTO {$servGroup->loginDatabase}.{$this->txnLogTable} (
@@ -429,10 +460,12 @@ class Flux_PaymentNotifyRequest {
 					notify_version,
 					verify_sign,
 					referrer_id,
-					process_date
+					process_date,
+					hold_until
 				) VALUES (
 					?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,
-					?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, NOW()
+					?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, NOW(),
+					?
 				)
 			";
 			$var = $this->ipnVariables;
@@ -468,7 +501,8 @@ class Flux_PaymentNotifyRequest {
 				$var->get('payment_type'),
 				$var->get('notify_version'),
 				$var->get('verify_sign'),
-				$var->get('receiver_id')
+				$var->get('receiver_id'),
+				$holdUntil
 			));
 			
 			if ($ret) {

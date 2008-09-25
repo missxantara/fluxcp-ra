@@ -14,12 +14,18 @@
 	$dollarAmount     = (float)+Flux::config('CreditExchangeRate');
 	$creditAmount     = 1;
 	$rateMultiplier   = 10;
+	$hoursHeld        = +(int)Flux::config('HoldUntrustedAccount');
 	
 	while ($dollarAmount < 1) {
 		$dollarAmount  *= $rateMultiplier;
 		$creditAmount  *= $rateMultiplier;
 	}
 	?>
+	
+	<?php if ($hoursHeld): ?>
+		<p>To prevent fraudulent payments, our server currently locks the crediting process for <?php echo number_format($hoursHeld) ?> hours
+			after the donation has been made to ensure legitimate gameplay and a healthy PayPal reputation.</p>
+	<?php endif ?>
 		
 	<p>The current credit exchange rate is:
 		<span class="exchange-rate"><?php echo $this->formatDollar($dollarAmount) ?> <?php echo htmlspecialchars($currency) ?>

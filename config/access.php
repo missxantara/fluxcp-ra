@@ -12,6 +12,7 @@ return array(
 		'donate'    => array(
 			'index'    => AccountLevel::ANYONE,
 			'notify'   => AccountLevel::ANYONE,
+			'update'   => AccountLevel::ANYONE
 		),
 		'purchase'  => array(
 			'index'    => AccountLevel::ANYONE,
