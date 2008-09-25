@@ -72,7 +72,9 @@ try {
 		FLUX_DATA_DIR.'/logs/schemas/charmapdb',
 		FLUX_DATA_DIR.'/logs/transactions',
 		FLUX_DATA_DIR.'/logs/mysql',
-		FLUX_DATA_DIR.'/logs/mysql/errors'
+		FLUX_DATA_DIR.'/logs/mysql/errors',
+		FLUX_DATA_DIR.'/logs/errors',
+		FLUX_DATA_DIR.'/logs/errors/exceptions'
 	);
 
 	// Schema log directories.
@@ -144,6 +146,22 @@ try {
 	));
 }
 catch (Exception $e) {
+	$exceptionDir = FLUX_DATA_DIR.'/logs/errors/exceptions';
+	if (is_writable($exceptionDir)) {
+		require_once 'Flux/LogFile.php';
+		$today = date('Ymd');
+		$eLog  = new Flux_LogFile("$exceptionDir/$today.log");
+		
+		// Get backtrace.
+		ob_start();
+		debug_print_backtrace();
+		$backtrace = ob_get_clean();
+		
+		// Log exception.
+		$eLog->puts('Exception %s: %s', get_class($e), $e->getMessage());
+		$eLog->puts('Backtrace for %s: %s', get_class($e), $backtrace);
+	}
+	
 	require_once FLUX_CONFIG_DIR.'/error.php';
 	define('__ERROR__', 1);
 	include $errorFile;
