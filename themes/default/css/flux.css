@@ -141,11 +141,11 @@ input[type=text], input[type=password], textarea {
 
 .request {
 	display: inline-block;
-	padding: 5px;
+	padding: 2px;
 	font-family: Monaco, "Lucida Console", "Bitsteam Vera Sans Mono", monospace;
-	font-size: 12pt;
-	background-color: #eee;
-	border: 1px solid #ddd;
+	font-size: 8pt;
+	background-color: #fff;
+	border: 1px solid #eee;
 }
 
 .keyword {
