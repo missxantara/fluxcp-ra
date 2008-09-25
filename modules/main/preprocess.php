@@ -47,7 +47,7 @@ $ppReturn = array(
 );
 
 if ($params->get('merchant_return_link') && $ppReturn['txn_id'] && $ppReturn['txn_type'] &&
-	$ppReturn['first_name'] && $ppReturn['last_name'] && $ppReturn['item_name'], && $ppReturn['verify_sign']) {
+	$ppReturn['first_name'] && $ppReturn['last_name'] && $ppReturn['item_name'] && $ppReturn['verify_sign']) {
 		
 	$session->setPpReturnData($ppReturn);
 	$this->redirect($this->url('donate', 'complete'));
