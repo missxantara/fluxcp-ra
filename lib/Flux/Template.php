@@ -449,10 +449,32 @@ class Flux_Template {
 	 */
 	public function url($moduleName, $actionName = null, $params = array())
 	{
-		$defaultAction = Flux_Dispatcher::getInstance()->defaultAction;
+		$defaultAction  = Flux_Dispatcher::getInstance()->defaultAction;
+		$serverProtocol = '';
+		$serverAddress  = '';
 		
 		if ($params instanceOf Flux_Config) {
 			$params = $params->toArray();
+		}
+		
+		if (array_key_exists('_host', $params)) {
+			$_host  = $params['_host'];
+			$_https = false;
+			
+			if ($_host && ($addr=Flux::config('ServerAddress'))) {
+				if (array_key_exists('_https', $params)) {
+					$_https = $params['_https'];
+				}
+
+				$serverProtocol = $_https ? 'https://' : 'http://';
+				$serverAddress  = $addr;
+			}
+			
+			unset($params['_host']);
+			
+			if (array_key_exists('_https', $params)) {
+				unset($params['_https']);
+			}
 		}
 		
 		$queryString = '';
@@ -481,7 +503,7 @@ class Flux_Template {
 				$url = sprintf('%s/?module=%s%s', $this->basePath, $moduleName, $queryString);
 			}
 		}
-		return preg_replace('&/{2,}&', '/', $url);
+		return $serverProtocol.preg_replace('&/{2,}&', '/', "$serverAddress/$url");
 	}
 	
 	/**
