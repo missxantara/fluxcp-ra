@@ -3,6 +3,8 @@ if (!defined('FLUX_ROOT')) exit;
 
 $this->loginRequired();
 
+$title = 'Add Item to Shop';
+
 require_once 'Flux/TemporaryTable.php';
 require_once 'Flux/ItemShop.php';
 

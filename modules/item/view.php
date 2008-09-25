@@ -3,6 +3,8 @@ if (!defined('FLUX_ROOT')) exit;
 
 $this->loginRequired();
 
+$title = 'Viewing Item';
+
 require_once 'Flux/TemporaryTable.php';
 
 $tableName  = "{$server->charMapDatabase}.items";
@@ -28,4 +30,8 @@ $sth  = $server->connection->getStatement($sql);
 $sth->execute(array($itemID));
 
 $item = $sth->fetch();
+
+if ($item) {
+	$title = "Viewing Item ($item->name)";
+}
 ?>

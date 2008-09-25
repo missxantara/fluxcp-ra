@@ -3,6 +3,8 @@ if (!defined('FLUX_ROOT')) exit;
 
 $this->loginRequired();
 
+$title = 'List Guilds';
+
 $bind       = array();
 $sqlpartial = "WHERE 1=1 ";
 

@@ -3,6 +3,8 @@ if (!defined('FLUX_ROOT')) exit;
 
 $this->loginRequired();
 
+$title = 'Viewing Character';
+
 $charID = $params->get('id');
 
 $col  = "ch.char_id, ch.account_id, ch.char_num, ch.name AS char_name, ch.class AS char_class, ch.base_level AS char_base_level, ";
@@ -67,6 +69,8 @@ if (!$isMine && !$auth->allowedToViewCharacter) {
 }
 
 if ($char) {
+	$title = "Viewing Character ({$char->char_name})";
+	
 	$sql  = "SELECT fr.char_id, fr.name, fr.class, fr.base_level, fr.job_level, ";
 	$sql .= "guild.guild_id, guild.name AS guild_name, fr.online ";
 	$sql .= "FROM {$server->charMapDatabase}.`char` AS fr ";

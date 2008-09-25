@@ -3,6 +3,8 @@ if (!defined('FLUX_ROOT')) exit;
 
 $this->loginRequired();
 
+$title = 'List Accounts';
+
 if (Flux::config('AutoRemoveTempBans')) {
 	$sql = "UPDATE {$server->loginDatabase}.login SET unban_time = 0 WHERE unban_time <= UNIX_TIMESTAMP()";
 	$sth = $server->connection->getStatement($sql);

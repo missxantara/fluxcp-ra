@@ -3,6 +3,8 @@ if (!defined('FLUX_ROOT')) exit;
 
 $this->loginRequired();
 
+$title = 'Modify Item in the Shop';
+
 require_once 'Flux/ItemShop.php';
 
 $shopItemID = $params->get('id');

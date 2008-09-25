@@ -1,6 +1,8 @@
 <?php
 if (!defined('FLUX_ROOT')) exit;
 
+$title = 'Log In';
+
 if (count($_POST)) {
 	$server   = $params->get('server');
 	$username = $params->get('username');

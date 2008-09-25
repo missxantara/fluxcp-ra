@@ -3,6 +3,8 @@ if (!defined('FLUX_ROOT')) exit;
 
 $this->loginRequired();
 
+$title = 'Viewing Monster';
+
 require_once 'Flux/TemporaryTable.php';
 
 $tableName  = "{$server->charMapDatabase}.monsters";
@@ -47,6 +49,10 @@ for ($loop = 0; $loop <= 13; $loop++) {
 	$sth[]   = $server->connection->getStatement($sql[$loop]);
 	$sth[$loop]->execute(array($monsterID));
 	$monster[$loop]   = $sth[$loop]->fetch();
+}
+
+if (!empty($monster[0])) {
+	$title = "Viewing Monster ({$monster[0]->kName})";
 }
 
 $mobDB = Flux::config('MobSkillDb');

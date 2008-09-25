@@ -1,6 +1,8 @@
 <?php
 if (!defined('FLUX_ROOT')) exit;
 
+$title = 'Reload Mob Skills';
+
 $mobDB1 = Flux::config('MobSkillDb1');
 $mobDB2 = Flux::config('MobSkillDb2');
 $mobDB  = Flux::config('MobSkillDb');

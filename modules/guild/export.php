@@ -7,6 +7,8 @@ if (!extension_loaded('zip')) {
 
 $this->loginRequired();
 
+$title = 'Export Guild Emblems';
+
 require_once 'Flux/EmblemExporter.php';
 $exporter = new Flux_EmblemExporter($session->loginAthenaGroup);
 

@@ -3,6 +3,8 @@ if (!defined('FLUX_ROOT')) exit;
 
 $this->loginRequired();
 
+$title = 'List PayPal Transactions';
+
 $txnLogTable = Flux::config('FluxTables.TransactionTable');
 $sqlpartial  = "{$server->loginDatabase}.{$txnLogTable} AS p LEFT OUTER JOIN {$server->loginDatabase}.login AS l";
 $sqlpartial .= " ON p.account_id = l.account_id WHERE (p.server_name = ? OR p.server_name IS NULL OR p.server_name = '')";

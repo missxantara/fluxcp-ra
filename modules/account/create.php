@@ -1,6 +1,8 @@
 <?php
 if (!defined('FLUX_ROOT')) exit;
 
+$title = 'Create an Account';
+
 $serverNames = $this->getServerNames();
 
 if (count($_POST)) {

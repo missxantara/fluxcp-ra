@@ -8,6 +8,8 @@ if ($server->cart->isEmpty()) {
 	$this->redirect($this->url('purchase'));
 }
 
+$title = 'Shopping Cart';
+
 require_once 'Flux/ItemShop.php';
 $items = $server->cart->getCartItems();
 ?>

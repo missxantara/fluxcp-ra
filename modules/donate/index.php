@@ -3,6 +3,8 @@ if (!defined('FLUX_ROOT')) exit;
 
 $this->loginRequired('Please login to continue donating.');
 
+$title = 'Make a Donation';
+
 $donationAmount = false;
 
 if (count($_POST) && $params->get('setamount')) {

@@ -3,6 +3,8 @@ if (!defined('FLUX_ROOT')) exit;
 
 $this->loginRequired();
 
+$title = 'View Account';
+
 $creditsTable  = Flux::config('FluxTables.CreditsTable');
 $creditColumns = 'credits.balance, credits.last_donation_date, credits.last_donation_amount';
 $isMine        = false;
@@ -29,6 +31,13 @@ if (!$isMine) {
 	
 	// Account object.
 	$account = $sth->fetch();
+	
+	if ($account) {
+		$title = "Viewing Account ({$account->userid})";
+	}
+}
+else {
+	$title = 'Viewing My Account';
 }
 
 $banSuperior = $account && (($account->level > $session->account->level && $auth->allowedToBanHigherPower) || $account->level <= $session->account->level);
