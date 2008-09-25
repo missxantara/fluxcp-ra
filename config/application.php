@@ -154,7 +154,8 @@ return array(
 		'TransactionTable'    => 'cp_txnlog',
 		'RedemptionTable'     => 'cp_redeemlog',
 		'AccountCreateTable'  => 'cp_createlog',
-		'AccountBanTable'     => 'cp_banlog'
+		'AccountBanTable'     => 'cp_banlog',
+		'DonationTrustTable'  => 'cp_trusted'
 	),
 
 	// Do not change these unless you also rename the files in FLUX_ROOT/lib/eA/
