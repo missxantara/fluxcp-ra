@@ -37,6 +37,21 @@ if (Flux::config('HoldUntrustedAccount') && Flux::config('AutoUnholdAccount')) {
 	Flux::processHeldCredits();
 }
 
+$ppReturn = array(
+	'txn_id'     => $params->get('txn_id'),
+	'txn_type'   => $params->get('txn_type'),
+	'first_name' => $params->get('first_name'),
+	'last_name'  => $params->get('last_name'),
+	'item_name'  => $params->get('item_name')
+);
+
+if ($params->get('merchant_return_link') && $ppReturn['txn_id'] && $ppReturn['txn_type'] &&
+	$ppReturn['first_name'] && $ppReturn['last_name'] && $ppReturn['item_name']) {
+		
+	$session->setPpReturnData($ppReturn);
+	$this->redirect($this->url('donate', 'complete'));
+}
+
 if ($session->isLoggedIn()) {
 	// Update preferred server.
 	if (($preferred_server = $params->get('preferred_server')) && $session->getAthenaServer($preferred_server)) {

@@ -12,7 +12,8 @@ return array(
 		'donate'    => array(
 			'index'    => AccountLevel::ANYONE,
 			'notify'   => AccountLevel::ANYONE,
-			'update'   => AccountLevel::ANYONE
+			'update'   => AccountLevel::ANYONE,
+			'complete' => AccountLevel::ANYONE
 		),
 		'purchase'  => array(
 			'index'    => AccountLevel::ANYONE,
