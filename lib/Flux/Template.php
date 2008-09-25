@@ -679,11 +679,14 @@ class Flux_Template {
 		$request  = $_SERVER['REQUEST_URI'];
 		
 		if ($withRequest) {
-			return $proto.$hostname.$request;
+			$url = $proto.$hostname.$request;
 		}
 		else {
-			return $proto.$hostname.'/';
+			$url = $proto.$hostname.'/'.$this->basePath;
 		}
+		
+		$url = rtrim(preg_replace('&/{2,}&', '/', $url), '/');
+		return $url;
 	}
 	
 	/**
