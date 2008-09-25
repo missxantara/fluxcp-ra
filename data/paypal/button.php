@@ -14,7 +14,7 @@ $creditExchangeRate = Flux::config('CreditExchangeRate');
 $donationCredits    = floor($amount / $creditExchangeRate);
 $itemName           = htmlspecialchars(sprintf('Donation Credits: %s CREDIT(s)', number_format($donationCredits)));
 ?>
-<form action="https://www.paypal.com/cgi-bin/webscr" method="post">
+<form action="https://<?php echo Flux::config('PayPalIpnUrl') ?>/cgi-bin/webscr" method="post">
 <input type="hidden" name="cmd" value="_donations" />
 <input type="hidden" name="return" value="<?php echo $this->entireUrl(false) ?>" />
 <input type="hidden" name="custom" value="<?php echo $customDataEscaped ?>" />
