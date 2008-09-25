@@ -2,6 +2,7 @@
 // This is the application configuration file. All values have been set to
 // the default, and should be changed as needed.
 return array(
+	'ServerAddress'        => 'localhost',              // This value is the hostname:port under which Flux runs. (e.g., example.com or example.com:80)
 	'BaseURI'              => '/~kuja/flux',            // The base URI is the base web root on which your application lies.
 	'InstallerPassword'    => 'secretpassword',         // Installer/updater password.
 	'SiteTitle'            => 'Flux Control Panel',     // This value is only used if the theme decides to use it.
