@@ -6,6 +6,7 @@
 <p class="cart-total-text">Your current subtotal is <span class="cart-sub-total"><?php echo number_format($total=$server->cart->getTotal()) ?></span> credit(s).</p>
 <p class="checkout-info-text">Your remaining balance after this purchase will be <span class="remaining-balance"><?php echo number_format($session->account->balance - $total) ?></span> credit(s).</p>
 <p>After reviewing the below item information, you can proceed with your checkout by clicking the “Purchase Items” button.</p>
+<p class="important">Note: These items are for redemption on the <span class="server-name"><?php echo htmlspecialchars($server->serverName) ?></span> server ONLY.</p>
 <p>
 	<form action="<?php echo $this->url ?>" method="post">
 		<?php echo $this->moduleActionFormInputs($params->get('module'), 'checkout') ?>
