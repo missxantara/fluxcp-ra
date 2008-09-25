@@ -125,7 +125,7 @@ class Flux_Dispatcher {
 		
 		// Authorization handling.
 		$auth = Flux_Authorization::getInstance();
-		if (!$auth->actionAllowed($moduleName, $actionName)) {
+		if ($auth->actionAllowed($moduleName, $actionName) === false) {
 			if (!Flux::$sessionData->isLoggedIn()) {
 				Flux::$sessionData->setMessageData('Please login to continue.');
 				$this->loginRequired($baseURI);

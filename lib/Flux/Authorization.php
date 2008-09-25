@@ -74,20 +74,30 @@ class Flux_Authorization {
 		$accessConfig = $this->config->get('modules');
 		$accessKeys   = array("$moduleName.$actionName", "$moduleName.*");
 		$accountLevel = $this->session->account->level;
+		$existentKeys = array();
 		
 		if ($accessConfig instanceOf Flux_Config) {
 			foreach ($accessKeys as $accessKey) {
 				$accessLevel = $accessConfig->get($accessKey);
 			
-				if (!is_null($accessLevel) &&
-					($accessLevel == AccountLevel::ANYONE || $accessLevel == $accountLevel ||
-					($accessLevel != AccountLevel::UNAUTH && $accessLevel <= $accountLevel))) {
+				if (!is_null($accessLevel)) {
+					$existentKeys[] = $accessKey;
 					
-					return true;
+					if (($accessLevel == AccountLevel::ANYONE || $accessLevel == $accountLevel ||
+						($accessLevel != AccountLevel::UNAUTH && $accessLevel <= $accountLevel))) {
+					
+						return true;
+					}
 				}
 			}
 		}
-		return false;
+		
+		if (empty($existentKeys)) {
+			return -1;
+		}
+		else {
+			return false;
+		}
 	}
 	
 	/**
