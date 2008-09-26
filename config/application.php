@@ -132,6 +132,10 @@ return array(
 			'checkout' => 'Checkout',
 			'clear'    => 'Empty Cart',
 			'pending'  => 'Pending Redemption'
+		),
+		'donate' => array(
+			'index'   => 'Make a Donation',
+			'history' => 'Donation History'
 		)
 	),
 	

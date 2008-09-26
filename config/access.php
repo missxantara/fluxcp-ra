@@ -13,7 +13,8 @@ return array(
 			'index'    => AccountLevel::ANYONE,
 			'notify'   => AccountLevel::ANYONE,
 			'update'   => AccountLevel::ANYONE,
-			'complete' => AccountLevel::ANYONE
+			'complete' => AccountLevel::ANYONE,
+			'history'  => AccountLevel::NORMAL
 		),
 		'purchase'  => array(
 			'index'    => AccountLevel::ANYONE,
