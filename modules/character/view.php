@@ -105,7 +105,7 @@ if ($char) {
 	}
 	
 	$col  = "inventory.*, items.name_japanese, items.type";
-
+	
 	$sql  = "SELECT $col FROM {$server->charMapDatabase}.inventory ";
 	$sql .= "LEFT JOIN {$server->charMapDatabase}.items ON items.id = inventory.nameid ";
 	$sql .= "WHERE inventory.char_id = ? ";
@@ -116,5 +116,18 @@ if ($char) {
 	$sth->execute(array($char->char_id));
 	
 	$items = $sth->fetchAll();
+	
+	$col  = "cart_inventory.*, items.name_japanese, items.type";
+	
+	$sql  = "SELECT $col FROM {$server->charMapDatabase}.cart_inventory ";
+	$sql .= "LEFT JOIN {$server->charMapDatabase}.items ON items.id = cart_inventory.nameid ";
+	$sql .= "WHERE cart_inventory.char_id = ? ";
+	$sql .= "ORDER BY cart_inventory.nameid ASC, cart_inventory.identify DESC, ";
+	$sql .= "cart_inventory.attribute DESC, cart_inventory.refine ASC";
+	
+	$sth  = $server->connection->getStatement($sql);
+	$sth->execute(array($char->char_id));
+	
+	$cart_items = $sth->fetchAll();
 }
 ?>

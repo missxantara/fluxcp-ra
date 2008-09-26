@@ -318,6 +318,7 @@
 <?php else: ?>
 	<p><?php echo htmlspecialchars($char->char_name) ?> has no friends.</p>
 <?php endif ?>
+
 <h3>Inventory Items of “<?php echo htmlspecialchars($char->char_name) ?>”</h3>
 <?php if ($items): ?>
 	<p><?php echo htmlspecialchars($char->char_name) ?> has <?php echo count($items) ?> inventory item(s).</p>
@@ -393,7 +394,85 @@
 		<?php endforeach ?>
 	</table>
 <?php else: ?>
-	<p>There are no inventory items on this account.</p>
+	<p>There are no inventory items on this character.</p>
+<?php endif ?>
+
+<h3>Cart Inventory Items of “<?php echo htmlspecialchars($char->char_name) ?>”</h3>
+<?php if ($cart_items): ?>
+	<p><?php echo htmlspecialchars($char->char_name) ?> has <?php echo count($cart_items) ?> cart inventory item(s).</p>
+	<table class="vertical-table">
+		<tr>
+			<th>Item ID</th>
+			<th>Name</th>
+			<th>Amount</th>
+			<th>Identified</th>
+			<th>Refine Level</th>
+			<th>Broken</th>
+			<th>Card0</th>
+			<th>Card1</th>
+			<th>Card2</th>
+			<th>Card3</th>
+			</th>
+		</tr>
+		<?php foreach ($cart_items AS $cart_item): ?>
+		<tr>
+			<td align="right"><?php echo $this->linkToItem($cart_item->nameid, $cart_item->nameid) ?></td>
+			<td>
+				<?php if ($cart_item->name_japanese): ?>
+					<span class="item_name"><?php echo htmlspecialchars($cart_item->name_japanese) ?></span>
+				<?php else: ?>
+					<span class="not-applicable">Unknown Item</span>
+				<?php endif ?>
+			</td>
+			<td><?php echo number_format($cart_item->amount) ?></td>
+			<td>
+				<?php if ($cart_item->identify): ?>
+					<span class="identified yes">Yes</span>
+				<?php else: ?>
+					<span class="identified no">No</span>
+				<?php endif ?>
+			</td>
+			<td><?php echo htmlspecialchars($cart_item->refine) ?></td>
+			<td>
+				<?php if ($cart_item->attribute): ?>
+					<span class="broken yes">Yes</span>
+				<?php else: ?>
+					<span class="broken no">No</span>
+				<?php endif ?>
+			</td>
+			<td>
+				<?php if($cart_item->card0 && ($cart_item->type == 4 || $cart_item->type == 5)): ?>
+					<?php echo $this->linkToItem($cart_item->card0, $cart_item->card0) ?>
+				<?php else: ?>
+					<span class="not-applicable">None</span>
+				<?php endif ?>
+			</td>
+			<td>
+				<?php if($cart_item->card1 && ($cart_item->type == 4 || $cart_item->type == 5)): ?>
+					<?php echo $this->linkToItem($cart_item->card1, $cart_item->card1) ?>
+				<?php else: ?>
+					<span class="not-applicable">None</span>
+				<?php endif ?>
+			</td>
+			<td>
+				<?php if($cart_item->card2 && ($cart_item->type == 4 || $cart_item->type == 5)): ?>
+					<?php echo $this->linkToItem($cart_item->card2, $cart_item->card2) ?>
+				<?php else: ?>
+					<span class="not-applicable">None</span>
+				<?php endif ?>
+			</td>
+			<td>
+				<?php if($cart_item->card3 && ($cart_item->type == 4 || $cart_item->type == 5)): ?>
+					<?php echo $this->linkToItem($cart_item->card3, $cart_item->card3) ?>
+				<?php else: ?>
+					<span class="not-applicable">None</span>
+				<?php endif ?>
+			</td>
+		</tr>
+		<?php endforeach ?>
+	</table>
+<?php else: ?>
+	<p>There are no cart inventory items on this character.</p>
 <?php endif ?>
 
 <?php else: ?>
