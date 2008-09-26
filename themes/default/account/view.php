@@ -230,7 +230,7 @@
 			<td align="right"><?php echo $this->linkToItem($item->nameid, $item->nameid) ?></td>
 			<td>
 				<?php if ($item->name_japanese): ?>
-					<span class="item_name">$item->name_japanese</span>
+					<span class="item_name"><?php echo htmlspecialchars($item->name_japanese) ?></span>
 				<?php else: ?>
 					<span class="not-applicable">Unknown Item</span>
 				<?php endif ?>
