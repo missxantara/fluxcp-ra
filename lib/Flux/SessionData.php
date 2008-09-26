@@ -121,9 +121,9 @@ class Flux_SessionData {
 				}
 				
 				if (!array_key_exists($athenaServerName, $cartArray[$accountID])) {
-					$cartArray[$accountID][$athenaServerName] = new Flux_ItemShop_Cart($this->account);
+					$cartArray[$accountID][$athenaServerName] = new Flux_ItemShop_Cart();
 				}
-				
+				$cartArray[$accountID][$athenaServerName]->setAccount($this->account);
 				$athenaServer->setCart($cartArray[$accountID][$athenaServerName]);
 			}
 		}

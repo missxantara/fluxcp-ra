@@ -1,4 +1,6 @@
 <?php
+require_once 'Flux/Error.php';
+
 class Flux_ItemShop_Cart {
 	/**
 	 *
@@ -10,9 +12,17 @@ class Flux_ItemShop_Cart {
 	 */
 	private $cart = array();
 	
-	public function __construct(Flux_DataObject $account)
+	public function setAccount(Flux_DataObject $account)
 	{
 		$this->account = $account;
+		return $account;
+	}
+	
+	public function requiresAccount()
+	{
+		if (!$this->account) {
+			throw new Flux_Error('Account is required to use the shopping cart.');
+		}
 	}
 	
 	public function add(Flux_DataObject $item)
@@ -103,6 +113,7 @@ class Flux_ItemShop_Cart {
 	
 	public function hasFunds()
 	{
+		$this->requiresAccount();
 		$creditsAvailable = $this->account->balance;
 		$creditsNeeded    = $this->getTotal();
 		
