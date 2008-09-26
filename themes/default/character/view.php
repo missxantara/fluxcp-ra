@@ -1,7 +1,7 @@
 <?php if (!defined('FLUX_ROOT')) exit; ?>
 <h2>Viewing Character</h2>
 <?php if ($char): ?>
-<h3>Character information for “<?php echo htmlspecialchars($char->char_name) ?>”</h3>
+<h3>Character Information for “<?php echo htmlspecialchars($char->char_name) ?>”</h3>
 <table class="vertical-table">
 	<tr>
 		<th>Character ID</th>
