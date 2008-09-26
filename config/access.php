@@ -21,7 +21,8 @@ return array(
 			'clear'    => AccountLevel::NORMAL,
 			'cart'     => AccountLevel::NORMAL,
 			'checkout' => AccountLevel::NORMAL,
-			'remove'   => AccountLevel::NORMAL
+			'remove'   => AccountLevel::NORMAL,
+			'pending'  => AccountLevel::NORMAL
 		),
 		'itemshop'  => array(
 			'add'      => AccountLevel::ADMIN,

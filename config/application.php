@@ -130,7 +130,8 @@ return array(
 			'index'    => 'Shop',
 			'cart'     => 'Go to Cart',
 			'checkout' => 'Checkout',
-			'clear'    => 'Empty Cart'
+			'clear'    => 'Empty Cart',
+			'pending'  => 'Pending Redemption'
 		)
 	),
 	
