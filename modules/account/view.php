@@ -158,15 +158,17 @@ if ($items) {
 		}
 	}
 	
-	$ids = implode(',', array_fill(0, count($cardIDs), '?'));
-	$sql = "SELECT id, name_japanese FROM {$server->charMapDatabase}.items WHERE id IN ($ids)";
-	$sth = $server->connection->getStatement($sql);
+	if ($cardIDs) {
+		$ids = implode(',', array_fill(0, count($cardIDs), '?'));
+		$sql = "SELECT id, name_japanese FROM {$server->charMapDatabase}.items WHERE id IN ($ids)";
+		$sth = $server->connection->getStatement($sql);
 	
-	$sth->execute($cardIDs);
-	$temp = $sth->fetchAll();
-	if ($temp) {
-		foreach ($temp as $card) {
-			$cards[$card->id] = $card->name_japanese;
+		$sth->execute($cardIDs);
+		$temp = $sth->fetchAll();
+		if ($temp) {
+			foreach ($temp as $card) {
+				$cards[$card->id] = $card->name_japanese;
+			}
 		}
 	}
 }
