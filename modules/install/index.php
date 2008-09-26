@@ -1,6 +1,8 @@
 <?php
 if (!defined('FLUX_ROOT')) exit;
 
+require_once 'Flux/Installer/SchemaPermissionError.php';
+
 // Force debug mode off here.
 Flux::config('DebugMode', false);
 
@@ -68,12 +70,16 @@ if ($session->installerAuth) {
 		}
 		
 		if ($params->get('update_all')) {
-			$installer->updateAll();
-
-			if (!$installer->updateNeeded()) {
-				$session->setMessageData('Updates have been installed.');
-				$session->setInstallerAuthData(false);
-				$this->redirect();
+			try {
+				$installer->updateAll();
+				if (!$installer->updateNeeded()) {
+					$session->setMessageData('Updates have been installed.');
+					$session->setInstallerAuthData(false);
+					$this->redirect();
+				}
+			}
+			catch (Flux_Installer_SchemaPermissionError $e) {
+				$permissionError = $e;
 			}
 		}
 	}

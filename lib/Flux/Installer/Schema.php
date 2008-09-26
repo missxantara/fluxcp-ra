@@ -1,4 +1,6 @@
 <?php
+require_once 'Flux/Installer/SchemaPermissionError.php';
+
 /**
  *
  */
@@ -106,15 +108,20 @@ class Flux_Installer_Schema {
 			if ($sth->errorCode()) {
 				list ($sqlstate, $errnum, $errmsg) = $sth->errorInfo();
 				
-				// No permissions?
-				if ($errnum == 1045 || $errnum == 1142) {
-					$charMap  = $this->charMapServerName ? $this->charMapServerName : 'None';
-					
+				if ($errnum == 1045) {
+					throw new Flux_Error("Critical MySQL error in Installer/Updater: $errnum: $errmsg");
+				}
+				elseif ($errnum == 1142) {
 					// Bail-out.
-					$message  = "Encountered a MySQL error related to insufficient permissions. (Login Server: {$this->mainServerName}, Char/Map Server: {$charMap})\n";
-					$message .= "MySQL error: $errmsg\n\n";
-					$message .= "The query trying to be executed was: $sql\n";
-					throw new Flux_Error($message);
+					$message = "MySQL error: $errmsg\n\n";
+					throw new Flux_Installer_SchemaPermissionError(
+						$message,
+						$this->schemaInfo['files'][$version],
+						$this->databaseName,
+						$this->mainServerName,
+						$this->charMapServerName,
+						$sql
+					);
 				}
 			}
 			
