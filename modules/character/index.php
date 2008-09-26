@@ -146,7 +146,7 @@ else {
 }
 
 $sql  = "SELECT COUNT(ch.char_id) AS total FROM {$server->charMapDatabase}.`char` AS ch $sqlpartial";
-$sth  = $server->connection->getStatement($sql); echo $sql;
+$sth  = $server->connection->getStatement($sql);
 
 $sth->execute($bind);
 $paginator = $this->getPaginator($sth->fetch()->total);
