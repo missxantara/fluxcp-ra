@@ -63,6 +63,54 @@
 		</td>
 	</tr>
 </table>
+<h3>Alliances of “<?php echo htmlspecialchars($guild->name) ?>”</h3>
+<?php if ($alliances): ?>
+	<p><?php echo htmlspecialchars($guild->name) ?> has <?php echo count($alliances) ?> Alliance(s).</p>
+	<table class="vertical-table">
+		<tr>
+			<td>Guild ID</td>
+			<td>Guild Name</td>
+		</tr>
+		<?php foreach ($alliances AS $alliance): ?>
+		<tr>
+			<td align="right">
+				<?php if ($auth->allowedToViewGuild): ?>
+					<?php echo $this->linkToGuild($alliance->alliance_id, $alliance->alliance_id) ?>
+				<?php else: ?>
+					<?php echo htmlspecialchars($alliance->alliance_id) ?>
+				<?php endif ?>
+			</td>
+			<td><?php echo htmlspecialchars($alliance->name) ?></td>
+		</tr>
+		<?php endforeach ?>
+	</table>
+<?php else: ?>
+	<p>There are no alliances for this guild.</p>
+<?php endif ?>
+<h3>Oppositions of “<?php echo htmlspecialchars($guild->name) ?>”</h3>
+<?php if ($oppositions): ?>
+	<p><?php echo htmlspecialchars($guild->name) ?> has <?php echo count($oppositions) ?> Opposition(s).</p>
+	<table class="vertical-table">
+		<tr>
+			<td>Guild ID</td>
+			<td>Guild Name</td>
+		</tr>
+		<?php foreach ($oppositions AS $opposition): ?>
+		<tr>
+			<td align="right">
+				<?php if ($auth->allowedToViewGuild): ?>
+					<?php echo $this->linkToGuild($opposition->alliance_id, $opposition->alliance_id) ?>
+				<?php else: ?>
+					<?php echo htmlspecialchars($opposition->alliance_id) ?>
+				<?php endif ?>
+			</td>
+			<td><?php echo htmlspecialchars($opposition->name) ?></td>
+		</tr>
+		<?php endforeach ?>
+	</table>
+<?php else: ?>
+	<p>There are no oppositions for this guild.</p>
+<?php endif ?>
 <h3>Guild Members of “<?php echo htmlspecialchars($guild->name) ?>”</h3>
 <?php if ($members): ?>
 	<p><?php echo htmlspecialchars($guild->name) ?> has <?php echo count($members) ?> guild member(s).</p>
@@ -118,54 +166,6 @@
 	</table>
 <?php else: ?>
 	<p>There are no members in this guild.</p>
-<?php endif ?>
-<h3>Alliances of “<?php echo htmlspecialchars($guild->name) ?>”</h3>
-<?php if ($alliances): ?>
-	<p><?php echo htmlspecialchars($guild->name) ?> has <?php echo count($alliances) ?> Alliance(s).</p>
-	<table class="vertical-table">
-		<tr>
-			<td>Guild ID</td>
-			<td>Guild Name</td>
-		</tr>
-		<?php foreach ($alliances AS $alliance): ?>
-		<tr>
-			<td align="right">
-				<?php if ($auth->allowedToViewGuild): ?>
-					<?php echo $this->linkToGuild($alliance->alliance_id, $alliance->alliance_id) ?>
-				<?php else: ?>
-					<?php echo htmlspecialchars($alliance->alliance_id) ?>
-				<?php endif ?>
-			</td>
-			<td><?php echo htmlspecialchars($alliance->name) ?></td>
-		</tr>
-		<?php endforeach ?>
-	</table>
-<?php else: ?>
-	<p>There are no alliances for this guild.</p>
-<?php endif ?>
-<h3>Oppositions of “<?php echo htmlspecialchars($guild->name) ?>”</h3>
-<?php if ($oppositions): ?>
-	<p><?php echo htmlspecialchars($guild->name) ?> has <?php echo count($oppositions) ?> Opposition(s).</p>
-	<table class="vertical-table">
-		<tr>
-			<td>Guild ID</td>
-			<td>Guild Name</td>
-		</tr>
-		<?php foreach ($oppositions AS $opposition): ?>
-		<tr>
-			<td align="right">
-				<?php if ($auth->allowedToViewGuild): ?>
-					<?php echo $this->linkToGuild($opposition->alliance_id, $opposition->alliance_id) ?>
-				<?php else: ?>
-					<?php echo htmlspecialchars($opposition->alliance_id) ?>
-				<?php endif ?>
-			</td>
-			<td><?php echo htmlspecialchars($opposition->name) ?></td>
-		</tr>
-		<?php endforeach ?>
-	</table>
-<?php else: ?>
-	<p>There are no oppositions for this guild.</p>
 <?php endif ?>
 <?php else: ?>
 <p>No such guild was found. <a href="javascript:history.go(-1)">Go back</a>.</p>
