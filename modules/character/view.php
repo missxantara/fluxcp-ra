@@ -5,6 +5,13 @@ $this->loginRequired();
 
 $title = 'Viewing Character';
 
+require_once 'Flux/TemporaryTable.php';
+
+$tableName  = "{$server->charMapDatabase}.items";
+$fromTables = array("{$server->charMapDatabase}.item_db", "{$server->charMapDatabase}.item_db2");
+$tempTable  = new Flux_TemporaryTable($server->connection, $tableName, $fromTables);
+
+
 $charID = $params->get('id');
 
 $col  = "ch.char_id, ch.account_id, ch.char_num, ch.name AS char_name, ch.class AS char_class, ch.base_level AS char_base_level, ";
@@ -96,5 +103,18 @@ if ($char) {
 	else {
 		$partyMembers = array();
 	}
+	
+	$col  = "inventory.*, items.name_japanese, items.type";
+
+	$sql  = "SELECT $col FROM {$server->charMapDatabase}.inventory ";
+	$sql .= "LEFT JOIN {$server->charMapDatabase}.items ON items.id = inventory.nameid ";
+	$sql .= "WHERE inventory.char_id = ? ";
+	$sql .= "ORDER BY inventory.nameid ASC, inventory.identify DESC, ";
+	$sql .= "inventory.attribute DESC, inventory.refine ASC";
+	
+	$sth  = $server->connection->getStatement($sql);
+	$sth->execute(array($char->char_id));
+	
+	$items = $sth->fetchAll();
 }
 ?>
