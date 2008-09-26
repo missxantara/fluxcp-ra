@@ -128,7 +128,7 @@
 			<?php endif ?>
 		</td>
 		<th>Tax Level</th>
-		<td><?php echo number_format((int)$char->guild_tax)."%" ?></td>
+		<td><?php echo number_format($char->guild_tax) ?>%</td>
 	</tr>
 	<tr>
 		<th>Party Name</th>
