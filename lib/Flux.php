@@ -527,7 +527,7 @@ class Flux {
 		foreach ($loginAthenaGroups as $loginAthenaGroup) {
 			$sql  = "SELECT account_id, payer_email, credits, mc_gross, txn_id, hold_until ";
 			$sql .= "FROM {$loginAthenaGroup->loginDatabase}.$txnLogTable ";
-			$sql .= "WHERE hold_until IS NOT NULL AND payment_status = 'Completed'";
+			$sql .= "WHERE account_id > 0 AND hold_until IS NOT NULL AND payment_status = 'Completed'";
 			$sth  = $loginAthenaGroup->connection->getStatement($sql);
 			
 			if ($sth->execute() && ($txn=$sth->fetchAll())) {
@@ -553,10 +553,6 @@ class Flux {
 				$sth->execute($cancel);
 			}
 			
-			$sql    = "UPDATE {$loginAthenaGroup->loginDatabase}.$creditsTable ";
-			$sql   .= "SET balance = ?, last_donation_amount = ?, last_donation_date = NOW() ";
-			$sth    = $loginAthenaGroup->connection->getStatement($sql);
-			
 			$sql2   = "INSERT INTO {$loginAthenaGroup->loginDatabase}.$trustTable (account_id, email, create_date)";
 			$sql2  .= "VALUES (?, ?, NOW())";
 			$sth2   = $loginAthenaGroup->connection->getStatement($sql2);
@@ -564,7 +560,7 @@ class Flux {
 			$idvals = array();
 			
 			foreach ($accept as $txn) {
-				if ($sth->execute(array($txn->credits, $txn->mc_gross)) &&
+				if ($loginAthenaGroup->loginServer->depositCredits($txn->account_id, $txn->credits, $txn->mc_gross) &&
 					$sth2->execute(array($txn->account_id, $txn->payer_email))) {
 						
 					$idvals[] = $txn->txn_id;

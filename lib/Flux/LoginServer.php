@@ -255,5 +255,149 @@ class Flux_LoginServer extends Flux_BaseServer {
 			return false;
 		}
 	}
+	
+	/**
+	 *
+	 */
+	public function hasCreditsRecord($accountID)
+	{
+		$creditsTable = Flux::config('FluxTables.CreditsTable');
+		
+		$sql = "SELECT COUNT(account_id) AS hasRecord FROM {$this->loginDatabase}.$creditsTable WHERE account_id = ?";
+		$sth = $this->connection->getStatement($sql);
+		
+		$sth->execute(array($accountID));
+		
+		if ($sth->fetch()->hasRecord) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+	
+	/**
+	 *
+	 */
+	public function depositCredits($targetAccountID, $credits, $donationAmount = null)
+	{
+		$sql = "SELECT COUNT(account_id) AS accountExists FROM {$this->loginDatabase}.login WHERE account_id = ?";
+		$sth = $this->connection->getStatement($sql);
+		
+		if (!$sth->execute(array($targetAccountID)) || !$sth->fetch()->accountExists) {
+			return false; // Account doesn't exist.
+		}
+		
+		$creditsTable = Flux::config('FluxTables.CreditsTable');
+		
+		if (!$this->hasCreditsRecord($targetAccountID)) {
+			$fields = 'account_id, balance';
+			$values = '?, ?';
+			
+			if (!is_null($donationAmount)) {
+				$fields .= ', last_donation_date, last_donation_amount';
+				$values .= ', NOW(), ?';
+			}
+			
+			$sql  = "INSERT INTO {$this->loginDatabase}.$creditsTable ($fields) VALUES ($values)";
+			$sth  = $this->connection->getStatement($sql);
+			$vals = array($targetAccountID, $credits);
+			
+			if (!is_null($donationAmount)) {
+				$vals[] = $donationAmount;
+			}
+			
+			return $sth->execute($vals);
+		}
+		else {
+			$vals = array();
+			$sql  = "UPDATE {$this->loginDatabase}.$creditsTable SET balance = balance + ? ";
+
+			if (!is_null($donationAmount)) {
+				$sql .= ", last_donation_date = NOW(), last_donation_amount = ? ";
+			}
+			
+			$vals[] = $credits;
+			if (!is_null($donationAmount)) {
+				$vals[] = $donationAmount;
+			}
+			$vals[] = $targetAccountID;
+			
+			$sql .= "WHERE account_id = ?";
+			$sth  = $this->connection->getStatement($sql);
+			
+			return $sth->execute($vals);
+		}
+	}
+	
+	/**
+	 *
+	 */
+	public function transferCredits($fromAccountID, $targetAccountID, $credits)
+	{
+		//
+		// Return values:
+		// -1 = From or to account, one or the other does not exist. (likely the latter.)
+		// -2 = Sender has an insufficient balance.
+		// -3 = 
+		// true = Successful transfer
+		// false = Error
+		//
+		
+		$sql  = "SELECT COUNT(account_id) AS accounts FROM {$this->loginDatabase}.login WHERE ";
+		$sql .= "account_id = ? OR account_id = ? LIMIT 2";
+		$sth  = $this->connection->getStatement($sql);
+		
+		if (!$sth->execute(array($fromAccountID, $targetAccountID)) || $sth->fetch()->accounts != 2) {
+			// One or the other, from or to, are non-existent accounts.
+			return -1;
+		}
+		
+		if (!$this->hasCreditsRecord($fromAccountID)) {
+			// Sender has a zero balance.
+			return -2;
+		}
+		
+		$creditsTable = Flux::config('FluxTables.CreditsTable');
+		$xferTable    = Flux::config('FluxTables.CreditTransferTable');
+		
+		// Get balance of sender.
+		$sql = "SELECT balance FROM {$this->loginDatabase}.$creditsTable WHERE account_id = ? LIMIT 1";
+		$sth = $this->connection->getStatement($sql);
+		
+		if (!$sth->execute(array($fromAccountID))) {
+			// Error.
+			return false;
+		}
+		
+		if ($sth->fetch()->balance < $credits) {
+			// Insufficient balance.
+			return -2;
+		}
+		
+		// Take credits from fromAccount first.
+		if ($this->depositCredits($fromAccountID, -$credits)) {
+			// Then deposit to targetAccount next.
+			if (!$this->depositCredits($targetAccountID, $credits)) {
+				// Attempt to restore credits if deposit to toAccount failed.
+				$this->depositCredits($fromAccountID, $credits);
+				return false;
+			}
+			else {
+				$sql  = "INSERT INTO {$this->loginDatabase}.$xferTable ";
+				$sql .= "(from_account_id, target_account_id, amount, transfer_date) ";
+				$sql .= "VALUES (?, ?, ?, NOW())";
+				$sth  = $this->connection->getStatement($sql);
+				
+				// Log transfer.
+				$sth->execute(array($fromAccountID, $targetAccountID, $credits));
+				
+				return true;
+			}
+		}
+		else {
+			return false;
+		}
+	}
 }
 ?>

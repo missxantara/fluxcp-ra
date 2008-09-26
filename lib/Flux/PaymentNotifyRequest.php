@@ -185,16 +185,8 @@ class Flux_PaymentNotifyRequest {
 							$this->logPayPal('Unknown account #%s on server %s, cannot exchange for credits.', $accountID, $serverName);
 						}
 						else {
-							$sql = "SELECT * FROM {$servGroup->loginDatabase}.{$this->creditsTable} WHERE account_id = ?";
-							$sth = $servGroup->connection->getStatement($sql);
-							$sth->execute(array($accountID));
-							$acc = $sth->fetch();
-
-							if (!$acc) {
+							if (!$servGroup->loginServer->hasCreditsRecord($accountID)) {
 								$this->logPayPal('Identified as first-time donation to the server from this account.');
-								$sql = "INSERT INTO {$servGroup->loginDatabase}.{$this->creditsTable} (account_id, balance, last_donation_date, last_donation_amount) VALUES (?, 0, NULL, 0)";
-								$sth = $servGroup->connection->getStatement($sql);
-								$sth->execute(array($accountID));
 							}
 
 							$amount  = (float)$this->ipnVariables->get('mc_gross');
@@ -222,10 +214,13 @@ class Flux_PaymentNotifyRequest {
 								$credits = floor($amount / $rate);
 								
 								if ($trusted) {
-									$this->logPayPal('Updating account credit balance from %s to %s', (int)$acc->balance, $acc->balance + $credits);
-
-									$sql = "UPDATE {$servGroup->loginDatabase}.{$this->creditsTable} SET balance = balance + ?, last_donation_amount = ?, last_donation_date = NOW()";
+									$sql = "SELECT * FROM {$servGroup->loginDatabase}.{$this->creditsTable} WHERE account_id = ?";
 									$sth = $servGroup->connection->getStatement($sql);
+									$sth->execute(array($accountID));
+									$acc = $sth->fetch();
+									
+									$this->logPayPal('Updating account credit balance from %s to %s', (int)$acc->balance, $acc->balance + $credits);
+									$servGroup->loginServer->depositCredits($accountID, $credits, $amount);
 
 									if ($sth->execute(array($credits, $amount))) {
 										$this->logPayPal('Deposited credits.');
