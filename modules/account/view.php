@@ -138,4 +138,36 @@ $sth  = $server->connection->getStatement($sql);
 $sth->execute(array($account->account_id));
 
 $items = $sth->fetchAll();
+$cards = array();
+
+if ($items) {
+	$cardIDs = array();
+	
+	foreach ($items as $item) {
+		if ($item->card0) {
+			$cardIDs[] = $item->card0;
+		}
+		if ($item->card1) {
+			$cardIDs[] = $item->card1;
+		}
+		if ($item->card2) {
+			$cardIDs[] = $item->card2;
+		}
+		if ($item->card3) {
+			$cardIDs[] = $item->card3;
+		}
+	}
+	
+	$ids = implode(',', array_fill(0, count($cardIDs), '?'));
+	$sql = "SELECT id, name_japanese FROM {$server->charMapDatabase}.items WHERE id IN ($ids)";
+	$sth = $server->connection->getStatement($sql);
+	
+	$sth->execute($cardIDs);
+	$temp = $sth->fetchAll();
+	if ($temp) {
+		foreach ($temp as $card) {
+			$cards[$card->id] = $card->name_japanese;
+		}
+	}
+}
 ?>
