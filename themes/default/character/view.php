@@ -364,28 +364,44 @@
 			</td>
 			<td>
 				<?php if($item->card0 && ($item->type == 4 || $item->type == 5)): ?>
-					<?php echo $this->linkToItem($item->card0, $item->card0) ?>
+					<?php if (!empty($cards[$item->card0])): ?>
+						<?php echo $this->linkToItem($item->card0, $cards[$item->card0]) ?>
+					<?php else: ?>
+						<?php echo $this->linkToItem($item->card0, $item->card0) ?>
+					<?php endif ?>
 				<?php else: ?>
 					<span class="not-applicable">None</span>
 				<?php endif ?>
 			</td>
 			<td>
 				<?php if($item->card1 && ($item->type == 4 || $item->type == 5)): ?>
-					<?php echo $this->linkToItem($item->card1, $item->card1) ?>
+					<?php if (!empty($cards[$item->card1])): ?>
+						<?php echo $this->linkToItem($item->card1, $cards[$item->card1]) ?>
+					<?php else: ?>
+						<?php echo $this->linkToItem($item->card1, $item->card1) ?>
+					<?php endif ?>
 				<?php else: ?>
 					<span class="not-applicable">None</span>
 				<?php endif ?>
 			</td>
 			<td>
 				<?php if($item->card2 && ($item->type == 4 || $item->type == 5)): ?>
-					<?php echo $this->linkToItem($item->card2, $item->card2) ?>
+					<?php if (!empty($cards[$item->card2])): ?>
+						<?php echo $this->linkToItem($item->card2, $cards[$item->card2]) ?>
+					<?php else: ?>
+						<?php echo $this->linkToItem($item->card2, $item->card2) ?>
+					<?php endif ?>
 				<?php else: ?>
 					<span class="not-applicable">None</span>
 				<?php endif ?>
 			</td>
 			<td>
 				<?php if($item->card3 && ($item->type == 4 || $item->type == 5)): ?>
-					<?php echo $this->linkToItem($item->card3, $item->card3) ?>
+					<?php if (!empty($cards[$item->card3])): ?>
+						<?php echo $this->linkToItem($item->card3, $cards[$item->card3]) ?>
+					<?php else: ?>
+						<?php echo $this->linkToItem($item->card3, $item->card3) ?>
+					<?php endif ?>
 				<?php else: ?>
 					<span class="not-applicable">None</span>
 				<?php endif ?>
@@ -442,28 +458,44 @@
 			</td>
 			<td>
 				<?php if($cart_item->card0 && ($cart_item->type == 4 || $cart_item->type == 5)): ?>
-					<?php echo $this->linkToItem($cart_item->card0, $cart_item->card0) ?>
+					<?php if (!empty($cart_cards[$cart_item->card0])): ?>
+						<?php echo $this->linkToItem($cart_item->card0, $cards[$cart_item->card0]) ?>
+					<?php else: ?>
+						<?php echo $this->linkToItem($cart_item->card0, $cart_item->card0) ?>
+					<?php endif ?>
 				<?php else: ?>
 					<span class="not-applicable">None</span>
 				<?php endif ?>
 			</td>
 			<td>
 				<?php if($cart_item->card1 && ($cart_item->type == 4 || $cart_item->type == 5)): ?>
-					<?php echo $this->linkToItem($cart_item->card1, $cart_item->card1) ?>
+					<?php if (!empty($cart_cards[$cart_item->card1])): ?>
+						<?php echo $this->linkToItem($cart_item->card1, $cards[$cart_item->card1]) ?>
+					<?php else: ?>
+						<?php echo $this->linkToItem($cart_item->card1, $cart_item->card1) ?>
+					<?php endif ?>
 				<?php else: ?>
 					<span class="not-applicable">None</span>
 				<?php endif ?>
 			</td>
 			<td>
 				<?php if($cart_item->card2 && ($cart_item->type == 4 || $cart_item->type == 5)): ?>
-					<?php echo $this->linkToItem($cart_item->card2, $cart_item->card2) ?>
+					<?php if (!empty($cart_cards[$cart_item->card2])): ?>
+						<?php echo $this->linkToItem($cart_item->card2, $cart_cards[$cart_item->card2]) ?>
+					<?php else: ?>
+						<?php echo $this->linkToItem($cart_item->card2, $cart_item->card2) ?>
+					<?php endif ?>
 				<?php else: ?>
 					<span class="not-applicable">None</span>
 				<?php endif ?>
 			</td>
 			<td>
 				<?php if($cart_item->card3 && ($cart_item->type == 4 || $cart_item->type == 5)): ?>
-					<?php echo $this->linkToItem($cart_item->card3, $cart_item->card3) ?>
+					<?php if (!empty($cart_cards[$cart_item->card3])): ?>
+						<?php echo $this->linkToItem($cart_item->card3, $cart_cards[$cart_item->card3]) ?>
+					<?php else: ?>
+						<?php echo $this->linkToItem($cart_item->card3, $cart_item->card3) ?>
+					<?php endif ?>
 				<?php else: ?>
 					<span class="not-applicable">None</span>
 				<?php endif ?>
