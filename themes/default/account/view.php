@@ -228,7 +228,13 @@
 		<?php foreach ($items AS $item): ?>
 		<tr>
 			<td align="right"><?php echo $this->linkToItem($item->nameid, $item->nameid) ?></td>
-			<td><?php echo htmlspecialchars($item->name_japanese) ?></td>
+			<td>
+				<?php if ($item->name_japanese): ?>
+					<span class="item_name">$item->name_japanese</span>
+				<?php else: ?>
+					<span class="not-applicable">Unknown Item</span>
+				<?php endif ?>
+			</td>
 			<td><?php echo number_format($item->amount) ?></td>
 			<td>
 				<?php if ($item->identify): ?>
