@@ -68,8 +68,8 @@
 	<p><?php echo htmlspecialchars($guild->name) ?> has <?php echo count($alliances) ?> Alliance(s).</p>
 	<table class="vertical-table">
 		<tr>
-			<td>Guild ID</td>
-			<td>Guild Name</td>
+			<th>Guild ID</th>
+			<th>Guild Name</th>
 		</tr>
 		<?php foreach ($alliances AS $alliance): ?>
 		<tr>
@@ -92,8 +92,8 @@
 	<p><?php echo htmlspecialchars($guild->name) ?> has <?php echo count($oppositions) ?> Opposition(s).</p>
 	<table class="vertical-table">
 		<tr>
-			<td>Guild ID</td>
-			<td>Guild Name</td>
+			<th>Guild ID</th>
+			<th>Guild Name</th>
 		</tr>
 		<?php foreach ($oppositions AS $opposition): ?>
 		<tr>
