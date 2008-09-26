@@ -66,4 +66,14 @@ foreach ($members as $member) {
 if (!$isMine && !$auth->allowedToViewGuild) {
 	$this->deny();
 }
+
+$col  = "account_id, name, mes";
+
+$sql  = "SELECT $col FROM {$server->charMapDatabase}.guild_expulsion ";
+$sql .= "WHERE guild_id = ? ORDER BY name ASC";
+
+$sth  = $server->connection->getStatement($sql);
+$sth->execute(array($guildID));
+
+$expulsions = $sth->fetchAll();
 ?>

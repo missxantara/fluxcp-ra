@@ -167,6 +167,32 @@
 <?php else: ?>
 	<p>There are no members in this guild.</p>
 <?php endif ?>
+<h3>Member Expulsions of “<?php echo htmlspecialchars($guild->name) ?>”</h3>
+<?php if ($expulsions): ?>
+	<p><?php echo htmlspecialchars($guild->name) ?> has <?php echo count($expulsions) ?> member expulsion(s).</p>
+	<table class="vertical-table">
+		<tr>
+			<th>Account ID</th>
+			<th>Character Name</th>
+			<th>Expulsion Reason</th>
+		</tr>
+		<?php foreach ($expulsions AS $expulsion): ?>
+		<tr>
+			<td align="right">
+				<?php if ($auth->allowedToViewAccount): ?>
+					<?php echo $this->linkToAccount($expulsion->account_id, $expulsion->account_id) ?>
+				<?php else: ?>
+					<?php echo htmlspecialchars($expulsion->account_id) ?>
+				<?php endif ?>
+			</td>
+			<td><?php echo htmlspecialchars($expulsion->name) ?></td>
+			<td><?php echo htmlspecialchars($expulsion->mes) ?></td>
+		</tr>
+		<?php endforeach ?>
+	</table>
+<?php else: ?>
+	<p>There are no member expulsions for this guild.</p>
+<?php endif ?>
 <?php else: ?>
 <p>No such guild was found. <a href="javascript:history.go(-1)">Go back</a>.</p>
 <?php endif ?>
