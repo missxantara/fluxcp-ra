@@ -10,7 +10,7 @@ if ($session->installerAuth) {
 	}
 	else {
 		$requiredMySqlVersion = '5.0';
-		$requiredDbPrivileges = array('SELECT', 'UPDATE', 'INSERT', 'DELETE', 'CREATE', 'ALTER');
+		$requiredDbPrivileges = array('SELECT', 'UPDATE', 'INSERT', 'DELETE', 'CREATE', 'ALTER', 'DROP');
 		
 		foreach (Flux::$loginAthenaGroupRegistry as $serverName => $loginAthenaGroup) {
 			$sth = $loginAthenaGroup->connection->getStatement("SELECT VERSION() AS mysql_version, CURRENT_USER() AS mysql_user");
