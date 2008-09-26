@@ -43,8 +43,8 @@ return array(
 	'PayPalIpnUrl'         => 'www.sandbox.paypal.com', // The URL for PayPal's IPN responses (www.paypal.com for live and www.sandbox.paypal.com for testing)
 	'PayPalBusinessEmail'  => 'admin@localhost',        // Enter the e-mail under which you have registered your business account.
 	'PayPalReceiverEmails' => array(                    // These are the receiver e-mail addresses who are allowed to receive payment.
-		'admin2@localhost',                             // -- This array may be empty if you only use one e-mail
-		'admin3@localhost'                              // -- because your Business Email is also checked.
+		//'admin2@localhost',                             // -- This array may be empty if you only use one e-mail
+		//'admin3@localhost'                              // -- because your Business Email is also checked.
 	),
 	'AllowTempBanLogin'    => false,                    // Allow logging in of temporarily banned accounts.
 	'AllowPermBanLogin'    => false,                    // Allow logging in of permanently banned accounts.
