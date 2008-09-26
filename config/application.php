@@ -99,8 +99,9 @@ return array(
 	// particular module. The format it simple.
 	'SubMenuItems' => array(
 		'account' => array(
-			'index' => 'List Accounts',
-			'view'  => 'View Account'
+			'index'    => 'List Accounts',
+			'view'     => 'View Account',
+			'transfer' => 'Transfer Credits'
 		),
 		'guild' => array(
 			'index'  => 'List Guilds',

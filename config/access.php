@@ -35,7 +35,8 @@ return array(
 			'view'     => AccountLevel::NORMAL,
 			'create'   => AccountLevel::UNAUTH,
 			'login'    => AccountLevel::UNAUTH,
-			'logout'   => AccountLevel::NORMAL
+			'logout'   => AccountLevel::NORMAL,
+			'transfer' => AccountLevel::NORMAL
 		),
 		'character' => array(
 			'index'    => AccountLevel::LOWGM,
