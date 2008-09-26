@@ -101,7 +101,8 @@ return array(
 		'account' => array(
 			'index'    => 'List Accounts',
 			'view'     => 'View Account',
-			'transfer' => 'Transfer Credits'
+			'transfer' => 'Transfer Credits',
+			'xferlog'  => 'Credit Transfer History'
 		),
 		'guild' => array(
 			'index'  => 'List Guilds',

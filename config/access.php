@@ -36,7 +36,8 @@ return array(
 			'create'   => AccountLevel::UNAUTH,
 			'login'    => AccountLevel::UNAUTH,
 			'logout'   => AccountLevel::NORMAL,
-			'transfer' => AccountLevel::NORMAL
+			'transfer' => AccountLevel::NORMAL,
+			'xferlog'  => AccountLevel::NORMAL
 		),
 		'character' => array(
 			'index'    => AccountLevel::LOWGM,
