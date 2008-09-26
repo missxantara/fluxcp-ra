@@ -22,7 +22,7 @@ if ($guild) {
 	$title = "Viewing Guild ({$guild->name})";
 }
 
-$col  = "ch.char_id, ch.name, ch.class, ch.base_level, ch.job_level, ";
+$col  = "ch.account_id, ch.char_id, ch.name, ch.class, ch.base_level, ch.job_level, ";
 $col .= "roster.exp AS devotion, roster.position, ";
 $col .= "pos.name AS position_name, pos.mode, pos.exp_mode";
 
@@ -36,11 +36,11 @@ $sth->execute(array($guildID));
 
 $members = $sth->fetchAll();
 
-if ($guild && $guild->guild_id == $session->account->account_id) {
-	$isMine = true;
-}
-else {
-	$isMine = false;
+$isMine = false;
+foreach ($members as $member) {
+	if ($guild && $member->account_id == $session->account->account_id) {
+		$isMine = true;
+	}
 }
 
 if (!$isMine && !$auth->allowedToViewGuild) {
