@@ -339,7 +339,6 @@ class Flux_LoginServer extends Flux_BaseServer {
 		// Return values:
 		// -1 = From or to account, one or the other does not exist. (likely the latter.)
 		// -2 = Sender has an insufficient balance.
-		// -3 = 
 		// true = Successful transfer
 		// false = Error
 		//
