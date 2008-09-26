@@ -3,6 +3,8 @@ if (!defined('FLUX_ROOT')) exit;
 
 $this->loginRequired();
 
+$title = 'Transfer Donation Credits';
+
 if (count($_POST)) {
 	if ($session->account->balance) {
 		$credits  = (int)$params->get('credits'); 
