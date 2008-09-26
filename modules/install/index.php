@@ -24,7 +24,7 @@ if ($session->installerAuth) {
 				throw new Flux_Error($message);
 			}
 			
-			list($user, $host) = explode('@', $res->mysql_user);
+			/*list($user, $host) = explode('@', $res->mysql_user);
 			$myUser = "'$user'@'$host'";
 			$bind   = array($myUser, $loginAthenaGroup->loginDatabase);
 			$sql    = "SELECT PRIVILEGE_TYPE AS priv, TABLE_SCHEMA AS dbname FROM INFORMATION_SCHEMA.SCHEMA_PRIVILEGES ";
@@ -64,7 +64,7 @@ if ($session->installerAuth) {
 					
 					throw new Flux_Error($message);
 				}
-			}
+			}*/
 		}
 		
 		if ($params->get('update_all')) {

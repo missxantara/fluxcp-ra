@@ -103,6 +103,21 @@ class Flux_Installer_Schema {
 			// Execute.
 			$sth->execute();
 			
+			if ($sth->errorCode()) {
+				list ($sqlstate, $errnum, $errmsg) = $sth->errorInfo();
+				
+				// No permissions?
+				if ($errnum == 1045 || $errnum == 1142) {
+					$charMap  = $this->charMapServerName ? $this->charMapServerName : 'None';
+					
+					// Bail-out.
+					$message  = "Encountered a MySQL error related to insufficient permissions. (Login Server: {$this->mainServerName}, Char/Map Server: {$charMap})\n";
+					$message .= "MySQL error: $errmsg\n\n";
+					$message .= "The query trying to be executed was: $sql\n";
+					throw new Flux_Error($message);
+				}
+			}
+			
 			$this->schemaInfo['versions'][$version] = true;
 			$this->determineInstalledVersions();
 			
