@@ -5,6 +5,12 @@ $this->loginRequired();
 
 $title = 'View Account';
 
+require_once 'Flux/TemporaryTable.php';
+
+$tableName  = "{$server->charMapDatabase}.items";
+$fromTables = array("{$server->charMapDatabase}.item_db", "{$server->charMapDatabase}.item_db2");
+$tempTable  = new Flux_TemporaryTable($server->connection, $tableName, $fromTables);
+
 $creditsTable  = Flux::config('FluxTables.CreditsTable');
 $creditColumns = 'credits.balance, credits.last_donation_date, credits.last_donation_amount';
 $isMine        = false;
@@ -119,4 +125,17 @@ foreach ($session->getAthenaServerNames() as $serverName) {
 	$chars = $sth->fetchAll();
 	$characters[$athena->serverName] = $chars;
 }
+
+$col  = "storage.*, items.name_japanese, items.type";
+
+$sql  = "SELECT $col FROM {$server->charMapDatabase}.storage ";
+$sql .= "LEFT JOIN {$server->charMapDatabase}.items ON items.id = storage.nameid ";
+$sql .= "WHERE storage.account_id = ? ";
+$sql .= "ORDER BY storage.nameid ASC, storage.identify DESC, ";
+$sql .= "storage.attribute DESC, storage.refine ASC";
+
+$sth  = $server->connection->getStatement($sql);
+$sth->execute(array($account->account_id));
+
+$items = $sth->fetchAll();
 ?>
