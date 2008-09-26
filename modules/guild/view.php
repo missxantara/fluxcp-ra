@@ -46,4 +46,24 @@ foreach ($members as $member) {
 if (!$isMine && !$auth->allowedToViewGuild) {
 	$this->deny();
 }
+
+$col  = "alliance_id, name";
+
+$sql  = "SELECT $col FROM {$server->charMapDatabase}.guild_alliance ";
+$sql .= "WHERE guild_id = ? AND opposition = 0 ORDER BY alliance_id ASC";
+
+$sth  = $server->connection->getStatement($sql);
+$sth->execute(array($guildID));
+
+$alliances = $sth->fetchAll();
+
+$col  = "alliance_id, name";
+
+$sql  = "SELECT $col FROM {$server->charMapDatabase}.guild_alliance ";
+$sql .= "WHERE guild_id = ? AND opposition = 1 ORDER BY alliance_id ASC";
+
+$sth  = $server->connection->getStatement($sql);
+$sth->execute(array($guildID));
+
+$oppositions = $sth->fetchAll();
 ?>
