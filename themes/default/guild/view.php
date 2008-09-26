@@ -193,6 +193,77 @@
 <?php else: ?>
 	<p>There are no member expulsions for this guild.</p>
 <?php endif ?>
+<h3>Guild Storage Items of “<?php echo htmlspecialchars($guild->name) ?>”</h3>
+<?php if ($items): ?>
+	<p><?php echo htmlspecialchars($guild->name) ?> has <?php echo count($items) ?> guild storage item(s).</p>
+	<table class="vertical-table">
+		<tr>
+			<th>Item ID</th>
+			<th>Name</th>
+			<th>Amount</th>
+			<th>Identified</th>
+			<th>Refine Level</th>
+			<th>Broken</th>
+			<th>Card0</th>
+			<th>Card1</th>
+			<th>Card2</th>
+			<th>Card3</th>
+			</th>
+		</tr>
+		<?php foreach ($items AS $item): ?>
+		<tr>
+			<td align="right"><?php echo $this->linkToItem($item->nameid, $item->nameid) ?></td>
+			<td><?php echo htmlspecialchars($item->name_japanese) ?></td>
+			<td><?php echo number_format($item->amount) ?></td>
+			<td>
+				<?php if ($item->identify): ?>
+					<span class="identified yes">Yes</span>
+				<?php else: ?>
+					<span class="identified no">No</span>
+				<?php endif ?>
+			</td>
+			<td><?php echo htmlspecialchars($item->refine) ?></td>
+			<td>
+				<?php if ($item->attribute): ?>
+					<span class="broken yes">Yes</span>
+				<?php else: ?>
+					<span class="broken no">No</span>
+				<?php endif ?>
+			</td>
+			<td>
+				<?php if($item->card0 && ($item->type == 4 || $item->type == 5)): ?>
+					<?php echo $this->linkToItem($item->card0, $item->card0) ?>
+				<?php else: ?>
+					<span class="not-applicable">None</span>
+				<?php endif ?>
+			</td>
+			<td>
+				<?php if($item->card1 && ($item->type == 4 || $item->type == 5)): ?>
+					<?php echo $this->linkToItem($item->card1, $item->card1) ?>
+				<?php else: ?>
+					<span class="not-applicable">None</span>
+				<?php endif ?>
+			</td>
+			<td>
+				<?php if($item->card2 && ($item->type == 4 || $item->type == 5)): ?>
+					<?php echo $this->linkToItem($item->card2, $item->card2) ?>
+				<?php else: ?>
+					<span class="not-applicable">None</span>
+				<?php endif ?>
+			</td>
+			<td>
+				<?php if($item->card3 && ($item->type == 4 || $item->type == 5)): ?>
+					<?php echo $this->linkToItem($item->card3, $item->card3) ?>
+				<?php else: ?>
+					<span class="not-applicable">None</span>
+				<?php endif ?>
+			</td>
+		</tr>
+		<?php endforeach ?>
+	</table>
+<?php else: ?>
+	<p>There are no guild storage items for this guild.</p>
+<?php endif ?>
 <?php else: ?>
 <p>No such guild was found. <a href="javascript:history.go(-1)">Go back</a>.</p>
 <?php endif ?>

@@ -5,6 +5,12 @@ $this->loginRequired();
 
 $title = 'Viewing Guild';
 
+require_once 'Flux/TemporaryTable.php';
+
+$tableName  = "{$server->charMapDatabase}.items";
+$fromTables = array("{$server->charMapDatabase}.item_db", "{$server->charMapDatabase}.item_db2");
+$tempTable  = new Flux_TemporaryTable($server->connection, $tableName, $fromTables);
+
 $guildID = $params->get('id');
 
 $col  = "guild.*, roster.name AS char_names";
@@ -76,4 +82,17 @@ $sth  = $server->connection->getStatement($sql);
 $sth->execute(array($guildID));
 
 $expulsions = $sth->fetchAll();
+
+$col  = "guild_storage.*, items.name_japanese, items.type";
+
+$sql  = "SELECT $col FROM {$server->charMapDatabase}.guild_storage ";
+$sql .= "LEFT JOIN {$server->charMapDatabase}.items ON items.id = guild_storage.nameid ";
+$sql .= "WHERE guild_storage.guild_id = ? ";
+$sql .= "ORDER BY guild_storage.nameid ASC, guild_storage.identify DESC, ";
+$sql .= "guild_storage.attribute ASC, guild_storage.refine ASC";
+
+$sth  = $server->connection->getStatement($sql);
+$sth->execute(array($guildID));
+
+$items = $sth->fetchAll();
 ?>
