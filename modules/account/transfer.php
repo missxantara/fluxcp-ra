@@ -17,28 +17,20 @@ if (count($_POST)) {
 			$errorMessage = 'You must input a character name whom will receive the credits.';
 		}
 		else {
-			$sql = "SELECT account_id FROM {$server->charMapDatabase}.`char` WHERE `char`.name = ? LIMIT 1";
-			$sth = $server->connection->getStatement($sql);
+			$res = $server->transferCredits($session->account->account_id, $charName, $credits);
 			
-			$sth->execute(array($charName));
-			$row = $sth->fetch();
-			
-			if (!$row->account_id) {
-				$errorMessage = "No such character '$charName', make sure you typed it correctly.";
+			if ($res === -3) {
+				$errorMessage = "Character '$charName' does not exist. Please make sure you typed it correctly.";
+			}
+			elseif ($res === -2) {
+				$errorMessage = 'You do not have a sufficient balance to make the transfer.';
+			}
+			elseif ($res !== true) {
+				$errorMessage = 'Unexpected error occurred.';
 			}
 			else {
-				$res = $session->loginServer->transferCredits($session->account->account_id, $row->account_id, $credits);
-				
-				if ($res === -2) {
-					$errorMessage = 'You do not have a sufficient balance to make the transfer.';
-				}
-				elseif ($res !== true) {
-					$errorMessage = 'Unexpected error occurred.';
-				}
-				else {
-					$session->setMessageData('Credits have been transferred!');
-					$this->redirect();
-				}
+				$session->setMessageData('Credits have been transferred!');
+				$this->redirect();
 			}
 		}
 	}

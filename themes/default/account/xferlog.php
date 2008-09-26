@@ -1,44 +1,51 @@
 <?php if (!defined('FLUX_ROOT')) exit; ?>
 <h2>Credit Transfer History</h2>
-<?php if ($transfers): ?>
+<h3>Transfers: Received</h3>
+<?php if ($incomingXfers): ?>
 <table class="vertical-table">
 	<tr>
-		<th>Transfer</th>
 		<th>Credits</th>
-		<?php if ($auth->allowedToViewAccount): ?><th>To/From</th><?php endif ?>
+		<th>From E-mail</th>
 		<th>Transfer Date</th>
 	</tr>
-	<?php foreach ($transfers as $xfer): ?>
+	<?php foreach ($incomingXfers as $xfer): ?>
 	<tr>
-		<td align="right">
-			<?php if ($xfer->from_account_id == $session->account->account_id): ?>
-				Sent
-			<?php else: ?>
-				Received
-			<?php endif ?>
-		</td>
-		<td><?php echo number_format($xfer->amount) ?></td>
-		<?php if ($auth->allowedToViewAccount): ?>
-		<td>
-			<?php if ($xfer->from_account_id != $session->account->account_id): ?>
-				<?php if ($xfer->from_userid): ?>
-					<?php echo $this->linkToAccount($xfer->from_account_id, $xfer->from_userid) ?>
-				<?php else: ?>
-					<span class="not-applicable"><?php echo htmlspecialchars($xfer->from_account_id) ?></span>
-				<?php endif ?>
-			<?php else: ?>
-				<?php if ($xfer->target_userid): ?>
-					<?php echo $this->linkToAccount($xfer->target_account_id, $xfer->target_userid) ?>
-				<?php else: ?>
-					<span class="not-applicable"><?php echo htmlspecialchars($xfer->target_account_id) ?></span>
-				<?php endif ?>
-			<?php endif ?>
-		</td>
-		<?php endif ?>
+		<td align="right"><?php echo number_format($xfer->amount) ?></td>
+		<td><?php echo htmlspecialchars($xfer->from_email) ?></td>
 		<td><?php echo $this->formatDateTime($xfer->transfer_date) ?></td>
 	</tr>
 	<?php endforeach ?>
 </table>
 <?php else: ?>
-<p>You have not transferred nor have you received any credits.</p>
+<p>You have not received any credit transfers.</p>
+<?php endif ?>
+
+<h3>Transfers: Sent</h3>
+<?php if ($outgoingXfers): ?>
+<table class="vertical-table">
+	<tr>
+		<th>Credits</th>
+		<th>To Character</th>
+		<th>Transfer Date</th>
+	</tr>
+	<?php foreach ($outgoingXfers as $xfer): ?>
+	<tr>
+		<td align="right"><?php echo number_format($xfer->amount) ?></td>
+		<td>
+			<?php if ($xfer->target_char_name): ?>
+				<?php if ($auth->allowedToViewCharacter): ?>
+					<?php echo $this->linkToCharacter($xfer->target_char_id, $xfer->target_char_name) ?>
+				<?php else: ?>
+					<?php echo htmlspecialchars($xfer->target_char_name) ?>
+				<?php endif ?>
+			<?php else: ?>
+				<span class="not-applicable"><?php echo htmlspecialchars($xfer->target_char_id) ?></span>
+			<?php endif ?>
+		</td>
+		<td><?php echo $this->formatDateTime($xfer->transfer_date) ?></td>
+	</tr>
+	<?php endforeach ?>
+</table>
+<?php else: ?>
+<p>You have not sent any credit transfers.</p>
 <?php endif ?>
