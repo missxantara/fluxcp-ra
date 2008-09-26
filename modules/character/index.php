@@ -13,7 +13,7 @@ $sqlpartial .= "LEFT OUTER JOIN {$server->charMapDatabase}.`char` AS partner ON 
 $sqlpartial .= "LEFT OUTER JOIN {$server->charMapDatabase}.`char` AS mother ON mother.char_id = ch.mother ";
 $sqlpartial .= "LEFT OUTER JOIN {$server->charMapDatabase}.`char` AS father ON father.char_id = ch.father ";
 $sqlpartial .= "LEFT OUTER JOIN {$server->charMapDatabase}.`char` AS child ON child.char_id = ch.child ";
-$sqlpartial .= "WHERE 1=1";
+$sqlpartial .= "WHERE 1=1 ";
 
 $charID = $params->get('char_id');
 if ($charID) {
@@ -146,7 +146,7 @@ else {
 }
 
 $sql  = "SELECT COUNT(ch.char_id) AS total FROM {$server->charMapDatabase}.`char` AS ch $sqlpartial";
-$sth  = $server->connection->getStatement($sql);
+$sth  = $server->connection->getStatement($sql); echo $sql;
 
 $sth->execute($bind);
 $paginator = $this->getPaginator($sth->fetch()->total);
