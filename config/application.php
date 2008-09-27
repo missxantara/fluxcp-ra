@@ -100,11 +100,12 @@ return array(
 	// particular module. The format it simple.
 	'SubMenuItems' => array(
 		'account' => array(
-			'index'    => 'List Accounts',
-			'view'     => 'View Account',
-			'transfer' => 'Transfer Credits',
-			'xferlog'  => 'Credit Transfer History',
-			'cart'     => 'Go to Shopping Cart'
+			'index'      => 'List Accounts',
+			'view'       => 'View Account',
+			'changepass' => 'Change Password',
+			'transfer'   => 'Transfer Credits',
+			'xferlog'    => 'Credit Transfer History',
+			'cart'       => 'Go to Shopping Cart'
 		),
 		'guild' => array(
 			'index'  => 'List Guilds',
@@ -143,8 +144,8 @@ return array(
 		)
 	),
 	
-	'AllowMD5PasswordSearch'       => false,
-	'ReallyAllowMD5PasswordSearch' => false, // Are you POSITIVELY sure?
+	'AllowMD5PasswordSearch'       => true,
+	'ReallyAllowMD5PasswordSearch' => true, // Are you POSITIVELY sure?
 	
 	// Specifies which modules and actions should be ignored by Tidy
 	// (enabled/disabled by the OutputCleanHTML option).
