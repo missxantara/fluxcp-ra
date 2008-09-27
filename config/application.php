@@ -145,7 +145,7 @@ return array(
 	),
 	
 	'AllowMD5PasswordSearch'       => false,
-	'ReallyAllowMD5PasswordSearch' => falses, // Are you POSITIVELY sure?
+	'ReallyAllowMD5PasswordSearch' => false, // Are you POSITIVELY sure?
 	
 	// Specifies which modules and actions should be ignored by Tidy
 	// (enabled/disabled by the OutputCleanHTML option).
