@@ -52,6 +52,7 @@ return array(
 	'AutoRemoveTempBans'   => true,                     // Automatically remove expired temporary bans on certain pages.
 	'ItemShopMaxCost'      => 99,                       // Max price an item can be sold for.
 	'ItemShopMaxQuantity'  => 99,                       // Max quantity the item may be sold at once for.
+	'HideFromWhosOnline'   => 10,                       // Levels greater than or equal to this will be hidden from the "Who's Online" page.
 	'BanPaymentStatuses'   => array(                    // Payment statuses that will automatically ban the account owner if received.
 		'Cancelled_Reversal',                           // -- 'Cancelled_Reversal'
 		'Reversed',                                     // -- 'Reversed'
@@ -81,6 +82,7 @@ return array(
 		'Purchase'      => array('module' => 'purchase'),
 		'Donate'        => array('module' => 'donate'),
 		'Server Status' => array('module' => 'server', 'action' => 'status'),
+		"Who's Online"  => array('module' => 'character', 'action' => 'online'),
 		'Log Data'      => array('module' => 'logdata'),
 		//'IP Ban List'   => array('module' => 'ipban'),
 		'Accounts'      => array('module' => 'account'),

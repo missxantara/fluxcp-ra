@@ -43,7 +43,8 @@ return array(
 		),
 		'character' => array(
 			'index'    => AccountLevel::LOWGM,
-			'view'     => AccountLevel::NORMAL
+			'view'     => AccountLevel::NORMAL,
+			'online'   => AccountLevel::NORMAL
 		),
 		'guild'     => array(
 			'emblem'   => AccountLevel::ANYONE,
