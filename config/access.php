@@ -115,8 +115,8 @@ return array(
 	'features' => array(
 		'ViewAccount'        => AccountLevel::HIGHGM,
 		'ViewAccountBanLog'  => AccountLevel::HIGHGM,
-		'DeleteAccount'      => AccountLevel::HIGHGM,
-		'DeleteCharacter'    => AccountLevel::HIGHGM,
+		'DeleteAccount'      => AccountLevel::ADMIN,
+		'DeleteCharacter'    => AccountLevel::ADMIN,
 		'SeeAccountPassword' => AccountLevel::ADMIN,
 		'TempBanAccount'     => AccountLevel::LOWGM,
 		'TempUnbanAccount'   => AccountLevel::LOWGM,
