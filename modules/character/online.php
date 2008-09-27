@@ -10,41 +10,43 @@ $sqlpartial .= "LEFT JOIN {$server->charMapDatabase}.guild ON guild.guild_id = c
 $sqlpartial .= "WHERE ch.online > 0 ";
 $bind        = array();
 
-$charName  = $params->get('char_name');
-$charClass = $params->get('char_class');
-$guildName = $params->get('guild_name');
+if ($auth->allowedToSearchWhosOnline) {
+	$charName  = $params->get('char_name');
+	$charClass = $params->get('char_class');
+	$guildName = $params->get('guild_name');
 
-if ($charName) {
-	$sqlpartial .= "AND (ch.name LIKE ? OR ch.name = ?) ";
-	$bind[]      = "%$charName%";
-	$bind[]      = $charName;
-}
-
-if ($guildName) {
-	$sqlpartial .= "AND (guild.name LIKE ? OR guild.name = ?) ";
-	$bind[]      = "%$guildName%";
-	$bind[]      = $guildName;
-}
-
-if ($charClass) {
-	$className = preg_quote($charClass);
-	$classIDs  = preg_grep("/.*?$className.*?/i", Flux::config('JobClasses')->toArray());
-	
-	if (count($classIDs)) {
-		$classIDs    = array_keys($classIDs);
-		$sqlpartial .= "AND (";
-		$partial     = '';
-		
-		foreach ($classIDs as $id) {
-			$partial .= "ch.class = ? OR ";
-			$bind[]   = $id;
-		}
-		
-		$partial     = preg_replace('/\s*OR\s*$/', '', $partial);
-		$sqlpartial .= "$partial) ";
+	if ($charName) {
+		$sqlpartial .= "AND (ch.name LIKE ? OR ch.name = ?) ";
+		$bind[]      = "%$charName%";
+		$bind[]      = $charName;
 	}
-	else {
-		$sqlpartial .= 'AND ch.class IS NULL ';
+
+	if ($guildName) {
+		$sqlpartial .= "AND (guild.name LIKE ? OR guild.name = ?) ";
+		$bind[]      = "%$guildName%";
+		$bind[]      = $guildName;
+	}
+
+	if ($charClass) {
+		$className = preg_quote($charClass);
+		$classIDs  = preg_grep("/.*?$className.*?/i", Flux::config('JobClasses')->toArray());
+
+		if (count($classIDs)) {
+			$classIDs    = array_keys($classIDs);
+			$sqlpartial .= "AND (";
+			$partial     = '';
+
+			foreach ($classIDs as $id) {
+				$partial .= "ch.class = ? OR ";
+				$bind[]   = $id;
+			}
+
+			$partial     = preg_replace('/\s*OR\s*$/', '', $partial);
+			$sqlpartial .= "$partial) ";
+		}
+		else {
+			$sqlpartial .= 'AND ch.class IS NULL ';
+		}
 	}
 }
 
