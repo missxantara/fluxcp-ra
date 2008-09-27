@@ -748,23 +748,23 @@ textarea {
 	font-weight: bold;
 }
 
-.change-password-form {
+.generic-form {
 	padding: 10px;
 	background-color: #fff;
 	border: 1px solid #ddd;
 	width: auto;
 }
 
-.change-password-table label {
+.generic-form-table label {
 	display: block;
 	padding: 6px;
 }
 
-.change-password-table th {
+.generic-form-table th {
 	text-align: right;
 }
 
-.change-password-table td p {
+.generic-form-table td p {
 	margin: 2px 10px;
 	color: #000;
 }
