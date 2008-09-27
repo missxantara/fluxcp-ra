@@ -37,7 +37,8 @@ return array(
 			'login'    => AccountLevel::UNAUTH,
 			'logout'   => AccountLevel::NORMAL,
 			'transfer' => AccountLevel::NORMAL,
-			'xferlog'  => AccountLevel::NORMAL
+			'xferlog'  => AccountLevel::NORMAL,
+			'cart'     => AccountLevel::ANYONE
 		),
 		'character' => array(
 			'index'    => AccountLevel::LOWGM,

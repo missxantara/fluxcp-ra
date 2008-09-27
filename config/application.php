@@ -103,7 +103,8 @@ return array(
 			'index'    => 'List Accounts',
 			'view'     => 'View Account',
 			'transfer' => 'Transfer Credits',
-			'xferlog'  => 'Credit Transfer History'
+			'xferlog'  => 'Credit Transfer History',
+			'cart'     => 'Go to Shopping Cart'
 		),
 		'guild' => array(
 			'index'  => 'List Guilds',
