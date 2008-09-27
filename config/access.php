@@ -128,7 +128,7 @@ return array(
 		'EditShopItem'       => AccountLevel::ADMIN,
 		'DeleteShopItem'     => AccountLevel::ADMIN,
 		'ViewGuild'          => AccountLevel::ADMIN,
-		'SearchWhosOnline'   => 200,
+		'SearchWhosOnline'   => AccountLevel::NORMAL,
 		
 		'BanHigherPower'     => 5000
 	)
