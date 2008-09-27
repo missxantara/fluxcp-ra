@@ -33,7 +33,13 @@
 	</tr>
 	<?php foreach ($chars as $char): ?>
 	<tr>
-		<td align="right"><?php echo htmlspecialchars($char->char_name) ?></td>
+		<td align="right">
+			<?php if ($auth->allowedToViewCharacter): ?>
+				<?php echo $this->linkToCharacter($char->char_id, $char->char_name) ?>
+			<?php else: ?>
+				<?php echo htmlspecialchars($char->char_name) ?>
+			<?php endif ?>
+		</td>
 		<td><?php echo $this->jobClassText($char->char_class) ?></td>
 		<td><?php echo number_format($char->base_level) ?></td>
 		<td><?php echo number_format($char->job_level) ?></td>
