@@ -4,6 +4,7 @@
 	<p class="red"><?php echo htmlspecialchars($errorMessage) ?></p>
 <?php endif ?>
 <?php if ($session->account->balance): ?>
+<h3>Credits will be transferred to character on the <?php echo htmlspecialchars($server->serverName) ?> server.</h3>
 <p>You currently have <span class="remaining-balance"><?php echo number_format($session->account->balance) ?></span> credit(s).</p>
 <p>
 	Enter the amount you would like to transfer and character name belonging to the account you would like
