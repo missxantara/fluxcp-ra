@@ -563,10 +563,12 @@ class Flux_Template {
 		$year  = ($year =$this->params->get("{$name}_year"))  ? $year  : date('Y', $ts);
 		$month = ($month=$this->params->get("{$name}_month")) ? $month : date('m', $ts);
 		$day   = ($day  =$this->params->get("{$name}_day"))   ? $day   : date('d', $ts);
+		$fw    = $year + (int)Flux::config('ForwardYears');
+		$bw    = $year - (int)Flux::config('BackwardYears');
 		
 		// Get years.
 		$years = sprintf('<select name="%s_year">', $name);
-		for ($i = 2038; $i >= 1970; --$i) {
+		for ($i = $fw; $i >= $bw; --$i) {
 			if ($year == $i) {
 				$years .= sprintf('<option value="%04d" selected="selected">%04d</option>', $i, $i);
 			}
