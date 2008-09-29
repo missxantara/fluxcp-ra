@@ -83,10 +83,8 @@ if ($account) {
 			$sth->execute($bind);
 
 			if ($auth->allowedToEditAccountBalance) {
-				$creditsTable = Flux::config('FluxTables.CreditsTable');
-				$sql = "UPDATE {$server->loginDatabase}.$creditsTable SET balance = ? WHERE account_id = ?";
-				$sth = $server->connection->getStatement($sql);
-				$sth->execute(array($balance, $account->account_id));
+				$deposit = $balance - $account->balance;
+				$session->loginServer->depositCredits($account->account_id, $deposit);
 			}
 			
 			$session->setMessageData('Account has been modified.');
