@@ -1175,7 +1175,8 @@ class Flux_Template {
 		}
 		else {
 			reset($files);
-			return current($files);
+			$imageFile = current($files);
+			return preg_replace('&/{2,}&', '/', "{$this->basePath}/$imageFile");
 		}
 	}
 }
