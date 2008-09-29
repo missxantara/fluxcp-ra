@@ -20,6 +20,11 @@ tr, td, th {
 	vertical-align: top;
 }
 
+h2 {
+	color: #444;
+	letter-spacing: -1px;
+}
+
 h3 {
 	/*font-style: italic;*/
 	font-weight: normal;
@@ -776,7 +781,7 @@ textarea {
 	width: auto;
 }
 
-.generic-form-table label {
+.generic-form-table th label {
 	display: block;
 	padding: 6px;
 }
@@ -788,6 +793,11 @@ textarea {
 .generic-form-table td p {
 	margin: 2px 10px;
 	color: #000;
+}
+
+.security-code {
+	margin: 5px 0;
+	text-align: left;
 }
 
 .action {

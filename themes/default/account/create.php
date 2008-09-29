@@ -4,11 +4,11 @@
 <?php if (isset($errorMessage)): ?>
 <p class="red" style="font-weight: bold"><?php echo htmlspecialchars($errorMessage) ?></p>
 <?php endif ?>
-<form action="<?php echo $this->url ?>" method="post" id="register_form">
+<form action="<?php echo $this->url ?>" method="post" class="generic-form">
 	<?php if (count($serverNames) === 1): ?>
 	<input type="hidden" name="server" value="<?php echo current($serverNames) ?>">
 	<?php endif ?>
-	<table cellspacing="0" cellpadding="0">
+	<table class="generic-form-table">
 		<?php if (count($serverNames) > 1): ?>
 		<tr>
 			<th><label for="register_server">Choose a Server</label></th>
@@ -43,11 +43,13 @@
 		</tr>
 		
 		<tr>
-			<th><label for="register_gender_m">Gender</label></th>
+			<th><label>Gender</label></th>
 			<td>
-				<label><input type="radio" name="gender" id="register_gender_m" value="M"<?php if ($params->get('gender') === 'M') echo ' checked="checked"' ?> /> Male</label>
-				<label><input type="radio" name="gender" id="register_gender_f" value="F"<?php if ($params->get('gender') === 'F') echo ' checked="checked"' ?> /> Female</label>
-				<strong title="The gender you choose here will affect your in-game character's gender!">?</strong>
+				<p>
+					<label><input type="radio" name="gender" id="register_gender_m" value="M"<?php if ($params->get('gender') === 'M') echo ' checked="checked"' ?> /> Male</label>
+					<label><input type="radio" name="gender" id="register_gender_f" value="F"<?php if ($params->get('gender') === 'F') echo ' checked="checked"' ?> /> Female</label>
+					<strong title="The gender you choose here will affect your in-game character's gender!">?</strong>
+				</p>
 			</td>
 		</tr>
 		
@@ -55,17 +57,27 @@
 		<tr>
 			<th><label for="register_security_code">Security Code</label></th>
 			<td>
-				<div style="margin-bottom: 2px"><img src="<?php echo $this->url('captcha') ?>" /></div>
+				<div class="security-code">
+					<img src="<?php echo $this->url('captcha') ?>" />
+				</div>
 				<input type="text" name="security_code" id="register_security_code" />
 			</td>
 		</tr>
 		<?php endif ?>
 		
 		<tr>
-			<td colspan="2" align="center"><button type="submit" class="submit_button">
-				I accept the ToS.<br />
-				<strong>Create my account</strong>.
-			</button></td>
+			<td></td>
+			<td>
+				<div style="margin-bottom: 5px">
+					By clicking "Create My Account",<br />
+					you agree to be bound by our <a href="<?php echo $this->url('service', 'tos') ?>">Terms of Service</a> indefinitely.
+				</div>
+				<div>
+					<button type="submit">
+						<p><strong>Create My Account</strong></p>
+					</button>
+				</div>
+			</td>
 		</tr>
 	</table>
 </form>
