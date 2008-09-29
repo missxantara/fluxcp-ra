@@ -4,6 +4,9 @@
 <p class="red"><?php echo htmlspecialchars($errorMessage) ?></p>
 <?php endif ?>
 <?php if ($account): ?>
+<p class="action">
+	<a href="<?php echo $this->url('account', 'edit', array('id' => $account->account_id)) ?>">Modify Account</a>
+</p>
 <table class="vertical-table">
 	<tr>
 		<th>Username</th>

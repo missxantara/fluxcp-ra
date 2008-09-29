@@ -40,6 +40,7 @@ return array(
 			'xferlog'  => AccountLevel::NORMAL,
 			'cart'     => AccountLevel::NORMAL,
 			'changepass' => AccountLevel::NORMAL,
+			'edit'       => AccountLevel::ADMIN
 		),
 		'character' => array(
 			'index'    => AccountLevel::LOWGM,
@@ -129,7 +130,10 @@ return array(
 		'DeleteShopItem'     => AccountLevel::ADMIN,
 		'ViewGuild'          => AccountLevel::ADMIN,
 		'SearchWhosOnline'   => AccountLevel::NORMAL,
+		'EditAccountLevel'   => AccountLevel::ADMIN,
+		'EditAccountBalance' => AccountLevel::ADMIN,
 		
+		'EditHigherPower'    => 5000,
 		'BanHigherPower'     => 5000
 	)
 );

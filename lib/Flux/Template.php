@@ -559,7 +559,7 @@ class Flux_Template {
 	 */
 	public function dateField($name, $value = null)
 	{
-		$ts    = $value ? strtotime($value) : time();
+		$ts    = $value && !preg_match('/^0000-00-00(?: 00:00:00)?$/', $value) ? strtotime($value) : time();
 		$year  = ($year =$this->params->get("{$name}_year"))  ? $year  : date('Y', $ts);
 		$month = ($month=$this->params->get("{$name}_month")) ? $month : date('m', $ts);
 		$day   = ($day  =$this->params->get("{$name}_day"))   ? $day   : date('d', $ts);
