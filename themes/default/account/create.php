@@ -70,7 +70,7 @@
 			<td>
 				<div style="margin-bottom: 5px">
 					By clicking "Create My Account",<br />
-					you agree to be bound by our <a href="<?php echo $this->url('service', 'tos') ?>">Terms of Service</a> indefinitely.
+					<strong>you agree to be bound</strong> by our <a href="<?php echo $this->url('service', 'tos') ?>">Terms of Service</a>.
 				</div>
 				<div>
 					<button type="submit">
