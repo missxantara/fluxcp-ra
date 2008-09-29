@@ -48,13 +48,15 @@ if ($item && count($_POST)) {
 	}
 	else {
 		if ($id=$shop->add($itemID, $cost, $quantity, $info)) {
+			$message = 'Item has been successfully added to the shop';
 			if ($image && $image->get('size') && !$shop->uploadShopItemImage($id, $image)) {
-				$errorMessage = 'Failed to upload image.';
+				$message .= ', but the image failed to upload. You can re-attempt by modifying.';
 			}
 			else {
-				$session->setMessageData('Item has been successfully added to the shop.');
-				$this->redirect($this->url('purchase'));	
+				$message .= '.';
 			}
+			$session->setMessageData($message);
+			$this->redirect($this->url('purchase'));	
 		}
 		else {
 			$errorMessage = 'Failed to add the item to the shop.';
