@@ -95,7 +95,7 @@ try {
 	
 	// Installer library.
 	$installer = Flux_Installer::getInstance();
-	if ($installer->updateNeeded()) {
+	if ($hasUpdates=$installer->updateNeeded()) {
 		Flux::config('ThemeName', 'installer');
 	}
 	
@@ -123,7 +123,7 @@ try {
 	}
 	
 	// Initialize session data.
-	Flux::$sessionData = new Flux_SessionData($_SESSION[$sessionKey]);
+	Flux::$sessionData = new Flux_SessionData($_SESSION[$sessionKey], $hasUpdates);
 	
 	// Initialize authorization component.
 	$accessConfig = new Flux_Config(include(FLUX_CONFIG_DIR.'/access.php'));

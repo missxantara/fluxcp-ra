@@ -54,10 +54,15 @@ class Flux_SessionData {
 	 * @param array $sessionData
 	 * @access public
 	 */
-	public function __construct(array &$sessionData)
+	public function __construct(array &$sessionData, $logout = false)
 	{
 		$this->sessionData = &$sessionData;
-		$this->initialize();
+		if ($logout) {
+			$this->logout();
+		}
+		else {
+			$this->initialize();
+		}
 	}
 	
 	/**
