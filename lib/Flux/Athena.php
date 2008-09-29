@@ -275,5 +275,90 @@ class Flux_Athena {
 		$this->loginAthenaGroup = $loginAthenaGroup;
 		return $loginAthenaGroup;
 	}
+	
+	/**
+	 *
+	 */
+	public function charExists($charID)
+	{
+		$sql  = "SELECT char_id FROM {$this->charMapDatabase}.`char` WHERE ";
+		$sql .= "`char`.char_id = ? LIMIT 1";
+		$sth  = $this->connection->getStatement($sql);
+		
+		if ($sth->execute(array($charID)) && ($char=$sth->fetch()) && $char->char_id) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+	/**
+	 *
+	 */
+	public function charBelongsToAccount($charID, $accountID)
+	{
+		$sql  = "SELECT char_id FROM {$this->charMapDatabase}.`char` WHERE ";
+		$sql .= "`char`.char_id = ? AND `char`.account_id = ? LIMIT 1";
+		$sth  = $this->connection->getStatement($sql);
+		
+		if ($sth->execute(array($charID, $accountID)) && ($char=$sth->fetch()) && $char->char_id) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+	
+	/**
+	 *
+	 */
+	public function charIsOnline($charID)
+	{
+		$sql  = "SELECT char_id FROM {$this->charMapDatabase}.`char` WHERE `char`.online > 0 ";
+		$sql .= "AND `char`.char_id = ? LIMIT 1";
+		$sth  = $this->connection->getStatement($sql);
+		
+		if ($sth->execute(array($charID)) && ($char=$sth->fetch()) && $char->char_id) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+	
+	/**
+	 *
+	 */
+	public function accountHasOnlineChars($accountID)
+	{
+		$sql  = "SELECT char_id FROM {$this->charMapDatabase}.`char` WHERE `char`.online > 0 ";
+		$sql .= "AND `char`.account_id = ? ORDER BY `char`.online DESC LIMIT 1";
+		$sth  = $this->connection->getStatement($sql);
+		
+		if ($sth->execute(array($accountID)) && ($char=$sth->fetch()) && $char->char_id) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+	
+	/**
+	 *
+	 */
+	public function getCharacter($charID)
+	{
+		$sql  = "SELECT `char`.* FROM {$this->charMapDatabase}.`char` WHERE ";
+		$sql .= "`char`.char_id = ? LIMIT 1";
+		$sth  = $this->connection->getStatement($sql);
+		
+		if ($sth->execute(array($charID)) && ($char=$sth->fetch())) {
+			return $char;
+		}
+		else {
+			return false;
+		}
+	}
 }
 ?>
