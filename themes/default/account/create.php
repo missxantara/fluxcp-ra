@@ -9,6 +9,7 @@
 	<input type="hidden" name="server" value="<?php echo current($serverNames) ?>">
 	<?php endif ?>
 	<table cellspacing="0" cellpadding="0">
+		<?php if (count($serverNames) > 1): ?>
 		<tr>
 			<th><label for="register_server">Choose a Server</label></th>
 			<td>
@@ -19,6 +20,7 @@
 				</select>
 			</td>
 		</tr>
+		<?php endif ?>
 		
 		<tr>
 			<th><label for="register_username">Your Username</label></th>

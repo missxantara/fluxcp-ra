@@ -18,6 +18,7 @@
 			<th valign="middle"><label for="login_password">Password</label></th>
 			<td><input type="password" name="password" id="login_password" /></td>
 		</tr>
+		<?php if (count($serverNames) > 1): ?>
 		<tr>
 			<th valign="middle"><label for="login_server">Log into</label></th>
 			<td>
@@ -28,6 +29,7 @@
 				</select>
 			</td>
 		</tr>
+		<?php endif ?>
 		<tr style="display: none">
 			<!--<td></td>-->
 			<td align="right" colspan="2"><label><input type="checkbox"> Remember who I am</label></td>
