@@ -56,7 +56,7 @@ if ($account) {
 		elseif ($account->balance != $balance && !$auth->allowedToEditAccountBalance) {
 			$errorMessage = 'You cannot modify account balances.';
 		}
-		elseif ($lastLogin && !preg_match('/^0000-00-00 00:00:00$/', $lastLogin)) {
+		elseif ($lastLogin && !preg_match('/^\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}$/', $lastLogin)) {
 			$errorMessage = 'Invalid last login date.';
 		}
 		else {
