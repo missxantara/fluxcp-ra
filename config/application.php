@@ -55,6 +55,7 @@ return array(
 	'ItemShopMaxCost'      => 99,                       // Max price an item can be sold for.
 	'ItemShopMaxQuantity'  => 99,                       // Max quantity the item may be sold at once for.
 	'HideFromWhosOnline'   => 10,                       // Levels greater than or equal to this will be hidden from the "Who's Online" page.
+	'ChargeGenderChange'   => 0,                        // You can specify this as the number of credits to charge for gender change.  Can be 0 for free change.
 	'BanPaymentStatuses'   => array(                    // Payment statuses that will automatically ban the account owner if received.
 		'Cancelled_Reversal',                           // -- 'Cancelled_Reversal'
 		'Reversed',                                     // -- 'Reversed'
@@ -111,6 +112,7 @@ return array(
 			'index'      => 'List Accounts',
 			'view'       => 'View Account',
 			'changepass' => 'Change Password',
+			'changesex'  => 'Change Gender',
 			'transfer'   => 'Transfer Credits',
 			'xferlog'    => 'Credit Transfer History',
 			'cart'       => 'Go to Shopping Cart'

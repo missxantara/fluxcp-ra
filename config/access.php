@@ -40,7 +40,8 @@ return array(
 			'xferlog'  => AccountLevel::NORMAL,
 			'cart'     => AccountLevel::NORMAL,
 			'changepass' => AccountLevel::NORMAL,
-			'edit'       => AccountLevel::ADMIN
+			'edit'       => AccountLevel::ADMIN,
+			'changesex'  => AccountLevel::NORMAL
 		),
 		'character' => array(
 			'index'    => AccountLevel::LOWGM,
