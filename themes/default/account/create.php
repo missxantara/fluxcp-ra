@@ -73,9 +73,7 @@
 					<strong>you agree to be bound</strong> by our <a href="<?php echo $this->url('service', 'tos') ?>">Terms of Service</a>.
 				</div>
 				<div>
-					<button type="submit">
-						<p><strong>Create My Account</strong></p>
-					</button>
+					<button type="submit"><strong>Create My Account</strong></button>
 				</div>
 			</td>
 		</tr>
