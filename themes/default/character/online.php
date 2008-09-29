@@ -48,7 +48,13 @@
 		<td><?php echo number_format($char->job_level) ?></td>
 		<?php if ($char->guild_name): ?>
 			<td><img src="<?php echo $this->emblem($char->guild_id) ?>" /></td>
-			<td><?php echo htmlspecialchars($char->guild_name) ?></td>
+			<td>
+				<?php if ($auth->allowedToViewGuild): ?>
+					<?php echo $this->linkToGuild($char->guild_id, $char->guild_name) ?>
+				<?php else: ?>
+					<?php echo htmlspecialchars($char->guild_name) ?>
+				<?php endif ?>
+			</td>
 		<?php else: ?>
 			<td colspan="2"><span class="not-applicable">None</span></td>
 		<?php endif ?>
