@@ -7,7 +7,6 @@ return array(
 	'InstallerPassword'    => 'secretpassword',         // Installer/updater password.
 	'SiteTitle'            => 'Flux Control Panel',     // This value is only used if the theme decides to use it.
 	'ThemeName'            => 'default',                // The theme name of the theme you would like to use.  Themes are in FLUX_ROOT/themes.
-	'DataDirectory'        => 'data',                   // Configurable location for where your data directory is located.  `data' is default.
 	'MissingEmblemBMP'     => 'empty.bmp',              //
 	'SessionCookieExpire'  => 48,                       // Duration in hours.
 	'AdminMenuLevel'       => AccountLevel::LOWGM,      // The starting level for which module actions are moved into the admin menu for display.
