@@ -127,6 +127,11 @@ class Flux_Athena {
 	public $loginAthenaGroup;
 	
 	/**
+	 *
+	 */
+	public $maxCharSlots;
+	
+	/**
 	 * @param Flux_Connection $connection
 	 * @param Flux_Config $charMapConfig
 	 * @param Flux_LoginServer $loginServer
@@ -148,6 +153,7 @@ class Flux_Athena {
 		$this->dropRates       = (int)$charMapConfig->getDropRates();
 		$this->mvpDropRates    = (int)$charMapConfig->getMvpDropRates();
 		$this->cardDropRates   = (int)$charMapConfig->getCardDropRates();
+		$this->maxCharSlots    = (int)$charMapConfig->getMaxCharSlots();
 	}
 	
 	/**

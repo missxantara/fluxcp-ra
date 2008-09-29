@@ -43,6 +43,7 @@ return array(
 				'DropRates'     => 25,
 				'MvpDropRates'  => 25,
 				'CardDropRates' => 25,
+				'MaxCharSlots'  => 9,
 				//'Database'      => 'ragnarok', // Defaults to DbConfig.Database
 				'CharServer'    => array(
 					'Address'   => '127.0.0.1',
@@ -61,6 +62,7 @@ return array(
 				'DropRates'     => 25,
 				'MvpDropRates'  => 25,
 				'CardDropRates' => 25,
+				'MaxCharSlots'  => 9,
 				//'Database'      => 'ragnarok', // Defaults to DbConfig.Database
 				'CharServer'    => array(
 					'Address'   => '127.0.0.1',
