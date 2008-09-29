@@ -74,6 +74,7 @@ class Flux_LoginAthenaGroup {
 	public function addAthenaServer(Flux_Athena $athenaServer)
 	{
 		if ($athenaServer->loginServer === $this->loginServer) {
+			$athenaServer->setLoginAthenaGroup($this);
 			$athenaServer->setConnection($this->connection);
 			$this->athenaServers[] = $athenaServer;
 			return $this->athenaServers;

@@ -122,6 +122,11 @@ class Flux_Athena {
 	public $cart;
 	
 	/**
+	 *
+	 */
+	public $loginAthenaGroup;
+	
+	/**
 	 * @param Flux_Connection $connection
 	 * @param Flux_Config $charMapConfig
 	 * @param Flux_LoginServer $loginServer
@@ -254,6 +259,15 @@ class Flux_Athena {
 		else {
 			return false;
 		}
+	}
+	
+	/**
+	 *
+	 */
+	public function setLoginAthenaGroup(Flux_LoginAthenaGroup $loginAthenaGroup)
+	{
+		$this->loginAthenaGroup = $loginAthenaGroup;
+		return $loginAthenaGroup;
 	}
 }
 ?>
