@@ -1,1 +1,0 @@
-ALTER TABLE `cp_itemshop` ADD `create_date` DATETIME NOT NULL;

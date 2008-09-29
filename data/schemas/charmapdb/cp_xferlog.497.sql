@@ -1,4 +1,4 @@
-CREATE TABLE IF NOT EXISTS `cp_xferlog` (
+CREATE TABLE `cp_xferlog` (
   `id` int(10) unsigned NOT NULL auto_increment,
   `from_account_id` int(10) unsigned NOT NULL,
   `target_account_id` int(10) unsigned NOT NULL,
@@ -7,4 +7,4 @@ CREATE TABLE IF NOT EXISTS `cp_xferlog` (
   `for_free` tinyint(1) unsigned NOT NULL default '0',
   `transfer_date` datetime NOT NULL,
   PRIMARY KEY  (`id`)
-) ENGINE=MyISAM COMMENT='Credit transfer log.' ;
+) ENGINE=MyISAM COMMENT='Credit transfer log.';

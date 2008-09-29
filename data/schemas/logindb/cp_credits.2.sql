@@ -1,1 +1,0 @@
-ALTER TABLE `cp_credits` CHANGE `last_donation_amount` `last_donation_amount` FLOAT UNSIGNED NULL  

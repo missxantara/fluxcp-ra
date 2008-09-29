@@ -1,1 +1,0 @@
-ALTER TABLE `cp_txnlog` ADD `parent_txn_id` VARCHAR( 20 ) NULL AFTER `mc_currency` ;

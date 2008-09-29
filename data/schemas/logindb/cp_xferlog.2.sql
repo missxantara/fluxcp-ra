@@ -1,1 +1,0 @@
-ALTER TABLE `cp_xferlog` ADD `for_free` TINYINT( 1 ) UNSIGNED NOT NULL DEFAULT '0' AFTER `amount`;

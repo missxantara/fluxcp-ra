@@ -1,1 +1,0 @@
-ALTER TABLE `cp_txnlog` ADD `hold_until` DATETIME NULL ;

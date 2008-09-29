@@ -1,1 +1,0 @@
-ALTER TABLE `cp_createlog` ADD `delete_date` DATETIME NULL;
