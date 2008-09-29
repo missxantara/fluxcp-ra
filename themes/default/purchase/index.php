@@ -25,23 +25,34 @@ foreach ($items as $i => $item) {
 		<td width="50%">
 			<?php foreach ($evens as $i => $item): ?>
 				<div class="shop-item <?php echo (!($i % 2) ? 'even' : 'odd') ?>">
-					<h4 class="shop-item-name"><?php echo htmlspecialchars($item->shop_item_name) ?></h4>
-					<?php if ($item->shop_item_qty > 1): ?>
-					<p class="shop-item-qty">Quantity: <span class="qty"><?php echo number_format($item->shop_item_qty) ?></span></p>
-					<?php endif ?>
-					<p class="shop-item-cost"><span class="cost"><?php echo number_format($item->shop_item_cost) ?></span> credits</p>
-					<p class="shop-item-info"><?php echo nl2br(htmlspecialchars($item->shop_item_info)) ?></p>
-					<p class="shop-item-action">
-						<a href="<?php echo $this->url('purchase', 'add', array('id' => $item->shop_item_id)) ?>"><strong>Add to Cart</strong></a>
-						/ <?php echo $this->linkToItem($item->shop_item_nameid, 'View Item') ?>
-						<?php if ($auth->allowedToEditShopItem): ?>
-						/ <a href="<?php echo $this->url('itemshop', 'edit', array('id' => $item->shop_item_id)) ?>">Modify</a>
-						<?php endif ?>
-						<?php if ($auth->allowedToDeleteShopItem): ?>
-						/ <a href="<?php echo $this->url('itemshop', 'delete', array('id' => $item->shop_item_id)) ?>"
-							onclick="return confirm('Are you sure you want to remove this item from the item shop?')">Delete</a>
-						<?php endif ?>
-					</p>
+					<table>
+						<tr>
+							<?php if ($image=$this->shopItemImage($item->shop_item_id)): ?>
+							<td>
+								<img src="<?php echo $image ?>?nocache=<?php echo rand() ?>" class="shop-item-image" />
+							</td>
+							<?php endif ?>
+							<td>
+								<h4 class="shop-item-name"><?php echo htmlspecialchars($item->shop_item_name) ?></h4>
+								<?php if ($item->shop_item_qty > 1): ?>
+								<p class="shop-item-qty">Quantity: <span class="qty"><?php echo number_format($item->shop_item_qty) ?></span></p>
+								<?php endif ?>
+								<p class="shop-item-cost"><span class="cost"><?php echo number_format($item->shop_item_cost) ?></span> credits</p>
+								<p class="shop-item-info"><?php echo nl2br(htmlspecialchars($item->shop_item_info)) ?></p>
+								<p class="shop-item-action">
+									<a href="<?php echo $this->url('purchase', 'add', array('id' => $item->shop_item_id)) ?>"><strong>Add to Cart</strong></a>
+									/ <?php echo $this->linkToItem($item->shop_item_nameid, 'View Item') ?>
+									<?php if ($auth->allowedToEditShopItem): ?>
+									/ <a href="<?php echo $this->url('itemshop', 'edit', array('id' => $item->shop_item_id)) ?>">Modify</a>
+									<?php endif ?>
+									<?php if ($auth->allowedToDeleteShopItem): ?>
+									/ <a href="<?php echo $this->url('itemshop', 'delete', array('id' => $item->shop_item_id)) ?>"
+										onclick="return confirm('Are you sure you want to remove this item from the item shop?')">Delete</a>
+									<?php endif ?>
+								</p>
+							</td>
+						</tr>
+					</table>
 				</div>
 			<?php endforeach ?>
 		</td>
@@ -49,23 +60,34 @@ foreach ($items as $i => $item) {
 		<td width="50%">
 			<?php foreach ($odds as $i => $item): ?>
 				<div class="shop-item <?php echo (!($i % 2) ? 'even' : 'odd') ?>">
-					<h4 class="shop-item-name"><?php echo htmlspecialchars($item->shop_item_name) ?></h4>
-					<?php if ($item->shop_item_qty > 1): ?>
-					<p class="shop-item-qty">Quantity: <span class="qty"><?php echo number_format($item->shop_item_qty) ?></span></p>
-					<?php endif ?>
-					<p class="shop-item-cost"><span class="cost"><?php echo number_format($item->shop_item_cost) ?></span> credits</p>
-					<p class="shop-item-info"><?php echo nl2br(htmlspecialchars($item->shop_item_info)) ?></p>
-					<p class="shop-item-action">
-						<a href="<?php echo $this->url('purchase', 'add', array('id' => $item->shop_item_id)) ?>"><strong>Add to Cart</strong></a>
-						/ <?php echo $this->linkToItem($item->shop_item_nameid, 'View Item') ?>
-						<?php if ($auth->allowedToEditShopItem): ?>
-						/ <a href="<?php echo $this->url('itemshop', 'edit', array('id' => $item->shop_item_id)) ?>">Modify</a>
-						<?php endif ?>
-						<?php if ($auth->allowedToDeleteShopItem): ?>
-						/ <a href="<?php echo $this->url('itemshop', 'delete', array('id' => $item->shop_item_id)) ?>"
-							onclick="return confirm('Are you sure you want to remove this item from the item shop?')">Delete</a>
-						<?php endif ?>
-					</p>
+					<table>
+						<tr>
+							<?php if ($image=$this->shopItemImage($item->shop_item_id)): ?>
+							<td>
+								<img src="<?php echo $image ?>?nocache=<?php echo rand() ?>" class="shop-item-image" />
+							</td>
+							<?php endif ?>
+							<td>
+								<h4 class="shop-item-name"><?php echo htmlspecialchars($item->shop_item_name) ?></h4>
+								<?php if ($item->shop_item_qty > 1): ?>
+								<p class="shop-item-qty">Quantity: <span class="qty"><?php echo number_format($item->shop_item_qty) ?></span></p>
+								<?php endif ?>
+								<p class="shop-item-cost"><span class="cost"><?php echo number_format($item->shop_item_cost) ?></span> credits</p>
+								<p class="shop-item-info"><?php echo nl2br(htmlspecialchars($item->shop_item_info)) ?></p>
+								<p class="shop-item-action">
+									<a href="<?php echo $this->url('purchase', 'add', array('id' => $item->shop_item_id)) ?>"><strong>Add to Cart</strong></a>
+									/ <?php echo $this->linkToItem($item->shop_item_nameid, 'View Item') ?>
+									<?php if ($auth->allowedToEditShopItem): ?>
+									/ <a href="<?php echo $this->url('itemshop', 'edit', array('id' => $item->shop_item_id)) ?>">Modify</a>
+									<?php endif ?>
+									<?php if ($auth->allowedToDeleteShopItem): ?>
+									/ <a href="<?php echo $this->url('itemshop', 'delete', array('id' => $item->shop_item_id)) ?>"
+										onclick="return confirm('Are you sure you want to remove this item from the item shop?')">Delete</a>
+									<?php endif ?>
+								</p>
+							</td>
+						</tr>
+					</table>
 				</div>
 			<?php endforeach ?>
 		</td>

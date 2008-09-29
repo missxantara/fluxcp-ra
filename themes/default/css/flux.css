@@ -38,7 +38,7 @@ a {
 	text-decoration: none;
 }
 
-input[type=text], input[type=password], textarea {
+input[type=text], input[type=password], input[type=file], textarea {
 	padding: 4px;
 	font-size: 10pt;
 	color: #444;

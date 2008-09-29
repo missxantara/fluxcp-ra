@@ -71,6 +71,10 @@ return array(
 	                                                    // Without clean URLs: http://<server>/<baseURI>?module=donate&action=update&password=<InstallerPassword>
 	                                                    // NOTE: This option is HIGHLY inefficient, it's recommended to run a cron job instead.
 	
+	'ShopImageExtensions'  => array(                    // These are the image extensions allowed for uploading in the item shop.
+		'png', 'jpg', 'gif', 'bmp', 'jpeg'
+	),
+	
 	// These are the main menu items that should be displayed by themes.
 	// They route to modules and actions.  Whether they are displayed or
 	// not at any given time depends on the user's account level and/or

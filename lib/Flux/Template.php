@@ -272,6 +272,9 @@ class Flux_Template {
 		// variables from the template.
 		extract($data, EXTR_REFS);
 		
+		// Files object.
+		$files = new Flux_Config($_FILES);
+		
 		$preprocessorPath = sprintf('%s/main/preprocess.php', $this->modulePath);
 		if (file_exists($preprocessorPath)) {
 			include $preprocessorPath;
@@ -1144,6 +1147,36 @@ class Flux_Template {
 		include FLUX_DATA_DIR.'/paypal/button.php';
 		$button = ob_get_clean();
 		return $button;
+	}
+	
+	/**
+	 *
+	 */
+	public function shopItemImage($shopItemID, $serverName = null, $athenaServerName = null)
+	{
+		if (Flux::$sessionData->isLoggedIn() && !$serverName) {
+			$serverName = Flux::$sessionData->loginAthenaGroup->serverName;
+		}
+		
+		if (Flux::$sessionData->isLoggedIn() && !$athenaServerName) {
+			$athenaServerName = Flux::$sessionData->getAthenaServer(Flux::$sessionData->athenaServerName);
+		}
+		
+		if (!$serverName || !$athenaServerName) {
+			return false;
+		}
+		
+		$dir   = FLUX_DATA_DIR."/itemshop/$serverName/$athenaServerName";
+		$exts  = implode('|', array_map('preg_quote', Flux::config('ShopImageExtensions')->toArray()));
+		$files = preg_grep("/\.($exts)$/", glob("$dir/$shopItemID.*"));
+		
+		if (empty($files)) {
+			return false;
+		}
+		else {
+			reset($files);
+			return current($files);
+		}
 	}
 }
 ?>

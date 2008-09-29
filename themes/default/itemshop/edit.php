@@ -5,7 +5,7 @@
 <?php if (!empty($errorMessage)): ?>
 <p class="red"><?php echo htmlspecialchars($errorMessage) ?></p>
 <?php endif ?>
-<form action="<?php echo $this->urlWithQs ?>" method="post">
+<form action="<?php echo $this->urlWithQs ?>" method="post" enctype="multipart/form-data">
 <table class="vertical-table">
 	<tr>
 		<th>Shop ID</th>
@@ -31,6 +31,16 @@
 		<th><label for="info">Info</label></th>
 		<td>
 			<textarea name="info" id="info"><?php echo htmlspecialchars($info) ?></textarea>
+		</td>
+	</tr>
+	<tr>
+		<th><label for="image">Image</label></th>
+		<td>
+			<input type="file" name="image" id="image" />
+			<?php if ($image=$this->shopItemImage($item->shop_item_id)): ?>
+			<p>Current image (<?php echo number_format(filesize($image)) ?> bytes):</p>
+			<p><img src="<?php echo $image ?>" /></p>
+			<?php endif ?>
 		</td>
 	</tr>
 	<tr>

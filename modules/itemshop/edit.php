@@ -18,6 +18,7 @@ if ($item) {
 		$cost     = (int)$params->get('cost');
 		$quantity = (int)$params->get('qty');
 		$info     = trim($params->get('info'));
+		$image    = $files->get('image');
 
 		if (!$cost) {
 			$errorMessage = 'You must input a credit cost greater than zero.';
@@ -36,8 +37,13 @@ if ($item) {
 		}
 		else {
 			if ($shop->edit($shopItemID, $cost, $quantity, $info)) {
-				$session->setMessageData('Item has been successfully modified.');
-				$this->redirect($this->url('purchase'));
+				if ($image && $image->get('size') && !$shop->uploadShopItemImage($shopItemID, $image)) {
+					$errorMessage = 'Failed to upload image.';
+				}
+				else {
+					$session->setMessageData('Item has been successfully modified.');
+					$this->redirect($this->url('purchase'));
+				}
 			}
 			else {
 				$errorMessage = 'Failed to modify the item.';

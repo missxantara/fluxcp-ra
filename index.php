@@ -106,6 +106,9 @@ try {
 	elseif (!is_writable($dir=realpath(FLUX_DATA_DIR.'/logs'))) {
 		throw new Flux_PermissionError("The log storage directory '$dir' is not writable.  Remedy with `chmod 0707 $dir`");
 	}
+	elseif (!is_writable($dir=realpath(FLUX_DATA_DIR.'/itemshop'))) {
+		throw new Flux_PermissionError("The item shop image directory '$dir' is not writable.  Remedy with `chmod 0707 $dir`");
+	}
 	elseif (!is_writable($dir=realpath(FLUX_DATA_DIR.'/tmp'))) {
 		throw new Flux_PermissionError("The temporary directory '$dir' is not writable.  Remedy with `chmod 0707 $dir`");
 	}

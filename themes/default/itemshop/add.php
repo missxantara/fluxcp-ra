@@ -5,7 +5,7 @@
 <?php if (!empty($errorMessage)): ?>
 <p class="red"><?php echo htmlspecialchars($errorMessage) ?></p>
 <?php endif ?>
-<form action="<?php echo $this->urlWithQs ?>" method="post">
+<form action="<?php echo $this->urlWithQs ?>" method="post" enctype="multipart/form-data">
 <table class="vertical-table">
 	<tr>
 		<th>Item ID</th>
@@ -29,6 +29,12 @@
 			<textarea name="info" id="info">
 				<?php echo htmlspecialchars($params->get('info')) ?>
 			</textarea>
+		</td>
+	</tr>
+	<tr>
+		<th><label for="image">Image</label></th>
+		<td>
+			<input type="file" name="image" id="image" />
 		</td>
 	</tr>
 	<tr>

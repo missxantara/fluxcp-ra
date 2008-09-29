@@ -29,6 +29,7 @@ if ($item && count($_POST)) {
 	$cost     = (int)$params->get('cost');
 	$quantity = (int)$params->get('qty');
 	$info     = trim($params->get('info'));
+	$image    = $files->get('image');
 	
 	if (!$cost) {
 		$errorMessage = 'You must input a credit cost greater than zero.';
@@ -46,9 +47,14 @@ if ($item && count($_POST)) {
 		$errorMessage = 'You must input at least some info text.';
 	}
 	else {
-		if ($shop->add($itemID, $cost, $quantity, $info)) {
-			$session->setMessageData('Item has been successfully added to the shop.');
-			$this->redirect($this->url('purchase'));
+		if ($id=$shop->add($itemID, $cost, $quantity, $info)) {
+			if ($image && $image->get('size') && !$shop->uploadShopItemImage($id, $image)) {
+				$errorMessage = 'Failed to upload image.';
+			}
+			else {
+				$session->setMessageData('Item has been successfully added to the shop.');
+				$this->redirect($this->url('purchase'));	
+			}
 		}
 		else {
 			$errorMessage = 'Failed to add the item to the shop.';

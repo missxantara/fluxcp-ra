@@ -23,8 +23,16 @@ class Flux_ItemShop {
 		$table = Flux::config('FluxTables.ItemShopTable');
 		$sql   = "INSERT INTO $db.$table (nameid, quantity, cost, info, create_date) VALUES (?, ?, ?, ?, NOW())";
 		$sth   = $this->server->connection->getStatement($sql);
+		$res   = $sth->execute(array($itemID, $quantity, $cost, $info));
+		$sth2  = $this->server->connection->getStatement('SELECT LAST_INSERT_ID() AS insID');
+		$res2  = $sth2->execute();
 		
-		return $sth->execute(array($itemID, $quantity, $cost, $info));
+		if ($res && $res2 && ($insertID=$sth2->fetch()->insID)) {
+			return $insertID;
+		}
+		else {
+			return false;
+		}
 	}
 	
 	/**
@@ -134,6 +142,61 @@ class Flux_ItemShop {
 		
 		if ($sth->execute()) {
 			return $sth->fetchAll();
+		}
+		else {
+			return false;
+		}
+	}
+	
+	/**
+	 *
+	 */
+	public function deleteShopItemImage($shopItemID)
+	{
+		$serverName       = $this->server->loginAthenaGroup->serverName;
+		$athenaServerName = $this->server->serverName;
+		$dir              = FLUX_DATA_DIR."/itemshop/$serverName/$athenaServerName";
+		$files            = glob("$dir/$shopItemID.*");
+		
+		foreach ($files as $file) {
+			unlink($file);
+		}
+		
+		return true;
+	}
+	
+	/**
+	 *
+	 */
+	public function uploadShopItemImage($shopItemID, Flux_Config $file)
+	{
+		if ($file->get('error')) {
+			return false;
+		}
+		
+		$validexts = array_map('strtolower', Flux::config('ShopImageExtensions')->toArray());
+		$extension = strtolower(pathinfo($file->get('name'), PATHINFO_EXTENSION));
+		
+		if (!in_array($extension, $validexts)) {
+			return false;
+		}
+		
+		$serverName       = $this->server->loginAthenaGroup->serverName;
+		$athenaServerName = $this->server->serverName;
+		$dir              = FLUX_DATA_DIR."/itemshop/$serverName/$athenaServerName";
+		
+		if (!is_dir(FLUX_DATA_DIR."/itemshop/$serverName")) {
+			mkdir(FLUX_DATA_DIR."/itemshop/$serverName");
+		}
+		
+		if (!is_dir($dir)) {
+			mkdir($dir);
+		}
+		
+		$this->deleteShopItemImage($shopItemID);
+		
+		if (move_uploaded_file($file->get('tmp_name'), "$dir/$shopItemID.$extension")) {
+			return true;
 		}
 		else {
 			return false;

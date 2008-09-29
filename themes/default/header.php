@@ -20,7 +20,7 @@
 		<script type="text/javascript" src="<?php echo $this->themePath('js/flux.datefields.js') ?>"></script>
 		<script type="text/javascript">
 			$(document).ready(function(){
-				var inputs = 'input[type=text],input[type=password]';
+				var inputs = 'input[type=text],input[type=password],input[type=file]';
 				$(inputs).focus(function(){
 					$(this).css({
 						'background-color': '#f9f5e7',
