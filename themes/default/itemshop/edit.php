@@ -38,7 +38,7 @@
 		<td>
 			<input type="file" name="image" id="image" />
 			<?php if ($image=$this->shopItemImage($item->shop_item_id)): ?>
-			<p>Current image (<?php echo number_format(filesize($image)) ?> bytes):</p>
+			<p>Current image:</p>
 			<p><img src="<?php echo $image ?>" /></p>
 			<?php endif ?>
 		</td>
