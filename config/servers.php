@@ -36,26 +36,7 @@ return array(
 		),
 		'CharMapServers' => array(
 			array(
-				'ServerName'    => 'Fluxia',
-				'BaseExpRates'  => 200,
-				'JobExpRates'   => 200,
-				'MvpExpRates'   => 200,
-				'DropRates'     => 25,
-				'MvpDropRates'  => 25,
-				'CardDropRates' => 25,
-				'MaxCharSlots'  => 9,
-				//'Database'      => 'ragnarok', // Defaults to DbConfig.Database
-				'CharServer'    => array(
-					'Address'   => '127.0.0.1',
-					'Port'      => 6121
-				),
-				'MapServer'     => array(
-					'Address'   => '127.0.0.1',
-					'Port'      => 5121
-				)
-			),
-			array(
-				'ServerName'    => 'Utopia',
+				'ServerName'    => 'FluxRO',
 				'BaseExpRates'  => 200,
 				'JobExpRates'   => 200,
 				'MvpExpRates'   => 200,
