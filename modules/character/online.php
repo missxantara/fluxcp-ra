@@ -60,10 +60,10 @@ $sth  = $server->connection->getStatement($sql);
 
 $sth->execute($bind);
 $paginator = $this->getPaginator($sth->fetch()->total);
-$paginator->setSortableColumns(array('char_name' => 'asc', 'base_level', 'job_level', 'guild_name'));
+$paginator->setSortableColumns(array('char_name' => 'asc', 'base_level', 'job_level', 'guild_name', 'last_map'));
 
 $col  = "ch.char_id, ch.name AS char_name, ch.class AS char_class, ch.base_level, ch.job_level, ";
-$col .= "guild.name AS guild_name, guild.guild_id";
+$col .= "guild.name AS guild_name, guild.guild_id, ch.last_map";
 
 $sql  = $paginator->getSQL("SELECT $col FROM {$server->charMapDatabase}.`char` AS ch $sqlpartial");
 $sth  = $server->connection->getStatement($sql);

@@ -30,6 +30,9 @@
 		<th><?php echo $paginator->sortableColumn('base_level', 'Base Level') ?></th>
 		<th><?php echo $paginator->sortableColumn('job_level', 'Job Level') ?></th>
 		<th colspan="2"><?php echo $paginator->sortableColumn('guild_name', 'Guild') ?></th>
+		<?php if ($auth->allowedToViewOnlinePosition): ?>
+		<th><?php echo $paginator->sortableColumn('last_map', 'Map') ?></th>
+		<?php endif ?>
 	</tr>
 	<?php foreach ($chars as $char): ?>
 	<tr>
@@ -48,6 +51,9 @@
 			<td><?php echo htmlspecialchars($char->guild_name) ?></td>
 		<?php else: ?>
 			<td colspan="2"><span class="not-applicable">None</span></td>
+		<?php endif ?>
+		<?php if ($auth->allowedToViewOnlinePosition): ?>
+		<td><?php echo htmlspecialchars($char->last_map) ?></td>
 		<?php endif ?>
 	</tr>
 	<?php endforeach ?>

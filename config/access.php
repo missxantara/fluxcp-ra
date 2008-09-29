@@ -130,6 +130,7 @@ return array(
 		'DeleteShopItem'     => AccountLevel::ADMIN,
 		'ViewGuild'          => AccountLevel::ADMIN,
 		'SearchWhosOnline'   => AccountLevel::NORMAL,
+		'ViewOnlinePosition' => AccountLevel::NORMAL,
 		'EditAccountLevel'   => AccountLevel::ADMIN,
 		'EditAccountBalance' => AccountLevel::ADMIN,
 		
