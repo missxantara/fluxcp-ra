@@ -50,6 +50,9 @@ if ($account) {
 		elseif ($account->level != $level && !$auth->allowedToEditAccountLevel) {
 			$errorMessage = 'You cannot modify account levels.';
 		}
+		elseif ($level > $session->account->level) {
+			$errorMessage = 'You cannot set an account level to be higher than your own.';
+		}
 		elseif (!in_array($gender, array('M', 'F'))) {
 			$errorMessage = 'Gender must be male or female.';
 		}
