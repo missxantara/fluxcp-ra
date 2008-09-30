@@ -18,8 +18,13 @@ if (!$auth->allowedToIgnoreHiddenPref) {
 
 $sqlpartial .= "LEFT JOIN {$server->charMapDatabase}.$charPrefsTable AS pref2 ON ";
 $sqlpartial .= "(pref2.account_id = ch.account_id AND pref2.char_id = ch.char_id AND pref2.name = 'HideMapFromWhosOnline') ";
-$sqlpartial .= "WHERE ch.online > 0 AND (pref1.value IS NULL) ";
-$bind        = array();
+$sqlpartial .= "WHERE ch.online > 0 ";
+
+if (!$auth->allowedToIgnoreHiddenPref) {
+	$sqlpartial .= "AND (pref1.value IS NULL) ";
+}
+
+$bind = array();
 
 if ($auth->allowedToSearchWhosOnline) {
 	$charName  = $params->get('char_name');
