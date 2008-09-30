@@ -15,12 +15,15 @@
 			<tr>
 				<th><label for="email">E-mail</label></th>
 				<td><input type="text" name="email" id="email" value="<?php echo htmlspecialchars($account->email) ?>" /></td>
-				<?php if ($auth->allowedToEditAccountLevel): ?>
+				<?php if ($auth->allowedToEditAccountLevel && !$isMine): ?>
 					<th><label for="level">Account Level</label></th>
 					<td><input type="text" name="level" id="level" value="<?php echo (int)$account->level ?>" /></td>
 				<?php else: ?>
 					<th>Account Level</th>
-					<td><?php echo number_format((int)$account->level) ?></td>
+					<td>
+						<input type="hidden" name="level" value="<?php echo (int)$account->level ?>" />
+						<?php echo number_format((int)$account->level) ?>
+					</td>
 				<?php endif ?>
 			</tr>
 			<tr>
