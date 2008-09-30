@@ -1,4 +1,6 @@
 <?php
+require_once 'Flux/Config.php';
+
 /**
  * The Athena class is used for all database interactions with each eA server,
  * hence its name.
@@ -359,6 +361,140 @@ class Flux_Athena {
 		else {
 			return false;
 		}
+	}
+	
+	/**
+	 *
+	 */
+	public function getPrefs($charID, array $prefs = array())
+	{
+		$sql = "SELECT account_id FROM {$this->loginDatabase}.`char` WHERE char_id = ? LIMIT 1";
+		$sth = $this->connection->getStatement($sql);
+		
+		if ($sth->execute(array($charID)) && ($char=$sth->fetch())) {
+			$charPrefsTable = Flux::config('FluxTables.CharacterPrefsTable');
+			
+			$pref = array();
+			$bind = array($char->account_id, $charID);
+			$sql  = "SELECT name, value FROM {$this->charMapDatabase}.$charPrefsTable ";
+			$sql .= "WHERE account_id = ? AND char_id = ?";
+			
+			if ($prefs) {
+				foreach ($prefs as $p) {
+					$pref[] = "name = ?";
+					$bind[] = $p;
+				}
+				$sql .= sprintf(' AND (%s)', implode(' OR ', $pref));
+			}
+			
+			$sth = $this->connection->getStatement($sql);
+			
+			if ($sth->execute($bind)) {
+				$prefsArray = array();
+				foreach ($sth->fetchAll() as $p) {
+					$prefsArray[$p->name] = $p->value;
+				}
+				
+				return new Flux_Config($prefsArray);
+			}
+			else {
+				return false;
+			}
+		}
+		else {
+			return false;
+		}
+	}
+	
+	/**
+	 *
+	 */
+	public function setPrefs($charID, array $prefsArray)
+	{
+		$sql = "SELECT account_id FROM {$this->loginDatabase}.`char` WHERE char_id = ? LIMIT 1";
+		$sth = $this->connection->getStatement($sql);
+		
+		if ($sth->execute(array($charID)) && ($char=$sth->fetch())) {
+			$charPrefsTable = Flux::config('FluxTables.CharacterPrefsTable');
+			
+			$pref = array();
+			$bind = array($char->account_id, $charID);
+			$sql  = "SELECT id, name, value FROM {$this->charMapDatabase}.$charPrefsTable ";
+			$sql .= "WHERE account_id = ? AND char_id = ?";
+			
+			if ($prefsArray) {
+				foreach ($prefsArray as $prefName => $prefValue) {
+					$pref[] = "name = ?";
+					$bind[] = $prefName;
+				}
+				$sql .= sprintf(' AND (%s)', implode(' OR ', $pref));
+			}
+			
+			$sth = $this->connection->getStatement($sql);
+			
+			if ($sth->execute($bind)) {
+				$prefs  = $sth->fetchAll();
+				$update = array();
+				
+				$usql   = "UPDATE {$this->charMapDatabase}.$charPrefsTable ";
+				$usql  .= "SET value = ? WHERE id = ?";
+				$usth   = $this->connection->getStatement($usql);
+				       
+				$isql   = "INSERT INTO {$this->charMapDatabase}.$charPrefsTable ";
+				$isql  .= "(account_id, char_id, name, value, create_date) ";
+				$isql  .= "VALUES (?, ?, ?, ?, NOW())";
+				$isth   = $this->connection->getStatement($isql);
+				
+				foreach ($prefs as $p) {
+					$update[$p->name] = $p->id;
+				}
+				
+				foreach ($prefsArray as $pref => $value) {
+					if (array_key_exists($pref, $update)) {
+						$id = $update[$pref];
+						$usth->execute(array($value, $id));
+					}
+					else {
+						$isth->execute(array($char->account_id, $charID, $pref, $value));
+					}
+				}
+				
+				if (!$usth->errorCode() && !$isth->errorCode()) {
+					return true;
+				}
+				else {
+					return false;
+				}
+			}
+			else {
+				return false;
+			}
+		}
+		else {
+			return false;
+		}
+	}
+	
+	/**
+	 *
+	 */
+	public function getPref($charID, $pref)
+	{
+		$prefs = $this->getPrefs($charID, array($pref));
+		if ($prefs instanceOf Flux_Config) {
+			return $prefs->get($pref);
+		}
+		else {
+			return false;
+		}
+	}
+	
+	/**
+	 *
+	 */
+	public function setPref($charID, $pref, $value)
+	{
+		return $this->setPrefs($charID, array($pref => $value));
 	}
 }
 ?>
