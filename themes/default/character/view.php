@@ -2,6 +2,13 @@
 <h2>Viewing Character</h2>
 <?php if ($char): ?>
 <h3>Character Information for “<?php echo htmlspecialchars($char->char_name) ?>”</h3>
+<p class="action">
+	<?php if (($isMine || $auth->allowedToModifyCharPrefs) && $auth->actionAllowed('character', 'prefs')): ?>
+	<a href="<?php echo $this->url('character', 'prefs', array('id' => $char->char_id)) ?>">
+		Modify Preferences
+	</a>
+	<?php endif ?>
+</p>
 <table class="vertical-table">
 	<tr>
 		<th>Character ID</th>
