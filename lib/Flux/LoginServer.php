@@ -329,5 +329,134 @@ class Flux_LoginServer extends Flux_BaseServer {
 			return $sth->execute($vals);
 		}
 	}
+	
+	/**
+	 *
+	 */
+	public function getPrefs($accountID, array $prefs = array())
+	{
+		$sql = "SELECT account_id FROM {$this->loginDatabase}.`login` WHERE account_id = ? LIMIT 1";
+		$sth = $this->connection->getStatement($sql);
+		
+		if ($sth->execute(array($accountID)) && ($char=$sth->fetch())) {
+			$accountPrefsTable = Flux::config('FluxTables.AccountPrefsTable');
+			
+			$pref = array();
+			$bind = array($accountID);
+			$sql  = "SELECT name, value FROM {$this->loginDatabase}.$accountPrefsTable ";
+			$sql .= "WHERE account_id = ?";
+			
+			if ($prefs) {
+				foreach ($prefs as $p) {
+					$pref[] = "name = ?";
+					$bind[] = $p;
+				}
+				$sql .= sprintf(' AND (%s)', implode(' OR ', $pref));
+			}
+			
+			$sth = $this->connection->getStatement($sql);
+			
+			if ($sth->execute($bind)) {
+				$prefsArray = array();
+				foreach ($sth->fetchAll() as $p) {
+					$prefsArray[$p->name] = $p->value;
+				}
+				
+				return new Flux_Config($prefsArray);
+			}
+			else {
+				return false;
+			}
+		}
+		else {
+			return false;
+		}
+	}
+	
+	/**
+	 *
+	 */
+	public function setPrefs($accountID, array $prefsArray)
+	{
+		$sql = "SELECT account_id FROM {$this->loginDatabase}.`login` WHERE account_id = ? LIMIT 1";
+		$sth = $this->connection->getStatement($sql);
+		
+		if ($sth->execute(array($accountID)) && ($char=$sth->fetch())) {
+			$accountPrefsTable = Flux::config('FluxTables.AccountPrefsTable');
+			
+			$pref = array();
+			$bind = array($accountID);
+			$sql  = "SELECT id, name, value FROM {$this->loginDatabase}.$accountPrefsTable ";
+			$sql .= "WHERE account_id = ?";
+			
+			if ($prefsArray) {
+				foreach ($prefsArray as $prefName => $prefValue) {
+					$pref[] = "name = ?";
+					$bind[] = $prefName;
+				}
+				$sql .= sprintf(' AND (%s)', implode(' OR ', $pref));
+			}
+			
+			$sth = $this->connection->getStatement($sql);
+			
+			if ($sth->execute($bind)) {
+				$prefs  = $sth->fetchAll();
+				$update = array();
+				
+				$usql   = "UPDATE {$this->loginDatabase}.$accountPrefsTable ";
+				$usql  .= "SET value = ? WHERE id = ?";
+				$usth   = $this->connection->getStatement($usql);
+				       
+				$isql   = "INSERT INTO {$this->loginDatabase}.$accountPrefsTable ";
+				$isql  .= "(account_id, name, value, create_date) ";
+				$isql  .= "VALUES (?, ?, ?, NOW())";
+				$isth   = $this->connection->getStatement($isql);
+				
+				foreach ($prefs as $p) {
+					$update[$p->name] = $p->id;
+				}
+				
+				foreach ($prefsArray as $pref => $value) {
+					if (array_key_exists($pref, $update)) {
+						$id = $update[$pref];
+						$usth->execute(array($value, $id));
+					}
+					else {
+						$isth->execute(array($accountID, $pref, $value));
+					}
+				}
+				
+				return true;
+			}
+			else {
+				return false;
+			}
+		}
+		else {
+			return false;
+		}
+	}
+	
+	/**
+	 *
+	 */
+	public function getPref($accountID, $pref)
+	{
+		$prefs = $this->getPrefs($accountID, array($pref));
+		if ($prefs instanceOf Flux_Config) {
+			return $prefs->get($pref);
+		}
+		else {
+			return false;
+		}
+	}
+	
+	/**
+	 *
+	 */
+	public function setPref($accountID, $pref, $value)
+	{
+		return $this->setPrefs($accountID, array($pref => $value));
+	}
 }
 ?>

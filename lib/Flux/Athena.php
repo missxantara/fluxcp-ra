@@ -459,12 +459,7 @@ class Flux_Athena {
 					}
 				}
 				
-				if (!$usth->errorCode() && !$isth->errorCode()) {
-					return true;
-				}
-				else {
-					return false;
-				}
+				return true;
 			}
 			else {
 				return false;
