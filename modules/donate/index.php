@@ -1,7 +1,7 @@
 <?php 
 if (!defined('FLUX_ROOT')) exit;
 
-$this->loginRequired('Please login to continue donating.');
+$this->loginRequired(Flux::message('LoginToDonate'));
 
 $title = 'Make a Donation';
 

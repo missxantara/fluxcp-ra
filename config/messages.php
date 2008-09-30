@@ -20,6 +20,8 @@ return array(
 	'CriticalRegisterError'   => 'Something bad happened.  Report to an administrator ASAP.',
 	'TemporarilyBanned'       => 'Your account is temporarily banned.',
 	'PermanentlyBanned'       => 'Your account is permanently banned.',
-	'FoundSearchResults'      => 'Found a total of %d record(s) across %d page(s).  Displaying result(s) %d-%d.'
+	'FoundSearchResults'      => 'Found a total of %d record(s) across %d page(s).  Displaying result(s) %d-%d.',
+	'LoginToDonate'           => 'Please log-in to make a donation.',
+	'LoginToPurchase'         => 'Please log-in to purchase items in the item shop.'
 );
 ?>
