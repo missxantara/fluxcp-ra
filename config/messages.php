@@ -22,6 +22,16 @@ return array(
 	'PermanentlyBanned'       => 'Your account is permanently banned.',
 	'FoundSearchResults'      => 'Found a total of %d record(s) across %d page(s).  Displaying result(s) %d-%d.',
 	'LoginToDonate'           => 'Please log-in to make a donation.',
-	'LoginToPurchase'         => 'Please log-in to purchase items in the item shop.'
+	'LoginToPurchase'         => 'Please log-in to purchase items in the item shop.',
+	'LoginPageMakeAccount'    => 'Don\'t have an account? <a href="%s">Create one!</a>',
+	'NeedCurrentPassword'     => 'Please enter your current password.',
+	'NeedNewPassword'         => 'Please enter your new password.',
+	'ConfirmNewPassword'      => 'Please confirm your new password.',
+	'NewPasswordSameAsOld'    => 'New password cannot be the same as your current password.',
+	'OldPasswordInvalid'      => "The password you provided doesn't match the one we have on record.",
+	'PasswordHasBeenChanged'  => 'Your password has been changed, please log-in again.',
+	'FailedToChangePassword'  => 'Failed to change your password.  Please contact an admin.',
+	'GenderChanged'           => 'Your gender has been changed and %d credit(s) have been deducted from your account.',
+	'GenderChangedForFree'    => 'Your gender has been changed.'
 );
 ?>

@@ -3,7 +3,7 @@
 <?php if (isset($errorMessage)): ?>
 <p class="red"><?php echo htmlspecialchars($errorMessage) ?></p>
 <?php else: ?>
-<p>If you don't have an account, you may go to the <a href="<?php echo $this->url('account', 'create') ?>">registration page</a> to create one.</p>
+<p><?php printf(Flux::message('LoginPageMakeAccount'), $this->url('account', 'create')); ?></p>
 <?php endif ?>
 <form action="<?php echo $this->url('account', 'login', array('return_url' => $params->get('return_url'))) ?>" method="post" class="generic-form">
 	<?php if (count($serverNames) === 1): ?>

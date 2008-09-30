@@ -11,10 +11,10 @@ if (count($_POST)) {
 	$confirmNewPassword = trim($params->get('confirmnewpass'));
 	
 	if (!$currentPassword) {
-		$errorMessage = 'Please enter your current password.';
+		$errorMessage = Flux::message('NeedCurrentPassword');
 	}
 	elseif (!$newPassword) {
-		$errorMessage = 'Please enter your new password.';
+		$errorMessage = Flux::message('NeedNewPassword');
 	}
 	elseif (strlen($newPassword) < Flux::config('MinPasswordLength')) {
 		$errorMessage = Flux::message('PasswordTooShort');
@@ -23,13 +23,13 @@ if (count($_POST)) {
 		$errorMessage = Flux::message('PasswordTooLong');
 	}
 	elseif (!$confirmNewPassword) {
-		$errorMessage = 'Please confirm your new password.';
+		$errorMessage = Flux::message('ConfirmNewPassword');
 	}
 	elseif ($newPassword != $confirmNewPassword) {
-		$errorMessage = 'New password and confirmation do not match.';
+		$errorMessage = Flux::message('PasswordsDoNotMatch');
 	}
 	elseif ($newPassword == $currentPassword) {
-		$errorMessage = 'New password cannot be the same as your current password.';
+		$errorMessage = Flux::message('NewPasswordSameAsOld');
 	}
 	else {
 		$sql = "SELECT user_pass AS currentPassword FROM {$server->loginDatabase}.login WHERE account_id = ?";
@@ -42,19 +42,19 @@ if (count($_POST)) {
 		$newPassword     = $useMD5 ? md5($newPassword) : $newPassword;
 		
 		if ($currentPassword != $account->currentPassword) {
-			$errorMessage = "The password you provided doesn't match the one we have on record.";
+			$errorMessage = Flux::message('OldPasswordInvalid');
 		}
 		else {
 			$sql = "UPDATE {$server->loginDatabase}.login SET user_pass = ? WHERE account_id = ?";
 			$sth = $server->connection->getStatement($sql);
 			
 			if ($sth->execute(array($newPassword, $session->account->account_id))) {
-				$session->setMessageData('Your password has been changed, please log-in again.');
+				$session->setMessageData(Flux::message('PasswordHasBeenChanged'));
 				$session->logout();
 				$this->redirect($this->url('account', 'login'));
 			}
 			else {
-				$errorMessage = 'Failed to change your password.  Please contact an admin.';
+				$errorMessage = Flux::message('FailedToChangePassword');
 			}
 		}
 	}

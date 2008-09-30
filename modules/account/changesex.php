@@ -25,10 +25,10 @@ if (count($_POST)) {
 	
 	if ($cost) {
 		$session->loginServer->depositCredits($session->account->account_id, -$cost);
-		$session->setMessageData("Your gender has been changed and $cost credit(s) have been deducted from your account.");
+		$session->setMessageData(sprintf(Flux::message('GenderChanged'), $cost));
 	}
 	else {
-		$session->setMessageData("Your gender has been changed.");
+		$session->setMessageData(Flux::message('GenderChangedForFree'));
 	}
 	
 	$this->redirect($this->url('account', 'view'));
