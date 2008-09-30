@@ -169,5 +169,21 @@ class Flux_Connection {
 			return false;
 		}
 	}
+	
+	/**
+	 *
+	 */
+	public function reconnectAs($username, $password)
+	{
+		if ($this->pdoMain) {
+			$this->pdoMain = null;
+		}
+		
+		$this->dbConfig->setPersistent(false);
+		$this->dbConfig->setUsername($username);
+		$this->dbConfig->setPassword($password);
+
+		return true;
+	}
 }
 ?>

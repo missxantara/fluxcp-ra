@@ -12,8 +12,7 @@ if ($session->installerAuth) {
 	}
 	else {
 		$requiredMySqlVersion = '5.0';
-		$requiredDbPrivileges = array('SELECT', 'UPDATE', 'INSERT', 'DELETE', 'CREATE', 'ALTER', 'DROP');
-		
+
 		foreach (Flux::$loginAthenaGroupRegistry as $serverName => $loginAthenaGroup) {
 			$sth = $loginAthenaGroup->connection->getStatement("SELECT VERSION() AS mysql_version, CURRENT_USER() AS mysql_user");
 			$sth->execute();
@@ -25,48 +24,6 @@ if ($session->installerAuth) {
 				$message .= " on the server '$serverName'"; 
 				throw new Flux_Error($message);
 			}
-			
-			/*list($user, $host) = explode('@', $res->mysql_user);
-			$myUser = "'$user'@'$host'";
-			$bind   = array($myUser, $loginAthenaGroup->loginDatabase);
-			$sql    = "SELECT PRIVILEGE_TYPE AS priv, TABLE_SCHEMA AS dbname FROM INFORMATION_SCHEMA.SCHEMA_PRIVILEGES ";
-			$sql   .= "WHERE GRANTEE = ? AND (TABLE_SCHEMA = ?";
-			
-			foreach ($loginAthenaGroup->athenaServers as $athenaServer) {
-				$sql   .= " OR TABLE_SCHEMA = ?";
-				$bind[] = $athenaServer->charMapDatabase;
-			}
-			$sql .= ")";
-			$sth  = $loginAthenaGroup->connection->getStatement($sql);
-			$sth->execute($bind);
-			
-			$privs = $sth->fetchAll();
-			if (!$privs) {
-				throw new Flux_Error('Unable to get database privileges from the INFORMATION_SCHEMA.SCHEMA_PRIVILEGES view.');
-			}
-			
-			$existingPrivs = array();
-			foreach ($privs as $priv) {
-				if (in_array($priv->priv, $requiredDbPrivileges)) {
-					if (!array_key_exists($priv->dbname, $existingPrivs)) {
-						$existingPrivs[$priv->dbname] = array();
-					}
-					
-					$existingPrivs[$priv->dbname][] = $priv->priv;
-				}
-			}
-			
-			foreach ($existingPrivs as $dbName => $privArr) {
-				$missingPrivs = array_diff($requiredDbPrivileges, $privArr);
-				
-				if (count($missingPrivs)) {
-					$message  = "Flux has detected that the $myUser user lacks all the necessary privileges on the '$dbName' database. ";
-					$message .= sprintf("Please ensure you have %s privileges. Currently you are missing the %s privilege(s).",
-						implode(', ', $requiredDbPrivileges), implode(', ', $missingPrivs));
-					
-					throw new Flux_Error($message);
-				}
-			}*/
 		}
 		
 		if ($params->get('update_all')) {
@@ -80,6 +37,56 @@ if ($session->installerAuth) {
 			}
 			catch (Flux_Installer_SchemaPermissionError $e) {
 				$permissionError = $e;
+			}
+		}
+		elseif (($username=$params->get('username')) && $username instanceOf Flux_Config &&
+				($password=$params->get('password')) && $password instanceOf Flux_Config &&
+				($update=$params->get('update')) && $update instanceOf Flux_Config) {
+				
+			$server64     = key($update->toArray());
+			$username     = $username->get($server64);
+			$password     = $password->get($server64);
+			$serverName   = base64_decode($server64);
+			$server       = array_key_exists($serverName, $installer->servers) ? $installer->servers[$serverName] : false;
+			$updateNeeded = false;
+			
+			if ($server) {
+				foreach ($server->schemas as $schema) {
+					if (!$schema->isLatest()) {
+						$updateNeeded = true;
+						break;
+					}
+				}
+				
+				if (!$updateNeeded) {
+					foreach ($server->servers as $charMapServer) {
+						foreach ($charMapServer->schemas as $schema) {
+							if (!$schema->isLatest()) {
+								$updateNeeded = true;
+								break;
+							}
+						}
+					}
+				}
+			}
+			
+			if (!$updateNeeded || !$server) {
+				$errorMessage = 'Invalid server or the server has no updates.';
+			}
+			elseif (!$username || !$password) {
+				$errorMessage = "Username and password are required for individual server updates.";
+			}
+			else {
+				$connection = $server->loginAthenaGroup->connection;
+				$connection->reconnectAs($username, $password);
+				try {
+					$server->updateAll();
+					$session->setMessageData("Updates for $serverName have been installed.");
+					$this->redirect();
+				}
+				catch (Flux_Installer_SchemaPermissionError $e) {
+					$permissionError = $e;
+				}
 			}
 		}
 	}

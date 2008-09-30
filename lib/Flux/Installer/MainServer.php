@@ -35,5 +35,24 @@ class Flux_Installer_MainServer {
 			}
 		}
 	}
+	
+	/**
+	 *
+	 */
+	public function updateAll()
+	{
+		foreach ($this->schemas as $schema) {
+			if (!$schema->isLatest()) {
+				$schema->update();
+			}
+		}
+		foreach ($this->charMapServers as $charMapServer) {
+			foreach ($charMapServer->schemas as $schema) {
+				if (!$schema->isLatest()) {
+					$schema->update();
+				}
+			}
+		}
+	}
 }
 ?>

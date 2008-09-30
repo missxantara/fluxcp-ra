@@ -45,6 +45,12 @@ if (!defined('FLUX_ROOT')) exit;
 				border-top: 1px solid #ddd;
 			}
 			
+			.message {
+				padding: 10px;
+				color: #fff;
+				background-color: #444;
+			}
+			
 			.error {
 				padding: 10px;
 				color: #fff;
@@ -72,6 +78,18 @@ if (!defined('FLUX_ROOT')) exit;
 			.menu {
 				color: #bbb;
 			}
+			
+			.schema-query {
+				font-family: Georgia, serif;
+				border-bottom: 1px dotted #888;
+			}
+			
+			.input {
+				display: block;
+				padding: 5px;
+				width: 90%;
+				border: 1px solid #aaa;
+			}
 		</style>
 	</head>
 	
@@ -80,6 +98,9 @@ if (!defined('FLUX_ROOT')) exit;
 		<h1>Install &amp; Update</h1>
 		
 		<div id="content">
+			<?php if ($message=$session->getMessage()): ?>
+				<p class="message"><?php echo htmlspecialchars($message) ?></p>
+			<?php endif ?>
 			<?php if (!empty($errorMessage)): ?>
 				<p class="error"><?php echo htmlspecialchars($errorMessage) ?></p>
 			<?php endif ?>
