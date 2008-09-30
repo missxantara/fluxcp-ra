@@ -156,6 +156,7 @@ class Flux_Template {
 	 * @var string
 	 */
 	protected $urlWithQs;
+	protected $urlWithQS; // compatibility.
 	
 	/**
 	 * Module/action for missing action's event.
@@ -241,8 +242,24 @@ class Flux_Template {
 		$this->urlWithQS  = $this->url;
 		
 		if (!empty($_SERVER['QUERY_STRING'])) {
-			$this->urlWithQS .= "?{$_SERVER['QUERY_STRING']}";
+			if ($this->useCleanUrls) {
+				$this->urlWithQS .= "?{$_SERVER['QUERY_STRING']}";
+			}
+			else {
+				foreach (explode('&', $_SERVER['QUERY_STRING']) as $line) {
+					list ($key,$val) = explode('=', $line, 2);
+					$key = urldecode($key);
+					$val = urldecode($val);
+					
+					if ($key != 'module' && $key != 'action') {
+						$this->urlWithQS .= sprintf('&%s=%s', urlencode($key), urlencode($val));
+					}
+				}
+			}
 		}
+		
+		// Compatibility.
+		$this->urlWithQs  = $this->urlWithQS;
 		
 		// Tidy up!
 		if (Flux::config('OutputCleanHTML')) {
