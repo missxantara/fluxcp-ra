@@ -399,7 +399,7 @@ class Flux_Paginator {
 			Flux::message('FoundSearchResults'),
 			$this->total, $this->numberOfPages, ($currPage*20-19), $currPage * 20 < $this->total ? ($currPage*20) : ($this->total)
 		);
-		return sprintf('<p class="info-text">%s</p>', $infoTex);
+		return sprintf('<p class="info-text">%s</p>', $infoText);
 	}
 }
 ?>
