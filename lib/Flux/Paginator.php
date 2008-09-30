@@ -395,25 +395,11 @@ class Flux_Paginator {
 	public function infoText()
 	{
 		$currPage = $this->currentPage;
-		if ($this->total === 1) {
-			$text = 'Found <span class="info-text-total">one</span> record.';
-		}
-		else {
-			$text = "Found a total of <span class=\"info-text-total\">{$this->total}</span> records";
-			if ($this->numberOfPages > 1) {
-				$text .= " across <span class=\"info-text-pages\">{$this->numberOfPages}</span> pages.";
-			}
-			else {
-				$text .= '.';
-			}
-			
-			if ($currPage * 20 < $this->total)
-				$text .= ' Displaying results <span class="info-text-results">'.($currPage*20-19).'-'.($currPage*20).'</span>.';
-			else
-				$text .= ' Displaying results <span class="info-text-results">'.($currPage*20-19).'-'.($this->total).'</span>.';
-		}
-		
-		return sprintf('<p class="info-text">%s</p>', $text);
+		$infoText = sprintf(
+			Flux::message('FoundSearchResults'),
+			$this->total, $this->numberOfPages, ($currPage*20-19), $currPage * 20 < $this->total ? ($currPage*20) : ($this->total)
+		);
+		return sprintf('<p class="info-text">%s</p>', $infoTex);
 	}
 }
 ?>
