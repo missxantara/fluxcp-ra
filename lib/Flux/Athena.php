@@ -368,7 +368,7 @@ class Flux_Athena {
 	 */
 	public function getPrefs($charID, array $prefs = array())
 	{
-		$sql = "SELECT account_id FROM {$this->loginDatabase}.`char` WHERE char_id = ? LIMIT 1";
+		$sql = "SELECT account_id FROM {$this->charMapDatabase}.`char` WHERE char_id = ? LIMIT 1";
 		$sth = $this->connection->getStatement($sql);
 		
 		if ($sth->execute(array($charID)) && ($char=$sth->fetch())) {
@@ -411,7 +411,7 @@ class Flux_Athena {
 	 */
 	public function setPrefs($charID, array $prefsArray)
 	{
-		$sql = "SELECT account_id FROM {$this->loginDatabase}.`char` WHERE char_id = ? LIMIT 1";
+		$sql = "SELECT account_id FROM {$this->charMapDatabase}.`char` WHERE char_id = ? LIMIT 1";
 		$sth = $this->connection->getStatement($sql);
 		
 		if ($sth->execute(array($charID)) && ($char=$sth->fetch())) {
