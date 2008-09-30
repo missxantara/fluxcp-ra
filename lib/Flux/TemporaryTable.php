@@ -95,10 +95,80 @@ class Flux_TemporaryTable {
 		// Drop temporary table before hand.
 		$this->drop();
 		
-		// Attempt to create temporary table.
-		$sql = "CREATE TEMPORARY TABLE {$this->tableName} LIKE $firstTable";
-		$sth = $this->connection->getStatement($sql);
+		$sth = $this->connection->getStatement("DESCRIBE $firstTable");
 		$res = $sth->execute();
+		
+		if (!$res) {
+			return false;
+		}
+
+		$cols    = $sth->fetchAll();
+		$rand    = rand();
+		$bind    = array();
+		$sql     = "CREATE TEMPORARY TABLE {$this->tableName} (";
+		$primary = false;
+		$uniques = array();
+		$indices = array();
+
+		// Origin column, indicates which table the record came from.
+		$varcharLength   = $this->findVarcharLength();
+		$origin          = new Flux_DataObject();
+		$origin->Field   = 'origin_table';
+		$origin->Type    = "varchar($varcharLength)";
+		$origin->Null    = 'YES';
+		$origin->Key     = '';
+		$origin->Default = null;
+		$origin->Extra   = '';
+
+		// Add origin column.
+		$cols[] = $origin;
+
+		foreach ($cols as $col) {
+			// Determine default value.	
+			if ($col->Default) {
+				$default = 'DEFAULT ?';
+				$bind[]  = $col->Default;
+			}
+			else {
+				$default = '';
+			}
+			// Find primary key.
+			if ($col->Key == 'PRI') {
+				$primary = $col->Field;
+			}
+			// Find any unique keys.
+			elseif ($col->Key == 'UNI') {
+				$uniques[] = $col->Field;
+			}
+			// Find any indexed keys.
+			elseif ($col->Key == 'MUL') {
+				$indices[] = $col->Field;
+			}
+			$null = $col->Null == 'YES' ? 'NULL' : 'NOT NULL'; // Determine NULL status.
+			$sql .= rtrim("\n\t`{$col->Field}` {$col->Type} $null $default {$col->Extra},");
+		}
+		// Add primary key.
+		if ($primary) {
+			$sql .= "\n\tPRIMARY KEY( `$primary` ),";
+		}
+		// Add unique keys.
+		if ($uniques) {
+			foreach ($uniques as $unique) {
+				$sql .= "\n\tUNIQUE KEY `$unique` ( `$unique` ),";
+			}
+		}
+		// Add index keys.
+		if ($indices) {
+			foreach ($indices as $index) {
+				$sql .= "\n\tKEY `$index` (`$index`),";
+			}
+		}
+
+		$sql  = rtrim($sql, ', ');
+		$sql .= "\n);";
+		
+		$sth = $this->connection->getStatement($sql);
+		$res = $sth->execute($bind);
 		
 		if (!$res) {
 			$message  = "Failed to create temporary table '{$this->tableName}'.\n";
@@ -106,23 +176,7 @@ class Flux_TemporaryTable {
 			self::raise($message);
 		}
 		
-		// Add `origin_table' column.
-		$len = $this->findVarcharLength();
-		$sql = "ALTER TABLE {$this->tableName} ADD COLUMN origin_table VARCHAR($len) NOT NULL";
-		$sth = $this->connection->getStatement($sql);
-		$res = $sth->execute();
-		
-		if (!$res) {
-			// Drop first.
-			$this->drop();
-			
-			$message  = "Failed to add `origin_table` column to '{$this->tableName}'.\n";
-			$message .= sprintf('Error info: %s', print_r($sth->errorInfo(), true));
-			self::raise($message);
-		}
-		else {
-			return true;
-		}
+		return true;
 	}
 	
 	/**
