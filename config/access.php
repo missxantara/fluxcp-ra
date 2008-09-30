@@ -132,11 +132,13 @@ return array(
 		'DeleteShopItem'     => AccountLevel::ADMIN,  // Ability to remove an item for sale on the shop.
 		'ViewGuild'          => AccountLevel::ADMIN,  // Ability to view another guild's details.
 		'SearchWhosOnline'   => AccountLevel::NORMAL, // Ability to search the "Who's Online" page.
-		'ViewOnlinePosition' => AccountLevel::LOWGM,  // Ability to see a character's current map on "Who's Online" page.
+		'ViewOnlinePosition' => AccountLevel::HELPER, // Ability to see a character's current map on "Who's Online" page.
 		'EditAccountLevel'   => AccountLevel::ADMIN,  // Ability to edit another person's account level.
 		'EditAccountBalance' => AccountLevel::ADMIN,  // Ability to edit another person's account balance.
 		'ModifyAccountPrefs' => AccountLevel::ADMIN,  // Ability to modify another person's account preferences.
 		'ModifyCharPrefs'    => AccountLevel::ADMIN,  // Ability to modify another person's character preferences.
+		'IgnoreHiddenPref'   => AccountLevel::HELPER, // Ability to see users on "Who's Online" page, hidden or not.
+		'IgnoreHiddenPref2'  => AccountLevel::HELPER, // Ability to see users on "Who's Online" page, hidden by app config or not.
 		
 		'EditHigherPower'    => 5000,
 		'BanHigherPower'     => 5000
