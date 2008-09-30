@@ -5,7 +5,7 @@
 <?php endif ?>
 <?php if ($account): ?>
 <p class="action">
-	<?php if ($auth->actionAllowed('account', 'edit')): ?>
+	<?php if (($account->level <= $session->account->level || $auth->allowedToEditHigherPower) && $auth->actionAllowed('account', 'edit')): ?>
 	<a href="<?php echo $this->url('account', 'edit', array('id' => $account->account_id)) ?>">Modify Account</a>
 	<?php endif ?>
 </p>
