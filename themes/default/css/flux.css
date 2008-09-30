@@ -786,8 +786,13 @@ textarea {
 	text-align: right;
 }
 
+.generic-form-table td input[type=checkbox] {
+	display: inline-block;
+	margin-top: 6px;
+}
+
 .generic-form-table td p {
-	margin: 2px 10px;
+	margin: 6px 5px;
 	color: #000;
 }
 
@@ -801,6 +806,13 @@ textarea {
 }
 
 .action a {
+	color: #80a2c8;
+	border-bottom: 1px solid #eee;
+}
+
+.block-link {
+	display: block;
+	padding: 3px;
 	color: #80a2c8;
 	border-bottom: 1px solid #eee;
 }

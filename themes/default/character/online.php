@@ -23,6 +23,10 @@
 <?php endif ?>
 <?php echo $paginator->infoText() ?>
 
+<?php if ($hiddenCount): ?>
+<p><?php echo number_format($hiddenCount) ?> <?php echo ((int)$hiddenCount === 1) ? 'person has' : 'people have' ?> chosen to hide themselves from this list.</p>
+<?php endif ?>
+
 <table class="vertical-table">
 	<tr>
 		<th><?php echo $paginator->sortableColumn('char_name', 'Character Name') ?></th>
@@ -30,9 +34,7 @@
 		<th><?php echo $paginator->sortableColumn('base_level', 'Base Level') ?></th>
 		<th><?php echo $paginator->sortableColumn('job_level', 'Job Level') ?></th>
 		<th colspan="2"><?php echo $paginator->sortableColumn('guild_name', 'Guild') ?></th>
-		<?php if ($auth->allowedToViewOnlinePosition): ?>
 		<th><?php echo $paginator->sortableColumn('last_map', 'Map') ?></th>
-		<?php endif ?>
 	</tr>
 	<?php foreach ($chars as $char): ?>
 	<tr>
@@ -58,9 +60,14 @@
 		<?php else: ?>
 			<td colspan="2"><span class="not-applicable">None</span></td>
 		<?php endif ?>
-		<?php if ($auth->allowedToViewOnlinePosition): ?>
-		<td><?php echo htmlspecialchars($char->last_map) ?></td>
+		
+		<td>
+		<?php if (!$char->hidemap || $auth->allowedToViewOnlinePosition): ?>
+			<?php echo htmlspecialchars($char->last_map) ?>
+		<?php else: ?>
+			<span class="not-applicable">Unknown</span>
 		<?php endif ?>
+		</td>
 	</tr>
 	<?php endforeach ?>
 </table>

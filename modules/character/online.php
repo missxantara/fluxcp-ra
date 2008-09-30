@@ -5,9 +5,16 @@ $this->loginRequired();
 
 $title = "Who's Online";
 
+$charPrefsTable = Flux::config('FluxTables.CharacterPrefsTable');
+
+
 $sqlpartial  = "LEFT JOIN {$server->loginDatabase}.login ON login.account_id = ch.account_id ";
 $sqlpartial .= "LEFT JOIN {$server->charMapDatabase}.guild ON guild.guild_id = ch.guild_id ";
-$sqlpartial .= "WHERE ch.online > 0 ";
+$sqlpartial .= "LEFT JOIN {$server->charMapDatabase}.$charPrefsTable AS pref1 ON ";
+$sqlpartial .= "(pref1.account_id = ch.account_id AND pref1.char_id = ch.char_id AND pref1.name = 'HideFromWhosOnline') ";
+$sqlpartial .= "LEFT JOIN {$server->charMapDatabase}.$charPrefsTable AS pref2 ON ";
+$sqlpartial .= "(pref2.account_id = ch.account_id AND pref2.char_id = ch.char_id AND pref2.name = 'HideMapFromWhosOnline') ";
+$sqlpartial .= "WHERE ch.online > 0 AND (pref1.value IS NULL) ";
 $bind        = array();
 
 if ($auth->allowedToSearchWhosOnline) {
@@ -50,10 +57,22 @@ if ($auth->allowedToSearchWhosOnline) {
 	}
 }
 
+// Hide levels greater than or equal to.
 if ($hideLevel=Flux::config('HideFromWhosOnline')) {
 	$sqlpartial .= "AND login.level < ? ";
 	$bind[] = $hideLevel;
 }
+
+$sql  = "SELECT COUNT(ch.char_id) AS total FROM {$server->charMapDatabase}.`char` AS ch ";
+$sql .= "LEFT JOIN {$server->charMapDatabase}.$charPrefsTable AS pref1 ON ";
+$sql .= "(pref1.account_id = ch.account_id AND pref1.char_id = ch.char_id AND pref1.name = 'HideFromWhosOnline') ";
+$sql .= "WHERE ch.online > 0 AND pref1.value IS NOT NULL";
+$sth  = $server->connection->getStatement($sql);
+
+$sth->execute();
+
+// Number of hidden players (not including the ones hidden by the 'HideFromWhosOnline' app config).
+$hiddenCount = $sth->fetch()->total;
 
 $sql  = "SELECT COUNT(ch.char_id) AS total FROM {$server->charMapDatabase}.`char` AS ch $sqlpartial";
 $sth  = $server->connection->getStatement($sql);
@@ -63,7 +82,7 @@ $paginator = $this->getPaginator($sth->fetch()->total);
 $paginator->setSortableColumns(array('char_name' => 'asc', 'base_level', 'job_level', 'guild_name', 'last_map'));
 
 $col  = "ch.char_id, ch.name AS char_name, ch.class AS char_class, ch.base_level, ch.job_level, ";
-$col .= "guild.name AS guild_name, guild.guild_id, ch.last_map";
+$col .= "guild.name AS guild_name, guild.guild_id, ch.last_map, pref2.value AS hidemap";
 
 $sql  = $paginator->getSQL("SELECT $col FROM {$server->charMapDatabase}.`char` AS ch $sqlpartial");
 $sth  = $server->connection->getStatement($sql);

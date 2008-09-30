@@ -10,3 +10,8 @@ select {
 #logo {
 	display: block;
 }
+
+.generic-form-table td input[type=checkbox] {
+	display: inline-block;
+	margin-top: 3px;
+}

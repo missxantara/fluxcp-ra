@@ -46,7 +46,8 @@ return array(
 		'character' => array(
 			'index'    => AccountLevel::LOWGM,
 			'view'     => AccountLevel::NORMAL,
-			'online'   => AccountLevel::NORMAL
+			'online'   => AccountLevel::NORMAL,
+			'prefs'    => AccountLevel::NORMAL
 		),
 		'guild'     => array(
 			'emblem'   => AccountLevel::ANYONE,
@@ -115,25 +116,27 @@ return array(
 	),
 	// General feature permissions, handled by the modules themselves.
 	'features' => array(
-		'ViewAccount'        => AccountLevel::HIGHGM,
-		'ViewAccountBanLog'  => AccountLevel::HIGHGM,
-		'DeleteAccount'      => AccountLevel::ADMIN,
-		'DeleteCharacter'    => AccountLevel::ADMIN,
-		'SeeAccountPassword' => AccountLevel::ADMIN,
-		'TempBanAccount'     => AccountLevel::LOWGM,
-		'TempUnbanAccount'   => AccountLevel::LOWGM,
-		'PermBanAccount'     => AccountLevel::HIGHGM,
-		'PermUnbanAccount'   => AccountLevel::HIGHGM,
-		'SearchMD5Passwords' => AccountLevel::ADMIN,
-		'ViewCharacter'      => AccountLevel::HIGHGM,
-		'AddShopItem'        => AccountLevel::ADMIN,
-		'EditShopItem'       => AccountLevel::ADMIN,
-		'DeleteShopItem'     => AccountLevel::ADMIN,
-		'ViewGuild'          => AccountLevel::ADMIN,
-		'SearchWhosOnline'   => AccountLevel::NORMAL,
-		'ViewOnlinePosition' => AccountLevel::NORMAL,
-		'EditAccountLevel'   => AccountLevel::ADMIN,
-		'EditAccountBalance' => AccountLevel::ADMIN,
+		'ViewAccount'        => AccountLevel::HIGHGM, // View another person's account details.
+		'ViewAccountBanLog'  => AccountLevel::HIGHGM, // View another person's account ban log.
+		'DeleteAccount'      => AccountLevel::ADMIN,  // (not yet implemented)
+		'DeleteCharacter'    => AccountLevel::ADMIN,  // (not yet implemented)
+		'SeeAccountPassword' => AccountLevel::ADMIN,  // If not using MD5, view another person's password in list.
+		'TempBanAccount'     => AccountLevel::LOWGM,  // Has ability to temporarily ban an account.
+		'TempUnbanAccount'   => AccountLevel::LOWGM,  // Has ability to remove a temporary ban on an account.
+		'PermBanAccount'     => AccountLevel::HIGHGM, // Has ability to permanently ban an account.
+		'PermUnbanAccount'   => AccountLevel::HIGHGM, // Has ability to remove a permanent ban on an account.
+		'SearchMD5Passwords' => AccountLevel::ADMIN,  // Ability to search MD5'd passwords in list.
+		'ViewCharacter'      => AccountLevel::HIGHGM, // View another person's character details.
+		'AddShopItem'        => AccountLevel::ADMIN,  // Ability to add an item to the shop.
+		'EditShopItem'       => AccountLevel::ADMIN,  // Ability to modify a shop item's details.
+		'DeleteShopItem'     => AccountLevel::ADMIN,  // Ability to remove an item for sale on the shop.
+		'ViewGuild'          => AccountLevel::ADMIN,  // Ability to view another guild's details.
+		'SearchWhosOnline'   => AccountLevel::NORMAL, // Ability to search the "Who's Online" page.
+		'ViewOnlinePosition' => AccountLevel::LOWGM,  // Ability to see a character's current map on "Who's Online" page.
+		'EditAccountLevel'   => AccountLevel::ADMIN,  // Ability to edit another person's account level.
+		'EditAccountBalance' => AccountLevel::ADMIN,  // Ability to edit another person's account balance.
+		'ModifyAccountPrefs' => AccountLevel::ADMIN,  // Ability to modify another person's account preferences.
+		'ModifyCharPrefs'    => AccountLevel::ADMIN,  // Ability to modify another person's character preferences.
 		
 		'EditHigherPower'    => 5000,
 		'BanHigherPower'     => 5000
