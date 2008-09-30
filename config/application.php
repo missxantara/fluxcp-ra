@@ -186,7 +186,9 @@ return array(
 		'RedemptionTable'     => 'cp_redeemlog',
 		'AccountCreateTable'  => 'cp_createlog',
 		'AccountBanTable'     => 'cp_banlog',
-		'DonationTrustTable'  => 'cp_trusted'
+		'DonationTrustTable'  => 'cp_trusted',
+		'AccountPrefsTable'   => 'cp_loginprefs',
+		'CharacterPrefsTable' => 'cp_charprefs'
 	),
 
 	// Do not change these unless you also rename the files in FLUX_ROOT/lib/eA/
