@@ -641,7 +641,7 @@ label:hover {
 }
 
 textarea {
-	width: 280px;
+	width: 320px;
 	height: 120px;
 }
 
@@ -815,4 +815,9 @@ textarea {
 	padding: 3px;
 	color: #80a2c8;
 	border-bottom: 1px solid #eee;
+}
+
+.button-action {
+	padding: 5px 0;
+	text-align: left;
 }

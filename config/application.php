@@ -90,7 +90,7 @@ return array(
 		'Server Status' => array('module' => 'server', 'action' => 'status'),
 		"Who's Online"  => array('module' => 'character', 'action' => 'online'),
 		'Log Data'      => array('module' => 'logdata'),
-		//'IP Ban List'   => array('module' => 'ipban'),
+		'IP Ban List'   => array('module' => 'ipban'),
 		'Accounts'      => array('module' => 'account'),
 		'Characters'    => array('module' => 'character'),
 		'Guilds'        => array('module' => 'guild'),
@@ -150,6 +150,10 @@ return array(
 		'donate' => array(
 			'index'   => 'Make a Donation',
 			'history' => 'Donation History'
+		),
+		'ipban' => array(
+			'index' => 'IP Ban List',
+			'add'   => 'Add IP Ban'
 		)
 	),
 	

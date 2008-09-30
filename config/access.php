@@ -96,6 +96,8 @@ return array(
 		),
 		'ipban'     => array(
 			'index'    => AccountLevel::ADMIN,
+			'add'      => AccountLevel::ADMIN,
+			'unban'    => AccountLevel::ADMIN
 		),
 		'service'   => array(
 			'tos'      => AccountLevel::ANYONE
