@@ -6,6 +6,9 @@
 	<tr>
 		<th>Item Name</th>
 		<th>Quantity</th>
+		<th>Cost</th>
+		<th>Balance (Before)</th>
+		<th>Balance (After)</th>
 		<th>Purchase Date</th>
 	</tr>
 	<?php foreach ($items as $item): ?>
@@ -18,6 +21,10 @@
 			<?php endif ?>
 		</td>
 		<td><?php echo number_format($item->quantity) ?></td>
+		<td><?php echo number_format($item->cost) ?></td>
+		<td><?php echo number_format($item->credits_before) ?></td>
+		<td><?php echo number_format($item->credits_after) ?></td>
+		
 		<td><?php echo $this->formatDateTime($item->purchase_date) ?></td>
 	</tr>
 	<?php endforeach ?>
