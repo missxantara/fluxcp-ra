@@ -12,8 +12,8 @@
 			<td></td>
 		</tr>
 		<tr>
-			<th><label>Slot Number</label></th>
-			<td><input type="text" name="slot"
+			<th><label for="slot">Slot Number</label></th>
+			<td><input type="text" name="slot" id="slot"
 					size="<?php echo strlen($server->maxCharSlots) * 2 ?>"
 					value="<?php echo (int)$char->char_num + 1 ?>"
 					maxlength="<?php echo strlen($server->maxCharSlots) ?>" /></td>
