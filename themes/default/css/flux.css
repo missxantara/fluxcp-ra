@@ -782,7 +782,7 @@ textarea {
 	padding: 6px;
 }
 
-.generic-form-table td label {
+.generic-form-table td div {
 	display: block;
 	padding: 6px 0;
 }

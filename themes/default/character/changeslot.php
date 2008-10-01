@@ -8,7 +8,7 @@
 	<table class="generic-form-table">
 		<tr>
 			<th><label>Character Name</label></th>
-			<td><label><?php echo htmlspecialchars($char->name) ?></label></td>
+			<td><div><?php echo htmlspecialchars($char->name) ?></div></td>
 			<td></td>
 		</tr>
 		<tr>
