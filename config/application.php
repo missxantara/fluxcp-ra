@@ -10,7 +10,7 @@ return array(
 	'MissingEmblemBMP'     => 'empty.bmp',              //
 	'SessionCookieExpire'  => 48,                       // Duration in hours.
 	'AdminMenuLevel'       => AccountLevel::LOWGM,      // The starting level for which module actions are moved into the admin menu for display.
-	'DateDefaultTimezone'  => 'America/Los_Angeles',    // The default timezone, consult the PHP manual for valid timezones: http://php.net/timezones
+	'DateDefaultTimezone'  => null,                     // The default timezone, consult the PHP manual for valid timezones: http://php.net/timezones (null for defaut system TZ)
 	'DateFormat'           => 'Y-m-d',                  // Default DATE format to be displayed in pages.
 	'DateTimeFormat'       => 'Y-m-d H:i:s',            // Default DATETIME format to be displayed in pages.
 	'ShowSinglePage'       => true,                     // Whether or not to show the page numbers even if there's only one page.
