@@ -59,7 +59,7 @@ if ($session->installerAuth) {
 				}
 				
 				if (!$updateNeeded) {
-					foreach ($server->servers as $charMapServer) {
+					foreach ($server->charMapServers as $charMapServer) {
 						foreach ($charMapServer->schemas as $schema) {
 							if (!$schema->isLatest()) {
 								$updateNeeded = true;
