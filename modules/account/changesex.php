@@ -23,6 +23,9 @@ if (count($_POST)) {
 	
 	$sth->execute(array($sex, $session->account->account_id));
 	
+	$changeTimes = (int)$session->loginServer->getPref($session->account->account_id, 'NumberOfGenderChanges');
+	$session->loginServer->setPref($session->account->account_id, 'NumberOfGenderChanges', $changeTimes + 1);
+	
 	if ($cost) {
 		$session->loginServer->depositCredits($session->account->account_id, -$cost);
 		$session->setMessageData(sprintf(Flux::message('GenderChanged'), $cost));
