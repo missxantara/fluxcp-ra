@@ -1,14 +1,17 @@
 <?php if (!defined('FLUX_ROOT')) exit; ?>
 <h2>Viewing Character</h2>
 <?php if ($char): ?>
+<?php
+$actions = array();
+if (($isMine || $auth->allowedToModifyCharPrefs) && $auth->actionAllowed('character', 'prefs')) {
+	$actions[] = sprintf('<a href="%s">Modify Preferences</a>', $this->url('character', 'prefs', array('id' => $char->char_id)));
+}
+if (($isMine || $auth->allowedToChangeSlot) && $auth->actionAllowed('character', 'changeslot')) {
+	$actions[] = sprintf('<a href="%s">Change Slot</a>', $this->url('character', 'changeslot', array('id' => $char->char_id)));
+}
+?>
 <h3>Character Information for “<?php echo htmlspecialchars($char->char_name) ?>”</h3>
-<p class="action">
-	<?php if (($isMine || $auth->allowedToModifyCharPrefs) && $auth->actionAllowed('character', 'prefs')): ?>
-	<a href="<?php echo $this->url('character', 'prefs', array('id' => $char->char_id)) ?>">
-		Modify Preferences
-	</a>
-	<?php endif ?>
-</p>
+<p class="action"><?php echo implode(' / ', $actions) ?></p>
 <table class="vertical-table">
 	<tr>
 		<th>Character ID</th>

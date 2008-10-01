@@ -782,6 +782,11 @@ textarea {
 	padding: 6px;
 }
 
+.generic-form-table td label {
+	display: block;
+	padding: 6px 0;
+}
+
 .generic-form-table th {
 	text-align: right;
 }

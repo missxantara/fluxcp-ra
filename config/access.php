@@ -47,7 +47,8 @@ return array(
 			'index'    => AccountLevel::LOWGM,
 			'view'     => AccountLevel::NORMAL,
 			'online'   => AccountLevel::NORMAL,
-			'prefs'    => AccountLevel::NORMAL
+			'prefs'    => AccountLevel::NORMAL,
+			'changeslot' => AccountLevel::NORMAL
 		),
 		'guild'     => array(
 			'emblem'   => AccountLevel::ANYONE,
@@ -141,6 +142,7 @@ return array(
 		'ModifyCharPrefs'    => AccountLevel::ADMIN,  // Ability to modify another person's character preferences.
 		'IgnoreHiddenPref'   => AccountLevel::HELPER, // Ability to see users on "Who's Online" page, hidden or not.
 		'IgnoreHiddenPref2'  => AccountLevel::HELPER, // Ability to see users on "Who's Online" page, hidden by app config or not.
+		'ChangeSlot'         => AccountLevel::LOWGM,  //
 		
 		'EditHigherPower'    => 5000,
 		'BanHigherPower'     => 5000
