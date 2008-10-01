@@ -75,6 +75,10 @@ return array(
 	'ShopImageExtensions'  => array(                    // These are the image extensions allowed for uploading in the item shop.
 		'png', 'jpg', 'gif', 'bmp', 'jpeg'
 	),
+	'CharRankingLimit'    => 20,                        //
+	'GuildRankingLimit'   => 20,                        //
+	'ZenyRankingLimit'    => 20,                        //
+	'RankingHideLevel'    => AccountLevel::LOWGM,       //
 	
 	// These are the main menu items that should be displayed by themes.
 	// They route to modules and actions.  Whether they are displayed or
@@ -99,7 +103,7 @@ return array(
 		//'Castles'       => array('module' => 'castle'),
 		//'Auction'       => array('module' => 'auction'),
 		//'Economy'       => array('module' => 'economy'),
-		//'Ranking'       => array('module' => 'ranking'),
+		'Ranking'       => array('module' => 'ranking'),
 		'Items'         => array('module' => 'item'),
 		'Monsters'      => array('module' => 'monster'),
 		//'Google'        => array('exturl' => 'http://www.google.com')
@@ -155,6 +159,11 @@ return array(
 		'ipban' => array(
 			'index' => 'IP Ban List',
 			'add'   => 'Add IP Ban'
+		),
+		'ranking' => array(
+			'character' => 'Character Ranking',
+			'guild'     => 'Guild Ranking',
+			'zeny'      => 'Zeny Ranking'
 		)
 	),
 	

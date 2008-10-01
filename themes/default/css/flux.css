@@ -376,13 +376,19 @@ label:hover {
 	border-bottom: 1px dotted #ccc;
 }
 
-.search-form p {
+.search-form2 {
+	margin: 0 0 10px 0;
+	padding: 5px 0 0 0;
+	border-bottom: 1px dotted #ccc;
+}
+
+.search-form p, .search-form2 p {
 	margin: 0 0 5px 0;
 	padding: 0;
 	color: #aaa;
 }
 
-.search-form label {
+.search-form label, .search-form2 label {
 	display: inline-block;
 	margin: 0 0 3px 0;
 	font-size: 8pt;
@@ -390,7 +396,7 @@ label:hover {
 	vertical-align: center;
 }
 
-.search-form input[type=text] {
+.search-form input[type=text], .search-form2 input[type=text] {
 	display: inline-block;
 	margin: 0 0 2px 0;
 	padding: 2px;
@@ -398,25 +404,26 @@ label:hover {
 	width: 80px;
 }
 
-.search-form input[type=submit] {
+.search-form input[type=submit], .search-form2 input[type=submit] {
 	display: inline-block;
 	margin: 0 0 2px 0;
 	font-size: 8pt;
 	font-weight: bold;
 }
 
-.search-form input[type=button], .search-form input[type=reset] {
+.search-form input[type=button], .search-form input[type=reset],
+.search-form2 input[type=button], .search-form2 input[type=reset] {
 	display: inline-block;
 	margin: 0 0 2px 0;
 	font-size: 8pt;
 }
 
-.search-form input[type=checkbox] {
+.search-form input[type=checkbox], .search-form2 input[type=checkbox] {
 	display: inline-block;
 	margin: 0 0 2px 0;
 }
 
-.search-form select {
+.search-form select, .search-form2 select {
 	display: inline-block;
 	margin: 2px 0;
 }
@@ -773,6 +780,12 @@ textarea {
 	width: auto;
 }
 
+.generic-form-div {
+	padding: 10px;
+	background-color: #fff;
+	border: 1px solid #ddd;
+	width: auto;
+}
 .generic-form-table th label {
 	display: block;
 	padding: 6px;
