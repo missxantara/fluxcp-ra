@@ -22,26 +22,35 @@ if (count($_POST) && $params->get('process')) {
 	$deduct      = 0;
 	
 	$sql  = "INSERT INTO {$server->charMapDatabase}.$redeemTable ";
-	$sql .= "(nameid, quantity, cost, account_id, char_id, redeemed, redemption_date, purchase_date) ";
-	$sql .= "VALUES (?, ?, ?, ?, NULL, 0, NULL, NOW())";
+	$sql .= "(nameid, quantity, cost, account_id, char_id, redeemed, redemption_date, purchase_date, credits_before, credits_after) ";
+	$sql .= "VALUES (?, ?, ?, ?, NULL, 0, NULL, NOW(), ?, ?)";
 	$sth  = $server->connection->getStatement($sql);
 	
+	$balance = $session->account->balance;
+	
 	foreach ($items as $item) {
+		$creditsAfter = $balance - $item->shop_item_cost;
+		
 		$res = $sth->execute(array(
 			$item->shop_item_nameid,
 			$item->shop_item_qty,
 			$item->shop_item_cost,
 			$session->account->account_id,
+			$balance,
+			$creditsAfter
 		));
 		
 		if ($res) {
-			$deduct += $item->shop_item_cost;
+			$deduct  += $item->shop_item_cost;
+			$balance -= $item->shop_item_cost;
 		}
 	}
 	
-	$sql = "UPDATE {$server->loginDatabase}.$creditTable SET balance = balance - ? WHERE account_id = ?";
-	$sth = $server->connection->getStatement($sql);
-	$sth->execute(array($deduct, $session->account->account_id));
+	//$sql = "UPDATE {$server->loginDatabase}.$creditTable SET balance = balance - ? WHERE account_id = ?";
+	//$sth = $server->connection->getStatement($sql);
+	//$sth->execute(array($deduct, $session->account->account_id));
+	
+	$session->loginServer->depositCredits($session->account->account_id, -$deduct);
 	
 	if ($res) {
 		if (!$deduct) {
