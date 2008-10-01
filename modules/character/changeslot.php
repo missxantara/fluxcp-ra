@@ -11,6 +11,8 @@ if (!$charID) {
 
 $char = $server->getCharacter($charID);
 if ($char) {
+	$title = "Change Slot for {$char->name}";
+	
 	if ($char->account_id != $session->account->account_id && !$auth->allowedToChangeSlot) {
 		$this->deny();
 	}
