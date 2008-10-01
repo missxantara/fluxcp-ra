@@ -454,7 +454,7 @@ label:hover {
 }
 
 #server_status th, #server_status td {
-	padding: 5px 8px 5px 8px;
+	padding: 8px 12px 8px 12px;
 	text-align: left;
 	border-bottom: 1px solid #ddd;	
 }
@@ -462,12 +462,8 @@ label:hover {
 #server_status {
 	border-spacing: 0;
 	border-collapse: collapse;
-}
-
-#server_status th {
-	background-color: #eee;
-	color: #aaa;
-	text-align: center;
+	background-color: #fff;
+	border: 1px solid #ddd;
 }
 
 #server_status .server {

@@ -691,7 +691,7 @@ class Flux_Template {
 	public function serverUpDown($bool)
 	{
 		$class = $bool ? 'up' : 'down';
-		return sprintf('<span class="%s">%s</span>', $class, $bool ? 'Up' : 'Down');
+		return sprintf('<span class="%s">%s</span>', $class, $bool ? 'Online' : 'Offline');
 	}
 	
 	/**

@@ -3,14 +3,11 @@
 <table id="server_status">
 <?php foreach ($serverStatus as $privServerName => $gameServers): ?>
 	<tr>
-		<td colspan="5"><h3><?php echo htmlspecialchars($privServerName) ?></h3></td>
-	</tr>
-	<tr>
-		<th>Servers</th>
-		<td class="status">Login</td>
-		<td class="status">Char</td>
-		<td class="status">Map</td>
-		<td class="status">Online</td>
+		<td class="status">Server</td>
+		<td class="status">Login Server</td>
+		<td class="status">Character Server</td>
+		<td class="status">Map Server</td>
+		<td class="status">Players Online</td>
 	</tr>
 	<?php foreach ($gameServers as $serverName => $gameServer): ?>
 	<tr>
