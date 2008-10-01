@@ -41,6 +41,10 @@ if (count($_POST)) {
 				$errorMessage = Flux::message('PermanentlyBanned');
 				break;
 				
+			case Flux_LoginError::IPBANNED:
+				$errorMessage = Flux::message('IpBanned');
+				break;
+				
 			default:
 				$errorMessage = Flux::message('CriticalLoginError');
 				break;

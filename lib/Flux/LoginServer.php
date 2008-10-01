@@ -458,5 +458,42 @@ class Flux_LoginServer extends Flux_BaseServer {
 	{
 		return $this->setPrefs($accountID, array($pref => $value));
 	}
+	
+	/**
+	 *
+	 */
+	public function isIpBanned($ip = null)
+	{
+		if (is_null($ip)) {
+			$ip = $_SERVER['REMOTE_ADDR'];
+		}
+		
+		$ip = trim($ip);
+		if (!preg_match('/^(\d{1,3})\.(\d{1,3})\.(\d{1,3})\.(\d{1,3})$/', $ip, $m)) {
+			// Invalid IP.
+			return false;
+		}
+		
+		$sql  = "SELECT list FROM {$this->loginDatabase}.ipbanlist WHERE ";
+		$sql .= "rtime > NOW() AND (list = ? OR list = ? OR list = ? OR list = ?) LIMIT 1";
+		$sth  = $this->connection->getStatement($sql);
+		
+		$list = array(
+			sprintf('%u.*.*.*', $m[1]),
+			sprintf('%u.%u.*.*', $m[1], $m[2]),
+			sprintf('%u.%u.%u.*', $m[1], $m[2], $m[3]),
+			sprintf('%u.%u.%u.%u', $m[1], $m[2], $m[3], $m[4])
+		);
+		
+		$sth->execute($list);
+		$ipban = $sth->fetch();
+		
+		if ($ipban) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
 }
 ?>

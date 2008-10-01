@@ -234,6 +234,10 @@ class Flux_SessionData {
 			throw new Flux_LoginError('Invalid server.', Flux_LoginError::INVALID_SERVER);
 		}
 		
+		if ($loginAthenaGroup->loginServer->isIpBanned() && !Flux::config('AllowIpBanLogin')) {
+			throw new Flux_LoginError('IP address is banned', Flux_LoginError::IPBANNED);
+		}
+		
 		if (!$loginAthenaGroup->isAuth($username, $password)) {
 			throw new Flux_LoginError('Invalid login', Flux_LoginError::INVALID_LOGIN);
 		}

@@ -7,5 +7,6 @@ class Flux_LoginError extends Flux_Error {
 	const INVALID_LOGIN  = 2;
 	const BANNED         = 3;
 	const PERMABANNED    = 4;
+	const IPBANNED       = 5;
 }
 ?>
