@@ -103,7 +103,7 @@ return array(
 		//'Castles'       => array('module' => 'castle'),
 		//'Auction'       => array('module' => 'auction'),
 		//'Economy'       => array('module' => 'economy'),
-		'Ranking'       => array('module' => 'ranking'),
+		'Ranking'       => array('module' => 'ranking', 'action' => 'character'),
 		'Items'         => array('module' => 'item'),
 		'Monsters'      => array('module' => 'monster'),
 		//'Google'        => array('exturl' => 'http://www.google.com')
