@@ -11,6 +11,9 @@
 			<th><?php echo $paginator->sortableColumn('btime', 'Ban Date') ?></th>
 			<th><?php echo $paginator->sortableColumn('reason', 'Ban Reason') ?></th>
 			<th><?php echo $paginator->sortableColumn('rtime', 'Ban Expiration Date') ?></th>
+			<?php if ($auth->allowedToModifyIpBan && $auth->actionAllowed('ipban', 'edit')): ?>
+			<th>Modify</th>
+			<?php endif ?>
 		</tr>
 		<?php foreach ($banlist as $list): ?>
 		<tr>
@@ -33,6 +36,9 @@
 					<?php echo $this->formatDateTime($list->rtime) ?>
 				<?php endif ?>
 			</td>
+			<?php if ($auth->allowedToModifyIpBan && $auth->actionAllowed('ipban', 'edit')): ?>
+			<td class="td-action action"><a href="<?php echo $this->url('ipban', 'edit', array('list' => $list->list)) ?>">Modify</a></td>
+			<?php endif ?>
 		</tr>
 		<?php endforeach ?>
 	</table>

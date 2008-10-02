@@ -100,7 +100,8 @@ return array(
 		'ipban'     => array(
 			'index'    => AccountLevel::ADMIN,
 			'add'      => AccountLevel::ADMIN,
-			'unban'    => AccountLevel::ADMIN
+			'unban'    => AccountLevel::ADMIN,
+			'edit'     => AccountLevel::ADMIN
 		),
 		'service'   => array(
 			'tos'      => AccountLevel::ANYONE
@@ -145,6 +146,7 @@ return array(
 		'IgnoreHiddenPref'   => AccountLevel::HELPER, // Ability to see users on "Who's Online" page, hidden or not.
 		'IgnoreHiddenPref2'  => AccountLevel::HELPER, // Ability to see users on "Who's Online" page, hidden by app config or not.
 		'ChangeSlot'         => AccountLevel::LOWGM,  //
+		'ModifyIpBan'        => AccountLevel::ADMIN,  //
 		
 		'EditHigherPower'    => 5000,
 		'BanHigherPower'     => 5000
