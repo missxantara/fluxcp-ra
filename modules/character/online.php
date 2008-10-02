@@ -1,8 +1,6 @@
 <?php
 if (!defined('FLUX_ROOT')) exit;
 
-$this->loginRequired();
-
 $title = "Who's Online";
 
 $charPrefsTable = Flux::config('FluxTables.CharacterPrefsTable');

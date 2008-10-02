@@ -46,7 +46,7 @@ return array(
 		'character' => array(
 			'index'    => AccountLevel::LOWGM,
 			'view'     => AccountLevel::NORMAL,
-			'online'   => AccountLevel::NORMAL,
+			'online'   => AccountLevel::ANYONE,
 			'prefs'    => AccountLevel::NORMAL,
 			'changeslot' => AccountLevel::NORMAL
 		),
@@ -136,7 +136,7 @@ return array(
 		'EditShopItem'       => AccountLevel::ADMIN,  // Ability to modify a shop item's details.
 		'DeleteShopItem'     => AccountLevel::ADMIN,  // Ability to remove an item for sale on the shop.
 		'ViewGuild'          => AccountLevel::ADMIN,  // Ability to view another guild's details.
-		'SearchWhosOnline'   => AccountLevel::NORMAL, // Ability to search the "Who's Online" page.
+		'SearchWhosOnline'   => AccountLevel::ANYONE, // Ability to search the "Who's Online" page.
 		'ViewOnlinePosition' => AccountLevel::HELPER, // Ability to see a character's current map on "Who's Online" page.
 		'EditAccountLevel'   => AccountLevel::ADMIN,  // Ability to edit another person's account level.
 		'EditAccountBalance' => AccountLevel::ADMIN,  // Ability to edit another person's account balance.

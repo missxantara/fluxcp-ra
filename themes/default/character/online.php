@@ -1,9 +1,9 @@
 <?php if (!defined('FLUX_ROOT')) exit; ?>
 <h2>Who's Online?</h2>
 <?php if ($chars): ?>
-<p>Showing players on-line <?php echo htmlspecialchars($server->serverName) ?>.</p>
+<h3>Showing players on-line <?php echo htmlspecialchars($server->serverName) ?>.</h3>
 <?php if ($auth->allowedToSearchWhosOnline): ?>
-	<form action="<?php echo $this->url ?>" method="get" class="search-form">
+	<form action="<?php echo $this->url ?>" method="get" class="search-form2">
 		<?php echo $this->moduleActionFormInputs($params->get('module'), $params->get('action')) ?>
 		<p>Search for on-line character(s):</p>
 		<p>
