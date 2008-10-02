@@ -5,6 +5,7 @@
 	<?php if (!is_null($jobClass)): ?>
 	(<?php echo htmlspecialchars($this->jobClassText($jobClass)) ?>)
 	<?php endif ?>
+	on <?php echo htmlspecialchars($server->serverName) ?>
 </h3>
 <?php if ($chars): ?>
 <form action="" method="get" class="search-form2">

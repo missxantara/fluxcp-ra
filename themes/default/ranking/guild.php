@@ -1,6 +1,9 @@
 <?php if (!defined('FLUX_ROOT')) exit; ?>
 <h2>Guild Ranking</h2>
-<h3>Top <?php echo number_format($limit=(int)Flux::config('CharRankingLimit')) ?> Guilds</h3>
+<h3>
+	Top <?php echo number_format($limit=(int)Flux::config('CharRankingLimit')) ?> Guilds
+	on <?php echo htmlspecialchars($server->serverName) ?>
+</h3>
 <?php if ($guilds): ?>
 	<table class="horizontal-table">
 		<tr>
