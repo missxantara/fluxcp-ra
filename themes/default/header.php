@@ -98,13 +98,13 @@
 					<table cellspacing="0" cellpadding="0" width="100%" id="content">
 						<tr>
 							<td width="18"><img src="<?php echo $this->themePath('img/content_tl.gif') ?>" style="display: block"  /></td>
-							<td bgcolor="#f8f8f8"></td>
+							<td bgcolor="#f5f5f5"></td>
 							<td width="18"><img src="<?php echo $this->themePath('img/content_tr.gif') ?>" style="display: block" /></td>
 						</tr>
 						
 						<tr>
-							<td bgcolor="#f8f8f8"></td>
-							<td bgcolor="#f8f8f8">
+							<td bgcolor="#f5f5f5"></td>
+							<td bgcolor="#f5f5f5">
 								<!-- Messages -->
 								<?php if ($message=$session->getMessage()): ?>
 									<p class="message"><?php echo htmlspecialchars($message) ?></p>
