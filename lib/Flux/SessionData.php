@@ -82,11 +82,31 @@ class Flux_SessionData {
 				$this->$method(null);
 			}
 		}
+
+		$loggedIn = true;
+		if (!$this->serverName) {
+			$loggedIn = false;
+			$cfgAthenaServerName = Flux::config('DefaultCharMapServer');
+			$cfgLoginAthenaGroup = Flux::config('DefaultLoginGroup');
+			
+			if (Flux::getServerGroupByName($cfgLoginAthenaGroup)){
+				$this->setServerNameData($cfgLoginAthenaGroup);
+			}
+			else {
+				$defaultServerName = current(array_keys(Flux::$loginAthenaGroupRegistry));
+				$this->setServerNameData($defaultServerName);
+			}
+		}
+		
 		
 		if ($this->serverName && ($this->loginAthenaGroup = Flux::getServerGroupByName($this->serverName))) {
 			$this->loginServer = $this->loginAthenaGroup->loginServer;
 			
-			if (!$this->athenaServerName || !$this->getAthenaServer($this->athenaServerName)) {
+			if (!$loggedIn && $cfgAthenaServerName && $this->getAthenaServer($cfgAthenaServerName)) {
+				$this->setAthenaServerNameData($cfgAthenaServerName);
+			}
+			
+			if (!$this->athenaServerName && ((!$loggedIn && !$this->getAthenaServer($cfgAthenaServerName)) || !$this->getAthenaServer($this->athenaServerName))) {
 				$this->setAthenaServerNameData(current($this->getAthenaServerNames()));
 			}
 		}
@@ -106,6 +126,11 @@ class Flux_SessionData {
 		else {
 			$this->account = new Flux_DataObject(null, array('level' => AccountLevel::UNAUTH));
 		}
+		
+		//if (!$this->isLoggedIn()) {
+		//	$this->setServerNameData(null);
+		//	$this->setAthenaServerNameData(null);
+		//}
 		
 		if (!is_array($this->cart)) {
 			$this->setCartData(array());

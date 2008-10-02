@@ -66,9 +66,9 @@ return array(
 			'index'    => AccountLevel::LOWGM
 		),
 		'ranking'   => array(
-			'character' => AccountLevel::NORMAL,
-			'guild'     => AccountLevel::NORMAL,
-			'zeny'      => AccountLevel::NORMAL
+			'character' => AccountLevel::ANYONE,
+			'guild'     => AccountLevel::ANYONE,
+			'zeny'      => AccountLevel::ANYONE
 		),
 		'item'      => array(
 			'index'    => AccountLevel::NORMAL,

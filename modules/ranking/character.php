@@ -1,8 +1,6 @@
 <?php
 if (!defined('FLUX_ROOT')) exit;
 
-$this->loginRequired();
-
 $title    = 'Character Ranking';
 $classes  = Flux::config('JobClasses')->toArray();
 $jobClass = $params->get('jobclass');

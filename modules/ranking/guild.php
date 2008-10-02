@@ -1,8 +1,6 @@
 <?php
 if (!defined('FLUX_ROOT')) exit;
 
-$this->loginRequired();
-
 $title = 'Guild Ranking';
 
 $col  = "g.guild_id, g.name, g.guild_lv, g.exp, ";

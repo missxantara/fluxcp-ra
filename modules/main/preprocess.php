@@ -53,16 +53,15 @@ if ($params->get('merchant_return_link') && $ppReturn['txn_id'] && $ppReturn['tx
 	$this->redirect($this->url('donate', 'complete'));
 }
 
-if ($session->isLoggedIn()) {
-	// Update preferred server.
-	if (($preferred_server = $params->get('preferred_server')) && $session->getAthenaServer($preferred_server)) {
-		$session->setAthenaServerNameData($params->get('preferred_server'));
-		if (!array_key_exists('preferred_server', $_GET)) {
-			$this->redirect($this->url);
-		}
-	}
 
-	// Preferred server.
-	$server = $session->getAthenaServer();
+// Update preferred server.
+if (($preferred_server = $params->get('preferred_server')) && $session->getAthenaServer($preferred_server)) {
+	$session->setAthenaServerNameData($params->get('preferred_server'));
+	if (!array_key_exists('preferred_server', $_GET)) {
+		$this->redirect($this->url);
+	}
 }
+
+// Preferred server.
+$server = $session->getAthenaServer();
 ?>

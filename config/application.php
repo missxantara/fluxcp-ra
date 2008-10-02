@@ -5,6 +5,8 @@ return array(
 	'ServerAddress'        => 'localhost',              // This value is the hostname:port under which Flux runs. (e.g., example.com or example.com:80)
 	'BaseURI'              => '/~kuja/flux',            // The base URI is the base web root on which your application lies.
 	'InstallerPassword'    => 'secretpassword',         // Installer/updater password.
+	'DefaultLoginGroup'    => null,
+	'DefaultCharMapServer' => null,
 	'SiteTitle'            => 'Flux Control Panel',     // This value is only used if the theme decides to use it.
 	'ThemeName'            => 'default',                // The theme name of the theme you would like to use.  Themes are in FLUX_ROOT/themes.
 	'MissingEmblemBMP'     => 'empty.bmp',              //
