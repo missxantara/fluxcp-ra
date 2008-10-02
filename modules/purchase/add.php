@@ -1,7 +1,7 @@
 <?php
 if (!defined('FLUX_ROOT')) exit;
 
-$this->loginRequired();
+$this->loginRequired('Please log-in to add items to your cart.');
 
 require_once 'Flux/ItemShop.php';
 

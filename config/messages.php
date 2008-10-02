@@ -23,7 +23,6 @@ return array(
 	'IpBanned'                => 'The IP address you are behind is banned.',
 	'FoundSearchResults'      => 'Found a total of %d record(s) across %d page(s).  Displaying result(s) %d-%d.',
 	'LoginToDonate'           => 'Please log-in to make a donation.',
-	'LoginToPurchase'         => 'Please log-in to purchase items in the item shop.',
 	'LoginPageMakeAccount'    => 'Don\'t have an account? <a href="%s">Create one!</a>',
 	'NeedCurrentPassword'     => 'Please enter your current password.',
 	'NeedNewPassword'         => 'Please enter your new password.',

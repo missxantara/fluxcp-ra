@@ -18,7 +18,7 @@ return array(
 		),
 		'purchase'  => array(
 			'index'    => AccountLevel::ANYONE,
-			'add'      => AccountLevel::NORMAL,
+			'add'      => AccountLevel::ANYONE,
 			'clear'    => AccountLevel::NORMAL,
 			'cart'     => AccountLevel::NORMAL,
 			'checkout' => AccountLevel::NORMAL,
