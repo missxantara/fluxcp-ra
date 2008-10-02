@@ -84,7 +84,7 @@ class Flux_SessionData {
 		}
 
 		$loggedIn = true;
-		if (!$this->serverName) {
+		if (!$this->username) {
 			$loggedIn = false;
 			$cfgAthenaServerName = Flux::config('DefaultCharMapServer');
 			$cfgLoginAthenaGroup = Flux::config('DefaultLoginGroup');
