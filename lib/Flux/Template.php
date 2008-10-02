@@ -1171,11 +1171,11 @@ class Flux_Template {
 	 */
 	public function shopItemImage($shopItemID, $serverName = null, $athenaServerName = null)
 	{
-		if (Flux::$sessionData->isLoggedIn() && !$serverName) {
+		if ($serverName) {
 			$serverName = Flux::$sessionData->loginAthenaGroup->serverName;
 		}
 		
-		if (Flux::$sessionData->isLoggedIn() && !$athenaServerName) {
+		if ($athenaServerName) {
 			$athenaServerName = Flux::$sessionData->getAthenaServer(Flux::$sessionData->athenaServerName);
 		}
 		
