@@ -43,7 +43,7 @@
 		<td><strong><?php echo htmlspecialchars($chars[$i]->char_name) ?></strong></td>
 		<td><?php echo $this->jobClassText($chars[$i]->char_class) ?></td>
 		<?php if ($chars[$i]->guild_name): ?>
-		<td><img src="<?php echo $this->emblem($chars[$i]->guild_id) ?>" /></td>
+		<td width="24"><img src="<?php echo $this->emblem($chars[$i]->guild_id) ?>" /></td>
 		<td><?php echo htmlspecialchars($chars[$i]->guild_name) ?></td>
 		<?php else: ?>
 		<td colspan="2"><span class="not-applicable">None</span></td>
