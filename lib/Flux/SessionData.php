@@ -106,7 +106,7 @@ class Flux_SessionData {
 				$this->setAthenaServerNameData($cfgAthenaServerName);
 			}
 			
-			if (!$this->athenaServerName && ((!$loggedIn && !$this->getAthenaServer($cfgAthenaServerName)) || !$this->getAthenaServer($this->athenaServerName))) {
+			if (!$this->athenaServerName || ((!$loggedIn && !$this->getAthenaServer($cfgAthenaServerName)) || !$this->getAthenaServer($this->athenaServerName))) {
 				$this->setAthenaServerNameData(current($this->getAthenaServerNames()));
 			}
 		}
