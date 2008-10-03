@@ -469,7 +469,7 @@ if (($isMine || $auth->allowedToChangeSlot) && $auth->actionAllowed('character',
 			<td>
 				<?php if($cart_item->card0 && ($cart_item->type == 4 || $cart_item->type == 5)): ?>
 					<?php if (!empty($cart_cards[$cart_item->card0])): ?>
-						<?php echo $this->linkToItem($cart_item->card0, $cards[$cart_item->card0]) ?>
+						<?php echo $this->linkToItem($cart_item->card0, $cart_cards[$cart_item->card0]) ?>
 					<?php else: ?>
 						<?php echo $this->linkToItem($cart_item->card0, $cart_item->card0) ?>
 					<?php endif ?>
@@ -480,7 +480,7 @@ if (($isMine || $auth->allowedToChangeSlot) && $auth->actionAllowed('character',
 			<td>
 				<?php if($cart_item->card1 && ($cart_item->type == 4 || $cart_item->type == 5)): ?>
 					<?php if (!empty($cart_cards[$cart_item->card1])): ?>
-						<?php echo $this->linkToItem($cart_item->card1, $cards[$cart_item->card1]) ?>
+						<?php echo $this->linkToItem($cart_item->card1, $cart_cards[$cart_item->card1]) ?>
 					<?php else: ?>
 						<?php echo $this->linkToItem($cart_item->card1, $cart_item->card1) ?>
 					<?php endif ?>
