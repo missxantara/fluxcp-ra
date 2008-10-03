@@ -37,7 +37,7 @@ if (!is_null($jobClass)) {
 }
 
 $sql .= "ORDER BY ch.zeny DESC, ch.base_level DESC, ch.base_exp DESC, ch.job_level DESC, ch.job_exp DESC, ch.char_id ASC ";
-$sql .= "LIMIT ".(int)Flux::config('CharRankingLimit');
+$sql .= "LIMIT ".(int)Flux::config('ZenyRankingLimit');
 $sth  = $server->connection->getStatement($sql);
 
 $sth->execute($bind);
