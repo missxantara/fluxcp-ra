@@ -85,6 +85,13 @@
 			<option value="yes"<?php if ($for_sale == 'yes') echo ' selected="selected"' ?>>Yes</option>
 			<option value="no"<?php if ($for_sale == 'no') echo ' selected="selected"' ?>>No</option>
 		</select>
+		…
+		<label for="custom">Custom:</label>
+		<select name="custom" id="custom">
+			<option value=""<?php if (!($custom=$params->get('custom'))) echo ' selected="selected"' ?>>All</option>
+			<option value="yes"<?php if ($custom == 'yes') echo ' selected="selected"' ?>>Yes</option>
+			<option value="no"<?php if ($custom == 'no') echo ' selected="selected"' ?>>No</option>
+		</select>
 		
 		<input type="submit" value="Search" />
 		<input type="button" value="Reset" onclick="reload()" />
@@ -94,7 +101,7 @@
 <?php echo $paginator->infoText() ?>
 <table class="horizontal-table">
 	<tr>
-		<th><?php echo $paginator->sortableColumn('id', 'Item ID') ?></th>
+		<th><?php echo $paginator->sortableColumn('item_id', 'Item ID') ?></th>
 		<th><?php echo $paginator->sortableColumn('name', 'Name') ?></th>
 		<th>Type</th>
 		<th><?php echo $paginator->sortableColumn('price_buy', 'NPC Buy') ?></th>
@@ -106,6 +113,7 @@
 		<th><?php echo $paginator->sortableColumn('slots', 'Slots') ?></th>
 		<th><?php echo $paginator->sortableColumn('refineable', 'Refineable') ?></th>
 		<th><?php echo $paginator->sortableColumn('cost', 'For Sale') ?></th>
+		<th><?php echo $paginator->sortableColumn('origin_table', 'Custom') ?></th>
 	</tr>
 	<?php foreach ($items as $item): ?>
 	<tr>
@@ -137,6 +145,13 @@
 				<span class="for-sale yes"><a href="<?php echo $this->url('purchase') ?>" title="Go to Item Shop">Yes</a></span>
 			<?php else: ?>
 				<span class="for-sale no">No</span>
+			<?php endif ?>
+		</td>
+		<td>
+			<?php if (preg_match('/item_db2$/', $item->origin_table)): ?>
+				Yes
+			<?php else: ?>
+				No
 			<?php endif ?>
 		</td>
 	</tr>

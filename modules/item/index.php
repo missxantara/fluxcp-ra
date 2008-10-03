@@ -44,6 +44,7 @@ try {
 		$slotsOp      = $params->get('slots_op');
 		$refineable   = $params->get('refineable');
 		$forSale      = $params->get('for_sale');
+		$custom       = $params->get('custom');
 		
 		if ($itemName) {
 			$sqlpartial .= "AND (name_japanese LIKE ? OR name_japanese = ?) ";
@@ -167,6 +168,15 @@ try {
 				$sqlpartial .= "AND IFNULL($shopTable.cost, 0) < 1 ";
 			}
 		}
+		
+		if ($custom) {
+			if ($custom == 'yes') {
+				$sqlpartial .= "AND origin_table LIKE '%item_db2' ";
+			}
+			elseif ($custom == 'no') {
+				$sqlpartial .= "AND origin_table LIKE '%item_db' ";
+			}
+		}
 	}
 	
 	// Get total count and feed back to the paginator.
@@ -176,7 +186,7 @@ try {
 	$paginator = $this->getPaginator($sth->fetch()->total);
 	$paginator->setSortableColumns(array(
 		'item_id' => 'asc', 'name', 'type', 'price_buy', 'price_sell', 'weight', 'attack', 'defense',
-		'range', 'slots', 'refineable', 'cost'
+		'range', 'slots', 'refineable', 'cost', 'origin_table'
 	));
 	
 	$col  = "origin_table, items.id AS item_id, name_japanese AS name, type, price_buy, price_sell, weight, attack,  ";
