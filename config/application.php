@@ -85,6 +85,9 @@ return array(
 	'HideTempBannedCharRank'  => false,                  // Hide temporarily banned characters from ranking.
 	'HidePermBannedCharRank'  => true,                   // Hide permanently banned characters from ranking.
 	
+	'HideTempBannedZenyRank'  => false,                  // Hide temporarily banned characters from ranking.
+	'HidePermBannedZenyRank'  => true,                   // Hide permanently banned characters from ranking.
+	
 	// These are the main menu items that should be displayed by themes.
 	// They route to modules and actions.  Whether they are displayed or
 	// not at any given time depends on the user's account level and/or
