@@ -16,7 +16,15 @@ $col .= "ch.guild_id, guild.name AS guild_name";
 $sql  = "SELECT $col FROM {$server->charMapDatabase}.`char` AS ch ";
 $sql .= "LEFT JOIN {$server->charMapDatabase}.guild ON guild.guild_id = ch.guild_id ";
 $sql .= "LEFT JOIN {$server->loginDatabase}.login ON login.account_id = ch.account_id ";
-$sql .= "WHERE login.state != 5 AND (login.unban_time IS NULL OR login.unban_time = 0) ";
+$sql .= "WHERE 1=1 ";
+
+if (Flux::config('HidePermBannedCharRank')) {
+	$sql .= "AND login.state != 5 ";
+}
+if (Flux::config('HideTempBannedCharRank')) {
+	$sql .= "AND (login.unban_time IS NULL OR login.unban_time = 0) ";
+}
+
 $sql .= "AND login.level < ? ";
 
 if (!is_null($jobClass)) {
