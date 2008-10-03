@@ -9,8 +9,9 @@
 		<tr>
 			<th>Rank</th>
 			<th colspan="2">Guild Name</th>
-			<th>Level</th>
+			<th>Guild Level</th>
 			<th>Members</th>
+			<th>Average Level</th>
 			<th>Experience</th>
 		</tr>
 		<?php for ($i = 0; $i < $limit; ++$i): ?>
@@ -21,6 +22,7 @@
 			<td><strong><?php echo htmlspecialchars($guilds[$i]->name) ?></strong></td>
 			<td><?php echo number_format($guilds[$i]->guild_lv) ?></td>
 			<td><?php echo number_format($guilds[$i]->members) ?></td>
+			<td><?php echo number_format($guilds[$i]->average_lv) ?></td>
 			<td><?php echo number_format($guilds[$i]->exp) ?></td>
 			<?php else: ?>
 			<td colspan="8"></td>
