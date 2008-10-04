@@ -18,11 +18,13 @@
 			<td><input type="checkbox" name="hide_map_from_whos_online" id="hide_map_from_whos_online"<?php if ($hideMapFromWhosOnline) echo ' checked="checked"' ?> /></td>
 			<td><p>This will hide <?php echo $charName ?>'s current location from the "Who's Online" page.</p></td>
 		</tr>
+		<?php if ($auth->allowedToHideFromZenyRank): ?>
 		<tr>
 			<th><label for="hide_from_zeny_ranking">Hide Character From "Zeny Ranking"</label></th>
 			<td><input type="checkbox" name="hide_from_zeny_ranking" id="hide_from_zeny_ranking"<?php if ($hideFromZenyRanking) echo ' checked="checked"' ?> /></td>
 			<td><p>This will hide <?php echo $charName ?> from the "Zeny Ranking" page.</p></td>
 		</tr>
+		<?php endif ?>
 		<tr>
 			<td align="right"><p><input type="submit" value="Modify Preferences" /></p></td>
 			<td colspan="2"></td>

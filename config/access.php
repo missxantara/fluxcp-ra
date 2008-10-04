@@ -147,6 +147,7 @@ return array(
 		'IgnoreHiddenPref2'  => AccountLevel::HELPER, // Ability to see users on "Who's Online" page, hidden by app config or not.
 		'ChangeSlot'         => AccountLevel::LOWGM,  //
 		'ModifyIpBan'        => AccountLevel::ADMIN,  //
+		'HideFromZenyRank'   => AccountLevel::NORMAL, // Ability to set "Hide from zeny ranking" pref.
 		
 		'EditHigherPower'    => 5000,
 		'BanHigherPower'     => 5000

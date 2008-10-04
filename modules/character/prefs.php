@@ -22,11 +22,15 @@ if ($char) {
 	$hideFromZenyRanking   = $prefs->get('HideFromZenyRanking');
 	
 	if (count($_POST)) {
-		$res = $server->setPrefs($charID, array(
-			'HideFromWhosOnline'    => $params->get('hide_from_whos_online') ? 1 : null,
-			'HideMapFromWhosOnline' => $params->get('hide_map_from_whos_online') ? 1 : null,
-			'HideFromZenyRanking'   => $params->get('hide_from_zeny_ranking') ? 1 : null
-		));
+		$set = array();
+		$set['HideFromWhosOnline']    = $params->get('hide_from_whos_online') ? 1 : null;
+		$set['HideMapFromWhosOnline'] = $params->get('hide_map_from_whos_online') ? 1 : null;
+		
+		if ($auth->allowedToHideFromZenyRank) {
+			$set['HideFromZenyRanking'] = $params->get('hide_from_zeny_ranking') ? 1 : null;
+		}
+		
+		$res = $server->setPrefs($charID, $set);
 		
 		if ($res) {
 			$session->setMessageData('Preferences have been modified.');

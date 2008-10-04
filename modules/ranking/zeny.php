@@ -20,7 +20,7 @@ $sql .= "LEFT JOIN {$server->charMapDatabase}.$charPrefsTable AS hide_from_zr ON
 $sql .= "(hide_from_zr.name = 'HideFromZenyRanking' AND hide_from_zr.char_id = ch.char_id) ";
 $sql .= "LEFT JOIN {$server->charMapDatabase}.guild ON guild.guild_id = ch.guild_id ";
 $sql .= "LEFT JOIN {$server->loginDatabase}.login ON login.account_id = ch.account_id ";
-$sql .= "WHERE (hide_from_zr.value IS NULL OR hide_from_zr.value = 0) ";
+$sql .= "WHERE 1=1 ";
 
 if (Flux::config('HidePermBannedZenyRank')) {
 	$sql .= "AND login.state != 5 ";
@@ -30,6 +30,11 @@ if (Flux::config('HideTempBannedZenyRank')) {
 }
 
 $sql .= "AND login.level < ? ";
+
+// Whether or not the character is allowed to hide themselves from the Zeny Ranking.
+$sql .= "AND (((hide_from_zr.value IS NULL OR hide_from_zr.value = 0) AND login.level >= ?) OR login.level < ?) ";
+$bind[] = $auth->getLevelToHideFromZenyRank;
+$bind[] = $auth->getLevelToHideFromZenyRank;
 
 if (!is_null($jobClass)) {
 	$sql .= "AND ch.class = ? ";
