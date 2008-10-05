@@ -3,7 +3,7 @@
 	 *********************************************/
 
 body {
-	margin: 0;
+	margin: 0 0 20px 0;
 	padding: 0;
 	font-family: "Lucida Grande", "Lucida Sans", Verdana, Tahoma, sans-serif;
 	font-size: 10pt;
@@ -18,6 +18,12 @@ table {
 
 tr, td, th {
 	vertical-align: top;
+}
+
+.horizontal-table tr, .vertical-table tr, .generic-form-table tr,
+.horizontal-table td, .vertical-table td, .generic-form-table td,
+.horizontal-table th, .vertical-table th, .generic-form-table th {
+	vertical-align: middle;
 }
 
 h2 {
@@ -482,10 +488,19 @@ label:hover {
 
 #copyright p {
 	margin-top: 5px;
-	margin-bottom: 20px;
+	margin-bottom: 0px;
 	font-style: italic;
 	font-size: 8pt;
 	color: #ccc;
+	text-align: right;
+}
+
+#info p {
+	margin-top: 5px;
+	margin-bottom: 0px;
+	font-style: italic;
+	font-size: 8pt;
+	color: #aaa;
 	text-align: right;
 }
 
