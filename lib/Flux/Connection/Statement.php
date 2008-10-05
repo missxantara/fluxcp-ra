@@ -18,6 +18,7 @@ class Flux_Connection_Statement {
 	public function execute(array $inputParameters = array())
 	{
 		$res = $this->stmt->execute($inputParameters);
+		Flux::$numberOfQueries++;
 		if ((int)$this->stmt->errorCode()) {
 			$info = $this->stmt->errorInfo();
 			self::$errorLog->puts('[SQLSTATE=%s] Err %s: %s', $info[0], $info[1], $info[2]);

@@ -72,6 +72,11 @@ class Flux {
 	public static $sessionData;
 	
 	/**
+	 *
+	 */
+	public static $numberOfQueries = 0;
+	
+	/**
 	 * Initialize Flux application. This will handle configuration parsing and
 	 * instanciating of objects crucial to the control panel.
 	 *

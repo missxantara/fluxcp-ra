@@ -13,15 +13,27 @@
 				<!-- Spacing between content and horizontal end-of-page -->
 				<td style="padding: 10px"></td>
 			</tr>
+			<?php if (Flux::config('ShowCopyright')): ?>
 			<tr>
 				<td colspan="3"></td>
 				<td id="copyright">
-					<?php if (Flux::config('ShowCopyright')): ?>
 					<p><strong>Powered by Flux Control Panel</strong> &mdash; Copyright &copy; 2008 Matthew Harris and Nikunj Mehta.</p>
-					<?php endif ?>
 				</td>
 				<td></td>
 			</tr>
+			<?php endif ?>
+			<?php if (Flux::config('ShowRenderDetails')): ?>
+			<tr>
+				<td colspan="3"></td>
+				<td id="info">
+					<p>
+						Paged rendered in <strong><?php echo round(microtime(true) - __START__, 5) ?></strong> second(s).
+						Number of queries executed: <strong><?php echo (int)Flux::$numberOfQueries ?></strong>
+					</p>
+				</td>
+				<td></td>
+			</tr>
+			<?php endif ?>
 		</table>
 	</body>
 </html>

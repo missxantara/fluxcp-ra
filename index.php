@@ -6,6 +6,9 @@ if (version_compare(PHP_VERSION, '5.1', '<')) {
 	exit;
 }
 
+// Time started.
+define('__START__', microtime(true));
+
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
