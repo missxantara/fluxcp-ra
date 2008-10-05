@@ -71,12 +71,12 @@ return array(
 			'zeny'      => AccountLevel::ANYONE
 		),
 		'item'      => array(
-			'index'    => AccountLevel::NORMAL,
-			'view'     => AccountLevel::NORMAL
+			'index'    => AccountLevel::ANYONE,
+			'view'     => AccountLevel::ANYONE
 		),
 		'monster'   => array(
-			'index'    => AccountLevel::NORMAL,
-			'view'     => AccountLevel::NORMAL
+			'index'    => AccountLevel::ANYONE,
+			'view'     => AccountLevel::ANYONE
 		),
 		'server'    => array(
 			'status'     => AccountLevel::ANYONE,
