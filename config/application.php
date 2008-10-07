@@ -102,6 +102,7 @@ return array(
 		'Purchase'      => array('module' => 'purchase'),
 		'Donate'        => array('module' => 'donate'),
 		'Server Status' => array('module' => 'server', 'action' => 'status'),
+		'WoE Hours'     => array('module' => 'woe'),
 		"Who's Online"  => array('module' => 'character', 'action' => 'online'),
 		'Log Data'      => array('module' => 'logdata'),
 		'IP Ban List'   => array('module' => 'ipban'),

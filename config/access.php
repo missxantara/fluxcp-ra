@@ -118,6 +118,9 @@ return array(
 		'reload'    => array(
 			'index'   => AccountLevel::ADMIN,
 			'mobskill' => AccountLevel::ADMIN
+		),
+		'woe'       => array(
+			'index'   => AccountLevel::ANYONE
 		)
 	),
 	// General feature permissions, handled by the modules themselves.

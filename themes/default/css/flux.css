@@ -849,3 +849,32 @@ textarea {
 	padding: 5px 0;
 	text-align: left;
 }
+
+.woe-table {
+	border-spacing: 0;
+	border-collapse: collapse;
+	background-color: #fff;
+	border: 1px solid #ddd;
+}
+
+.woe-table th, .woe-table td {
+	padding: 5px 10px;
+}
+
+.woe-table th {
+	font-weight: normal;
+	border-bottom: 1px solid #ddd;
+}
+
+.woe-table td {
+	font-size: 120%;
+}
+
+.woe-table .server {
+	font-weight: bold;
+}
+
+.woe-table .time {
+	font-style: italic;
+	color: #333;
+}
