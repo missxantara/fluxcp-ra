@@ -46,6 +46,9 @@ require_once 'Flux/Authorization.php';
 require_once 'Flux/Installer.php';
 require_once 'Flux/PermissionError.php';
 
+// Vendor libraries.
+require_once 'markdown/markdown.php';
+
 try {
 	if (!extension_loaded('pdo')) {
 		throw new Flux_Error('The PDO extension is required to use Flux, please make sure it is installed along with the PDO_MYSQL driver.');
