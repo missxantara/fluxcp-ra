@@ -31,7 +31,13 @@
 	</tr>
 	<?php foreach ($monsters as $monster): ?>
 	<tr>
-		<td align="right"><?php echo $this->linkToMonster($monster->monster_id, $monster->monster_id) ?></td>
+		<td align="right">
+			<?php if ($auth->actionAllowed('monster', 'view')): ?>
+				<?php echo $this->linkToMonster($monster->monster_id, $monster->monster_id) ?>
+			<?php else: ?>
+				<?php echo htmlspecialchars($monster->monster_id) ?>
+			<?php endif ?>
+		</td>
 		<td><?php echo htmlspecialchars($monster->kName) ?></td>
 		<td><?php echo htmlspecialchars($monster->iName) ?></td>
 		<td><?php echo number_format($monster->LV) ?></td>
@@ -39,7 +45,13 @@
 		<td><?php echo number_format($monster->EXP * $server->baseExpRates) ?></td>
 		<td><?php echo number_format($monster->JEXP * $server->jobExpRates) ?></td>
 		<?php if ($monster->DropCardid): ?>
-			<td><?php echo $this->linkToItem($monster->DropCardid, $monster->DropCardid) ?></td>
+			<td>
+				<?php if ($auth->actionAllowed('item', 'view')): ?>
+					<?php echo $this->linkToItem($monster->DropCardid, $monster->DropCardid) ?>
+				<?php else: ?>
+					<?php echo htmlspecialchars($monster->DropCardid) ?>
+				<?php endif ?>
+			</td>
 		<?php else: ?>
 			<td><span class="not-applicable">None</span></td>
 		<?php endif ?>
