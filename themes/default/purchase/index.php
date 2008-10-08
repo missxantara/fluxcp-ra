@@ -43,7 +43,9 @@ foreach ($items as $i => $item) {
 								<p class="shop-item-info"><?php echo Markdown($item->shop_item_info) ?></p>
 								<p class="shop-item-action">
 									<a href="<?php echo $this->url('purchase', 'add', array('id' => $item->shop_item_id)) ?>"><strong>Add to Cart</strong></a>
+									<?php if ($auth->actionAllowed('item', 'view')): ?>
 									/ <?php echo $this->linkToItem($item->shop_item_nameid, 'View Item') ?>
+									<?php endif ?>
 									<?php if ($auth->allowedToEditShopItem): ?>
 									/ <a href="<?php echo $this->url('itemshop', 'edit', array('id' => $item->shop_item_id)) ?>">Modify</a>
 									<?php endif ?>
