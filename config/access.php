@@ -151,6 +151,8 @@ return array(
 		'ChangeSlot'         => AccountLevel::LOWGM,  //
 		'ModifyIpBan'        => AccountLevel::ADMIN,  //
 		'HideFromZenyRank'   => AccountLevel::NORMAL, // Ability to set "Hide from zeny ranking" pref.
+		'SeeItemDbScripts'   => AccountLevel::ANYONE, // Ability to see item_db scripts in view page.
+		'SeeItemDb2Scripts'  => AccountLevel::ADMIN,  // Ability to see item_db2 scripts in view page.
 		
 		'EditHigherPower'    => 5000,
 		'BanHigherPower'     => 5000
