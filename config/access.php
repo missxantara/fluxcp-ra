@@ -153,6 +153,7 @@ return array(
 		'HideFromZenyRank'   => AccountLevel::NORMAL, // Ability to set "Hide from zeny ranking" pref.
 		'SeeItemDbScripts'   => AccountLevel::ANYONE, // Ability to see item_db scripts in view page.
 		'SeeItemDb2Scripts'  => AccountLevel::ADMIN,  // Ability to see item_db2 scripts in view page.
+		'ViewRawTxnLogData'  => AccountLevel::ADMIN,  // Level required to view Raw Transaction Log in txnview page.
 		
 		'EditHigherPower'    => 5000,
 		'BanHigherPower'     => 5000

@@ -9,7 +9,7 @@
 		<th>Account</th>
 		<td>
 			<?php if ($txn->account_id): ?>
-				<?php if ($auth->allowedToViewAccount): ?>
+				<?php if ($auth->actionAllowed('account', 'view') && $auth->allowedToViewAccount): ?>
 					<?php echo $this->linkToAccount($txn->account_id, $txn->userid) ?>
 				<?php else: ?>
 					<?php echo htmlspecialchars($txn->userid) ?>
@@ -62,13 +62,15 @@
 		<td><?php echo htmlspecialchars($txn->last_name) ?></td>
 	</tr>
 </table>
-<h3>Raw Transaction Log</h3>
-<?php if ($txnFileLog): ?>
-<pre class="raw-txn-log"><?php echo htmlspecialchars($txnFileLog) ?></pre>
-<?php else: ?>
-<p>The raw log for this transaction could not be found.</p>
-<?php endif ?>	
+<?php if ($auth->allowedToViewRawTxnLogData): ?>
+	<h3>Raw Transaction Log</h3>
+	<?php if ($txnFileLog): ?>
+	<pre class="raw-txn-log"><?php echo htmlspecialchars($txnFileLog) ?></pre>
+	<?php else: ?>
+	<p>The raw log for this transaction could not be found.</p>
+	<?php endif ?>	
 
-<?php else: ?>
-<p>Records indicate that such a transaction was never recorded. <a href="javascript:history.go(-1)">Go back</a>.</p>
+	<?php else: ?>
+	<p>Records indicate that such a transaction was never recorded. <a href="javascript:history.go(-1)">Go back</a>.</p>
+	<?php endif ?>
 <?php endif ?>

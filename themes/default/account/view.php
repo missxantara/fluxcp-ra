@@ -176,7 +176,7 @@
 		<tr>
 			<td align="right"><?php echo $char->char_num+1 ?></td>
 			<td>
-				<?php if ($isMine || (!$isMine && $auth->allowedToViewCharacter)): ?>
+				<?php if ($auth->actionAllowed('character', 'view') && ($isMine || (!$isMine && $auth->allowedToViewCharacter))): ?>
 					<?php echo $this->linkToCharacter($char->char_id, $char->name, $serverName) ?>
 				<?php else: ?>
 					<?php echo htmlspecialchars($char->name) ?>
@@ -189,7 +189,7 @@
 			<?php if ($char->guild_name): ?>
 				<td><img src="<?php echo $this->emblem($char->guild_id) ?>" /></td>
 				<td>
-					<?php if ($auth->allowedToViewGuild): ?>
+					<?php if ($auth->actionAllowed('guild', 'view') && $auth->allowedToViewGuild): ?>
 						<?php echo $this->linkToGuild($char->guild_id, $char->guild_name) ?>
 					<?php else: ?>
 						<?php echo htmlspecialchars($char->guild_name) ?>
@@ -241,7 +241,13 @@
 		</tr>
 		<?php foreach ($items AS $item): ?>
 		<tr>
-			<td align="right"><?php echo $this->linkToItem($item->nameid, $item->nameid) ?></td>
+			<td align="right">
+				<?php if ($auth->actionAllowed('item', 'view')): ?>
+					<?php echo $this->linkToItem($item->nameid, $item->nameid) ?>
+				<?php else: ?>
+					<?php echo htmlspecialchars($item->nameid) ?>
+				<?php endif ?>
+			</td>
 			<td>
 				<?php if ($item->name_japanese): ?>
 					<span class="item_name"><?php echo htmlspecialchars($item->name_japanese) ?></span>
@@ -268,9 +274,17 @@
 			<td>
 				<?php if($item->card0 && ($item->type == 4 || $item->type == 5)): ?>
 					<?php if (!empty($cards[$item->card0])): ?>
-						<?php echo $this->linkToItem($item->card0, $cards[$item->card0]) ?>
+						<?php if ($auth->actionAllowed('item', 'view')): ?>
+							<?php echo $this->linkToItem($item->card0, $cards[$item->card0]) ?>
+						<?php else: ?>
+							<?php echo htmlspecialchars($cards[$item->card0]) ?>
+						<?php endif ?>
 					<?php else: ?>
-						<?php echo $this->linkToItem($item->card0, $item->card0) ?>
+						<?php if ($auth->actionAllowed('item', 'view')): ?>
+							<?php echo $this->linkToItem($item->card0, $item->card0) ?>
+						<?php else: ?>
+							<?php echo htmlspecialchars($item->card0) ?>
+						<?php endif ?>
 					<?php endif ?>
 				<?php else: ?>
 					<span class="not-applicable">None</span>
@@ -279,9 +293,17 @@
 			<td>
 				<?php if($item->card1 && ($item->type == 4 || $item->type == 5)): ?>
 					<?php if (!empty($cards[$item->card1])): ?>
-						<?php echo $this->linkToItem($item->card1, $cards[$item->card1]) ?>
+						<?php if ($auth->actionAllowed('item', 'view')): ?>
+							<?php echo $this->linkToItem($item->card1, $cards[$item->card1]) ?>
+						<?php else: ?>
+							<?php echo htmlspecialchars($cards[$item->card1]) ?>
+						<?php endif ?>
 					<?php else: ?>
-						<?php echo $this->linkToItem($item->card1, $item->card1) ?>
+						<?php if ($auth->actionAllowed('item', 'view')): ?>
+							<?php echo $this->linkToItem($item->card1, $item->card1) ?>
+						<?php else: ?>
+							<?php echo htmlspecialchars($item->card1) ?>
+						<?php endif ?>
 					<?php endif ?>
 				<?php else: ?>
 					<span class="not-applicable">None</span>
@@ -289,10 +311,18 @@
 			</td>
 			<td>
 				<?php if($item->card2 && ($item->type == 4 || $item->type == 5)): ?>
-					<?php if (!empty($cards[$item->card2])): ?>
-						<?php echo $this->linkToItem($item->card2, $cards[$item->card2]) ?>
+					<?php if (!empty($cards[$item->card0])): ?>
+						<?php if ($auth->actionAllowed('item', 'view')): ?>
+							<?php echo $this->linkToItem($item->card2, $cards[$item->card2]) ?>
+						<?php else: ?>
+							<?php echo htmlspecialchars($cards[$item->card2]) ?>
+						<?php endif ?>
 					<?php else: ?>
-						<?php echo $this->linkToItem($item->card2, $item->card2) ?>
+						<?php if ($auth->actionAllowed('item', 'view')): ?>
+							<?php echo $this->linkToItem($item->card2, $item->card2) ?>
+						<?php else: ?>
+							<?php echo htmlspecialchars($item->card2) ?>
+						<?php endif ?>
 					<?php endif ?>
 				<?php else: ?>
 					<span class="not-applicable">None</span>
@@ -300,10 +330,18 @@
 			</td>
 			<td>
 				<?php if($item->card3 && ($item->type == 4 || $item->type == 5)): ?>
-					<?php if (!empty($cards[$item->card3])): ?>
-						<?php echo $this->linkToItem($item->card3, $cards[$item->card3]) ?>
+					<?php if (!empty($cards[$item->card0])): ?>
+						<?php if ($auth->actionAllowed('item', 'view')): ?>
+							<?php echo $this->linkToItem($item->card3, $cards[$item->card3]) ?>
+						<?php else: ?>
+							<?php echo htmlspecialchars($cards[$item->card3]) ?>
+						<?php endif ?>
 					<?php else: ?>
-						<?php echo $this->linkToItem($item->card3, $item->card3) ?>
+						<?php if ($auth->actionAllowed('item', 'view')): ?>
+							<?php echo $this->linkToItem($item->card3, $item->card3) ?>
+						<?php else: ?>
+							<?php echo htmlspecialchars($item->card3) ?>
+						<?php endif ?>
 					<?php endif ?>
 				<?php else: ?>
 					<span class="not-applicable">None</span>
