@@ -148,8 +148,8 @@ return array(
 		'ModifyCharPrefs'    => AccountLevel::ADMIN,  // Ability to modify another person's character preferences.
 		'IgnoreHiddenPref'   => AccountLevel::HELPER, // Ability to see users on "Who's Online" page, hidden or not.
 		'IgnoreHiddenPref2'  => AccountLevel::HELPER, // Ability to see users on "Who's Online" page, hidden by app config or not.
-		'ChangeSlot'         => AccountLevel::LOWGM,  //
-		'ModifyIpBan'        => AccountLevel::ADMIN,  //
+		'ChangeSlot'         => AccountLevel::LOWGM,  // Level required to change another character's slot.
+		'ModifyIpBan'        => AccountLevel::ADMIN,  // Level required to modify an existing IP ban.
 		'HideFromZenyRank'   => AccountLevel::NORMAL, // Ability to set "Hide from zeny ranking" pref.
 		'SeeItemDbScripts'   => AccountLevel::ANYONE, // Ability to see item_db scripts in view page.
 		'SeeItemDb2Scripts'  => AccountLevel::ADMIN,  // Ability to see item_db2 scripts in view page.
