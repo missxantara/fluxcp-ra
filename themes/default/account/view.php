@@ -170,7 +170,9 @@
 			<th>Zeny</th>
 			<th colspan="2">Guild</th>
 			<th>Status</th>
+			<?php if (($isMine || $auth->allowedToModifyCharPrefs) && $auth->actionAllowed('character', 'prefs')): ?>
 			<th>Preferences</th>
+			<?php endif ?>
 		</tr>
 		<?php foreach ($chars as $char): $zeny += $char->zeny; ?>
 		<tr>
@@ -205,14 +207,14 @@
 					<span class="offline">Offline</span>
 				<?php endif ?>
 			</td>
+			<?php if (($isMine || $auth->allowedToModifyCharPrefs) && $auth->actionAllowed('character', 'prefs')): ?>
 			<td>
-				<?php if (($isMine || $auth->allowedToModifyCharPrefs) && $auth->actionAllowed('character', 'prefs')): ?>
 				<a href="<?php echo $this->url('character', 'prefs', array('id' => $char->char_id)) ?>"
 					class="block-link">
 					Modify Preferences
 				</a>
-				<?php endif ?>
 			</td>
+			<?php endif ?>
 		</tr>
 		<?php endforeach ?>
 		</table>
