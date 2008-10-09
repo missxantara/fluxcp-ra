@@ -146,7 +146,8 @@ class Flux_LoginServer extends Flux_BaseServer {
 			$sql .= "VALUES (?, ?, ?, ?, ?, NOW(), ?)";
 			$sth  = $this->connection->getStatement($sql);
 			
-			return (bool)$sth->execute(array($idres->account_id, $username, $password, $gender, $email, $_SERVER['REMOTE_ADDR']));
+			$sth->execute(array($idres->account_id, $username, $password, $gender, $email, $_SERVER['REMOTE_ADDR']));
+			return $idres->account_id;
 		}
 		else {
 			return false;

@@ -22,7 +22,15 @@ return array(
 	'MaxUsernameLength'    => 23,                       // Maximum username length.
 	'MinPasswordLength'    => 4,                        // Minimum password length.
 	'MaxPasswordLength'    => 23,                       // Maximum password length.
-	'AllowDuplicateEmails' => false,                    // Whether or not to allow duplicate e-mails to be used in registration.
+	'AllowDuplicateEmails' => false,                    // Whether or not to allow duplicate e-mails to be used in registration. (See Mailer config options)
+	'RequireEmailConfirm'  => false,                    // Require e-mail confirmation during registration.
+	'EmailConfirmExpire'   => 48,                       // E-mail confirmations expire hours. Unconfirmed accounts will expire after this period of time.
+	'MailerFromAddress'    => 'noreply@localhost',      // The e-mail address displayed in the From field.
+	'MailerFromName'       => 'MailerName',             // The name displayed with the From e-mail address.
+	'MailerUseSMTP'        => false,                    // Whether or not to use a separate SMTP server for sending mail.
+	'MailerSMTPHosts'      => null,                     // A string host or array of hosts (e.g., 'host1' or array('host1', 'backuphost')).
+	'MailerSMTPUsername'   => null,                     // When MailerUseSMTP is true: Authorized username for SMTP server.
+	'MailerSMTPPassword'   => null,                     // When MailerUseSMTP is true: Authorized password for SMTP server (for above user).
 	'ServerStatusTimeout'  => 2,                        // For each server, spend X amount of seconds to determine whether it's up or not.
 	'SessionKey'           => 'fluxSessionData',        // Shouldn't be changed, just specifies the session key to be used for session data.
 	'DefaultModule'        => 'main',                   // This is the module to execute when none has been specified.
