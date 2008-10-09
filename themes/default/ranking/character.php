@@ -13,6 +13,7 @@
 	<p>
 		<label for="jobclass">Filter by job class:</label>
 		<select name="jobclass" id="jobclass">
+			<option value=""<?php if (is_null($jobClass)) echo 'selected="selected"' ?>>All</option>
 		<?php foreach ($classes as $jobClassIndex => $jobClassName): ?>
 			<option value="<?php echo $jobClassIndex ?>"
 				<?php if (!is_null($jobClass) && $jobClass == $jobClassIndex) echo ' selected="selected"' ?>>

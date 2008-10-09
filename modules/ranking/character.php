@@ -6,6 +6,10 @@ $classes  = Flux::config('JobClasses')->toArray();
 $jobClass = $params->get('jobclass');
 $bind     = array((int)Flux::config('RankingHideLevel'));
 
+if (trim($jobClass) === '') {
+	$jobClass = null;
+}
+
 if (!is_null($jobClass) && !array_key_exists($jobClass, $classes)) {
 	$this->deny();
 }
