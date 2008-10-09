@@ -23,7 +23,13 @@
 	<?php foreach ($items as $item): ?>
 	<tr>
 		<td>
-			<h4><?php echo $this->linkToItem($item->shop_item_nameid, $item->shop_item_name) ?></h4>
+			<h4>
+				<?php if ($auth->actionAllowed('item', 'view')): ?>
+					<?php echo $this->linkToItem($item->shop_item_nameid, $item->shop_item_name) ?>
+				<?php else: ?>
+					<?php echo htmlspecialchars($item->shop_item_nameid) ?>
+				<?php endif ?>
+			</h4>
 			<?php if ($item->shop_item_qty > 1): ?>
 			<p class="shop-item-qty">Quantity: <span class="qty"><?php echo number_format($item->shop_item_qty) ?></span></p>
 			<?php endif ?>

@@ -90,7 +90,7 @@
 	<?php foreach ($accounts as $account): ?>
 	<tr>
 		<td align="right">
-			<?php if ($auth->allowedToViewAccount): ?>
+			<?php if ($auth->actionAllowed('account', 'view') && $auth->allowedToViewAccount): ?>
 				<?php echo $this->linkToAccount($account->account_id, $account->account_id) ?>
 			<?php else: ?>
 				<?php echo htmlspecialchars($account->account_id) ?>

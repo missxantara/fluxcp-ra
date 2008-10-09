@@ -33,7 +33,7 @@
 		<td align="right"><?php echo number_format($xfer->amount) ?></td>
 		<td>
 			<?php if ($xfer->target_char_name): ?>
-				<?php if ($auth->allowedToViewCharacter): ?>
+				<?php if ($auth->actionAllowed('character', 'view') && $auth->allowedToViewCharacter): ?>
 					<?php echo $this->linkToCharacter($xfer->target_char_id, $xfer->target_char_name) ?>
 				<?php else: ?>
 					<?php echo htmlspecialchars($xfer->target_char_name) ?>

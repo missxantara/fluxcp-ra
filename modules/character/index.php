@@ -171,8 +171,9 @@ $sth  = $server->connection->getStatement($sql);
 $sth->execute($bind);
 
 $characters = $sth->fetchAll();
+$authorized = $auth->actionAllowed('character', 'view') && $auth->allowedToViewCharacter;
 
-if ($characters && count($characters) === 1) {
+if ($characters && count($characters) === 1 && $authorized) {
 	$this->redirect($this->url('character', 'view', array('id' => $characters[0]->char_id)));
 }
 ?>

@@ -118,6 +118,7 @@
 			<?php endif ?>
 		</td>
 	</tr>
+	<?php if (($isCustom && $auth->allowedToSeeItemDb2Scripts) || (!$isCustom && $auth->allowedToSeeItemDbScripts)): ?>
 	<tr>
 		<th>Item Use Script</th>
 		<td colspan="3">
@@ -148,6 +149,7 @@
 			<?php endif ?>
 		</td>
 	</tr>
+	<?php endif ?>
 </table>
 <?php else: ?>
 <p>No such item was found. <a href="javascript:history.go(-1)">Go back</a>.</p>

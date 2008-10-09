@@ -143,9 +143,10 @@ $sql  = $paginator->getSQL("SELECT login.*, {$creditColumns}, {$accountColumns} 
 $sth  = $server->connection->getStatement($sql);
 $sth->execute($bind);
 
-$accounts = $sth->fetchAll();
+$accounts   = $sth->fetchAll();
+$authorized = $auth->actionAllowed('account', 'view') && $auth->allowedToViewAccount;
 
-if ($accounts && count($accounts) === 1) {
+if ($accounts && count($accounts) === 1 && $authorized) {
 	$this->redirect($this->url('account', 'view', array('id' => $accounts[0]->account_id)));
 }
 ?>

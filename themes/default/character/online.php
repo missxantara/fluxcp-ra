@@ -39,7 +39,7 @@
 	<?php foreach ($chars as $char): ?>
 	<tr>
 		<td align="right">
-			<?php if ($auth->allowedToViewCharacter): ?>
+			<?php if ($auth->actionAllowed('character', 'view') && $auth->allowedToViewCharacter): ?>
 				<?php echo $this->linkToCharacter($char->char_id, $char->char_name) ?>
 			<?php else: ?>
 				<?php echo htmlspecialchars($char->char_name) ?>
@@ -51,7 +51,7 @@
 		<?php if ($char->guild_name): ?>
 			<td><img src="<?php echo $this->emblem($char->guild_id) ?>" /></td>
 			<td>
-				<?php if ($auth->allowedToViewGuild): ?>
+				<?php if ($auth->actionAllowed('guild', 'view') && $auth->allowedToViewGuild): ?>
 					<?php echo $this->linkToGuild($char->guild_id, $char->guild_name) ?>
 				<?php else: ?>
 					<?php echo htmlspecialchars($char->guild_name) ?>

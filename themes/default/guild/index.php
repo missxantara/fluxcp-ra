@@ -70,7 +70,7 @@
 	<?php foreach ($guilds as $guild): ?>
 	<tr>
 		<td align="right">
-			<?php if ($auth->allowedToViewGuild): ?>
+			<?php if ($auth->actionAllowed('guild', 'view') && $auth->allowedToViewGuild): ?>
 				<?php echo $this->linkToGuild($guild->guild_id, $guild->guild_id) ?>
 			<?php else: ?>
 				<?php echo htmlspecialchars($guild->guild_id) ?>

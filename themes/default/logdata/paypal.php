@@ -19,14 +19,22 @@
 	<tr>
 		<td align="right">
 			<strong>
-				<a href="<?php echo $this->url($params->get('module'), 'txnview', array('id' => $txn->id)) ?>">
+				<?php if ($auth->actionAllowed('logdata', 'txnview')): ?>
+					<a href="<?php echo $this->url($params->get('module'), 'txnview', array('id' => $txn->id)) ?>">
+						<?php echo $txn->txn_id ?>
+					</a>
+				<?php else: ?>
 					<?php echo $txn->txn_id ?>
-				</a>
+				<?php endif ?>
 			</strong>
 		</td>
 		<td>
 			<?php if ($txn->parent_id): ?>
-				<a href="<?php echo $this->url($params->get('module'), 'txnview', array('id' => $txn->parent_id)) ?>"><?php echo $txn->parent_txn_id ?></a>
+				<?php if ($auth->actionAllowed('logdata', 'txnview')): ?>
+					<a href="<?php echo $this->url($params->get('module'), 'txnview', array('id' => $txn->parent_id)) ?>"><?php echo $txn->parent_txn_id ?></a>
+				<?php else: ?>
+					<?php echo $txn->parent_txn_id ?>
+				<?php endif ?>
 			<?php else: ?>
 				<span class="not-applicable">None</span>
 			<?php endif ?>
@@ -40,7 +48,11 @@
 		<!--<td><?php echo htmlspecialchars($txn->server_name) ?></td>-->
 		<td>
 			<?php if ($txn->account_id): ?>
-				<?php echo $this->linkToAccount($txn->account_id, $txn->userid) ?>
+				<?php if ($auth->actionAllowed('account', 'view') && $auth->allowedToViewAccount): ?>
+					<?php echo $this->linkToAccount($txn->account_id, $txn->userid) ?>
+				<?php else: ?>
+					<?php echo htmlspecialchars($txn->userid) ?>
+				<?php endif ?>
 			<?php else: ?>
 				<span class="not-applicable">Unknown</span>
 			<?php endif ?>

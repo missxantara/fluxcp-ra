@@ -90,9 +90,10 @@ $sth  = $server->connection->getStatement($sql);
 
 $sth->execute($bind);
 
-$guilds = $sth->fetchAll();
+$guilds     = $sth->fetchAll();
+$authorized = $auth->actionAllowed('guild', 'view') && $auth->allowedToViewGuild;
 
-if ($guilds && count($guilds) === 1) {
+if ($guilds && count($guilds) === 1 && $authorized) {
 	$this->redirect($this->url('guild', 'view', array('id' => $guilds[0]->guild_id)));
 }
 

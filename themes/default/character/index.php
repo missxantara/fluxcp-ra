@@ -99,14 +99,14 @@
 	<?php foreach ($characters as $char): ?>
 	<tr>
 		<td align="right">
-			<?php if ($auth->allowedToViewCharacter): ?>
+			<?php if ($auth->actionAllowed('character', 'view') && $auth->allowedToViewCharacter): ?>
 				<?php echo $this->linkToCharacter($char->char_id, $char->char_id) ?>
 			<?php else: ?>
 				<?php echo htmlspecialchars($char->char_id) ?>
 			<?php endif ?>
 		</td>
 		<td>
-			<?php if ($auth->allowedToViewAccount): ?>
+			<?php if ($auth->actionAllowed('account', 'view') && $auth->allowedToViewAccount): ?>
 				<?php echo $this->linkToAccount($char->account_id, $char->userid) ?>
 			<?php else: ?>
 				<?php echo htmlspecialchars($char->userid) ?>
@@ -126,7 +126,7 @@
 		<?php if ($char->guild_name): ?>
 			<td><img src="<?php echo $this->emblem($char->guild_id) ?>" /></td>
 			<td>
-				<?php if ($auth->allowedToViewGuild): ?>
+				<?php if ($auth->actionAllowed('guild', 'view') && $auth->allowedToViewGuild): ?>
 					<?php echo $this->linkToGuild($char->guild_id, $char->guild_name) ?>
 				<?php else: ?>
 					<?php echo htmlspecialchars($char->guild_name) ?>
@@ -137,7 +137,7 @@
 		<?php endif ?>
 		<td>
 			<?php if ($char->partner_name): ?>
-				<?php if ($auth->allowedToViewCharacter): ?>
+				<?php if ($auth->actionAllowed('character', 'view') && $auth->allowedToViewCharacter): ?>
 					<?php echo $this->linkToCharacter($char->partner_id, $char->partner_name) ?>
 				<?php else: ?>
 					<?php echo htmlspecialchars($char->parter_name) ?>
@@ -148,7 +148,7 @@
 		</td>
 		<td>
 			<?php if ($char->mother_name): ?>
-				<?php if ($auth->allowedToViewCharacter): ?>
+				<?php if ($auth->actionAllowed('character', 'view') && $auth->allowedToViewCharacter): ?>
 					<?php echo $this->linkToCharacter($char->mother_id, $char->mother_name) ?>
 				<?php else: ?>
 					<?php echo htmlspecialchars($char->mother_name) ?>
@@ -159,7 +159,7 @@
 		</td>
 		<td>
 			<?php if ($char->father_name): ?>
-				<?php if ($auth->allowedToViewCharacter): ?>
+				<?php if ($auth->actionAllowed('character', 'view') && $auth->allowedToViewCharacter): ?>
 					<?php echo $this->linkToCharacter($char->father_id, $char->father_name) ?>
 				<?php else: ?>
 					<?php echo htmlspecialchars($char->father_name) ?>
@@ -170,7 +170,7 @@
 		</td>
 		<td>
 			<?php if ($char->child_name): ?>
-				<?php if ($auth->allowedToViewCharacter): ?>
+				<?php if ($auth->actionAllowed('character', 'view') && $auth->allowedToViewCharacter): ?>
 					<?php echo $this->linkToCharacter($char->child_id, $char->child_name) ?>
 				<?php else: ?>
 					<?php echo htmlspecialchars($char->child_name) ?>

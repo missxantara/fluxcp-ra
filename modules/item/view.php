@@ -30,8 +30,10 @@ $sth  = $server->connection->getStatement($sql);
 $sth->execute(array($itemID));
 
 $item = $sth->fetch();
+$isCustom = null;
 
 if ($item) {
 	$title = "Viewing Item ($item->name)";
+	$isCustom = (bool)preg_match('/item_db2$/', $item->origin_table);
 }
 ?>

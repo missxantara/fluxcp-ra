@@ -117,7 +117,13 @@
 	</tr>
 	<?php foreach ($items as $item): ?>
 	<tr>
-		<td align="right"><?php echo $this->linkToItem($item->item_id, $item->item_id) ?></td>
+		<td align="right">
+			<?php if ($auth->actionAllowed('item', 'view')): ?>
+				<?php echo $this->linkToItem($item->item_id, $item->item_id) ?>
+			<?php else: ?>
+				<?php echo htmlspecialchars($item->item_id) ?>
+			<?php endif ?>
+		</td>
 		<td><?php echo htmlspecialchars($item->name) ?></td>
 		<td>
 			<?php if ($type=$this->itemTypeText($item->type)): ?>

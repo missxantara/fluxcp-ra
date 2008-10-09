@@ -21,7 +21,9 @@
 				<?php endif ?>
 				<p class="shop-item-cost"><span class="cost"><?php echo number_format($item->shop_item_cost) ?></span> credits</p>
 				<p class="shop-item-action">
-					<?php echo $this->linkToItem($item->shop_item_nameid, 'View Item') ?> /
+					<?php if ($auth->actionAllowed('item', 'view')): ?>
+						<?php echo $this->linkToItem($item->shop_item_nameid, 'View Item') ?> /
+					<?php endif ?>
 					<a href="<?php echo $this->url('purchase', 'remove', array('num' => $num)) ?>">Remove from Cart</a> /
 					<a href="<?php echo $this->url('purchase', 'add', array('id' => $item->shop_item_id, 'cart' => true)) ?>">Add Another to Cart</a>
 				</p>

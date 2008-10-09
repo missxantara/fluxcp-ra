@@ -15,7 +15,11 @@
 	<tr>
 		<td align="right">
 			<?php if ($item->item_name): ?>
-				<?php echo $this->linkToItem($item->nameid, $item->item_name) ?>
+				<?php if ($auth->actionAllowed('item', 'view')): ?>
+					<?php echo $this->linkToItem($item->nameid, $item->item_name) ?>
+				<?php else: ?>
+					<?php echo htmlspecialchars($item->nameid) ?>
+				<?php endif ?>
 			<?php else: ?>
 				<span class="not-applicable">Unknown</span>
 			<?php endif ?>
