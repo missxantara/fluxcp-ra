@@ -175,6 +175,14 @@ class Flux_Template {
 	protected $missingViewModuleAction;
 	
 	/**
+	 * HTTP referer.
+	 *
+	 * @access public
+	 * @var string
+	 */
+	public $referer;
+	
+	/**
 	 * Construct new template onbject.
 	 *
 	 * @param Flux_Config $config
@@ -194,6 +202,7 @@ class Flux_Template {
 		$this->useCleanUrls              = $config->get('useCleanUrls');
 		$this->missingActionModuleAction = $config->get('missingActionModuleAction', false);
 		$this->missingViewModuleAction   = $config->get('missingViewModuleAction', false);
+		$this->referer                   = isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : '';
 	}
 	
 	/**

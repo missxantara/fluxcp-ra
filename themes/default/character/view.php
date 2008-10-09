@@ -9,9 +9,17 @@ if (($isMine || $auth->allowedToModifyCharPrefs) && $auth->actionAllowed('charac
 if (($isMine || $auth->allowedToChangeSlot) && $auth->actionAllowed('character', 'changeslot')) {
 	$actions[] = sprintf('<a href="%s">Change Slot</a>', $this->url('character', 'changeslot', array('id' => $char->char_id)));
 }
+if (($isMine || $auth->allowedToResetLook) && $auth->actionAllowed('character', 'resetlook')) {
+	$actions[] = sprintf('<a href="%s"
+		onclick="return confirm(\'Are you sure you want to reset look?\')">Reset Look</a>', $this->url('character', 'resetlook', array('id' => $char->char_id)));
+}
+if (($isMine || $auth->allowedToResetPosition) && $auth->actionAllowed('character', 'resetpos')) {
+	$actions[] = sprintf('<a href="%s"
+		onclick="return confirm(\'Are you sure you want to reset position?\')">Reset Position</a>', $this->url('character', 'resetpos', array('id' => $char->char_id)));
+}
 ?>
 <h3>Character Information for “<?php echo htmlspecialchars($char->char_name) ?>”</h3>
-<p class="action"><?php echo implode(' / ', $actions) ?></p>
+<p class="action"><?php echo implode(' • ', $actions) ?></p>
 <table class="vertical-table">
 	<tr>
 		<th>Character ID</th>

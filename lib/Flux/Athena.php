@@ -134,6 +134,11 @@ class Flux_Athena {
 	public $maxCharSlots;
 	
 	/**
+	 *
+	 */
+	public $resetDenyMaps;
+	
+	/**
 	 * @param Flux_Connection $connection
 	 * @param Flux_Config $charMapConfig
 	 * @param Flux_LoginServer $loginServer
@@ -156,6 +161,17 @@ class Flux_Athena {
 		$this->mvpDropRates    = (int)$charMapConfig->getMvpDropRates();
 		$this->cardDropRates   = (int)$charMapConfig->getCardDropRates();
 		$this->maxCharSlots    = (int)$charMapConfig->getMaxCharSlots();
+		
+		$resetDenyMaps = $charMapConfig->getResetDenyMaps();
+		if (!$resetDenyMaps) {
+			$this->resetDenyMaps = array('sec_pri');
+		}
+		elseif (!is_array($resetDenyMaps)) {
+			$this->resetDenyMaps = array($resetDenyMaps);
+		}
+		else {
+			$this->resetDenyMaps = $resetDenyMaps->toArray();
+		}
 	}
 	
 	/**
@@ -490,6 +506,90 @@ class Flux_Athena {
 	public function setPref($charID, $pref, $value)
 	{
 		return $this->setPrefs($charID, array($pref => $value));
+	}
+	
+	/**
+	 *
+	 */
+	public function resetLook($charID)
+	{
+		// Return values:
+		// -1 = Character is online, cannot reset.
+		// -2 = Unknown character.
+		// false = Failed to reset.
+		// true  = Successfully reset.
+		
+		$char = $this->getCharacter($charID);
+		
+		if (!$char) {
+			return -2;
+		}
+		if ($char->online) {
+			return -1;
+		}
+		
+		$sql  = "UPDATE {$this->charMapDatabase}.inventory SET ";
+		$sql .= "equip = 0 WHERE char_id = ?";
+		$sth  = $this->connection->getStatement($sql);
+		
+		if (!$sth->execute(array($charID))) {
+			return false;
+		}
+		
+		$sql  = "UPDATE {$this->charMapDatabase}.`char` SET ";
+		$sql .= "hair = 0, hair_color = 0, clothes_color = 0, weapon = 0, shield = 0, ";
+		$sql .= "head_top = 0, head_mid = 0, head_bottom = 0 ";
+		$sql .= "WHERE char_id = ?";
+		$sth  = $this->connection->getStatement($sql);
+		
+		if (!$sth->execute(array($charID))) {
+			return false;
+		}
+		else {
+			return true;
+		}
+	}
+	
+	/**
+	 *
+	 */
+	public function resetPosition($charID)
+	{
+		// Return values:
+		// -1 = Character is online, cannot reset.
+		// -2 = Reset cannot be done from current map.
+		// -3 = Unknown character.
+		// false = Failed to reset.
+		// true  = Successfully reset.
+		
+		$char = $this->getCharacter($charID);
+		
+		if (!$char) {
+			return -3;
+		}
+		if ($char->online) {
+			return -1;
+		}
+		
+		$charMap = basename($char->last_map, '.gat');
+		foreach ($this->resetDenyMaps as $map) {
+			$denyMap = basename($map, '.gat');
+			if ($charMap == $denyMap) {
+				return -2;
+			}
+		}
+		
+		$sql  = "UPDATE {$this->charMapDatabase}.`char` AS ch SET ";
+		$sql .= "ch.last_map = ch.save_map, ch.last_x = ch.save_x, ch.last_y = ch.save_y ";
+		$sql .= "WHERE ch.char_id = ?";
+		$sth  = $this->connection->getStatement($sql);
+		
+		if ($sth->execute(array($charID))) {
+			return true;
+		}
+		else {
+			return false;
+		}
 	}
 }
 ?>

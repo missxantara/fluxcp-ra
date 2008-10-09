@@ -32,6 +32,14 @@ return array(
 	'PasswordHasBeenChanged'  => 'Your password has been changed, please log-in again.',
 	'FailedToChangePassword'  => 'Failed to change your password.  Please contact an admin.',
 	'GenderChanged'           => 'Your gender has been changed and %d credit(s) have been deducted from your account.',
-	'GenderChangedForFree'    => 'Your gender has been changed.'
+	'GenderChangedForFree'    => 'Your gender has been changed.',
+	'UnknownCharacter'        => 'No such character found.',
+	'CantResetPosWhenOnline'  => 'Cannot reset position while %s is online.',
+	'CantResetFromCurrentMap' => "You cannot reset %s's position from the current map.",
+	'ResetPositionSuccessful' => "%s's position has been reset!",
+	'ResetPositionFailed'     => "Failed to reset %s's position.",
+	'CantResetLookWhenOnline' => 'Cannot reset look while %s is online.',
+	'ResetLookSuccessful'     => "%s's look has been reset!",
+	'ResetLookFailed'         => "Failed to reset %s's look.",
 );
 ?>
