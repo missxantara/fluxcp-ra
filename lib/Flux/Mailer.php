@@ -1,12 +1,24 @@
 <?php
 require_once 'phpmailer/class.phpmailer.php';
+require_once 'Flux/LogFile.php';
 
 class Flux_Mailer {
 	protected $pm;
+	protected static $errLog;
+	protected static $log;
 	
 	public function __construct()
 	{
-		$this->pm = $pm = new PHPMailer();
+		if (!self::$errLog) {
+			self::$errLog = new Flux_LogFile(FLUX_DATA_DIR.'/logs/errors/mail/'.date('Ymd').'.log');
+		}
+		if (!self::$log) {
+			self::$log = new Flux_LogFile(FLUX_DATA_DIR.'/logs/mail/'.date('Ymd').'.log');
+		}
+		
+		$this->pm     = $pm = new PHPMailer();
+		$this->errLog = self::$errLog;
+		$this->log    = self::$log;
 		
 		if (Flux::config('MailerUseSMTP')) {
 			$pm->IsSMTP();
@@ -71,7 +83,14 @@ class Flux_Mailer {
 		$this->pm->Subject = $subject;
 		$this->pm->Body    = $content;
 		
-		return $this->pm->Send();
+		if ($sent=$this->pm->Send()) {
+			self::$log->puts("sent e-mail -- Recipient: $recipient, Subject: $subject");
+		}
+		else {
+			self::$errLog->puts("{$this->pm->ErrorInfo} (while attempting -- Recipient: $recipient, Subject: $subject)");
+		}
+		
+		return $sent;
 	}
 }
 ?>

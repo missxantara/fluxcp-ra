@@ -76,10 +76,12 @@ try {
 		FLUX_DATA_DIR.'/logs/schemas/logindb',
 		FLUX_DATA_DIR.'/logs/schemas/charmapdb',
 		FLUX_DATA_DIR.'/logs/transactions',
+		FLUX_DATA_DIR.'/logs/mail',
 		FLUX_DATA_DIR.'/logs/mysql',
 		FLUX_DATA_DIR.'/logs/mysql/errors',
 		FLUX_DATA_DIR.'/logs/errors',
-		FLUX_DATA_DIR.'/logs/errors/exceptions'
+		FLUX_DATA_DIR.'/logs/errors/exceptions',
+		FLUX_DATA_DIR.'/logs/errors/mail',
 	);
 
 	// Schema log directories.
