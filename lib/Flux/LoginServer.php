@@ -142,8 +142,8 @@ class Flux_LoginServer extends Flux_BaseServer {
 			$idres = $idsth->fetch();
 			$createTable = Flux::config('FluxTables.AccountCreateTable');
 			
-			$sql  = "INSERT INTO {$this->loginDatabase}.{$createTable} (account_id, userid, user_pass, sex, email, reg_date, reg_ip) ";
-			$sql .= "VALUES (?, ?, ?, ?, ?, NOW(), ?)";
+			$sql  = "INSERT INTO {$this->loginDatabase}.{$createTable} (account_id, userid, user_pass, sex, email, reg_date, reg_ip, confirmed) ";
+			$sql .= "VALUES (?, ?, ?, ?, ?, NOW(), ?, 1)";
 			$sth  = $this->connection->getStatement($sql);
 			
 			$sth->execute(array($idres->account_id, $username, $password, $gender, $email, $_SERVER['REMOTE_ADDR']));
