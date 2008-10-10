@@ -125,6 +125,9 @@ return array(
 		),
 		'woe'       => array(
 			'index'   => AccountLevel::ANYONE
+		),
+		'mail'      => array(
+			'index'   => AccountLevel::ADMIN
 		)
 	),
 	// General feature permissions, handled by the modules themselves.

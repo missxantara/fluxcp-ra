@@ -126,6 +126,7 @@ return array(
 		'Ranking'       => array('module' => 'ranking', 'action' => 'character'),
 		'Items'         => array('module' => 'item'),
 		'Monsters'      => array('module' => 'monster'),
+		'Send Mail'     => array('module' => 'mail'),
 		//'Google'        => array('exturl' => 'http://www.google.com')
 	),
 	
