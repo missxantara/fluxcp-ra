@@ -1,5 +1,6 @@
 <?php
 require_once 'phpmailer/class.phpmailer.php';
+require_once 'markdown/markdown.php';
 require_once 'Flux/LogFile.php';
 
 class Flux_Mailer {
@@ -57,25 +58,33 @@ class Flux_Mailer {
 	
 	public function send($recipient, $subject, $template, array $templateVars = array())
 	{
-		$templatePath = FLUX_DATA_DIR."/templates/$template.php";
-		if (!file_exists($templatePath)) {
-			return false;
+		if (array_key_exists('_ignoreTemplate', $templateVars) && $templateVars['_ignoreTemplate']) {
+			$content = $template;
+			if (array_key_exists('_useMarkdown', $templateVars) && $templateVars['_useMarkdown']) {
+				$content = Markdown($content);
+			}
 		}
-		
-		$find = array();
-		$repl = array();
-		
-		foreach ($templateVars as $key => $value) {
-			$find[] = '{'.$key.'}';
-			$repl[] = $value;
-		}
-		
-		ob_start();
-		include $templatePath;
-		$content = ob_get_clean();
-		
-		if (!empty($find) && !empty($repl)) {
-			$content = str_replace($find, $repl, $content);
+		else {
+			$templatePath = FLUX_DATA_DIR."/templates/$template.php";
+			if (!file_exists($templatePath)) {
+				return false;
+			}
+
+			$find = array();
+			$repl = array();
+
+			foreach ($templateVars as $key => $value) {
+				$find[] = '{'.$key.'}';
+				$repl[] = $value;
+			}
+
+			ob_start();
+			include $templatePath;
+			$content = ob_get_clean();
+			
+			if (!empty($find) && !empty($repl)) {
+				$content = str_replace($find, $repl, $content);
+			}
 		}
 		
 		$this->pm->AddAddress($recipient);
