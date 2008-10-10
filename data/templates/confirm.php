@@ -24,7 +24,7 @@ $emailTitle = sprintf('%s Account Confirmation', $siteTitle);
 			e-mail address. Point your browser to the below link to activate the account.</p>
 		
 		<?php if ($expire=Flux::config('EmailConfirmExpire')): ?>
-		<p>All unconfirmed accounts will be deleted from our system within <?php echo (int)$expire ?> hour(s).</p>
+		<p>All unconfirmed accounts will be deleted from our system within <?php echo (int)$expire ?> hour(s) of registration.</p>
 		<?php endif ?>
 		
 		<p>
