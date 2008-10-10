@@ -1,6 +1,10 @@
 <?php
 if (!defined('FLUX_ROOT')) exit;
 
+if (!Flux::config('RequireEmailConfirm')) {
+	$this->deny();
+}
+
 $title = 'Resend Confirmation E-mail';
 
 $serverNames = $this->getServerNames();
