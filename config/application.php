@@ -29,8 +29,8 @@ return array(
 	'MailerFromName'       => 'MailerName',             // The name displayed with the From e-mail address.
 	'MailerUseSMTP'        => false,                    // Whether or not to use a separate SMTP server for sending mail.
 	'MailerSMTPUseSSL'     => false,                    // Whether or not mailer should connect using SSL (yes for GMail).
-	'MailerSMTPPort'       => null,                     // SMTP server port (mailer will default to 25).
-	'MailerSMTPHosts'      => null,                     // A string host or array of hosts (e.g., 'host1' or array('host1', 'backuphost')).
+	'MailerSMTPPort'       => null,                     // When MailerUseSMTP is true: SMTP server port (mailer will default to 25).
+	'MailerSMTPHosts'      => null,                     // When MailerUseSMTP is true: A string host or array of hosts (e.g., 'host1' or array('host1', 'backuphost')).
 	'MailerSMTPUsername'   => null,                     // When MailerUseSMTP is true: Authorized username for SMTP server.
 	'MailerSMTPPassword'   => null,                     // When MailerUseSMTP is true: Authorized password for SMTP server (for above user).
 	'ServerStatusTimeout'  => 2,                        // For each server, spend X amount of seconds to determine whether it's up or not.
