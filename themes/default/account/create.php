@@ -6,7 +6,7 @@
 <?php endif ?>
 <form action="<?php echo $this->url ?>" method="post" class="generic-form">
 	<?php if (count($serverNames) === 1): ?>
-	<input type="hidden" name="server" value="<?php echo current($serverNames) ?>">
+	<input type="hidden" name="server" value="<?php echo htmlspecialchars($session->loginAthenaGroup->serverName) ?>">
 	<?php endif ?>
 	<table class="generic-form-table">
 		<?php if (count($serverNames) > 1): ?>
