@@ -42,7 +42,8 @@ return array(
 			'changepass' => AccountLevel::NORMAL,
 			'edit'       => AccountLevel::ADMIN,
 			'changesex'  => AccountLevel::NORMAL,
-			'confirm'    => AccountLevel::ANYONE
+			'confirm'    => AccountLevel::UNAUTH,
+			'resend'     => AccountLevel::UNAUTH
 		),
 		'character' => array(
 			'index'    => AccountLevel::LOWGM,

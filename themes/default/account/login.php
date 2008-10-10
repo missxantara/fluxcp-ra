@@ -4,6 +4,9 @@
 <p class="red"><?php echo htmlspecialchars($errorMessage) ?></p>
 <?php else: ?>
 <p><?php printf(Flux::message('LoginPageMakeAccount'), $this->url('account', 'create')); ?></p>
+<?php if (Flux::config('RequireEmailConfirm') && $auth->actionAllowed('account', 'resend')): ?>
+<p>If you have created an account but haven't received your confirmation e-mail, we can <a href="<?php echo $this->url('account', 'resend') ?>">resend your confirmation e-mail</a>.</p>
+<?php endif ?>
 <?php endif ?>
 <form action="<?php echo $this->url('account', 'login', array('return_url' => $params->get('return_url'))) ?>" method="post" class="generic-form">
 	<?php if (count($serverNames) === 1): ?>
