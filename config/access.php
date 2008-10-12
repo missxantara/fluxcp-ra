@@ -41,14 +41,18 @@ return array(
 			'cart'     => AccountLevel::NORMAL,
 			'changepass' => AccountLevel::NORMAL,
 			'edit'       => AccountLevel::ADMIN,
-			'changesex'  => AccountLevel::NORMAL
+			'changesex'  => AccountLevel::NORMAL,
+			'confirm'    => AccountLevel::UNAUTH,
+			'resend'     => AccountLevel::UNAUTH
 		),
 		'character' => array(
 			'index'    => AccountLevel::LOWGM,
 			'view'     => AccountLevel::NORMAL,
 			'online'   => AccountLevel::ANYONE,
 			'prefs'    => AccountLevel::NORMAL,
-			'changeslot' => AccountLevel::NORMAL
+			'changeslot' => AccountLevel::NORMAL,
+			'resetlook'  => AccountLevel::NORMAL,
+			'resetpos'   => AccountLevel::NORMAL
 		),
 		'guild'     => array(
 			'emblem'   => AccountLevel::ANYONE,
@@ -121,6 +125,9 @@ return array(
 		),
 		'woe'       => array(
 			'index'   => AccountLevel::ANYONE
+		),
+		'mail'      => array(
+			'index'   => AccountLevel::ADMIN
 		)
 	),
 	// General feature permissions, handled by the modules themselves.
@@ -154,6 +161,8 @@ return array(
 		'SeeItemDbScripts'   => AccountLevel::ANYONE, // Ability to see item_db scripts in view page.
 		'SeeItemDb2Scripts'  => AccountLevel::ADMIN,  // Ability to see item_db2 scripts in view page.
 		'ViewRawTxnLogData'  => AccountLevel::ADMIN,  // Level required to view Raw Transaction Log in txnview page.
+		'ResetLook'          => AccountLevel::LOWGM,  // Level required to reset another character's look.
+		'ResetPosition'      => AccountLevel::LOWGM,  // Level required to reset another character's position.
 		
 		'EditHigherPower'    => 5000,
 		'BanHigherPower'     => 5000

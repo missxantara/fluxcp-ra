@@ -27,7 +27,7 @@
 				<td colspan="3"></td>
 				<td id="info">
 					<p>
-						Paged generated in <strong><?php echo round(microtime(true) - __START__, 5) ?></strong> second(s).
+						Page generated in <strong><?php echo round(microtime(true) - __START__, 5) ?></strong> second(s).
 						Number of queries executed: <strong><?php echo (int)Flux::$numberOfQueries ?></strong>
 					</p>
 				</td>

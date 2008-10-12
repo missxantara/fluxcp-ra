@@ -25,9 +25,51 @@ if (count($_POST)) {
 		$result = $server->loginServer->register($username, $password, $confirm, $email, $gender, $code);
 
 		if ($result) {
-			$session->login($server->serverName, $username, $password);
-			$session->setMessageData('Congratulations, you have been registered successfully and automatically logged in.');
-			$this->redirect();
+			if (Flux::config('RequireEmailConfirm')) {
+				require_once 'Flux/Mailer.php';
+				
+				$user = $username;
+				$code = md5(rand());
+				$name = $session->loginAthenaGroup->serverName;
+				$link = $this->url('account', 'confirm', array('_host' => true, 'code' => $code, 'user' => $username, 'login' => $name));
+				$mail = new Flux_Mailer();
+				$sent = $mail->send($email, 'Account Confirmation', 'confirm', array('AccountUsername' => $username, 'ConfirmationLink' => htmlspecialchars($link)));
+				
+				$createTable = Flux::config('FluxTables.AccountCreateTable');
+				$bind = array($code);
+				
+				// Insert confirmation code.
+				$sql  = "UPDATE {$server->loginDatabase}.{$createTable} SET ";
+				$sql .= "confirm_code = ?, confirmed = 0 ";
+				if ($expire=Flux::config('EmailConfirmExpire')) {
+					$sql .= ", confirm_expire = ? ";
+					$bind[] = date('Y-m-d H:i:s', time() + (60 * 60 * $expire));
+				}
+				
+				$sql .= " WHERE account_id = ?";
+				$bind[] = $result;
+				
+				$sth  = $server->connection->getStatement($sql);
+				$sth->execute($bind);
+				
+				$session->loginServer->permanentlyBan(null, "Awaiting account activation: $code", $result);
+				
+				if ($sent) {
+					$message  = 'An e-mail has been sent containing account activation details, please check your e-mail and activate your account to log-in.';
+				}
+				else {
+					$message  = 'Your account has been created, but unfortunately we failed to send an e-mail due to technical difficulties. ';
+					$message .= 'Please contact a staff member and request for assistance.';
+				}
+				
+				$session->setMessageData($message);
+				$this->redirect();
+			}
+			else {
+				$session->login($server->serverName, $username, $password);
+				$session->setMessageData('Congratulations, you have been registered successfully and automatically logged in.');
+				$this->redirect();
+			}
 		}
 		else {
 			exit('Uh oh, what happened?');

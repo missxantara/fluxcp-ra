@@ -44,6 +44,7 @@ return array(
 				'MvpDropRates'  => 25,
 				'CardDropRates' => 25,
 				'MaxCharSlots'  => 9,
+				//'ResetDenyMaps' => 'sec_pri',  // Defaults to 'sec_pri'. This value can be an array of map names.
 				//'Database'      => 'ragnarok', // Defaults to DbConfig.Database
 				'CharServer'    => array(
 					'Address'   => '127.0.0.1',

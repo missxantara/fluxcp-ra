@@ -30,11 +30,25 @@ if (!$res || !$res->emblem_len) {
 }
 
 $data = @gzuncompress(pack('H*', $res->emblem_data));
+$type = 'image/bmp';
+
 if (!$data) {
 	$data = flux_get_default_bmp_data();
 }
+else {
+	require_once 'functions/imagecreatefrombmpstring.php';
+	
+	$image = imagecreatefrombmpstring($data);
+	$type  = 'image/png';
 
-header('Content-Type: image/bmp');
+	ob_start();
+	imagepng($image);
+	$data = ob_get_clean();
+	
+	imagedestroy($image);
+}
+
+header("Content-Type: $type");
 header('Content-Length: '.strlen($data));
 echo $data;
 exit;

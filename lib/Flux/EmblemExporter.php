@@ -1,4 +1,6 @@
 <?php
+require_once 'functions/imagecreatefrombmpstring.php';
+
 /**
  *
  */
@@ -59,9 +61,15 @@ class Flux_EmblemExporter {
 			$guilds = $sth->fetchAll();
 			if ($guilds) {
 				foreach ($guilds as $guild) {
-					$emblemData = @gzuncompress(pack('H*', $guild->emblem_data));
-					$emblemName = sprintf('%s.bmp', $this->sanitizePathName($guild->name)); 
-					$zip->addFromString("$topDir/$athenaDir/$emblemName", $emblemData);
+					$emblemData  = @gzuncompress(pack('H*', $guild->emblem_data));
+					$emblemImage = imagecreatefrombmpstring($emblemData);
+					
+					ob_start();
+					imagepng($emblemImage);
+					$data = ob_get_clean();
+					
+					$emblemName = sprintf('%s.png', $this->sanitizePathName($guild->name)); 
+					$zip->addFromString("$topDir/$athenaDir/$emblemName", $data);
 				}
 			}
 		}
