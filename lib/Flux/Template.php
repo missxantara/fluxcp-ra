@@ -1194,7 +1194,14 @@ class Flux_Template {
 		
 		$dir   = FLUX_DATA_DIR."/itemshop/$serverName/$athenaServerName";
 		$exts  = implode('|', array_map('preg_quote', Flux::config('ShopImageExtensions')->toArray()));
-		$files = preg_grep("/\.($exts)$/", glob("$dir/$shopItemID.*"));
+		$imgs  = glob("$dir/$shopItemID.*");
+		
+		if (is_array($imgs)) {
+			$files = preg_grep("/\.($exts)$/", $imgs);
+		}
+		else {
+			$files = arary();
+		}
 		
 		if (empty($files)) {
 			return false;
