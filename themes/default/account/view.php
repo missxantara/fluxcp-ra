@@ -149,7 +149,7 @@
 					<?php echo htmlspecialchars($ban->userid) ?>
 				<?php endif ?>
 			<?php else: ?>
-				<span class="not-applicable">Unknown</span>
+				<strong>Control Panel</strong>
 			<?php endif ?>
 		</td>
 	</tr>
