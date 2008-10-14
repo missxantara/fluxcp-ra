@@ -15,6 +15,11 @@ require_once 'Flux/LoginAthenaGroup.php';
  */
 class Flux {
 	/**
+	 * Current version.
+	 */
+	const VERSION = '1.0.0';
+	
+	/**
 	 * Application-specific configuration object.
 	 *
 	 * @access public
