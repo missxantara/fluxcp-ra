@@ -214,8 +214,13 @@ class Flux_Installer_Schema {
 		foreach ($directories as $directory) {
 			list ($schemaDir, $schemaArray, $fileExt) = $directory;
 			$schemas = &$$schemaArray;
+			$sFiles  = glob("$schemaDir/*.$fileExt");
 			
-			foreach (glob("$schemaDir/*.$fileExt") as $schemaFilePath) {
+			if (!$sFiles) {
+				$sFiles = array();
+			}
+			
+			foreach ($sFiles as $schemaFilePath) {
 				$schemaName = basename($schemaFilePath, ".$fileExt");
 				if (preg_match('/^(\w+)\.(\d+)$/', $schemaName, $m)) {
 					$schemaName    = $m[1];
