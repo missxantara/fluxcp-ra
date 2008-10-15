@@ -87,7 +87,7 @@ return array(
 	                                                    // NOTE: This option is HIGHLY inefficient, it's recommended to run a cron job instead.
 	
 	'ShopImageExtensions'  => array(                    // These are the image extensions allowed for uploading in the item shop.
-		'png', 'jpg', 'gif', 'bmp', 'jpeg', 'bmp'
+		'png', 'jpg', 'gif', 'bmp', 'jpeg'
 	),
 	'CharRankingLimit'    => 20,                        //
 	'GuildRankingLimit'   => 20,                        //
