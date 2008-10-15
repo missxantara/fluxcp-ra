@@ -587,5 +587,36 @@ class Flux {
 			}
 		}
 	}
+	
+	/**
+	 *
+	 */
+	public static function getEquipLocationList()
+	{
+		return array(
+			256 => 'Upper Headgear',
+			512 => 'Middle Headgear',
+			  1 => 'Lower Headgear',
+			 16 => 'Armor',
+			  2 => 'Weapon',
+			 32 => 'Shield',
+			  4 => 'Garment',
+			 64 => 'Footgear',
+			  8 => 'Accessory 1',
+			128 => 'Accessory 2'
+		);
+	}	
+	
+	/**
+	 *
+	 */
+	public static function getEquipUpperList()
+	{
+		return array(
+			1 => 'Normal',
+			2 => 'Reborn',
+			3 => 'Baby'
+		);
+	}
 }
 ?>
