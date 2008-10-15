@@ -9,21 +9,24 @@ function flux_get_default_bmp_data()
 	}
 }
 
-$serverName       = $params->get('login');
-$athenaServerName = $params->get('charmap');
-$guildID          = $params->get('id');
-$athenaServer     = Flux::getAthenaServerByName($serverName, $athenaServerName);
+$res = false;
+if (!Flux::config('ForceEmptyEmblem')) {
+	$serverName       = $params->get('login');
+	$athenaServerName = $params->get('charmap');
+	$guildID          = $params->get('id');
+	$athenaServer     = Flux::getAthenaServerByName($serverName, $athenaServerName);
 
-if (!$athenaServer || !$guildID) {
-	$data = flux_get_default_bmp_data();
+	if (!$athenaServer || !$guildID) {
+		$data = flux_get_default_bmp_data();
+	}
+
+	$db  = $athenaServer->charMapDatabase;
+	$sql = "SELECT emblem_len, emblem_data FROM $db.guild WHERE guild_id = ? LIMIT 1";
+	$sth = $athenaServer->connection->getStatement($sql);
+
+	$sth->execute(array($guildID));
+	$res = $sth->fetch();
 }
-
-$db  = $athenaServer->charMapDatabase;
-$sql = "SELECT emblem_len, emblem_data FROM $db.guild WHERE guild_id = ? LIMIT 1";
-$sth = $athenaServer->connection->getStatement($sql);
-
-$sth->execute(array($guildID));
-$res = $sth->fetch();
 
 if (!$res || !$res->emblem_len) {
 	$data = flux_get_default_bmp_data();
