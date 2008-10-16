@@ -55,7 +55,7 @@ try {
 		if ($itemType) {
 			if(is_numeric($itemType) && (floatval($itemType) == intval($itemType))) {
 				$itemTypes = Flux::config('ItemTypes')->toArray();
-				if ($itemType > count($itemTypes) && $itemTypes[$itemType]) {
+				if ($itemType < count($itemTypes) && $itemTypes[$itemType]) {
 					$sqlpartial .= "AND type = ? ";
 					$bind[]      = $itemType;
 				} else {
