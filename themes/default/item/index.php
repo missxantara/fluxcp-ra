@@ -127,7 +127,7 @@
 		<td><?php echo htmlspecialchars($item->name) ?></td>
 		<td>
 			<?php if ($type=$this->itemTypeText($item->type)): ?>
-				<?php echo htmlspecialchars($type) ?>
+				<?php echo htmlspecialchars($type); echo " (".$item->type.")"; ?>
 			<?php else: ?>
 				<span class="not-applicable">Unknown</span>
 			<?php endif ?>

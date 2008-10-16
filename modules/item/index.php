@@ -13,7 +13,7 @@ try {
 	$tempTable  = new Flux_TemporaryTable($server->connection, $tableName, $fromTables);
 	$shopTable  = Flux::config('FluxTables.ItemShopTable');
 	
-	// Statement paramters, joins and conditions.
+	// Statement parameters, joins and conditions.
 	$bind        = array();
 	$sqlpartial  = "LEFT OUTER JOIN {$server->charMapDatabase}.$shopTable ON $shopTable.nameid = items.id ";
 	$sqlpartial .= "WHERE 1=1 ";
@@ -53,24 +53,34 @@ try {
 		}
 
 		if ($itemType) {
-			$typeName   = preg_quote($itemType);
-			$itemTypes  = preg_grep("/.*?$typeName.*?/i", Flux::config('ItemTypes')->toArray());
-			
-			if (count($itemTypes)) {
-				$itemTypes    = array_keys($itemTypes);
-				$sqlpartial .= "AND (";
-				$partial     = '';
-				
-				foreach ($itemTypes as $id) {
-					$partial .= "type = ? OR ";
-					$bind[]   = $id;
+			if(is_numeric($itemType) && (floatval($itemType) == intval($itemType))) {
+				$itemTypes = Flux::config('ItemTypes')->toArray();
+				if ($itemType > count($itemTypes) && $itemTypes[$itemType]) {
+					$sqlpartial .= "AND type = ? ";
+					$bind[]      = $itemType;
+				} else {
+					$sqlpartial .= 'AND type IS NULL ';
 				}
+			} else {
+					
+				$typeName   = preg_quote($itemType);
+				$itemTypes  = preg_grep("/.*?$typeName.*?/i", Flux::config('ItemTypes')->toArray());
 				
-				$partial     = preg_replace('/\s*OR\s*$/', '', $partial);
-				$sqlpartial .= "$partial) ";
-			}
-			else {
-				$sqlpartial .= 'AND type IS NULL ';
+				if (count($itemTypes)) {
+					$itemTypes    = array_keys($itemTypes);
+					$sqlpartial .= "AND (";
+					$partial     = '';
+					
+					foreach ($itemTypes as $id) {
+						$partial .= "type = ? OR ";
+						$bind[]   = $id;
+					}
+					
+					$partial     = preg_replace('/\s*OR\s*$/', '', $partial);
+					$sqlpartial .= "$partial) ";
+				} else {
+					$sqlpartial .= 'AND type IS NULL ';
+				}
 			}
 		}
 		
