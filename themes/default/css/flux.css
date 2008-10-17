@@ -834,9 +834,10 @@ textarea {
 	color: #ddd;
 }
 
-.action a {
+.action a, .action span.anchor {
 	color: #80a2c8;
 	border-bottom: 1px solid #eee;
+	cursor: pointer;
 }
 
 .block-link {
@@ -878,4 +879,12 @@ textarea {
 .woe-table .time {
 	font-style: italic;
 	color: #333;
+}
+
+.script {
+	width: 98%;
+}
+
+.multi-select {
+	width: 100%;
 }
