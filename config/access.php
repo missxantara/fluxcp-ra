@@ -76,7 +76,9 @@ return array(
 		),
 		'item'      => array(
 			'index'    => AccountLevel::ANYONE,
-			'view'     => AccountLevel::ANYONE
+			'view'     => AccountLevel::ANYONE,
+			'add'      => AccountLevel::ADMIN,
+			'edit'     => AccountLevel::ADMIN
 		),
 		'monster'   => array(
 			'index'    => AccountLevel::ANYONE,

@@ -186,6 +186,10 @@ return array(
 			'character' => 'Character Ranking',
 			'guild'     => 'Guild Ranking',
 			'zeny'      => 'Zeny Ranking'
+		),
+		'item' => array(
+			'index' => 'List Items',
+			'add'   => 'Add Item'
 		)
 	),
 	
