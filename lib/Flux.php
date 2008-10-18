@@ -653,5 +653,14 @@ class Flux {
 			pow(2, 25) => 'Ninja'
 		);
 	}
+	
+	/**
+	 *
+	 */
+	public static function isStackableItemType($type)
+	{
+		$nonstackables = array(1, 4, 5, 7, 8, 9);
+		return !in_array($type, $nonstackables);
+	}
 }
 ?>
