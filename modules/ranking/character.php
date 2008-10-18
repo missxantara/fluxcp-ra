@@ -36,7 +36,7 @@ if (!is_null($jobClass)) {
 	$bind[] = $jobClass;
 }
 
-$sql .= "ORDER BY ch.base_level DESC, ch.base_exp DESC, ch.job_level DESC, ch.job_exp DESC, ch.char_id ASC ";
+$sql .= "ORDER BY ch.base_level DESC, ch.job_level DESC, ch.base_exp DESC, ch.job_exp DESC, ch.char_id ASC ";
 $sql .= "LIMIT ".(int)Flux::config('CharRankingLimit');
 $sth  = $server->connection->getStatement($sql);
 
