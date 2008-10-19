@@ -28,7 +28,7 @@ $equipFemale   = $params->get('equip_female');
 $script        = $params->get('script');
 $equipScript   = $params->get('equip_script');
 $unequipScript = $params->get('unequip_script');
-//echo '<pre>'; var_dump(array(pow(2, 00) => 'Novice',)); echo '</pre>';
+
 if (count($_POST) && $params->get('additem')) {
 	// Equip locations.
 	if ($equipLocs instanceOf Flux_Config) {
@@ -238,5 +238,15 @@ if (count($_POST) && $params->get('additem')) {
 			}
 		}
 	}
+}
+
+if (!is_array($equipLocs)) {
+	$equipLocs = array();
+}
+if (!is_array($equipUpper)) {
+	$equipUpper = array();
+}
+if (!is_array($equipJobs)) {
+	$equipJobs = array();
 }
 ?>
