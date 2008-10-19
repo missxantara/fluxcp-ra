@@ -255,7 +255,7 @@ class Flux_Template {
 				$this->urlWithQS .= "?{$_SERVER['QUERY_STRING']}";
 			}
 			else {
-				foreach (explode('&', $_SERVER['QUERY_STRING']) as $line) {
+				foreach (explode('&', trim($_SERVER['QUERY_STRING'], '&')) as $line) {
 					list ($key,$val) = explode('=', $line, 2);
 					$key = urldecode($key);
 					$val = urldecode($val);
