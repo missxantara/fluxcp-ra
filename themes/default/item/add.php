@@ -124,15 +124,15 @@
 		</tr>
 		<tr>
 			<th><label for="script">Item Use Script</label></th>
-			<td colspan="3"><textarea class="script" name="script" id="script"></textarea></td>
+			<td colspan="3"><textarea class="script" name="script" id="script"><?php echo htmlspecialchars($script) ?></textarea></td>
 		</tr>
 		<tr>
 			<th><label for="equip_script">Equip Script</label></th>
-			<td colspan="3"><textarea class="script" name="equip_script" id="equip_script"></textarea></td>
+			<td colspan="3"><textarea class="script" name="equip_script" id="equip_script"><?php echo htmlspecialchars($equipScript) ?></textarea></td>
 		</tr>
 		<tr>
 			<th><label for="unequip_script">Unequip Script</label></th>
-			<td colspan="3"><textarea class="script" name="unequip_script" id="unequip_script"></textarea></td>
+			<td colspan="3"><textarea class="script" name="unequip_script" id="unequip_script"><?php echo htmlspecialchars($unequipScript) ?></textarea></td>
 		</tr>
 		<tr>
 			<td colspan="4" align="right"><input type="submit" value="Add Item" /></td>
