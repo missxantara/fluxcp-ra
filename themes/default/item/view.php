@@ -2,6 +2,7 @@
 <h2>Viewing Item</h2>
 <?php if ($item): ?>
 <h3>#<?php echo htmlspecialchars($item->item_id) ?>: <?php echo htmlspecialchars($item->name) ?></h3>
+<p class="action"><a href="<?php echo $this->url('item', 'edit', array('id' => $item->item_id)) ?>">Modify Item</a></p>
 <table class="vertical-table">
 	<tr>
 		<th>Item ID</th>
@@ -42,7 +43,7 @@
 		<th>Name</th>
 		<td><?php echo htmlspecialchars($item->name) ?></td>
 		<th>Type</th>
-		<td><?php echo $this->itemTypeText($item->type)." (".$item->type.")"; ?></td>
+		<td><?php echo $this->itemTypeText($item->type) ?></td>
 	</tr>
 	<tr>
 		<th>NPC Buy</th>

@@ -662,5 +662,56 @@ class Flux {
 		$nonstackables = array(1, 4, 5, 7, 8, 9);
 		return !in_array($type, $nonstackables);
 	}
+	
+	/**
+	 *
+	 */
+	public static function equipLocationsToArray($bitmask)
+	{
+		$arr  = array();
+		$bits = self::getEquipLocationList();
+		
+		foreach ($bits as $bit => $name) {
+			if ($bitmask & $bit) {
+				$arr[] = $bit;
+			}
+		}
+		
+		return $arr;
+	}
+	
+	/**
+	 *
+	 */
+	public static function equipUpperToArray($bitmask)
+	{
+		$arr  = array();
+		$bits = self::getEquipUpperList();
+		
+		foreach ($bits as $bit => $name) {
+			if ($bitmask & $bit) {
+				$arr[] = $bit;
+			}
+		}
+		
+		return $arr;
+	}
+	
+	/**
+	 *
+	 */
+	public static function equipJobsToArray($bitmask)
+	{
+		$arr  = array();
+		$bits = self::getEquipJobsList();
+		
+		foreach ($bits as $bit => $name) {
+			if ($bitmask & $bit) {
+				$arr[] = $bit;
+			}
+		}
+		
+		return $arr;
+	}
 }
 ?>

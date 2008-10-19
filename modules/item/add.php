@@ -230,7 +230,13 @@ if (count($_POST) && $params->get('additem')) {
 				
 				if ($sth->execute($bind)) {
 					$session->setMessageData("Your item '$itemName' ($itemID) has been successfully added!");
-					$this->redirect();
+					
+					if ($auth->actionAllowed('item', 'view')) {
+						$this->redirect($this->url('item', 'view', array('id' => $itemID)));
+					}
+					else {
+						$this->redirect();
+					}
 				}
 				else {
 					$errorMessage = 'Failed to add item!';
