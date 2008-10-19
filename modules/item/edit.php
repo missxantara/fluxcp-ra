@@ -9,7 +9,7 @@ $fromTables = array("{$server->charMapDatabase}.item_db", "{$server->charMapData
 $tempTable  = new Flux_TemporaryTable($server->connection, $tableName, $fromTables);
 $shopTable  = Flux::config('FluxTables.ItemShopTable');
 
-$title = 'Edit Item';
+$title = 'Modify Item';
 
 $itemID = $params->get('id');
 
