@@ -29,6 +29,11 @@ $script        = $params->get('script');
 $equipScript   = $params->get('equip_script');
 $unequipScript = $params->get('unequip_script');
 
+// Weight is defaulted to an zero value.
+if (is_null($weight)) {
+	$weight = 0;
+}
+
 if (count($_POST) && $params->get('additem')) {
 	// Equip locations.
 	if ($equipLocs instanceOf Flux_Config) {
@@ -54,11 +59,6 @@ if (count($_POST) && $params->get('additem')) {
 		if (trim($$nullable) == '') {
 			$$nullable = null;
 		}
-	}
-	
-	// Weight is defaulted to an zero value.
-	if (is_null($weight)) {
-		$weight = 0;
 	}
 
 	// Refineable should be 1 or 0 if it's not null.
