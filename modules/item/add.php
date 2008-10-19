@@ -201,7 +201,7 @@ if (count($_POST) && $params->get('additem')) {
 				
 				if ($equipJobs) {
 					$bits = 0;
-					foreach (array_keys($equipJobs) as $bit) {
+					foreach ($equipJobs as $bit) {
 						$bits |= $bit;
 					}
 					$cols[] = 'equip_jobs';
