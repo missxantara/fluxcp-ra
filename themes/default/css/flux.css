@@ -59,6 +59,7 @@ a {
 }
 
 input[type=text], input[type=password], input[type=file], textarea {
+	font-family: "Lucida Grande", "Lucida Sans", Verdana, Tahoma, sans-serif;
 	padding: 4px;
 	font-size: 10pt;
 	color: #444;
@@ -833,9 +834,10 @@ textarea {
 	color: #ddd;
 }
 
-.action a {
+.action a, .action span.anchor {
 	color: #80a2c8;
 	border-bottom: 1px solid #eee;
+	cursor: pointer;
 }
 
 .block-link {
@@ -877,4 +879,12 @@ textarea {
 .woe-table .time {
 	font-style: italic;
 	color: #333;
+}
+
+.script {
+	width: 98%;
+}
+
+.multi-select {
+	width: 100%;
 }

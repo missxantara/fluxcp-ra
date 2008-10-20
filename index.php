@@ -123,7 +123,8 @@ try {
 		throw new Flux_Error("The 'session.use_trans_sid' php.ini configuration must be turned off for Flux to work.");
 	}
 	else {
-		session_set_cookie_params(Flux::config('SessionCookieExpire') * 60 * 60);
+		$sessionExpireDuration = Flux::config('SessionCookieExpire') * 60 * 60;
+		session_set_cookie_params($sessionExpireDuration, Flux::config('BaseURI'));
 		session_start();
 	}
 	

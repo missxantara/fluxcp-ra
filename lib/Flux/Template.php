@@ -255,7 +255,7 @@ class Flux_Template {
 				$this->urlWithQS .= "?{$_SERVER['QUERY_STRING']}";
 			}
 			else {
-				foreach (explode('&', $_SERVER['QUERY_STRING']) as $line) {
+				foreach (explode('&', trim($_SERVER['QUERY_STRING'], '&')) as $line) {
 					list ($key,$val) = explode('=', $line, 2);
 					$key = urldecode($key);
 					$val = urldecode($val);
@@ -1018,46 +1018,19 @@ class Flux_Template {
 	/**
 	 *
 	 */
-	public function equippableJobs($equipJobs)
+	public function equippableJobs($equipJob)
 	{
-		$jobs    = array();
-		$table   = array();
-		$table[] = array(0x00000001, 'Novice');
-		$table[] = array(0x00000002, 'Swordmans');
-		$table[] = array(0x00000004, 'Mage');
-		$table[] = array(0x00000008, 'Archer');
-		$table[] = array(0x00000010, 'Acolyte');
-		$table[] = array(0x00000020, 'Merchant');
-		$table[] = array(0x00000040, 'Thief');
-		$table[] = array(0x00000080, 'Knight');
-		$table[] = array(0x00000100, 'Priest');
-		$table[] = array(0x00000200, 'Wizard');
-		$table[] = array(0x00000400, 'Blacksmith');
-		$table[] = array(0x00000800, 'Hunter');
-		$table[] = array(0x00001000, 'Assassin');
-		$table[] = array(0x00002000, 'Unused');
-		$table[] = array(0x00004000, 'Crusader');
-		$table[] = array(0x00008000, 'Monk');
-		$table[] = array(0x00010000, 'Sage');
-		$table[] = array(0x00020000, 'Rogue');
-		$table[] = array(0x00040000, 'Alchemist');
-		$table[] = array(0x00080000, 'Bard/Dancer');
-		$table[] = array(0x00100000, 'Unused');
-		$table[] = array(0x00200000, 'Taekwon');
-		$table[] = array(0x00400000, 'Star Gladiator');
-		$table[] = array(0x00800000, 'Soul Linker');
-		$table[] = array(0x01000000, 'Gunslinger');
-		$table[] = array(0x02000000, 'Ninja');
+		$jobs      = array();
+		$equipJob  = (int)$equipJob;
+		$equipJobs = Flux::getEquipJobsList();
 		
-		foreach ($table as $job) {
-			list ($bit, $name) = $job;
-			
-			if ($equipJobs & $bit) {
+		foreach ($equipJobs as $bit => $name) {
+			if ($equipJob & $bit) {
 				$jobs[] = $name;
 			}
 		}
 		
-		if (count($jobs) === count($table)) {
+		if (count($jobs) === count($equipJobs)) {
 			return array('All Jobs');
 		}
 		else {
@@ -1095,22 +1068,11 @@ class Flux_Template {
 	public function equipLocations($equipLoc)
 	{
 		$locations   = array();
-		$equipLocs   = array();
-		$equipLocs[] = array('256', 'Upper Headgear');
-		$equipLocs[] = array('512', 'Middle Headgear');
-		$equipLocs[] = array('001', 'Lower Headgear');
-		$equipLocs[] = array('016', 'Armor');
-		$equipLocs[] = array('002', 'Weapon');
-		$equipLocs[] = array('032', 'Shield');
-		$equipLocs[] = array('004', 'Garment');
-		$equipLocs[] = array('064', 'Footgear');
-		$equipLocs[] = array('008', 'Accessory 1');
-		$equipLocs[] = array('128', 'Accessory 2');
+		$equipLoc    = (int)$equipLoc;
+		$equipLocs   = Flux::getEquipLocationList();
 		
-		foreach ($equipLocs as $loc) {
-			list ($value, $name) = $loc;
-			
-			if (intval($equipLoc) === intval($value)) {
+		foreach ($equipLocs as $bit => $name) {
+			if ($equipLoc & $bit) {
 				$locations[] = $name;
 			}
 		}
@@ -1124,14 +1086,9 @@ class Flux_Template {
 	public function equipUpper($equipUpper)
 	{
 		$upper   = array();
-		$table   = array();
-		$table[] = array(1, 'Normal');
-		$table[] = array(2, 'Reborn');
-		$table[] = array(3, 'Baby');
+		$table   = Flux::getEquipUpperList();
 		
-		foreach ($table as $up) {
-			list ($bit, $name) = $up;
-			
+		foreach ($table as $bit => $name) {
 			if ($equipUpper & $bit) {
 				$upper[] = $name;
 			}
@@ -1194,7 +1151,14 @@ class Flux_Template {
 		
 		$dir   = FLUX_DATA_DIR."/itemshop/$serverName/$athenaServerName";
 		$exts  = implode('|', array_map('preg_quote', Flux::config('ShopImageExtensions')->toArray()));
-		$files = preg_grep("/\.($exts)$/", glob("$dir/$shopItemID.*"));
+		$imgs  = glob("$dir/$shopItemID.*");
+		
+		if (is_array($imgs)) {
+			$files = preg_grep("/\.($exts)$/", $imgs);
+		}
+		else {
+			$files = arary();
+		}
 		
 		if (empty($files)) {
 			return false;

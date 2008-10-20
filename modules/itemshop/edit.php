@@ -5,13 +5,31 @@ $this->loginRequired();
 
 $title = 'Modify Item in the Shop';
 
+require_once 'Flux/TemporaryTable.php';
 require_once 'Flux/ItemShop.php';
 
+$stackable = false;
 $shopItemID = $params->get('id');
 $shop = new Flux_ItemShop($server);
 $item = $shop->getItem($shopItemID);
 
 if ($item) {
+	$tableName  = "{$server->charMapDatabase}.items";
+	$fromTables = array("{$server->charMapDatabase}.item_db", "{$server->charMapDatabase}.item_db2");
+	$tempTable  = new Flux_TemporaryTable($server->connection, $tableName, $fromTables);
+	$shopTable  = Flux::config('FluxTables.ItemShopTable');
+
+	$col = "id AS item_id, name_japanese AS item_name, type";
+	$sql = "SELECT $col FROM $tableName WHERE items.id = ?";
+	$sth = $server->connection->getStatement($sql);
+
+	$sth->execute(array($item->shop_item_nameid));
+	$originalItem = $sth->fetch();
+
+	if ($originalItem && Flux::isStackableItemType($originalItem->type)) {
+		$stackable = true;
+	}
+	
 	if (count($_POST)) {
 		$maxCost  = (int)Flux::config('ItemShopMaxCost');
 		$maxQty   = (int)Flux::config('ItemShopMaxQuantity');
@@ -28,6 +46,9 @@ if ($item) {
 		}
 		elseif (!$quantity) {
 			$errorMessage = 'You must input a quantity greater than zero.';
+		}
+		elseif ($quantity > 1 && !$stackable) {
+			$errorMessage = 'This item is not stackable. Quantity must be 1.';
 		}
 		elseif ($quantity > $maxQty) {
 			$errorMessage = "The item quantity must not exceed $maxQty.";
@@ -60,5 +81,9 @@ if ($item) {
 	if (empty($info)) {
 		$info = $item->shop_item_info;
 	}
+}
+
+if (!$stackable) {
+	$params->set('qty', 1);
 }
 ?>

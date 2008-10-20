@@ -13,7 +13,7 @@ try {
 	$tempTable  = new Flux_TemporaryTable($server->connection, $tableName, $fromTables);
 	$shopTable  = Flux::config('FluxTables.ItemShopTable');
 	
-	// Statement paramters, joins and conditions.
+	// Statement parameters, joins and conditions.
 	$bind        = array();
 	$sqlpartial  = "LEFT OUTER JOIN {$server->charMapDatabase}.$shopTable ON $shopTable.nameid = items.id ";
 	$sqlpartial .= "WHERE 1=1 ";
@@ -53,24 +53,34 @@ try {
 		}
 
 		if ($itemType) {
-			$typeName   = preg_quote($itemType);
-			$itemTypes  = preg_grep("/.*?$typeName.*?/i", Flux::config('ItemTypes')->toArray());
-			
-			if (count($itemTypes)) {
-				$itemTypes    = array_keys($itemTypes);
-				$sqlpartial .= "AND (";
-				$partial     = '';
-				
-				foreach ($itemTypes as $id) {
-					$partial .= "type = ? OR ";
-					$bind[]   = $id;
+			if(is_numeric($itemType) && (floatval($itemType) == intval($itemType))) {
+				$itemTypes = Flux::config('ItemTypes')->toArray();
+				if ($itemType < count($itemTypes) && $itemTypes[$itemType]) {
+					$sqlpartial .= "AND type = ? ";
+					$bind[]      = $itemType;
+				} else {
+					$sqlpartial .= 'AND type IS NULL ';
 				}
+			} else {
+					
+				$typeName   = preg_quote($itemType);
+				$itemTypes  = preg_grep("/.*?$typeName.*?/i", Flux::config('ItemTypes')->toArray());
 				
-				$partial     = preg_replace('/\s*OR\s*$/', '', $partial);
-				$sqlpartial .= "$partial) ";
-			}
-			else {
-				$sqlpartial .= 'AND type IS NULL ';
+				if (count($itemTypes)) {
+					$itemTypes    = array_keys($itemTypes);
+					$sqlpartial .= "AND (";
+					$partial     = '';
+					
+					foreach ($itemTypes as $id) {
+						$partial .= "type = ? OR ";
+						$bind[]   = $id;
+					}
+					
+					$partial     = preg_replace('/\s*OR\s*$/', '', $partial);
+					$sqlpartial .= "$partial) ";
+				} else {
+					$sqlpartial .= 'AND type IS NULL ';
+				}
 			}
 		}
 		
@@ -88,10 +98,10 @@ try {
 		if (in_array($npcSellOp, $opValues) && trim($npcSell) != '') {
 			$op = $opMapping[$npcSellOp];
 			if ($op == '=' && $npcSell === '0') {
-				$sqlpartial .= "AND (price_sell IS NULL OR price_sell = 0) ";
+				$sqlpartial .= "AND IFNULL(price_sell, FLOOR(price_buy/2)) = 0 ";
 			}
 			else {
-				$sqlpartial .= "AND price_sell $op ? ";
+				$sqlpartial .= "AND IFNULL(price_sell, FLOOR(price_buy/2)) $op ? ";
 				$bind[]      = $npcSell;
 			}
 		}
@@ -189,8 +199,9 @@ try {
 		'range', 'slots', 'refineable', 'cost', 'origin_table'
 	));
 	
-	$col  = "origin_table, items.id AS item_id, name_japanese AS name, type, price_buy, price_sell, weight, attack,  ";
-	$col .= "defence AS defense, `range`, slots, refineable, cost, $shopTable.id AS shop_item_id";
+	$col  = "origin_table, items.id AS item_id, name_japanese AS name, type, price_buy, weight, attack,  ";
+	$col .= "defence AS defense, `range`, slots, refineable, cost, $shopTable.id AS shop_item_id, ";
+	$col .= "IFNULL(price_sell, FLOOR(price_buy/2)) AS price_sell";
 	
 	$sql  = $paginator->getSQL("SELECT $col FROM $tableName $sqlpartial");
 	$sth  = $server->connection->getStatement($sql);

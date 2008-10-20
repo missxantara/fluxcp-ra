@@ -15,6 +15,11 @@ require_once 'Flux/LoginAthenaGroup.php';
  */
 class Flux {
 	/**
+	 * Current version.
+	 */
+	const VERSION = '1.0.0';
+	
+	/**
 	 * Application-specific configuration object.
 	 *
 	 * @access public
@@ -581,6 +586,132 @@ class Flux {
 				$sth->execute($idvals);
 			}
 		}
+	}
+	
+	/**
+	 *
+	 */
+	public static function getEquipLocationList()
+	{
+		return array(
+			256 => 'Upper Headgear',
+			512 => 'Middle Headgear',
+			  1 => 'Lower Headgear',
+			 16 => 'Armor',
+			  2 => 'Weapon',
+			 32 => 'Shield',
+			  4 => 'Garment',
+			 64 => 'Footgear',
+			  8 => 'Accessory 1',
+			128 => 'Accessory 2'
+		);
+	}	
+	
+	/**
+	 *
+	 */
+	public static function getEquipUpperList()
+	{
+		return array(
+			1 => 'Normal',
+			2 => 'Upper',
+			4 => 'Baby'
+		);
+	}
+	
+	/**
+	 *
+	 */
+	public static function getEquipJobsList()
+	{
+		return array(
+			pow(2,  0) => 'Novice',
+			pow(2,  1) => 'Swordman',
+			pow(2,  2) => 'Mage',
+			pow(2,  3) => 'Archer',
+			pow(2,  4) => 'Acolyte',
+			pow(2,  5) => 'Merchant',
+			pow(2,  6) => 'Thief',
+			pow(2,  7) => 'Knight',
+			pow(2,  8) => 'Priest',
+			pow(2,  9) => 'Wizard',
+			pow(2, 10) => 'Blacksmith',
+			pow(2, 11) => 'Hunter',
+			pow(2, 12) => 'Assassin',
+			pow(2, 13) => 'Unused',
+			pow(2, 14) => 'Crusader',
+			pow(2, 15) => 'Monk',
+			pow(2, 16) => 'Sage',
+			pow(2, 17) => 'Rogue',
+			pow(2, 18) => 'Alchemist',
+			pow(2, 19) => 'Bard/Dancer',
+			pow(2, 20) => 'Unused',
+			pow(2, 21) => 'Taekwon',
+			pow(2, 22) => 'Star Gladiator',
+			pow(2, 23) => 'Soul Linker',
+			pow(2, 24) => 'Gunslinger',
+			pow(2, 25) => 'Ninja'
+		);
+	}
+	
+	/**
+	 *
+	 */
+	public static function isStackableItemType($type)
+	{
+		$nonstackables = array(1, 4, 5, 7, 8, 9);
+		return !in_array($type, $nonstackables);
+	}
+	
+	/**
+	 *
+	 */
+	public static function equipLocationsToArray($bitmask)
+	{
+		$arr  = array();
+		$bits = self::getEquipLocationList();
+		
+		foreach ($bits as $bit => $name) {
+			if ($bitmask & $bit) {
+				$arr[] = $bit;
+			}
+		}
+		
+		return $arr;
+	}
+	
+	/**
+	 *
+	 */
+	public static function equipUpperToArray($bitmask)
+	{
+		$arr  = array();
+		$bits = self::getEquipUpperList();
+		
+		foreach ($bits as $bit => $name) {
+			if ($bitmask & $bit) {
+				$arr[] = $bit;
+			}
+		}
+		
+		return $arr;
+	}
+	
+	/**
+	 *
+	 */
+	public static function equipJobsToArray($bitmask)
+	{
+		$arr  = array();
+		$bits = self::getEquipJobsList();
+		
+		foreach ($bits as $bit => $name) {
+			if ($bitmask & $bit) {
+				$arr[] = $bit;
+			}
+		}
+		
+		return $arr;
 	}
 }
 ?>

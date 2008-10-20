@@ -17,7 +17,7 @@
 		<input type="text" name="master" id="master" value="<?php echo htmlspecialchars($params->get('master')) ?>" />
 	</p>
 	<p>
-		<label for="guild_lv">Guild Level:</label>
+		<label for="guild_level">Guild Level:</label>
 		<select name="guild_level_op">
 			<option value="eq"<?php if (($guild_level_op=$params->get('guild_level_op')) == 'eq') echo ' selected="selected"' ?>>is equal to</option>
 			<option value="gt"<?php if ($guild_level_op == 'gt') echo ' selected="selected"' ?>>is greater than</option>

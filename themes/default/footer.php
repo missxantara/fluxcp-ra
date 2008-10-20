@@ -17,7 +17,10 @@
 			<tr>
 				<td colspan="3"></td>
 				<td id="copyright">
-					<p><strong>Powered by Flux Control Panel</strong> &mdash; Copyright &copy; 2008 Matthew Harris and Nikunj Mehta.</p>
+					<p>
+						<strong>Powered by Flux Control Panel (<?php echo htmlspecialchars(Flux::VERSION) ?>)</strong>
+						&mdash; Copyright &copy; 2008 Matthew Harris and Nikunj Mehta.
+					</p>
 				</td>
 				<td></td>
 			</tr>

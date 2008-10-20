@@ -1,7 +1,17 @@
 <?php if (!defined('FLUX_ROOT')) exit; ?>
 <h2>Viewing Item</h2>
 <?php if ($item): ?>
+<?php
+$actions = array();
+if ($auth->actionAllowed('item', 'edit')) {
+	$actions[] = sprintf('<a href="%s">Modify Item</a>', $this->url('item', 'edit', array('id' => $item->item_id)));
+}
+if ($auth->actionAllowed('item', 'copy')) {
+	$actions[] = sprintf('<a href="%s">Duplicate Item</a>', $this->url('item', 'copy', array('id' => $item->item_id)));
+}
+?>
 <h3>#<?php echo htmlspecialchars($item->item_id) ?>: <?php echo htmlspecialchars($item->name) ?></h3>
+<p class="action"><?php echo implode(' • ', $actions) ?></p>
 <table class="vertical-table">
 	<tr>
 		<th>Item ID</th>
@@ -52,7 +62,13 @@
 	</tr>
 	<tr>
 		<th>NPC Sell</th>
-		<td><?php echo number_format((int)$item->price_sell) ?></td>
+		<td>
+			<?php if (is_null($item->price_sell) && $item->price_buy): ?>
+				<?php echo number_format(floor($item->price_buy / 2)) ?>
+			<?php else: ?>
+				<?php echo number_format((int)$item->price_sell) ?>
+			<?php endif ?>
+		</td>
 		<th>Attack</th>
 		<td><?php echo number_format((int)$item->attack) ?></td>
 	</tr>

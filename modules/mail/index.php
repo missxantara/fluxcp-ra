@@ -34,7 +34,7 @@ if (count($_POST)) {
 			$opts = array('_ignoreTemplate' => true, '_useMarkdown' => true);
 			
 			if ($mail->send($to, $subject, $body, $opts)) {
-				$session->setMessageData("Your e-mail has been successfull sent to $to.");
+				$session->setMessageData("Your e-mail has been successfully sent to $to.");
 				$this->redirect();
 			}
 			else {
