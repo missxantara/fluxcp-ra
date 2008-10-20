@@ -98,10 +98,10 @@ try {
 		if (in_array($npcSellOp, $opValues) && trim($npcSell) != '') {
 			$op = $opMapping[$npcSellOp];
 			if ($op == '=' && $npcSell === '0') {
-				$sqlpartial .= "AND (price_sell IS NULL OR price_sell = 0) ";
+				$sqlpartial .= "AND IFNULL(price_sell, FLOOR(price_buy/2)) = 0 ";
 			}
 			else {
-				$sqlpartial .= "AND price_sell $op ? ";
+				$sqlpartial .= "AND IFNULL(price_sell, FLOOR(price_buy/2)) $op ? ";
 				$bind[]      = $npcSell;
 			}
 		}
@@ -199,8 +199,9 @@ try {
 		'range', 'slots', 'refineable', 'cost', 'origin_table'
 	));
 	
-	$col  = "origin_table, items.id AS item_id, name_japanese AS name, type, price_buy, price_sell, weight, attack,  ";
-	$col .= "defence AS defense, `range`, slots, refineable, cost, $shopTable.id AS shop_item_id";
+	$col  = "origin_table, items.id AS item_id, name_japanese AS name, type, price_buy, weight, attack,  ";
+	$col .= "defence AS defense, `range`, slots, refineable, cost, $shopTable.id AS shop_item_id, ";
+	$col .= "IFNULL(price_sell, FLOOR(price_buy/2)) AS price_sell";
 	
 	$sql  = $paginator->getSQL("SELECT $col FROM $tableName $sqlpartial");
 	$sth  = $server->connection->getStatement($sql);
