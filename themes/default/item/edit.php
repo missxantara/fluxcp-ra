@@ -1,5 +1,5 @@
 <?php if (!defined('FLUX_ROOT')) exit; ?>
-<h2>Edit Item</h2>
+<h2>Modify Item</h2>
 <?php if ($item): ?>
 <p>The only required fields are the <em>Item ID</em>, <em>Identifier</em>, <em>Name</em> and <em>Type</em> fields.</p>
 <p><strong>Note:</strong> An empty <em>NPC Sell</em> price defaults to half of the buy price in-game.</p>
