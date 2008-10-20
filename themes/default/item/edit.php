@@ -141,5 +141,5 @@
 	</table>
 </form>
 <?php else: ?>
-<p>No such item found.</p>
+<p>No such item found. <a href="javascript:history.go(-1)">Go back</a>.</p>
 <?php endif ?>
