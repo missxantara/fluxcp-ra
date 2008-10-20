@@ -62,7 +62,13 @@ if ($auth->actionAllowed('item', 'copy')) {
 	</tr>
 	<tr>
 		<th>NPC Sell</th>
-		<td><?php echo number_format((int)$item->price_sell) ?></td>
+		<td>
+			<?php if (is_null($item->price_sell) && $item->price_buy): ?>
+				<?php echo number_format(floor($item->price_buy / 2)) ?>
+			<?php else: ?>
+				<?php echo number_format((int)$item->price_sell) ?>
+			<?php endif ?>
+		</td>
 		<th>Attack</th>
 		<td><?php echo number_format((int)$item->attack) ?></td>
 	</tr>
