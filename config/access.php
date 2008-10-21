@@ -167,6 +167,7 @@ return array(
 		'ViewRawTxnLogData'  => AccountLevel::ADMIN,  // Level required to view Raw Transaction Log in txnview page.
 		'ResetLook'          => AccountLevel::LOWGM,  // Level required to reset another character's look.
 		'ResetPosition'      => AccountLevel::LOWGM,  // Level required to reset another character's position.
+		'ViewWoeDisallowed'  => AccountLevel::LOWGM,  // Level required to bypass WoE-disabled page security check.
 		
 		'EditHigherPower'    => 5000,
 		'BanHigherPower'     => 5000

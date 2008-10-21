@@ -64,4 +64,16 @@ if (($preferred_server = $params->get('preferred_server')) && $session->getAthen
 
 // Preferred server.
 $server = $session->getAthenaServer();
+
+// WoE-based authorization.
+$_thisModule = $params->get('module');
+$_thisAction = $params->get('action');
+
+$woeDisallowModule = $server->woeDisallow->get($_thisModule);
+$woeDisallowAction = $server->woeDisallow->get("$_thisModule.$_thisAction");
+
+if (!$auth->allowedToViewWoeDisallowed && ($woeDisallowModule || $woeDisallowAction) && $server->isWoe()) {
+	$session->setMessageData('The page you have requested is not accessible during WoE.');
+	$this->redirect();
+}
 ?>

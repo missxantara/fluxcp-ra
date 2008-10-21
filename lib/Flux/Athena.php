@@ -149,6 +149,11 @@ class Flux_Athena {
 	public $woeDayTimes = array();
 	
 	/**
+	 *
+	 */
+	public $woeDisallow;
+	
+	/**
 	 * @param Flux_Connection $connection
 	 * @param Flux_Config $charMapConfig
 	 * @param Flux_LoginServer $loginServer
@@ -208,6 +213,27 @@ class Flux_Athena {
 					'endingDay'    => $eDay,
 					'endingTime'   => $eTime
 				);
+			}
+		}
+		
+		//
+		$woeDisallow = $charMapConfig->getWoeDisallow();
+		if ($woeDisallow instanceOf Flux_Config) {
+			$woeDisallow       = $woeDisallow->toArray();
+			$_tempArray        = array();
+			$this->woeDisallow = new Flux_Config($_tempArray);
+			
+			foreach ($woeDisallow as $disallow) {
+				if (array_key_exists('module', $disallow)) {
+					$module = $disallow['module'];
+					if (array_key_exists('action', $disallow)) {
+						$action = $disallow['action'];
+						$this->woeDisallow->set("$module.$action", true);
+					}
+					else {
+						$this->woeDisallow->set($module, true);
+					}
+				}
 			}
 		}
 	}
