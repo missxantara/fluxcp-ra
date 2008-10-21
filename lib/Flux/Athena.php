@@ -641,5 +641,27 @@ class Flux_Athena {
 		}
 		return $dateTime->format($format);
 	}
+	
+	/**
+	 *
+	 */
+	public function isWoe()
+	{
+		$serverTime = (int)$this->getServerTime();
+		$dayNames   = array('Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday');
+			
+		foreach ($this->woeDayTimes as $woeDayTime) {
+			$sDay  = $dayNames[$woeDayTime['startingDay']];
+			$eDay  = $dayNames[$woeDayTime['endingDay']];
+			$start = strtotime("$sDay {$woeDayTime['startingTime']}");
+			$end   = strtotime("$eDay {$woeDayTime['endingTime']}");
+			
+			if ($serverTime > $start && $serverTime < $end) {
+				return true;
+			}
+		}
+		
+		return false;
+	}
 }
 ?>
