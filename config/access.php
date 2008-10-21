@@ -52,7 +52,8 @@ return array(
 			'prefs'    => AccountLevel::NORMAL,
 			'changeslot' => AccountLevel::NORMAL,
 			'resetlook'  => AccountLevel::NORMAL,
-			'resetpos'   => AccountLevel::NORMAL
+			'resetpos'   => AccountLevel::NORMAL,
+			'mapstats'   => AccountLevel::ANYONE
 		),
 		'guild'     => array(
 			'emblem'   => AccountLevel::ANYONE,

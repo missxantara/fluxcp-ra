@@ -115,6 +115,7 @@ return array(
 		'Server Status' => array('module' => 'server', 'action' => 'status'),
 		'WoE Hours'     => array('module' => 'woe'),
 		"Who's Online"  => array('module' => 'character', 'action' => 'online'),
+		'Map Stats'     => array('module' => 'character', 'action' => 'mapstats'),
 		'Log Data'      => array('module' => 'logdata'),
 		'IP Ban List'   => array('module' => 'ipban'),
 		'Accounts'      => array('module' => 'account'),
