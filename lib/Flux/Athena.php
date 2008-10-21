@@ -139,6 +139,16 @@ class Flux_Athena {
 	public $resetDenyMaps;
 	
 	/**
+	 *
+	 */
+	public $dateTimezone;
+	
+	/**
+	 *
+	 */
+	public $woeDayTimes = array();
+	
+	/**
 	 * @param Flux_Connection $connection
 	 * @param Flux_Config $charMapConfig
 	 * @param Flux_LoginServer $loginServer
@@ -161,6 +171,7 @@ class Flux_Athena {
 		$this->mvpDropRates    = (int)$charMapConfig->getMvpDropRates();
 		$this->cardDropRates   = (int)$charMapConfig->getCardDropRates();
 		$this->maxCharSlots    = (int)$charMapConfig->getMaxCharSlots();
+		$this->dateTimezone    = $charMapConfig->getDateTimezone();
 		
 		$resetDenyMaps = $charMapConfig->getResetDenyMaps();
 		if (!$resetDenyMaps) {
@@ -171,6 +182,33 @@ class Flux_Athena {
 		}
 		else {
 			$this->resetDenyMaps = $resetDenyMaps->toArray();
+		}
+		
+		// Get WoE times specific in servers config.
+		$woeDayTimes = $charMapConfig->getWoeDayTimes();
+		if ($woeDayTimes instanceOf Flux_Config) {
+			$woeDayTimes = $woeDayTimes->toArray();
+			foreach ($woeDayTimes as $dayTime) {
+				if (!is_array($dayTime) || count($dayTime) < 4) {
+					continue;
+				}
+				
+				list ($sDay, $sTime, $eDay, $eTime) = array_slice($dayTime, 0, 4);
+				$sTime = trim($sTime);
+				$eTime = trim($eTime);
+				
+				if ($sDay < 0 || $sDay > 6 || $eDay < 0 || $eDay > 6 ||
+					!preg_match('/^\d{2}:\d{2}$/', $sTime) || !preg_match('/^\d{2}:\d{2}$/', $eTime)) {	
+					continue;
+				}
+				
+				$this->woeDayTimes[] = array(
+					'startingDay'  => $sDay,
+					'startingTime' => $sTime,
+					'endingDay'    => $eDay,
+					'endingTime'   => $eTime
+				);
+			}
 		}
 	}
 	
@@ -590,6 +628,18 @@ class Flux_Athena {
 		else {
 			return false;
 		}
+	}
+	
+	/**
+	 *
+	 */
+	public function getServerTime($format = 'U')
+	{
+		$dateTime = date_create('now');
+		if ($this->dateTimezone) {
+			$dateTime->setTimeZone(new DateTimeZone($this->dateTimezone));
+		}
+		return $dateTime->format($format);
 	}
 }
 ?>

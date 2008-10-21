@@ -44,6 +44,7 @@ return array(
 				'MvpDropRates'  => 25,
 				'CardDropRates' => 25,
 				'MaxCharSlots'  => 9,
+				'DateTimezone'  => null,       // Specifies game server's timezone for this char/map pair. (See: http://php.net/timezones)
 				//'ResetDenyMaps' => 'sec_pri',  // Defaults to 'sec_pri'. This value can be an array of map names.
 				//'Database'      => 'ragnarok', // Defaults to DbConfig.Database
 				'CharServer'    => array(
@@ -53,6 +54,16 @@ return array(
 				'MapServer'     => array(
 					'Address'   => '127.0.0.1',
 					'Port'      => 5121
+				),
+				// -- WoE days and times --
+				// First parameter: Starding day 0=Sunday / 1=Monday / 2=Tuesday / 3=Wednesday / 4=Thursday / 5=Friday / 6=Saturday
+				// Second parameter: Starting hour in 24-hr format.
+				// Third paramter: Ending day (possible value is same as starting day).
+				// Fourth (final) parameter: Ending hour in 24-hr format.
+				// ** (Note, invalid times are ignored silently.)
+				'WoeDayTimes'   => array(
+					//array(0, '12:00', 0, '14:00'), // Example: Starts Sunday 12:00 PM and ends Sunday 2:00 PM
+					//array(3, '14:00', 3, '15:00')  // Example: Starts Wednesday 2:00 PM and ends Wednesday 3:00 PM
 				)
 			)
 		)
