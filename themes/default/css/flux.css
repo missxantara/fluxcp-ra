@@ -190,6 +190,15 @@ label:hover {
 	background-color: #f00;
 }
 
+.green {
+	display: block;
+	padding: 10px;
+	font-weight: bold;
+	font-size: 120%;
+	color: #fff;
+	background-color: #0c0;
+}
+
 .note {
 	padding: 5px;
 	color: #444;
