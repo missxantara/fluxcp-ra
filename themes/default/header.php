@@ -55,15 +55,18 @@
 			}
 		</script>
 		
-		<?php if ($session->isLoggedIn()): ?>
 		<script type="text/javascript">
 			function updatePreferredServer(sel){
 				var preferred = sel.options[sel.selectedIndex].value;
 				document.preferred_server_form.preferred_server.value = preferred;
 				document.preferred_server_form.submit();
 			}
+			function refreshSecurityCode(imgSelector){
+				var clean = <?php echo Flux::config('UseCleanUrls') ? 'true' : 'false' ?>;
+				var image = "<?php echo $this->url('captcha') ?>"+(clean ? '?nocache=' : '&nocache=')+Math.random();
+				$(imgSelector).attr('src', image);
+			}
 		</script>
-		<?php endif ?>
 	</head>
 	<body>
 		<table cellspacing="0" cellpadding="0" width="100%">

@@ -60,7 +60,11 @@
 				<div class="security-code">
 					<img src="<?php echo $this->url('captcha') ?>" />
 				</div>
+				
 				<input type="text" name="security_code" id="register_security_code" />
+				<div style="font-size: smaller;" class="action">
+					<strong><a href="javascript:refreshSecurityCode('.security-code img')">Refresh Security Code</a></strong>
+				</div>
 			</td>
 		</tr>
 		<?php endif ?>

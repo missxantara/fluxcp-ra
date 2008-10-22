@@ -21,9 +21,12 @@ tr, td, th {
 }
 
 .horizontal-table tr, .vertical-table tr, .generic-form-table tr,
-.horizontal-table td, .vertical-table td, .generic-form-table td,
-.horizontal-table th, .vertical-table th, .generic-form-table th {
+.horizontal-table td, .vertical-table td, .generic-form-table td {
 	vertical-align: middle;
+}
+
+.horizontal-table th, .vertical-table th, .generic-form-table th {
+	vertical-align: top;
 }
 
 h2 {
