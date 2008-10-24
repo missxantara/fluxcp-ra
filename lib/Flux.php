@@ -212,8 +212,11 @@ class Flux {
 	 */
 	public static function parseConfigFile($filename)
 	{
+		ob_start();
 		// Uses require, thus assumes the file returns an array.
-		return self::parseConfig(require($filename));
+		$config = require $filename;
+		ob_end_clean();
+		return self::parseConfig($config);
 	}
 	
 	/**
