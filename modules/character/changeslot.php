@@ -68,10 +68,11 @@ if ($char) {
 				$sth->execute(array($slot-1, $charID));
 				
 				if ($otherChar) {
-					$session->setMessageData("You have successfully changed {$char->name}'s slot with {$otherChar->name}.");
+					$otherNum = $char->char_num + 1;
+					$session->setMessageData("You have successfully swapped {$char->name}'s slot with {$otherChar->name} (#$otherNum and #$slot).");
 				}
 				else {
-					$session->setMessageData("You have successfully changed {$char->name}'s slot.");
+					$session->setMessageData("You have successfully changed {$char->name}'s slot to #$slot.");
 				}
 				
 				$this->redirect();
