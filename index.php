@@ -1,7 +1,7 @@
 <?php
-if (version_compare(PHP_VERSION, '5.2', '<')) {
+if (version_compare(PHP_VERSION, '5.2.1', '<')) {
 	echo '<h2>Error</h2>';
-	echo '<p>PHP 5.2 or higher is required to use Flux Control Panel.</p>';
+	echo '<p>PHP 5.2.1 or higher is required to use Flux Control Panel.</p>';
 	echo '<p>You are running '.PHP_VERSION.'</p>';
 	exit;
 }
