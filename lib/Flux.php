@@ -8,6 +8,25 @@ require_once 'Flux/MapServer.php';
 require_once 'Flux/Athena.php';
 require_once 'Flux/LoginAthenaGroup.php';
 
+// Get the SVN revision of the top-level directory (FLUX_ROOT).
+$svnEntriesFile = FLUX_ROOT.'/.svn/entries';
+if (file_exists($svnEntriesFile) && is_readable($svnEntriesFile)) {
+	$fp  = fopen($svnEntriesFile, 'r');
+	$arr = explode("\n", fread($fp, 256));
+	
+	if (isset($arr[3]) && ctype_digit($rev=trim($arr[3]))) {
+		// Found one!
+		define('FLUX_SVNVERSION', (int)$rev);
+	}
+	
+	fclose($fp);
+}
+
+// Looks like no revision was found.
+if (!defined('FLUX_SVNVERSION')) {
+	define('FLUX_SVNVERSION', null);
+}
+
 /**
  * The Flux class contains methods related to the application on the larger
  * scale. For the most part, it handles application initialization such as
@@ -18,6 +37,11 @@ class Flux {
 	 * Current version.
 	 */
 	const VERSION = '1.0.0';
+	
+	/**
+	 * Top-level revision.
+	 */
+	const SVNVERSION = FLUX_SVNVERSION;
 	
 	/**
 	 * Application-specific configuration object.
