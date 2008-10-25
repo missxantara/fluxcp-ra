@@ -527,7 +527,7 @@ class Flux {
 	}
 	
 	/**
-	 *
+	 * Process donations that have been put on hold.
 	 */
 	public static function processHeldCredits()
 	{
@@ -592,7 +592,8 @@ class Flux {
 	}
 	
 	/**
-	 *
+	 * Get array of equip_location bits. (bit => loc_name pairs)
+	 * @return array
 	 */
 	public static function getEquipLocationList()
 	{
@@ -611,7 +612,8 @@ class Flux {
 	}	
 	
 	/**
-	 *
+	 * Get array of equip_upper bits. (bit => upper_name pairs)
+	 * @return array
 	 */
 	public static function getEquipUpperList()
 	{
@@ -623,7 +625,7 @@ class Flux {
 	}
 	
 	/**
-	 *
+	 * Get array of equip_jobs bits. (bit => job_name pairs)
 	 */
 	public static function getEquipJobsList()
 	{
@@ -658,7 +660,9 @@ class Flux {
 	}
 	
 	/**
-	 *
+	 * Check whether a particular item type is stackable.
+	 * @param int $type
+	 * @return bool
 	 */
 	public static function isStackableItemType($type)
 	{
@@ -667,7 +671,10 @@ class Flux {
 	}
 	
 	/**
-	 *
+	 * Perform a bitwise AND from each bit in getEquipLocationList() on $bitmask
+	 * to determine which bits have been set.
+	 * @param int $bitmask
+	 * @return array
 	 */
 	public static function equipLocationsToArray($bitmask)
 	{
@@ -684,7 +691,10 @@ class Flux {
 	}
 	
 	/**
-	 *
+	 * Perform a bitwise AND from each bit in getEquipUpperList() on $bitmask
+	 * to determine which bits have been set.
+	 * @param int $bitmask
+	 * @return array
 	 */
 	public static function equipUpperToArray($bitmask)
 	{
@@ -701,7 +711,10 @@ class Flux {
 	}
 	
 	/**
-	 *
+	 * Perform a bitwise AND from each bit in getEquipJobsList() on $bitmask
+	 * to determine which bits have been set.
+	 * @param int $bitmask
+	 * @return array
 	 */
 	public static function equipJobsToArray($bitmask)
 	{
