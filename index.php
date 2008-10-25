@@ -109,6 +109,7 @@ try {
 		Flux::config('ThemeName', 'installer');
 	}
 	
+	$sessionKey = Flux::config('SessionKey');
 	session_save_path(realpath(FLUX_DATA_DIR.'/sessions'));
 	if (!is_writable($dir=session_save_path())) {
 		throw new Flux_PermissionError("The session storage directory '$dir' is not writable.  Remedy with `chmod 0707 $dir`");
@@ -128,10 +129,10 @@ try {
 	else {
 		$sessionExpireDuration = Flux::config('SessionCookieExpire') * 60 * 60;
 		session_set_cookie_params($sessionExpireDuration, Flux::config('BaseURI'));
+		ini_set('session.name', $sessionKey);
 		session_start();
 	}
 	
-	$sessionKey = Flux::config('SessionKey');
 	if (empty($_SESSION[$sessionKey]) || !is_array($_SESSION[$sessionKey])) {
 		$_SESSION[$sessionKey] = array();
 	}
