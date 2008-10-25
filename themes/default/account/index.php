@@ -62,9 +62,13 @@
 		</select>
 		<input type="text" name="logincount" id="logincount" value="<?php echo htmlspecialchars($params->get('logincount')) ?>" />
 		…
-		<label for="use_last_login">Last Login Date:</label>
-		<input type="checkbox" name="use_last_login" id="use_last_login"<?php if ($params->get('use_last_login')) echo ' checked="checked"' ?> />
-		<?php echo $this->dateField('last_login') ?>
+		<label for="use_last_login_before">Login Before:</label>
+		<input type="checkbox" name="use_last_login_before" id="use_last_login_before"<?php if ($params->get('use_last_login_before')) echo ' checked="checked"' ?> />
+		<?php echo $this->dateField('last_login_before') ?>		
+		…
+		<label for="use_last_login_after">Login After:</label>
+		<input type="checkbox" name="use_last_login_after" id="use_last_login_after"<?php if ($params->get('use_last_login_after')) echo ' checked="checked"' ?> />
+		<?php echo $this->dateField('last_login_after') ?>
 		
 		<input type="submit" value="Search" />
 		<input type="button" value="Reset" onclick="reload()" />
