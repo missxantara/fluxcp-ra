@@ -64,6 +64,9 @@ try {
 		'messagesConfigFile' => FLUX_CONFIG_DIR.'/messages.php'
 	));
 	
+	// Set time limit.
+	set_time_limit((int)Flux::config('ScriptTimeLimit'));
+	
 	// Set default timezone for entire app.
 	$timezone = Flux::config('DateDefaultTimezone');
 	if ($timezone && !@date_default_timezone_set($timezone)) {
