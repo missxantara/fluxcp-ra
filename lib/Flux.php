@@ -7,25 +7,10 @@ require_once 'Flux/CharServer.php';
 require_once 'Flux/MapServer.php';
 require_once 'Flux/Athena.php';
 require_once 'Flux/LoginAthenaGroup.php';
+require_once 'functions/svn_version.php';
 
 // Get the SVN revision of the top-level directory (FLUX_ROOT).
-$svnEntriesFile = FLUX_ROOT.'/.svn/entries';
-if (file_exists($svnEntriesFile) && is_readable($svnEntriesFile)) {
-	$fp  = fopen($svnEntriesFile, 'r');
-	$arr = explode("\n", fread($fp, 256));
-	
-	if (isset($arr[3]) && ctype_digit($rev=trim($arr[3]))) {
-		// Found one!
-		define('FLUX_SVNVERSION', (int)$rev);
-	}
-	
-	fclose($fp);
-}
-
-// Looks like no revision was found.
-if (!defined('FLUX_SVNVERSION')) {
-	define('FLUX_SVNVERSION', null);
-}
+define('FLUX_SVNVERSION', svn_version());
 
 /**
  * The Flux class contains methods related to the application on the larger
