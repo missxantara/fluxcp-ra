@@ -102,7 +102,7 @@
 <table class="horizontal-table">
 	<tr>
 		<th><?php echo $paginator->sortableColumn('item_id', 'Item ID') ?></th>
-		<th><?php echo $paginator->sortableColumn('name', 'Name') ?></th>
+		<th colspan="2"><?php echo $paginator->sortableColumn('name', 'Name') ?></th>
 		<th>Type</th>
 		<th><?php echo $paginator->sortableColumn('price_buy', 'NPC Buy') ?></th>
 		<th><?php echo $paginator->sortableColumn('price_sell', 'NPC Sell') ?></th>
@@ -124,7 +124,12 @@
 				<?php echo htmlspecialchars($item->item_id) ?>
 			<?php endif ?>
 		</td>
-		<td><?php echo htmlspecialchars($item->name) ?></td>
+		<?php if ($icon=$this->iconImage($item->item_id)): ?>
+			<td><img src="<?php echo htmlspecialchars($icon) ?>?nocache=<?php echo rand() ?>" /></td>
+			<td><?php echo htmlspecialchars($item->name) ?></td>
+		<?php else: ?>
+			<td colspan="2"><?php echo htmlspecialchars($item->name) ?></td>
+		<?php endif ?>
 		<td>
 			<?php if ($type=$this->itemTypeText($item->type)): ?>
 				<?php echo htmlspecialchars($type); echo " (".$item->type.")"; ?>

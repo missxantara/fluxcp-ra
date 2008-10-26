@@ -1169,5 +1169,23 @@ class Flux_Template {
 			return preg_replace('&/{2,}&', '/', "{$this->basePath}/$imageFile");
 		}
 	}
+	
+	/**
+	 *
+	 */
+	public function iconImage($itemID)
+	{
+		$path = FLUX_DATA_DIR."/items/icons/$itemID.png";
+		return file_exists($path) ? $path : false;
+	}
+	
+	/**
+	 *
+	 */
+	public function itemImage($itemID)
+	{
+		$path = FLUX_DATA_DIR."/items/images/$itemID.png";
+		return file_exists($path) ? $path : false;
+	}
 }
 ?>
