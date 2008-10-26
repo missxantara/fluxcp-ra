@@ -1176,7 +1176,8 @@ class Flux_Template {
 	public function iconImage($itemID)
 	{
 		$path = FLUX_DATA_DIR."/items/icons/$itemID.png";
-		return file_exists($path) ? "{$this->basePath}/$path" : false;
+		$link = preg_replace('&/{2,}&', '/', "{$this->basePath}/$path");
+		return file_exists($path) ? $link : false;
 	}
 	
 	/**
@@ -1185,7 +1186,8 @@ class Flux_Template {
 	public function itemImage($itemID)
 	{
 		$path = FLUX_DATA_DIR."/items/images/$itemID.png";
-		return file_exists($path) ? "{$this->basePath}/$path" : false;
+		$link = preg_replace('&/{2,}&', '/', "{$this->basePath}/$path");
+		return file_exists($path) ? $link : false;
 	}
 }
 ?>
