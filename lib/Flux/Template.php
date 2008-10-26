@@ -1176,7 +1176,7 @@ class Flux_Template {
 	public function iconImage($itemID)
 	{
 		$path = FLUX_DATA_DIR."/items/icons/$itemID.png";
-		return file_exists($path) ? $path : false;
+		return file_exists($path) ? "{$this->basePath}/$path" : false;
 	}
 	
 	/**
@@ -1185,7 +1185,7 @@ class Flux_Template {
 	public function itemImage($itemID)
 	{
 		$path = FLUX_DATA_DIR."/items/images/$itemID.png";
-		return file_exists($path) ? $path : false;
+		return file_exists($path) ? "{$this->basePath}/$path" : false;
 	}
 }
 ?>
