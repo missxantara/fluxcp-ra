@@ -120,7 +120,7 @@ class Flux_Paginator {
 		$this->pagesToShow    = $options['pagesToShow'];
 		$this->pageVariable   = $options['pageVariable'];
 		$this->pageSeparator  = $options['pageSeparator'];
-		$this->currentPage    = isset($_GET[$this->pageVariable]) ? $_GET[$this->pageVariable] : 1;
+		$this->currentPage    = isset($_GET[$this->pageVariable]) && $_GET[$this->pageVariable] ? $_GET[$this->pageVariable] : 1;
 		
 		$this->calculatePages();
 	}
