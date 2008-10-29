@@ -9,13 +9,20 @@ if ($auth->actionAllowed('item', 'edit')) {
 if ($auth->actionAllowed('item', 'copy')) {
 	$actions[] = sprintf('<a href="%s">Duplicate Item</a>', $this->url('item', 'copy', array('id' => $item->item_id)));
 }
+$icon = $this->iconImage($item->item_id);
 ?>
-<h3>#<?php echo htmlspecialchars($item->item_id) ?>: <?php echo htmlspecialchars($item->name) ?></h3>
+<h3>
+	<?php if ($icon): ?><img src="<?php echo $icon ?>" /><?php endif ?>
+	#<?php echo htmlspecialchars($item->item_id) ?>: <?php echo htmlspecialchars($item->name) ?>
+</h3>
 <p class="action"><?php echo implode(' • ', $actions) ?></p>
 <table class="vertical-table">
 	<tr>
 		<th>Item ID</th>
 		<td><?php echo htmlspecialchars($item->item_id) ?></td>
+		<?php if ($image=$this->itemImage($item->item_id)): ?>
+		<td rowspan="5"><img src="<?php echo $image ?>" /></td>
+		<?php endif ?>
 		<th>For Sale</th>
 		<td>
 			<?php if ($item->cost): ?>
@@ -74,25 +81,25 @@ if ($auth->actionAllowed('item', 'copy')) {
 	</tr>
 	<tr>
 		<th>Range</th>
-		<td><?php echo number_format((int)$item->range) ?></td>
+		<td<?php if ($image) echo ' colspan="2"' ?>><?php echo number_format((int)$item->range) ?></td>
 		<th>Defense</th>
 		<td><?php echo number_format((int)$item->defence) ?></td>
 	</tr>
 	<tr>
 		<th>Slots</th>
-		<td><?php echo number_format((int)$item->slots) ?></td>
+		<td<?php if ($image) echo ' colspan="2"' ?>><?php echo number_format((int)$item->slots) ?></td>
 		<th>Refineable</th>
 		<td><?php echo number_format((int)$item->refineable) ?></td>
 	</tr>
 	<tr>
 		<th>Equip Level</th>
-		<td><?php echo number_format((int)$item->equip_level) ?></td>
+		<td<?php if ($image) echo ' colspan="2"' ?>><?php echo number_format((int)$item->equip_level) ?></td>
 		<th>Weapon Level</th>
 		<td><?php echo number_format((int)$item->weapon_level) ?></td>
 	</tr>
 	<tr>
 		<th>Equip Locations</th>
-		<td colspan="3">
+		<td colspan="<?php echo $image ? 5 : 3 ?>">
 			<?php if ($locs=$this->equipLocations($item->equip_locations)): ?>
 				<?php echo htmlspecialchars(implode(' + ', $locs)) ?>
 			<?php else: ?>
@@ -102,7 +109,7 @@ if ($auth->actionAllowed('item', 'copy')) {
 	</tr>
 	<tr>
 		<th>Equip Upper</th>
-		<td colspan="3">
+		<td colspan="<?php echo $image ? 5 : 3 ?>">
 			<?php if ($upper=$this->equipUpper($item->equip_upper)): ?>
 				<?php echo htmlspecialchars(implode(' / ', $upper)) ?>
 			<?php else: ?>
@@ -112,7 +119,7 @@ if ($auth->actionAllowed('item', 'copy')) {
 	</tr>
 	<tr>
 		<th>Equippable Jobs</th>
-		<td colspan="3">
+		<td colspan="<?php echo $image ? 5 : 3 ?>">
 			<?php if ($jobs=$this->equippableJobs($item->equip_jobs)): ?>
 				<?php echo htmlspecialchars(implode(' / ', $jobs)) ?>
 			<?php else: ?>
@@ -122,7 +129,7 @@ if ($auth->actionAllowed('item', 'copy')) {
 	</tr>
 	<tr>
 		<th>Equip Gender</th>
-		<td colspan="3">
+		<td colspan="<?php echo $image ? 5 : 3 ?>">
 			<?php if ($item->equip_genders === '0'): ?>
 				Female
 			<?php elseif ($item->equip_genders === '1'): ?>
@@ -137,7 +144,7 @@ if ($auth->actionAllowed('item', 'copy')) {
 	<?php if (($isCustom && $auth->allowedToSeeItemDb2Scripts) || (!$isCustom && $auth->allowedToSeeItemDbScripts)): ?>
 	<tr>
 		<th>Item Use Script</th>
-		<td colspan="3">
+		<td colspan="<?php echo $image ? 5 : 3 ?>">
 			<?php if ($script=$this->displayScript($item->script)): ?>
 				<?php echo $script ?>
 			<?php else: ?>
@@ -147,7 +154,7 @@ if ($auth->actionAllowed('item', 'copy')) {
 	</tr>
 	<tr>
 		<th>Equip Script</th>
-		<td colspan="3">
+		<td colspan="<?php echo $image ? 5 : 3 ?>">
 			<?php if ($script=$this->displayScript($item->equip_script)): ?>
 				<?php echo $script ?>
 			<?php else: ?>
@@ -157,7 +164,7 @@ if ($auth->actionAllowed('item', 'copy')) {
 	</tr>
 	<tr>
 		<th>Unequip Script</th>
-		<td colspan="3">
+		<td colspan="<?php echo $image ? 5 : 3 ?>">
 			<?php if ($script=$this->displayScript($item->unequip_script)): ?>
 				<?php echo $script ?>
 			<?php else: ?>
