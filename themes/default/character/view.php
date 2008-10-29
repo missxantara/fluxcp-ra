@@ -343,7 +343,7 @@ if (($isMine || $auth->allowedToResetPosition) && $auth->actionAllowed('characte
 	<table class="vertical-table">
 		<tr>
 			<th>Item ID</th>
-			<th>Name</th>
+			<th colspan="2">Name</th>
 			<th>Amount</th>
 			<th>Identified</th>
 			<th>Refine Level</th>
@@ -355,9 +355,13 @@ if (($isMine || $auth->allowedToResetPosition) && $auth->actionAllowed('characte
 			</th>
 		</tr>
 		<?php foreach ($items AS $item): ?>
+		<?php $icon = $this->iconImage($item->nameid) ?>
 		<tr>
 			<td align="right"><?php echo $this->linkToItem($item->nameid, $item->nameid) ?></td>
-			<td>
+			<?php if ($icon): ?>
+			<td><img src="<?php echo htmlspecialchars($icon) ?>" /></td>
+			<?php endif ?>
+			<td<?php if (!$icon) echo ' colspan="2"' ?>>
 				<?php if ($item->name_japanese): ?>
 					<span class="item_name"><?php echo htmlspecialchars($item->name_japanese) ?></span>
 				<?php else: ?>
@@ -437,7 +441,7 @@ if (($isMine || $auth->allowedToResetPosition) && $auth->actionAllowed('characte
 	<table class="vertical-table">
 		<tr>
 			<th>Item ID</th>
-			<th>Name</th>
+			<th colspan="2">Name</th>
 			<th>Amount</th>
 			<th>Identified</th>
 			<th>Refine Level</th>
@@ -449,9 +453,13 @@ if (($isMine || $auth->allowedToResetPosition) && $auth->actionAllowed('characte
 			</th>
 		</tr>
 		<?php foreach ($cart_items AS $cart_item): ?>
+		<?php $icon = $this->iconImage($cart_item->nameid) ?>
 		<tr>
 			<td align="right"><?php echo $this->linkToItem($cart_item->nameid, $cart_item->nameid) ?></td>
-			<td>
+			<?php if ($icon): ?>
+			<td><img src="<?php echo htmlspecialchars($icon) ?>" /></td>
+			<?php endif ?>
+			<td<?php if (!$icon) echo ' colspan="2"' ?>>
 				<?php if ($cart_item->name_japanese): ?>
 					<span class="item_name"><?php echo htmlspecialchars($cart_item->name_japanese) ?></span>
 				<?php else: ?>

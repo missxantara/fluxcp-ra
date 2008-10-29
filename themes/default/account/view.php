@@ -230,7 +230,7 @@
 	<table class="vertical-table">
 		<tr>
 			<th>Item ID</th>
-			<th>Name</th>
+			<th colspan="2">Name</th>
 			<th>Amount</th>
 			<th>Identified</th>
 			<th>Refine Level</th>
@@ -242,6 +242,7 @@
 			</th>
 		</tr>
 		<?php foreach ($items AS $item): ?>
+		<?php $icon = $this->iconImage($item->nameid) ?>
 		<tr>
 			<td align="right">
 				<?php if ($auth->actionAllowed('item', 'view')): ?>
@@ -250,7 +251,10 @@
 					<?php echo htmlspecialchars($item->nameid) ?>
 				<?php endif ?>
 			</td>
-			<td>
+			<?php if ($icon): ?>
+			<td><img src="<?php echo htmlspecialchars($icon) ?>" /></td>
+			<?php endif ?>
+			<td<?php if (!$icon) echo ' colspan="2"' ?>>
 				<?php if ($item->name_japanese): ?>
 					<span class="item_name"><?php echo htmlspecialchars($item->name_japanese) ?></span>
 				<?php else: ?>
