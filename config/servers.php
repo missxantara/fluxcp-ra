@@ -9,6 +9,7 @@ return array(
 		'DbConfig'       => array(
 			//'Socket'     => '/tmp/mysql.sock',
 			//'Port'       => 3306,
+			//'Encoding'   => null,
 			'Hostname'   => '127.0.0.1',
 			'Username'   => 'ragnarok',
 			'Password'   => 'ragnarok',
@@ -19,8 +20,9 @@ return array(
 		// database accessible under different credentials, and often on a
 		// different server entirely to ensure the reliability of the log data.
 		'LogsDbConfig'   => array(
-			//'Socket'   => '/tmp/mysql.sock',
-			//'Port'     => 3306,
+			//'Socket'     => '/tmp/mysql.sock',
+			//'Port'       => 3306,
+			//'Encoding'   => null,
 			'Hostname'   => '127.0.0.1',
 			'Username'   => 'ragnarok',
 			'Password'   => 'ragnarok',

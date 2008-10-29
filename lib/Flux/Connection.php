@@ -93,6 +93,11 @@ class Flux_Connection {
 			// Establish connection for main databases.
 			$pdoMain       = $this->connect($this->dbConfig);
 			$this->pdoMain = $pdoMain;
+			
+			if ($encoding=$this->dbConfig->getEncoding()) {
+				$sth = $this->getStatement("SET NAMES ?");
+				$sth->execute(array($encoding));
+			}
 		}
 		return $this->pdoMain;
 	}
@@ -109,6 +114,11 @@ class Flux_Connection {
 			// Establish separate connection just for the log database.
 			$pdoLogs       = $this->connect($this->logsDbConfig);
 			$this->pdoLogs = $pdoLogs;
+			
+			if ($encoding=$this->logsDbConfig->getEncoding()) {
+				$sth = $this->getStatement("SET NAMES ?");
+				$sth->execute(array($encoding));
+			}
 		}
 		return $this->pdoLogs;
 	}
