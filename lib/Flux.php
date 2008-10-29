@@ -7,6 +7,7 @@ require_once 'Flux/CharServer.php';
 require_once 'Flux/MapServer.php';
 require_once 'Flux/Athena.php';
 require_once 'Flux/LoginAthenaGroup.php';
+require_once 'Flux/Addon.php';
 require_once 'functions/svn_version.php';
 
 // Get the SVN revision of the top-level directory (FLUX_ROOT).
@@ -91,6 +92,11 @@ class Flux {
 	public static $numberOfQueries = 0;
 	
 	/**
+	 *
+	 */
+	public static $addons = array();
+	
+	/**
 	 * Initialize Flux application. This will handle configuration parsing and
 	 * instanciating of objects crucial to the control panel.
 	 *
@@ -116,6 +122,9 @@ class Flux {
 		
 		// Initialize server objects.
 		self::initializeServerObjects();
+		
+		// Initialize add-ons.
+		self::initializeAddons();
 	}
 	
 	/**
@@ -149,6 +158,28 @@ class Flux {
 				
 				// Add into registry.
 				self::registerAthenaServer($config->getServerName(), $charMapServer->getServerName(), $athena);
+			}
+		}
+	}
+	
+	/**
+	 *
+	 */
+	public static function initializeAddons()
+	{
+		if (!is_dir(FLUX_ADDON_DIR)) {
+			return false;
+		}
+			
+		foreach (glob(FLUX_ADDON_DIR.'/*') as $addonDir) {
+			if (is_dir($addonDir)) {
+				$addonName   = basename($addonDir);
+				$addonObject = new Flux_Addon($addonName, $addonDir);
+				self::$addons[$addonName] = $addonObject;
+				
+				// Merge configurations.
+				self::$appConfig->merge($addonObject->addonConfig);
+				self::$messagesConfig->merge($addonObject->messagesConfig);
 			}
 		}
 	}

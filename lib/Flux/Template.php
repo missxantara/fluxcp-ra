@@ -223,26 +223,46 @@ class Flux_Template {
 	 * Render a template, but before doing so, call the action file and render
 	 * the header->view->footer in that order.
 	 *
-	 * @param arary $dataArr Key=>value pairs of variables to be exposed to the template as globals.
+	 * @param array $dataArr Key=>value pairs of variables to be exposed to the template as globals.
 	 * @access public
 	 */
 	public function render(array $dataArr = array())
 	{
+		$addon = false;
 		$this->actionPath = sprintf('%s/%s/%s.php', $this->modulePath, $this->moduleName, $this->actionName);
+		
 		if (!file_exists($this->actionPath)) {
-			$this->moduleName = $this->missingActionModuleAction[0];
-			$this->actionName = $this->missingActionModuleAction[1];
-			$this->viewName   = $this->missingActionModuleAction[1];
-			$this->actionPath = sprintf('%s/%s/%s.php', $this->modulePath, $this->moduleName, $this->actionName);
+			foreach (Flux::$addons as $_tmpAddon) {
+				if ($_tmpAddon->respondsTo($this->moduleName, $this->actionName)) {
+					$addon = $_tmpAddon;
+					$this->actionPath = sprintf('%s/%s/%s.php', $addon->moduleDir, $this->moduleName, $this->actionName);
+				}
+			}
+			
+			if (!$addon) {
+				$this->moduleName = $this->missingActionModuleAction[0];
+				$this->actionName = $this->missingActionModuleAction[1];
+				$this->viewName   = $this->missingActionModuleAction[1];
+				$this->actionPath = sprintf('%s/%s/%s.php', $this->modulePath, $this->moduleName, $this->actionName);
+			}
 		}
 		
+		$viewExists = false;
 		$this->viewPath = sprintf('%s/%s/%s.php', $this->themePath, $this->moduleName, $this->actionName);
+		
 		if (!file_exists($this->viewPath)) {
-			$this->moduleName = $this->missingViewModuleAction[0];
-			$this->actionName = $this->missingViewModuleAction[1];
-			$this->viewName   = $this->missingViewModuleAction[1];
-			$this->actionPath = sprintf('%s/%s/%s.php', $this->modulePath, $this->moduleName, $this->actionName);
-			$this->viewPath   = sprintf('%s/%s/%s.php', $this->themePath, $this->moduleName, $this->viewName);
+			if ($addon) {
+				$this->viewPath = sprintf('%s/%s/%s.php', $addon->themeDir, $this->moduleName, $this->actionName);
+				$viewExists = $addon->hasView($this->moduleName, $this->actionName);
+			}
+			
+			if (!$viewExists) {
+				$this->moduleName = $this->missingViewModuleAction[0];
+				$this->actionName = $this->missingViewModuleAction[1];
+				$this->viewName   = $this->missingViewModuleAction[1];
+				$this->actionPath = sprintf('%s/%s/%s.php', $this->modulePath, $this->moduleName, $this->actionName);
+				$this->viewPath   = sprintf('%s/%s/%s.php', $this->themePath, $this->moduleName, $this->viewName);
+			}
 		}
 		
 		$this->headerPath = sprintf('%s/%s.php', $this->themePath, $this->headerName);

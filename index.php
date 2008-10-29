@@ -18,6 +18,7 @@ define('FLUX_CONFIG_DIR', 'config');
 define('FLUX_LIB_DIR',    'lib');
 define('FLUX_MODULE_DIR', 'modules');
 define('FLUX_THEME_DIR',  'themes');
+define('FLUX_ADDON_DIR',  'addons');
 
 // Clean GPC arrays in the event magic_quotes_gpc is enabled.
 if (ini_get('magic_quotes_gpc')) {
@@ -142,6 +143,12 @@ try {
 	
 	// Initialize authorization component.
 	$accessConfig = new Flux_Config(include(FLUX_CONFIG_DIR.'/access.php'));
+		
+	// Merge with add-on configs.
+	foreach (Flux::$addons as $addon) {
+		$accessConfig->merge($addon->accessConfig);
+	}
+	
 	$accessConfig->set('unauthorized.index', AccountLevel::ANYONE);
 	$authComponent = Flux_Authorization::getInstance($accessConfig, Flux::$sessionData);
 	
