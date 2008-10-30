@@ -1185,7 +1185,7 @@ class Flux_Template {
 			$files = preg_grep("/\.($exts)$/", $imgs);
 		}
 		else {
-			$files = arary();
+			$files = array();
 		}
 		
 		if (empty($files)) {
