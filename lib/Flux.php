@@ -279,6 +279,12 @@ class Flux {
 			self::raise("PayPalReceiverEmails must be an array.");
 		}
 		
+		// Sanitize BaseURI. (leading forward slash is mandatory.)
+		$baseURI = $config->get('BaseURI');
+		if (strlen($baseURI) && $baseURI[0] != '/') {
+			$config->set('BaseURI', "/$baseURI");
+		}
+		
 		return $config;
 	}
 	
