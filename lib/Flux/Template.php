@@ -228,6 +228,14 @@ class Flux_Template {
 	 */
 	public function render(array $dataArr = array())
 	{
+		// GZip compression.
+		if (Flux::config('GzipCompressOutput')) {
+			header('Accept-Encoding: gzip');
+			ini_set('zlib.output_handler', '');
+			ini_set('zlib.output_compression', 'On');
+			ini_set('zlib.output_compression_level', (int)Flux::config('GzipCompressionLevel'));
+		}
+		
 		$addon = false;
 		$this->actionPath = sprintf('%s/%s/%s.php', $this->modulePath, $this->moduleName, $this->actionName);
 		

@@ -3,7 +3,7 @@
 // the default, and should be changed as needed.
 return array(
 	'ServerAddress'        => 'localhost',              // This value is the hostname:port under which Flux runs. (e.g., example.com or example.com:80)
-	'BaseURI'              => '/~kuja/flux',            // The base URI is the base web root on which your application lies.
+	'BaseURI'              => '~kuja/flux',            // The base URI is the base web root on which your application lies.
 	'InstallerPassword'    => 'secretpassword',         // Installer/updater password.
 	'DefaultLoginGroup'    => null,
 	'DefaultCharMapServer' => null,
@@ -39,6 +39,8 @@ return array(
 	'SessionKey'           => 'fluxSessionData',        // Shouldn't be changed, just specifies the session key to be used for session data.
 	'DefaultModule'        => 'main',                   // This is the module to execute when none has been specified.
 	'DefaultAction'        => 'index',                  // This is the default action for any module, probably should leave this alone. (Deprecated)
+	'GzipCompressOutput'   => true,                     // Whether or not to compress output using zlib.
+	'GzipCompressionLevel' => 9,                        // zlib compression level. (1~9)
 	'OutputCleanHTML'      => true,                     // Use this if you have Tidy installed to clean your HTML output when serving pages.
 	'ShowCopyright'        => true,                     // Whether or not to show the copyright footer.
 	'ShowRenderDetails'    => true,                     // Shows the "page rendered in X seconds" and "number of queries executed: X" in the default theme.

@@ -31,7 +31,8 @@
 				<td id="info">
 					<p>
 						Page generated in <strong><?php echo round(microtime(true) - __START__, 5) ?></strong> second(s).
-						Number of queries executed: <strong><?php echo (int)Flux::$numberOfQueries ?></strong>
+						Number of queries executed: <strong><?php echo (int)Flux::$numberOfQueries ?></strong>.
+						<?php if (Flux::config('GzipCompressOutput')): ?>Gzip Compression: <strong>Enabled</strong>.<?php endif ?>
 					</p>
 				</td>
 				<td></td>
