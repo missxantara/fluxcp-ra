@@ -1203,7 +1203,7 @@ class Flux_Template {
 	 */
 	public function iconImage($itemID)
 	{
-		$path = FLUX_DATA_DIR."/items/icons/$itemID.png";
+		$path = sprintf(FLUX_DATA_DIR."/items/icons/".Flux::config('ItemIconNameFormat'), $itemID);
 		$link = preg_replace('&/{2,}&', '/', "{$this->basePath}/$path");
 		return file_exists($path) ? $link : false;
 	}
@@ -1213,7 +1213,7 @@ class Flux_Template {
 	 */
 	public function itemImage($itemID)
 	{
-		$path = FLUX_DATA_DIR."/items/images/$itemID.png";
+		$path = sprintf(FLUX_DATA_DIR."/items/images/".Flux::config('ItemImageNameFormat'), $itemID);
 		$link = preg_replace('&/{2,}&', '/', "{$this->basePath}/$path");
 		return file_exists($path) ? $link : false;
 	}
