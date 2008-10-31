@@ -41,7 +41,8 @@ class Flux_Captcha {
 				'fontName'   => 'default.ttf',
 				'fontSize'   => 28,
 				'yPosition'  => 40,
-				'distort'    => false
+				'useDistort' => true,
+				'distortion' => 10
 			),
 			$options
 		);
@@ -93,10 +94,13 @@ class Flux_Captcha {
 		$shade3 = imagecolorallocate($this->gd, 0, 0, 0);
 		
 		if (function_exists('imagettftext')) {
+			$distA = -$this->options['distortion'];
+			$distB = +$this->options['distortion'];
+			
 			foreach (str_split($this->code, 1) as $i => $char) {
-				imagettftext($this->gd, $size + 2, $this->options['distort'] ? rand(-5, 5) : 0, ((28 * $i) + 10), $yPos, $shade3, $font, $char);
-				imagettftext($this->gd, $size + 4, $this->options['distort'] ? rand(-5, 5) : 0, ((28 * $i) + 10), $yPos, $shade2, $font, $char);
-				imagettftext($this->gd, $size    , $this->options['distort'] ? rand(-5, 5) : 0, ((28 * $i) + 10), $yPos, $shade1, $font, $char);
+				imagettftext($this->gd, $size + 2, $this->options['useDistort'] ? rand($distA, $distB) : 0, ((28 * $i) + 10), $yPos, $shade3, $font, $char);
+				imagettftext($this->gd, $size + 4, $this->options['useDistort'] ? rand($distA, $distB) : 0, ((28 * $i) + 10), $yPos, $shade2, $font, $char);
+				imagettftext($this->gd, $size    , $this->options['useDistort'] ? rand($distA, $distB) : 0, ((28 * $i) + 10), $yPos, $shade1, $font, $char);
 			}
 		}
 		else {
