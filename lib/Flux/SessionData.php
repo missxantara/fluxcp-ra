@@ -252,7 +252,7 @@ class Flux_SessionData {
 	 * @throws Flux_LoginError
 	 * @access public
 	 */
-	public function login($server, $username, $password)
+	public function login($server, $username, $password, $securityCode = null)
 	{
 		$loginAthenaGroup = Flux::getServerGroupByName($server);
 		if (!$loginAthenaGroup) {
@@ -265,6 +265,10 @@ class Flux_SessionData {
 		
 		if (!$loginAthenaGroup->isAuth($username, $password)) {
 			throw new Flux_LoginError('Invalid login', Flux_LoginError::INVALID_LOGIN);
+		}
+		
+		if (Flux::config('UseLoginCaptcha') && $securityCode != $this->securityCode) {
+			throw new Flux_LoginError('Invalid security code', Flux_LoginError::INVALID_SECURITY_CODE);
 		}
 		
 		$creditsTable  = Flux::config('FluxTables.CreditsTable');

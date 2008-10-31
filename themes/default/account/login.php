@@ -14,11 +14,11 @@
 	<?php endif ?>
 	<table class="generic-form-table">
 		<tr>
-			<th><label for="login_username">Username</label></th>
+			<th><label for="login_username">Your Username</label></th>
 			<td><input type="text" name="username" id="login_username" value="<?php echo htmlspecialchars($params->get('username')) ?>" /></td>
 		</tr>
 		<tr>
-			<th><label for="login_password">Password</label></th>
+			<th><label for="login_password">Your Password</label></th>
 			<td><input type="password" name="password" id="login_password" /></td>
 		</tr>
 		<?php if (count($serverNames) > 1): ?>
@@ -30,6 +30,21 @@
 					<option value="<?php echo htmlspecialchars($serverName) ?>"><?php echo htmlspecialchars($serverName) ?></option>
 					<?php endforeach ?>
 				</select>
+			</td>
+		</tr>
+		<?php endif ?>
+		<?php if (Flux::config('UseLoginCaptcha')): ?>
+		<tr>
+			<th><label for="register_security_code">Security Code</label></th>
+			<td>
+				<div class="security-code">
+					<img src="<?php echo $this->url('captcha') ?>" />
+				</div>
+				
+				<input type="text" name="security_code" id="register_security_code" />
+				<div style="font-size: smaller;" class="action">
+					<strong><a href="javascript:refreshSecurityCode('.security-code img')">Refresh Security Code</a></strong>
+				</div>
 			</td>
 		</tr>
 		<?php endif ?>

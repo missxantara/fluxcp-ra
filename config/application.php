@@ -48,7 +48,8 @@ return array(
 	'ShowRenderDetails'    => true,                     // Shows the "page rendered in X seconds" and "number of queries executed: X" in the default theme.
 	'UseCleanUrls'         => false,                    // Set to true if you're running Apache and it supports mod_rewrite and .htaccess files.
 	'DebugMode'            => true,                     // Set to false to minimize technical details from being output by Flux.
-	'UseCaptcha'           => true,                     // Use CAPTCHA image for account registration to prevent automated account creations. (Requires GD2)
+	'UseCaptcha'           => true,                     // Use CAPTCHA image for account registration to prevent automated account creations. (Requires GD2/FreeType2)
+	'UseLoginCaptcha'      => false,                    // Use CAPTCHA image for account logins. (Requires GD2/FreeType2)
 	'DisplaySinglePages'   => true,                     // Whether or not to display paging for single page results.
 	'ForwardYears'         => 15,                       // (Visual) The number of years to display ahead of the current year in date inputs.
 	'BackwardYears'        => 30,                       // (Visual) The number of years to display behind the current year in date inputs.
