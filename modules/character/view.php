@@ -26,7 +26,7 @@ $col .= "partner.name AS partner_name, partner.char_id AS partner_id, ";
 $col .= "mother.name AS mother_name, mother.char_id AS mother_id, ";
 $col .= "father.name AS father_name, father.char_id AS father_id, ";
 $col .= "child.name AS child_name, child.char_id AS child_id, ";
-$col .= "guild.guild_id, guild.name AS guild_name, ";
+$col .= "guild.guild_id, guild.name AS guild_name, guild.emblem_len AS guild_emblem_len, ";
 $col .= "guild_position.name AS guild_position, guild_position.exp_mode AS guild_tax, ";
 $col .= "party.name AS party_name, party.leader_char AS party_leader_id, party_leader.name AS party_leader_name, ";
 
@@ -79,7 +79,7 @@ if ($char) {
 	$title = "Viewing Character ({$char->char_name})";
 	
 	$sql  = "SELECT fr.char_id, fr.name, fr.class, fr.base_level, fr.job_level, ";
-	$sql .= "guild.guild_id, guild.name AS guild_name, fr.online ";
+	$sql .= "guild.guild_id, guild.name AS guild_name, guild.emblem_len AS guild_emblem_len, fr.online ";
 	$sql .= "FROM {$server->charMapDatabase}.`char` AS fr ";
 	$sql .= "LEFT OUTER JOIN guild ON guild.guild_id = fr.guild_id ";
 	$sql .= "LEFT OUTER JOIN friends ON friends.friend_id = fr.char_id ";

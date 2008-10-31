@@ -82,7 +82,7 @@ $paginator->setSortableColumns(array(
 
 $col  = "guild.guild_id, guild.name AS guildName, guild.char_id AS charID, guild.master AS charName, ";
 $col .= "guild.guild_lv AS guildLevel, guild.connect_member AS connectMem, guild.max_member AS maxMem, ";
-$col .= "guild.average_lv AS avgLevel";
+$col .= "guild.average_lv AS avgLevel, guild.emblem_len ";
 
 $sql  = "SELECT $col FROM {$server->charMapDatabase}.`guild` $sqlpartial";
 $sql  = $paginator->getSQL($sql);

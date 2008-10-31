@@ -126,8 +126,10 @@ if (($isMine || $auth->allowedToResetPosition) && $auth->actionAllowed('characte
 	<tr>
 		<th>Guild Name</th>
 			<?php if ($char->guild_name): ?>
+				<?php if ($char->guild_emblem_len): ?>
 				<td><img src="<?php echo $this->emblem($char->guild_id) ?>" /></td>
-				<td>
+				<?php endif ?>
+				<td<?php if (!$char->guild_emblem_len) echo ' colspan="2"' ?>>
 					<?php if ($auth->allowedToViewGuild): ?>
 						<?php echo $this->linkToGuild($char->guild_id, $char->guild_name) ?>
 					<?php else: ?>
@@ -135,7 +137,7 @@ if (($isMine || $auth->allowedToResetPosition) && $auth->actionAllowed('characte
 					<?php endif ?>
 				</td>
 			<?php else: ?>	
-				<td colspan="2" align="center"><span class="not-applicable">None</span></td>
+				<td colspan="2"><span class="not-applicable">None</span></td>
 			<?php endif ?>
 		<th>Guild Position</th>
 		<td>
@@ -312,8 +314,10 @@ if (($isMine || $auth->allowedToResetPosition) && $auth->actionAllowed('characte
 			<td><?php echo number_format((int)$friend->base_level) ?></td>
 			<td><?php echo number_format((int)$friend->job_level) ?></td>
 			<?php if ($friend->guild_name): ?>
+				<?php if ($friend->guild_emblem_len): ?>
 				<td><img src="<?php echo $this->emblem($friend->guild_id) ?>" /></td>
-				<td>
+				<?php endif ?>
+				<td<?php if (!$friend->guild_emblem_len) echo ' colspan="2"' ?>>
 					<?php if ($auth->allowedToViewGuild): ?>
 						<?php echo $this->linkToGuild($friend->guild_id, $friend->guild_name) ?>
 					<?php else: ?>
@@ -321,7 +325,7 @@ if (($isMine || $auth->allowedToResetPosition) && $auth->actionAllowed('characte
 					<?php endif ?>
 				</td>
 			<?php else: ?>	
-				<td colspan="2" align="center"><span class="not-applicable">None</span></td>
+				<td colspan="2"><span class="not-applicable">None</span></td>
 			<?php endif ?>
 			<td>
 				<?php if ($friend->online): ?>
