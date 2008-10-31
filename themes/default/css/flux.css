@@ -855,6 +855,8 @@ textarea {
 .security-code {
 	margin: 5px 0;
 	text-align: left;
+	width: 145px;
+	height: 50px;
 }
 
 .action {
