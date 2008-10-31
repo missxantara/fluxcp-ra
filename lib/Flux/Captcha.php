@@ -38,7 +38,10 @@ class Flux_Captcha {
 				'length'     => 5,
 				'background' => FLUX_DATA_DIR.'/captcha/background.png',
 				'fontPath'   => FLUX_DATA_DIR.'/captcha/fonts',
-				'fontName'   => 'anonymous.gdf'
+				'fontName'   => 'default.ttf',
+				'fontSize'   => 28,
+				'yPosition'  => 40,
+				'distort'    => false
 			),
 			$options
 		);
@@ -79,8 +82,21 @@ class Flux_Captcha {
 	protected function generateImage()
 	{
 		$this->gd = imagecreatefrompng($this->options['background']);
-		$loadFont = imageloadfont($this->options['fontPath'].'/'.$this->options['fontName']);
-		imagestring($this->gd, $loadFont, 15, 5, $this->code, imagecolorallocate($this->gd, 255, 255, 255));
+		//$loadFont = imageloadfont($this->options['fontPath'].'/'.$this->options['fontName']);
+		//imagestring($this->gd, $loadFont, 15, 5, $this->code, imagecolorallocate($this->gd, 255, 255, 255));
+		
+		$yPos   = $this->options['yPosition'];
+		$shade1 = imagecolorallocate($this->gd, 240, 240, 240);
+		$shade2 = imagecolorallocate($this->gd, 60, 60, 60);
+		$shade3 = imagecolorallocate($this->gd, 0, 0, 0);
+		$font   = $this->options['fontPath'].'/'.$this->options['fontName'];
+		
+		//$this->code = '00o00';
+		foreach (str_split($this->code, 1) as $i => $char) {
+			imagettftext($this->gd, $this->options['fontSize'] + 2, $this->options['distort'] ? rand(-5, 5) : 0, 28 * $i + 10, $yPos, $shade3, $font, $char);
+			imagettftext($this->gd, $this->options['fontSize'] + 4, $this->options['distort'] ? rand(-5, 5) : 0, 28 * $i + 10, $yPos, $shade2, $font, $char);
+			imagettftext($this->gd, $this->options['fontSize']    , $this->options['distort'] ? rand(-5, 5) : 0, 28 * $i + 10, $yPos, $shade1, $font, $char);
+		}
 	}
 	
 	/**
