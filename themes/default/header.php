@@ -62,6 +62,9 @@
 				document.preferred_server_form.submit();
 			}
 			function refreshSecurityCode(imgSelector){
+				var load  = '<?php echo $this->themePath('img/spinner.gif') ?>';
+				$(imgSelector).attr('src', load);
+				
 				var clean = <?php echo Flux::config('UseCleanUrls') ? 'true' : 'false' ?>;
 				var image = "<?php echo $this->url('captcha') ?>"+(clean ? '?nocache=' : '&nocache=')+Math.random();
 				$(imgSelector).attr('src', image);
