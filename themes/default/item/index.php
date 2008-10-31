@@ -1,8 +1,8 @@
 <?php if (!defined('FLUX_ROOT')) exit; ?>
 <h2>Items</h2>
+<p class="toggler"><a href="javascript:toggleSearchForm()">Search…</a></p>
 <form class="search-form" method="get">
 	<?php echo $this->moduleActionFormInputs($params->get('module')) ?>
-	<p>Search for item(s):</p>
 	<p>
 		<label for="item_id">Item ID:</label>
 		<input type="text" name="item_id" id="item_id" value="<?php echo htmlspecialchars($params->get('item_id')) ?>" />

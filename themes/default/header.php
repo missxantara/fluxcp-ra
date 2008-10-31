@@ -66,6 +66,10 @@
 				var image = "<?php echo $this->url('captcha') ?>"+(clean ? '?nocache=' : '&nocache=')+Math.random();
 				$(imgSelector).attr('src', image);
 			}
+			function toggleSearchForm()
+			{
+				$('.search-form').toggle();
+			}
 		</script>
 	</head>
 	<body>

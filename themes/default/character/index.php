@@ -1,8 +1,8 @@
 <?php if (!defined('FLUX_ROOT')) exit; ?>
 <h2>Characters</h2>
+<p class="toggler"><a href="javascript:toggleSearchForm()">Search…</a></p>
 <form action="<?php echo $this->url ?>" method="get" class="search-form">
 	<?php echo $this->moduleActionFormInputs($params->get('module')) ?>
-	<p>Search for character(s):</p>
 	<p>
 		<label for="char_id">Character ID:</label>
 		<input type="text" name="char_id" id="char_id" value="<?php echo htmlspecialchars($params->get('char_id')) ?>" />

@@ -384,35 +384,50 @@ label:hover {
 .info-text-total {
 	font-weight: bold;
 }
+
 .info-text-results {
 	font-weight: bold;
 }
 
-.search-form {
-	margin: 0;
-	padding: 5px 0 0 0;
-	border-top: 1px dotted #ccc;
-	border-bottom: 1px dotted #ccc;
+.info-text {
+	margin-bottom: 6px;
+	padding: 5px;
+	color: #666;
+	background-color: #fff;
+	border: 1px solid #ccc;
+	text-align: center;
 }
 
-.search-form2 {
+.toggler {
+	font-weight: bold;
+	font-style: italic;
+}
+
+.toggler a {
+	color: #26a;
+}
+
+.search-form, search-form2 {
+	display: none;
 	margin: 0 0 10px 0;
-	padding: 5px 0 0 0;
-	border-bottom: 1px dotted #ccc;
+	padding: 0;
+	border-top: 1px solid #ddd;
 }
 
 .search-form p, .search-form2 p {
-	margin: 0 0 5px 0;
-	padding: 0;
+	margin: 0;
+	padding: 5px;
 	color: #aaa;
+	text-align: left;
+	border-bottom: 1px solid #ddd;
 }
 
 .search-form label, .search-form2 label {
 	display: inline-block;
 	margin: 0 0 3px 0;
 	font-size: 8pt;
+	font-style: italic;
 	color: #222;
-	vertical-align: center;
 }
 
 .search-form input[type=text], .search-form2 input[type=text] {

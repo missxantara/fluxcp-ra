@@ -1,11 +1,10 @@
 <?php if (!defined('FLUX_ROOT')) exit; ?>
 <h2>Who's Online?</h2>
-<?php if ($chars): ?>
 <h3>Showing players on-line <?php echo htmlspecialchars($server->serverName) ?>.</h3>
 <?php if ($auth->allowedToSearchWhosOnline): ?>
-	<form action="<?php echo $this->url ?>" method="get" class="search-form2">
+	<p class="toggler"><a href="javascript:toggleSearchForm()">Search…</a></p>
+	<form action="<?php echo $this->url ?>" method="get" class="search-form">
 		<?php echo $this->moduleActionFormInputs($params->get('module'), $params->get('action')) ?>
-		<p>Search for on-line character(s):</p>
 		<p>
 			<label for="char_name">Character Name:</label>
 			<input type="text" name="char_name" id="char_name" value="<?php echo htmlspecialchars($params->get('char_name')) ?>" />
@@ -21,13 +20,14 @@
 		</p>
 	</form>
 <?php endif ?>
+<?php if ($chars): ?>
 <?php echo $paginator->infoText() ?>
 
 <?php if ($hiddenCount): ?>
 <p><?php echo number_format($hiddenCount) ?> <?php echo ((int)$hiddenCount === 1) ? 'person has' : 'people have' ?> chosen to hide themselves from this list.</p>
 <?php endif ?>
 
-<table class="vertical-table">
+<table class="horizontal-table">
 	<tr>
 		<th><?php echo $paginator->sortableColumn('char_name', 'Character Name') ?></th>
 		<th>Job Class</th>
@@ -63,7 +63,7 @@
 		
 		<td>
 		<?php if (!$char->hidemap || $auth->allowedToViewOnlinePosition): ?>
-			<?php echo htmlspecialchars($char->last_map) ?>
+			<?php echo htmlspecialchars(basename($char->last_map, '.gat')) ?>
 		<?php else: ?>
 			<span class="not-applicable">Unknown</span>
 		<?php endif ?>

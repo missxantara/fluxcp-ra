@@ -1,8 +1,8 @@
 <?php if (!defined('FLUX_ROOT')) exit; ?>
 <h2>Monsters</h2>
+<p class="toggler"><a href="javascript:toggleSearchForm()">Search…</a></p>
 <form class="search-form" method="get">
 	<?php echo $this->moduleActionFormInputs($params->get('module')) ?>
-	<p>Search for monster(s):</p>
 	<p>
 		<label for="monster_id">Monster ID:</label>
 		<input type="text" name="monster_id" id="monster_id" value="<?php echo htmlspecialchars($params->get('monster_id')) ?>" />

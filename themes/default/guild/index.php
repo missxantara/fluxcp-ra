@@ -1,8 +1,8 @@
 <?php if (!defined('FLUX_ROOT')) exit; ?>
 <h2>Guilds</h2>
+<p class="toggler"><a href="javascript:toggleSearchForm()">Search…</a></p>
 <form action="<?php echo $this->url ?>" method="get" class="search-form">
 	<?php echo $this->moduleActionFormInputs($params->get('module')) ?>
-	<p>Search for guilds(s):</p>
 	<p>
 		<label for="id">Guild ID:</label>
 		<input type="text" name="id" id="id" value="<?php echo htmlspecialchars($params->get('id')) ?>" />
@@ -56,7 +56,7 @@
 </form>
 <?php if ($guilds): ?>
 <?php echo $paginator->infoText() ?>
-<table class="vertical-table">
+<table class="horizontal-table">
 	<tr>
 		<th><?php echo $paginator->sortableColumn('guild.guild_id', 'Guild ID') ?></th>
 		<th colspan="2"><?php echo $paginator->sortableColumn('guildName', 'Guild Name') ?></th>

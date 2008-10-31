@@ -1,8 +1,8 @@
 <?php if (!defined('FLUX_ROOT')) exit; ?>
 <h2>Accounts</h2>
+<p class="toggler"><a href="javascript:toggleSearchForm()">Search…</a></p>
 <form action="<?php echo $this->url ?>" method="get" class="search-form">
 	<?php echo $this->moduleActionFormInputs($params->get('module')) ?>
-	<p>Search for account(s):</p>
 	<p>
 		<label for="account_id">Account ID:</label>
 		<input type="text" name="account_id" id="account_id" value="<?php echo htmlspecialchars($params->get('account_id')) ?>" />
