@@ -86,16 +86,25 @@ class Flux_Captcha {
 		//imagestring($this->gd, $loadFont, 15, 5, $this->code, imagecolorallocate($this->gd, 255, 255, 255));
 		
 		$yPos   = $this->options['yPosition'];
+		$font   = $this->options['fontName'];
+		$size   = $this->options['fontSize'];
 		$shade1 = imagecolorallocate($this->gd, 240, 240, 240);
 		$shade2 = imagecolorallocate($this->gd, 60, 60, 60);
 		$shade3 = imagecolorallocate($this->gd, 0, 0, 0);
-		$font   = $this->options['fontPath'].'/'.$this->options['fontName'];
 		
-		//$this->code = '00o00';
-		foreach (str_split($this->code, 1) as $i => $char) {
-			imagettftext($this->gd, $this->options['fontSize'] + 2, $this->options['distort'] ? rand(-5, 5) : 0, 28 * $i + 10, $yPos, $shade3, $font, $char);
-			imagettftext($this->gd, $this->options['fontSize'] + 4, $this->options['distort'] ? rand(-5, 5) : 0, 28 * $i + 10, $yPos, $shade2, $font, $char);
-			imagettftext($this->gd, $this->options['fontSize']    , $this->options['distort'] ? rand(-5, 5) : 0, 28 * $i + 10, $yPos, $shade1, $font, $char);
+		if (function_exists('imagettftext')) {
+			foreach (str_split($this->code, 1) as $i => $char) {
+				imagettftext($this->gd, $size + 2, $this->options['distort'] ? rand(-5, 5) : 0, ((28 * $i) + 10), $yPos, $shade3, $font, $char);
+				imagettftext($this->gd, $size + 4, $this->options['distort'] ? rand(-5, 5) : 0, ((28 * $i) + 10), $yPos, $shade2, $font, $char);
+				imagettftext($this->gd, $size    , $this->options['distort'] ? rand(-5, 5) : 0, ((28 * $i) + 10), $yPos, $shade1, $font, $char);
+			}
+		}
+		else {
+			$text  = "FreeType2 is needed\n";
+			$text .= "for CAPTCHA support.\n";
+			foreach (explode("\n", $text) as $i => $line) {
+				imagestring($this->gd, 3, 5, (12 * ($i + 1)), $line, $shade1);
+			}
 		}
 	}
 	
