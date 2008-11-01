@@ -134,9 +134,9 @@ $sth->execute($bind);
 
 $paginator = $this->getPaginator($sth->fetch()->total);
 $paginator->setSortableColumns(array(
-	'login.account_id' => 'asc', 'userid', 'user_pass',
-	'sex', 'level', 'state', 'balance',
-	'email', 'logincount', 'lastlogin', 'last_ip',
+	'login.account_id' => 'asc', 'login.userid', 'login.user_pass',
+	'login.sex', 'level', 'state', 'balance',
+	'login.email', 'logincount', 'lastlogin', 'last_ip',
 	'reg_date'
 ));
 

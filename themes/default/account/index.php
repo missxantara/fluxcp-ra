@@ -78,13 +78,13 @@
 <table class="horizontal-table">
 	<tr>
 		<th><?php echo $paginator->sortableColumn('login.account_id', 'Account ID') ?></th>
-		<th><?php echo $paginator->sortableColumn('userid', 'Username') ?></th>
-		<?php if ($showPassword): ?><th><?php echo $paginator->sortableColumn('user_pass', 'Password') ?></th><?php endif ?>
-		<th><?php echo $paginator->sortableColumn('sex', 'Gender') ?></th>
+		<th><?php echo $paginator->sortableColumn('login.userid', 'Username') ?></th>
+		<?php if ($showPassword): ?><th><?php echo $paginator->sortableColumn('login.user_pass', 'Password') ?></th><?php endif ?>
+		<th><?php echo $paginator->sortableColumn('login.sex', 'Gender') ?></th>
 		<th><?php echo $paginator->sortableColumn('level', 'Account Level') ?></th>
 		<th><?php echo $paginator->sortableColumn('state', 'Account State') ?></th>
 		<th><?php echo $paginator->sortableColumn('balance', 'Credit Balance') ?></th>
-		<th><?php echo $paginator->sortableColumn('email', 'E-mail') ?></th>
+		<th><?php echo $paginator->sortableColumn('login.email', 'E-mail') ?></th>
 		<th><?php echo $paginator->sortableColumn('logincount', 'Login Count') ?></th>
 		<th><?php echo $paginator->sortableColumn('lastlogin', 'Last Login Date') ?></th>
 		<th><?php echo $paginator->sortableColumn('last_ip', 'Last Used IP') ?></th>
