@@ -48,7 +48,7 @@ class Flux_Captcha {
 		);
 		
 		// Let GD know where our fonts are.
-		putenv("GDFONTPATH={$this->options['fontPath']}");
+		//putenv("GDFONTPATH={$this->options['fontPath']}"); // Possibly breaks on Windows?
 		
 		// Generate security code.
 		$this->generateCode();
@@ -87,7 +87,7 @@ class Flux_Captcha {
 		//imagestring($this->gd, $loadFont, 15, 5, $this->code, imagecolorallocate($this->gd, 255, 255, 255));
 		
 		$yPos   = $this->options['yPosition'];
-		$font   = $this->options['fontName'];
+		$font   = "{$this->options['fontPath']}/{$this->options['fontName']}";
 		$size   = $this->options['fontSize'];
 		$shade1 = imagecolorallocate($this->gd, 240, 240, 240);
 		$shade2 = imagecolorallocate($this->gd, 60, 60, 60);
