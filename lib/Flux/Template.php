@@ -522,6 +522,12 @@ class Flux_Template {
 				if (array_key_exists('_https', $params)) {
 					$_https = $params['_https'];
 				}
+				elseif (!empty($_SERVER['HTTPS'])) {
+					$_https = true;
+				}
+				else {
+					$_https = false;
+				}
 
 				$serverProtocol = $_https ? 'https://' : 'http://';
 				$serverAddress  = $addr;
