@@ -31,7 +31,7 @@ $paginator->setSortableColumns(
 );
 
 $col  = "p.id, p.txn_id, p.parent_txn_id, p.process_date, p.payment_date, p.payment_status, p.mc_currency, ";
-$col .=  "p.payer_email, p.mc_gross, p.credits, p.server_name, pp.id AS parent_id, l.userid";
+$col .=  "p.payer_email, p.mc_gross, p.credits, p.server_name, pp.id AS parent_id, p.account_id, l.userid";
 
 $sql  = "SELECT $col FROM $sqlpartial";
 $sql  = $paginator->getSQL($sql);
