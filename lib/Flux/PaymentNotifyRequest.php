@@ -417,8 +417,21 @@ class Flux_PaymentNotifyRequest {
 		if ($this->txnIsValid) {
 			$holdUntil = null;
 			if (!$trusted) {
-				$hours     = +(int)Flux::config('HoldUntrustedAccount');
-				$holdUntil = date('Y-m-d H:i:s', time()+($hours*60*60));
+				$email = $this->ipnVariables->get('payer_email');
+				$sql   = "SELECT hold_until FROM {$servGroup->loginDatabase}.{$this->txnLogTable} ";
+				$sql  .= "WHERE account_id = ? AND payer_email = ? AND hold_until > NOW() AND payment_status = 'Completed' LIMIT 1";
+				$sth   = $sth = $servGroup->connection->getStatement($sql);
+				
+				$sth->execute(array($accountID, $email));
+				$row = $sth->fetch();
+				
+				if ($row && $row->hold_until) {
+					$holdUntil = $row->hold_until;
+				}
+				else {
+					$hours     = +(int)Flux::config('HoldUntrustedAccount');
+					$holdUntil = date('Y-m-d H:i:s', time()+($hours*60*60));
+				}
 			}
 			
 			$this->logPayPal('Saving transaction details to PayPal transactions table...');
