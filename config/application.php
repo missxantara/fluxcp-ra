@@ -148,7 +148,11 @@ return array(
 			'changesex'  => 'Change Gender',
 			'transfer'   => 'Transfer Credits',
 			'xferlog'    => 'Credit Transfer History',
-			'cart'       => 'Go to Shopping Cart'
+			'cart'       => 'Go to Shopping Cart',
+			'login'      => 'Login',
+			'create'     => 'Register',
+			'resetpass'  => 'Reset Password',
+			'resend'     => 'Resend E-mail Confirmation'
 		),
 		'guild' => array(
 			'index'  => 'List Guilds',
@@ -235,7 +239,8 @@ return array(
 		'AccountBanTable'     => 'cp_banlog',
 		'DonationTrustTable'  => 'cp_trusted',
 		'AccountPrefsTable'   => 'cp_loginprefs',
-		'CharacterPrefsTable' => 'cp_charprefs'
+		'CharacterPrefsTable' => 'cp_charprefs',
+		'ResetPasswordTable'  => 'cp_resetpass'
 	),
 
 	// Do not change these unless you also rename the files in FLUX_ROOT/lib/eA/

@@ -1,0 +1,57 @@
+<?php
+if (!defined('FLUX_ROOT')) exit;
+
+$title = 'Reset Password';
+
+$serverNames    = $this->getServerNames();
+$resetPassTable = Flux::config('FluxTables.ResetPasswordTable');
+
+if (count($_POST)) {
+	$userid    = $params->get('userid');
+	$email     = $params->get('email');
+	$groupName = $params->get('login');
+	
+	if (!$userid) {
+		$errorMessage = 'Please enter your account username.';
+	}
+	elseif (!$email) {
+		$errorMessage = 'Please enter your e-mail address.';
+	}
+	else {
+		if (!$groupName || !($loginAthenaGroup=Flux::getServerGroupByName($groupName))) {
+			$loginAthenaGroup = $session->loginAthenaGroup;
+		}
+
+		$sql  = "SELECT account_id, user_pass FROM {$loginAthenaGroup->loginDatabase}.login WHERE ";
+		$sql .= "userid = ? AND email = ? AND state = 0 AND sex IN ('M', 'F') LIMIT 1";
+		$sth  = $loginAthenaGroup->connection->getStatement($sql);
+		$sth->execute(array($userid, $email));
+
+		$row = $sth->fetch();
+		if ($row) {
+			$code = md5(rand() + $row->account_id);
+			$sql  = "INSERT INTO {$loginAthenaGroup->loginDatabase}.$resetPassTable ";
+			$sql .= "(code, account_id, old_password, request_date, request_ip, reset_done) ";
+			$sql .= "VALUES (?, ?, ?, NOW(), ?, 0)";
+			$sth  = $loginAthenaGroup->connection->getStatement($sql);
+			$res  = $sth->execute(array($code, $row->account_id, $row->user_pass, $_SERVER['REMOTE_ADDR']));
+			
+			if ($res) {
+				require_once 'Flux/Mailer.php';
+				$name = $loginAthenaGroup->serverName;
+				$link = $this->url('account', 'resetpw', array('_host' => true, 'code' => $code, 'account' => $row->account_id, 'login' => $name));
+				$mail = new Flux_Mailer();
+				$sent = $mail->send($email, 'Reset Password', 'resetpass', array('AccountUsername' => $userid, 'ResetLink' => htmlspecialchars($link)));
+			}
+		}
+
+		if (empty($sent)) {
+			$errorMessage = 'Failed to send reset password e-mail.';
+		}
+		else {
+			$session->setMessageData('An e-mail has been sent with details on how to reset your password.');
+			$this->redirect();
+		}
+	}
+}
+?>
