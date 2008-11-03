@@ -42,8 +42,9 @@ $sth  = $loginAthenaGroup->connection->getStatement($sql);
 $newPassword = '';
 $characters  = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
 $characters  = str_split($characters, 1);
+$passLength  = intval(($len=Flux::config('RandomPasswordLength')) < 1 ? 8 : $len);
 
-for ($i = 0; $i < 6; ++$i) {
+for ($i = 0; $i < $passLength; ++$i) {
 	$newPassword .= $characters[array_rand($characters)];
 }
 
