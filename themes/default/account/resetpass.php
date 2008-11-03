@@ -1,5 +1,8 @@
 <?php if (!defined('FLUX_ROOT')) exit; ?>
 <h2>Reset Password</h2>
+<?php if (!empty($errorMessage)): ?>
+<p class="red"><?php echo htmlspecialchars($errorMessage) ?></p>
+<?php endif ?>
 <p>If you lost your password, you can re-set it by entering the e-mail address you used to register your account.</p>
 <p>An e-mail will then be sent to the specified address with a link allowing you to reset your password, therefore a valid e-mail address is required.</p>
 <form action="<?php echo $this->urlWithQs ?>" method="post" class="generic-form">
