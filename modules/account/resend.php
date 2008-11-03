@@ -1,9 +1,9 @@
 <?php
 if (!defined('FLUX_ROOT')) exit;
 
-if (!Flux::config('RequireEmailConfirm')) {
-	$this->deny();
-}
+//if (!Flux::config('RequireEmailConfirm')) {
+//	$this->deny();
+//}
 
 $title = 'Resend Confirmation E-mail';
 
