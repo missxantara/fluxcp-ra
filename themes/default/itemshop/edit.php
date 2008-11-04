@@ -48,7 +48,12 @@ $markdownURL = 'http://daringfireball.net/projects/markdown/syntax';
 		<td>
 			<input type="file" name="image" id="image" />
 			<?php if ($image=$this->shopItemImage($item->shop_item_id)): ?>
-			<p>Current image:</p>
+			<p>
+				Current image:
+				<?php if ($auth->actionAllowed('itemshop', 'imagedel')): ?>
+					<a href="<?php echo $this->url('itemshop', 'imagedel', array('id' => $item->shop_item_id)) ?>">(Delete)</a>
+				<?php endif ?>
+			</p>
 			<p><img src="<?php echo $image ?>" /></p>
 			<?php endif ?>
 		</td>

@@ -28,7 +28,8 @@ return array(
 		'itemshop'  => array(
 			'add'      => AccountLevel::ADMIN,
 			'edit'     => AccountLevel::ADMIN,
-			'delete'   => AccountLevel::ADMIN
+			'delete'   => AccountLevel::ADMIN,
+			'imagedel' => AccountLevel::ADMIN
 		),
 		'account'   => array(
 			'index'    => AccountLevel::LOWGM,
