@@ -27,10 +27,20 @@
 			after the donation has been made to ensure legitimate gameplay and a healthy PayPal reputation.</p>
 		<p>This hold is applied only once for the associated PayPal e-mail and RO account.</p>
 	<?php endif ?>
-		
-	<p>The current credit exchange rate is:
-		<span class="exchange-rate"><?php echo $this->formatDollar($dollarAmount) ?> <?php echo htmlspecialchars($currency) ?>
-		= <?php echo number_format($creditAmount) ?> credit(s).</span></p>
+
+	<div class="generic-form-div" style="margin-bottom: 10px">
+		<table class="generic-form-table">
+			<tr>
+				<th><label>Current Credit Exchange Rate:</label></th>
+				<td><p><?php echo $this->formatDollar($dollarAmount) ?> <?php echo htmlspecialchars($currency) ?>
+				= <?php echo number_format($creditAmount) ?> credit(s).</p></td>
+			</tr>
+			<tr>
+				<th><label>Minimum Donation Amount:</label></th>
+				<td><p><?php echo $this->formatDollar(Flux::config('MinDonationAmount')) ?> <?php echo htmlspecialchars($currency) ?></p></td>
+			</tr>
+		</table>
+	</div>
 		
 	<?php if (!$donationAmount): ?>
 	<form action="<?php echo $this->url ?>" method="post">
