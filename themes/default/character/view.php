@@ -54,7 +54,7 @@ if (($isMine || $auth->allowedToResetPosition) && $auth->actionAllowed('characte
 				<?php if ($auth->allowedToViewCharacter): ?>
 					<?php echo $this->linkToCharacter($char->partner_id, $char->partner_name) ?>
 				<?php else: ?>
-					<?php echo htmlspecialchars($char->parter_name) ?>
+					<?php echo htmlspecialchars($char->partner_name) ?>
 				<?php endif ?>
 			<?php else: ?>
 				<span class="not-applicable">None</span>
