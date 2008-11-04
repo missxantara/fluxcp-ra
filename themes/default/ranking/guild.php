@@ -19,7 +19,13 @@
 			<td align="right"><?php echo number_format($i + 1) ?></td>
 			<?php if (isset($guilds[$i])): ?>
 			<td width="24"><img src="<?php echo $this->emblem($guilds[$i]->guild_id) ?>" /></td>
-			<td><strong><?php echo htmlspecialchars($guilds[$i]->name) ?></strong></td>
+			<td><strong>
+				<?php if ($auth->actionAllowed('guild', 'view') && $auth->allowedToViewGuild): ?>
+					<?php echo $this->linkToGuild($guilds[$i]->guild_id, $guilds[$i]->name) ?>
+				<?php else: ?>
+					<?php echo htmlspecialchars($guilds[$i]->name) ?>
+				<?php endif ?>
+			</strong></td>
 			<td><?php echo number_format($guilds[$i]->guild_lv) ?></td>
 			<td><?php echo number_format($guilds[$i]->members) ?></td>
 			<td><?php echo number_format($guilds[$i]->average_lv) ?></td>

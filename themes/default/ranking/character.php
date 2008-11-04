@@ -41,11 +41,23 @@
 	<tr>
 		<td align="right"><?php echo number_format($i + 1) ?></td>
 		<?php if (isset($chars[$i])): ?>
-		<td><strong><?php echo htmlspecialchars($chars[$i]->char_name) ?></strong></td>
+		<td><strong>
+			<?php if ($auth->actionAllowed('character', 'view') && $auth->allowedToViewCharacter): ?>
+				<?php echo $this->linkToCharacter($chars[$i]->char_id, $chars[$i]->char_name) ?>
+			<?php else: ?>
+				<?php echo htmlspecialchars($chars[$i]->char_name) ?>
+			<?php endif ?>
+		</strong></td>
 		<td><?php echo $this->jobClassText($chars[$i]->char_class) ?></td>
 		<?php if ($chars[$i]->guild_name): ?>
 		<td width="24"><img src="<?php echo $this->emblem($chars[$i]->guild_id) ?>" /></td>
-		<td><?php echo htmlspecialchars($chars[$i]->guild_name) ?></td>
+		<td>
+			<?php if ($auth->actionAllowed('guild', 'view') && $auth->allowedToViewGuild): ?>
+				<?php echo $this->linkToGuild($chars[$i]->guild_id, $chars[$i]->guild_name) ?>
+			<?php else: ?>
+				<?php echo htmlspecialchars($chars[$i]->guild_name) ?>
+			<?php endif ?>
+		</td>
 		<?php else: ?>
 		<td colspan="2"><span class="not-applicable">None</span></td>
 		<?php endif ?>
