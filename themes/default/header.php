@@ -71,7 +71,8 @@
 			}
 			function toggleSearchForm()
 			{
-				$('.search-form').toggle();
+				//$('.search-form').toggle();
+				$('.search-form').slideToggle('fast');
 			}
 		</script>
 	</head>
