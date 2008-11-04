@@ -64,10 +64,10 @@
 		<?php endif ?>
 		
 		<td>
-		<?php if (!$char->hidemap || $auth->allowedToViewOnlinePosition): ?>
+		<?php if (!$char->hidemap && $auth->allowedToViewOnlinePosition): ?>
 			<?php echo htmlspecialchars(basename($char->last_map, '.gat')) ?>
 		<?php else: ?>
-			<span class="not-applicable">Unknown</span>
+			<span class="not-applicable">Hidden</span>
 		<?php endif ?>
 		</td>
 	</tr>
