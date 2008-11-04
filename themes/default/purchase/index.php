@@ -22,7 +22,7 @@ foreach ($items as $i => $item) {
 	<p class="cart-total-text">Your current subtotal is <span class="cart-sub-total"><?php echo number_format($server->cart->getTotal()) ?></span> credit(s).</p>
 <?php endif ?>
 
-<table>
+<table class="shop-table">
 	<tr>
 		<td width="50%">
 			<?php foreach ($evens as $i => $item): ?>

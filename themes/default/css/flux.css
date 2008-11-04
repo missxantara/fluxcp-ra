@@ -620,6 +620,10 @@ label:hover {
 	padding: 5px;
 }
 
+.shop-table {
+	width: 100%;
+}
+
 .shop-item {
 	margin: 10px;
 	padding: 10px;
