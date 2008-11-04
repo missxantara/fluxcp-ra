@@ -112,7 +112,7 @@ try {
 				$sqlpartial .= "AND (weight IS NULL OR weight = 0) ";
 			}
 			else {
-				$sqlpartial .= "AND weight $op ? ";
+				$sqlpartial .= "AND CAST(weight/10 AS UNSIGNED INTEGER) $op ? ";
 				$bind[]      = $weight;
 			}
 		}
@@ -199,7 +199,7 @@ try {
 		'range', 'slots', 'refineable', 'cost', 'origin_table'
 	));
 	
-	$col  = "origin_table, items.id AS item_id, name_japanese AS name, type, price_buy, weight, attack,  ";
+	$col  = "origin_table, items.id AS item_id, name_japanese AS name, type, price_buy, CAST(weight/10 AS UNSIGNED INTEGER) AS weight, attack,  ";
 	$col .= "defence AS defense, `range`, slots, refineable, cost, $shopTable.id AS shop_item_id, ";
 	$col .= "IFNULL(price_sell, FLOOR(price_buy/2)) AS price_sell";
 	

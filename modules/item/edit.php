@@ -16,7 +16,7 @@ if (!$itemID) {
 	$this->deny();
 }
 
-$col  = "id, view, type, name_english, name_japanese, slots, price_buy, price_sell, weight, attack, ";
+$col  = "id, view, type, name_english, name_japanese, slots, price_buy, price_sell, CAST(weight/10 AS UNSIGNED INTEGER) AS weight, attack, ";
 $col .= "defence, range, weapon_level, equip_level, refineable, equip_locations, equip_upper, ";
 $col .= "equip_jobs, equip_genders, script, equip_script, unequip_script, origin_table";
 $sql  = "SELECT $col FROM $tableName WHERE id = ? LIMIT 1";
@@ -187,7 +187,7 @@ if ($item) {
 			}
 			if (empty($errorMessage)) {
 				$cols = array('id', 'name_english', 'name_japanese', 'type', 'weight');
-				$bind = array($itemID, $identifier, $itemName, $type, $weight);
+				$bind = array($itemID, $identifier, $itemName, $type, $weight*10);
 				$vals = array(
 					'view'           => $viewID,
 					'slots'          => $slots,
