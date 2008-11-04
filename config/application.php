@@ -245,7 +245,8 @@ return array(
 		'AccountPrefsTable'   => 'cp_loginprefs',
 		'CharacterPrefsTable' => 'cp_charprefs',
 		'ResetPasswordTable'  => 'cp_resetpass',
-		'ChangeEmailTable'    => 'cp_emailchange'
+		'ChangeEmailTable'    => 'cp_emailchange',
+		'LoginLogTable'       => 'cp_loginlog'
 	),
 
 	// Do not change these unless you also rename the files in FLUX_ROOT/lib/eA/
