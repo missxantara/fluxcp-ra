@@ -61,13 +61,20 @@
 				document.preferred_server_form.preferred_server.value = preferred;
 				document.preferred_server_form.submit();
 			}
+			
+			// Preload spinner image.
+			var spinner = new Image();
+			spinner.src = '<?php echo $this->themePath('img/spinner.gif') ?>';
+			
 			function refreshSecurityCode(imgSelector){
-				var load  = '<?php echo $this->themePath('img/spinner.gif') ?>';
-				$(imgSelector).attr('src', load);
+				$(imgSelector).attr('src', spinner.src);
 				
+				// Load image, spinner will be active until loading is complete.
 				var clean = <?php echo Flux::config('UseCleanUrls') ? 'true' : 'false' ?>;
-				var image = "<?php echo $this->url('captcha') ?>"+(clean ? '?nocache=' : '&nocache=')+Math.random();
-				$(imgSelector).attr('src', image);
+				var image = new Image();
+				image.src = "<?php echo $this->url('captcha') ?>"+(clean ? '?nocache=' : '&nocache=')+Math.random();
+				
+				$(imgSelector).attr('src', image.src);
 			}
 			function toggleSearchForm()
 			{
