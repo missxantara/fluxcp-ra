@@ -395,9 +395,10 @@ class Flux_Paginator {
 	public function infoText()
 	{
 		$currPage = $this->currentPage;
+		$results  = Flux::config('ResultsPerPage');
 		$infoText = sprintf(
 			Flux::message('FoundSearchResults'),
-			$this->total, $this->numberOfPages, ($currPage*20-19), $currPage * 20 < $this->total ? ($currPage*20) : ($this->total)
+			$this->total, $this->numberOfPages, ($currPage*$results-($results - 1)), $currPage * $results < $this->total ? ($currPage*$results) : ($this->total)
 		);
 		return sprintf('<p class="info-text">%s</p>', $infoText);
 	}
