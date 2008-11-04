@@ -20,7 +20,7 @@ map,x,y,d	script	FluxCP Rewards	987,{
 		mes "Well hello there young madam!";
 	mes "How may I be of assistance to you on this fine day?";
 	next;
-	switch(select("I wish to redeem items:Whom might you be?:I am merely perusing the area")) {
+	switch(select("I wish to redeem items:Who might you be?:I am merely perusing the area")) {
 		case 1:
 			mes $npcname$;
 			deletearray @inventorylist_id;
