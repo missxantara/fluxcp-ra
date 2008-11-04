@@ -29,7 +29,7 @@ foreach ($items as $i => $item) {
 				<div class="shop-item <?php echo (!($i % 2) ? 'even' : 'odd') ?>">
 					<table>
 						<tr>
-							<?php if ($image=$this->shopItemImage($item->shop_item_id)): ?>
+							<?php if (($item->shop_item_use_existing && ($image=$this->itemImage($item->shop_item_nameid))) || ($image=$this->shopItemImage($item->shop_item_id))): ?>
 							<td>
 								<img src="<?php echo $image ?>?nocache=<?php echo rand() ?>" class="shop-item-image" />
 							</td>
@@ -66,7 +66,7 @@ foreach ($items as $i => $item) {
 				<div class="shop-item <?php echo (!($i % 2) ? 'even' : 'odd') ?>">
 					<table>
 						<tr>
-							<?php if ($image=$this->shopItemImage($item->shop_item_id)): ?>
+							<?php if (($item->shop_item_use_existing && ($image=$this->itemImage($item->shop_item_nameid))) || ($image=$this->shopItemImage($item->shop_item_id))): ?>
 							<td>
 								<img src="<?php echo $image ?>?nocache=<?php echo rand() ?>" class="shop-item-image" />
 							</td>

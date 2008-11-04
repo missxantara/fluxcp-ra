@@ -28,13 +28,14 @@ if ($item && Flux::isStackableItemType($item->type)) {
 }
 
 if ($item && count($_POST)) {
-	$maxCost  = (int)Flux::config('ItemShopMaxCost');
-	$maxQty   = (int)Flux::config('ItemShopMaxQuantity');
-	$shop     = new Flux_ItemShop($server);
-	$cost     = (int)$params->get('cost');
-	$quantity = (int)$params->get('qty');
-	$info     = trim($params->get('info'));
-	$image    = $files->get('image');
+	$maxCost     = (int)Flux::config('ItemShopMaxCost');
+	$maxQty      = (int)Flux::config('ItemShopMaxQuantity');
+	$shop        = new Flux_ItemShop($server);
+	$cost        = (int)$params->get('cost');
+	$quantity    = (int)$params->get('qty');
+	$info        = trim($params->get('info'));
+	$image       = $files->get('image');
+	$useExisting = (int)$params->get('use_existing');
 	
 	if (!$cost) {
 		$errorMessage = 'You must input a credit cost greater than zero.';
@@ -55,7 +56,7 @@ if ($item && count($_POST)) {
 		$errorMessage = 'You must input at least some info text.';
 	}
 	else {
-		if ($id=$shop->add($itemID, $cost, $quantity, $info)) {
+		if ($id=$shop->add($itemID, $cost, $quantity, $info, $useExisting)) {
 			$message = 'Item has been successfully added to the shop';
 			if ($image && $image->get('size') && !$shop->uploadShopItemImage($id, $image)) {
 				$message .= ', but the image failed to upload. You can re-attempt by modifying.';
