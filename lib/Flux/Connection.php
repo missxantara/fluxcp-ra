@@ -13,18 +13,18 @@ class Flux_Connection {
 	/**
 	 * Main database configuration object.
 	 *
-	 * @access private
+	 * @access public
 	 * @var Flux_Config
 	 */
-	private $dbConfig;
+	public $dbConfig;
 	
 	/**
 	 * Logs database configuration object.
 	 *
-	 * @access private
+	 * @access public
 	 * @var Flux_Config
 	 */
-	private $logsDbConfig;
+	public $logsDbConfig;
 	
 	/**
 	 * @access private
