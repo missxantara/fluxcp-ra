@@ -15,7 +15,7 @@
 			<th>Experience</th>
 		</tr>
 		<?php for ($i = 0; $i < $limit; ++$i): ?>
-		<tr>
+		<tr<?php if ($i === 0) echo ' class="top-ranked"' ?>>
 			<td align="right"><?php echo number_format($i + 1) ?></td>
 			<?php if (isset($guilds[$i])): ?>
 			<td width="24"><img src="<?php echo $this->emblem($guilds[$i]->guild_id) ?>" /></td>

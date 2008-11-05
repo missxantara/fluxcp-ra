@@ -932,3 +932,14 @@ textarea {
 	padding: 2px;
 	font-size: 8pt;
 }
+
+.top-ranked td {
+	font-weight: bold;
+	color: #000;
+	background-color: #FFF8DC;
+}
+
+.top-ranked a {
+	color: #000;
+	border-bottom: 1px dotted #666;
+}

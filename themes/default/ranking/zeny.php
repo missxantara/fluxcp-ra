@@ -37,7 +37,7 @@
 		<th colspan="2">Guild Name</th>
 	</tr>
 	<?php for ($i = 0; $i < $limit; ++$i): ?>
-	<tr>
+	<tr<?php if ($i === 0) echo ' class="top-ranked"' ?>>
 		<td align="right"><?php echo number_format($i + 1) ?></td>
 		<?php if (isset($chars[$i])): ?>
 		<td><strong>
