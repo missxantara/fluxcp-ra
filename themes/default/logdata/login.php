@@ -42,7 +42,13 @@
 	<tr>
 		<td align="right"><?php echo htmlspecialchars($this->formatDateTime($login->time)) ?></td>
 		<td><?php echo htmlspecialchars($login->ip) ?></td>
-		<td><?php echo htmlspecialchars($login->user) ?></td>
+		<td>
+			<?php if ($login->account_id && $auth->actionAllowed('account', 'view')): ?>
+				<?php echo $this->linkToAccount($login->account_id, $login->user) ?>
+			<?php else: ?>
+				<?php echo htmlspecialchars($login->user) ?>
+			<?php endif ?>
+		</td>
 		<td><?php echo htmlspecialchars($login->log) ?></td>
 		<td><?php echo htmlspecialchars($login->rcode) ?></td>
 	</tr>

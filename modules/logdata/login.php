@@ -58,4 +58,30 @@ $sth = $server->connection->getStatementForLogs($sql);
 $sth->execute($bind);
 
 $logins = $sth->fetchAll();
+
+if ($logins) {
+	$usernames = array();
+	foreach ($logins as $_tmplogin) {
+		$usernames[] = $_tmplogin->user;
+	}
+	
+	$sql  = "SELECT userid, account_id FROM {$server->loginDatabase}.login WHERE ";
+	$sql .= "sex != 'S' AND level >= 0 AND userid IN (".implode(',', array_fill(0, count($usernames), '?')).")";
+	$sth  = $server->connection->getStatement($sql);
+	$sth->execute($usernames);
+	
+	$data = $sth->fetchAll();
+	if ($data) {
+		$accounts = array();
+		foreach ($data as $row) {
+			$accounts[$row->userid] = $row->account_id;
+		}
+		
+		foreach ($logins as $_tmplogin) {
+			if (array_key_exists($_tmplogin->user, $accounts)) {
+				$_tmplogin->account_id = $accounts[$_tmplogin->user];
+			}
+		}
+	}
+}
 ?>
