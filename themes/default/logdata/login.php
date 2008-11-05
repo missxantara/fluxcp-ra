@@ -21,7 +21,7 @@
 		<label for="log">Log Message:</label>
 		<input type="text" name="log" id="log" value="<?php echo htmlspecialchars($params->get('log')) ?>" />
 		…
-		<label for="log">Response:</label>
+		<label for="rcode">Response:</label>
 		<input type="text" name="rcode" id="rcode" value="<?php echo htmlspecialchars($params->get('rcode')) ?>" />
 		
 		<input type="submit" value="Search" />
