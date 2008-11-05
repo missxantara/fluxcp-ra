@@ -1,6 +1,5 @@
 <?php if (!defined('FLUX_ROOT')) exit; ?>
 <h2>Logins</h2>
-<?php if ($logins): ?>
 <p class="toggler"><a href="javascript:toggleSearchForm()">Search…</a></p>
 <form action="<?php echo $this->url ?>" method="get" class="search-form">
 	<?php echo $this->moduleActionFormInputs($params->get('module'), $params->get('action')) ?>
@@ -29,6 +28,7 @@
 		<input type="button" value="Reset" onclick="reload()" />
 	</p>
 </form>
+<?php if ($logins): ?>
 <?php echo $paginator->infoText() ?>
 <table class="horizontal-table">
 	<tr>
