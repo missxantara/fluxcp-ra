@@ -116,7 +116,7 @@ class Flux_Connection {
 			$this->pdoLogs = $pdoLogs;
 			
 			if ($encoding=$this->logsDbConfig->getEncoding()) {
-				$sth = $this->getStatement("SET NAMES ?");
+				$sth = $this->getStatementForLogs("SET NAMES ?");
 				$sth->execute(array($encoding));
 			}
 		}
