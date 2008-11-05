@@ -247,7 +247,18 @@ class Flux_Paginator {
 			array_push($pages, sprintf(' <a href="%s" title="Next Pane (#%d)" class="page-next">Next &raquo;</a>', $this->getPageURI($end), $end));
 		}
 		
-		$links = sprintf('<div class="pages">%s</div>', implode(" {$this->pageSeparator} ", $pages));
+		$links  = sprintf('<div class="pages">%s</div>', implode(" {$this->pageSeparator} ", $pages))."\n";
+		
+		if (Flux::config('ShowPageJump') && $this->numberOfPages > Flux::config('PageJumpMinimumPages')) {
+			// This is some tricky shit.  Don't even attempt to understand it =(
+			// Page jumping is entirely JavaScript dependent.
+			$pageVar = preg_quote($this->pageVariable);
+			$event   = "location.href='".$this->getPageURI(0)."'";
+			$event   = preg_replace("/$pageVar=0/", "{$this->pageVariable}='+this.value+'", $event);
+			$jump    = '<label>Page Jump: <input type="text" name="jump_to_page" id="jump_to_page" size="4" onkeypress="if (event.keyCode == 13) { %s }" /></label>';
+			$jump    = sprintf($jump, $event);
+			$links  .= sprintf('<div class="jump-to-page">%s</div>', $jump);
+		}
 		
 		if (!$this->showSinglePage && $this->numberOfPages === 1) {
 			return null;

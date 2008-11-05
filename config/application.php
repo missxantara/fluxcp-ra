@@ -22,6 +22,8 @@ return array(
 	'ShowSinglePage'       => true,                     // Whether or not to show the page numbers even if there's only one page.
 	'ResultsPerPage'       => 20,                       // The number of results to display in a paged set, per page.
 	'PagesToShow'          => 10,                       // The number of page numbers to display at once.
+	'PageJumpMinimumPages' => 1,                        // Minimum number of required pages before page jump box is shown. (0 to always show!)
+	'ShowPageJump'         => true,                     // Whether or not to show the "Page Jump" box.
 	'MinUsernameLength'    => 4,                        // Minimum username length.
 	'MaxUsernameLength'    => 23,                       // Maximum username length.
 	'MinPasswordLength'    => 4,                        // Minimum password length.
