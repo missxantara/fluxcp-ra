@@ -173,7 +173,7 @@ return array(
 			//'command' => 'Commands',
 			//'branch'  => 'Branches',
 			//'chat'    => 'Chats',
-			//'login'   => 'Logins',
+			'login'   => 'Logins',
 			//'mvp'     => 'MVP',
 			//'npc'     => 'NPC',
 			//'pick'    => 'Item Picks',
