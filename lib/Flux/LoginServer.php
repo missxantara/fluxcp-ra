@@ -23,6 +23,14 @@ class Flux_LoginServer extends Flux_BaseServer {
 	public $loginDatabase;
 	
 	/**
+	 * Logs database. (is not set until setConnection() is called.)
+	 *
+	 * @access public
+	 * @var string
+	 */
+	public $logsDatabase;
+	
+	/**
 	 * Overridden to add custom properties.
 	 *
 	 * @access public
@@ -42,7 +50,9 @@ class Flux_LoginServer extends Flux_BaseServer {
 	 */
 	public function setConnection(Flux_Connection $connection)
 	{
-		$this->connection = $connection;
+		$this->connection   = $connection;
+		$this->logsDatabase = $connection->logsDbConfig->getDatabase();
+		
 		return $connection;
 	}
 	

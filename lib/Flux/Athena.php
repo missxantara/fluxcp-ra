@@ -83,6 +83,14 @@ class Flux_Athena {
 	public $loginDatabase;
 	
 	/**
+	 * Logs database. (is not set until setConnection() is called.)
+	 *
+	 * @access public
+	 * @var string
+	 */
+	public $logsDatabase;
+	
+	/**
 	 * Database used for the char/map (aka everything else) SQL operations.
 	 * This does not include log-related tasks.
 	 *
@@ -265,7 +273,9 @@ class Flux_Athena {
 	 */
 	public function setConnection(Flux_Connection $connection)
 	{
-		$this->connection = $connection;
+		$this->connection   = $connection;
+		$this->logsDatabase = $connection->logsDbConfig->getDatabase();
+		
 		return $connection;
 	}
 	
