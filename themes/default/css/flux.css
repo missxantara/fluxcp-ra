@@ -921,3 +921,14 @@ textarea {
 .multi-select {
 	width: 100%;
 }
+
+.jump-to-page {
+	margin-top: 8px;
+	font-size: 8pt;
+	text-align: center;
+}
+
+.jump-to-page input {
+	padding: 2px;
+	font-size: 8pt;
+}
