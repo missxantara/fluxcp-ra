@@ -18,9 +18,9 @@
 		<th>Leader Name</th>
 		<td>
 			<?php if ($auth->allowedToViewCharacter): ?>
-				<?php echo $this->linkToCharacter($guild->char_id, $guild->master) ?>
+				<?php echo $this->linkToCharacter($guild->char_id, $guild->guild_master) ?>
 			<?php else: ?>
-				<?php echo htmlspecialchars($guild->master) ?>
+				<?php echo htmlspecialchars($guild->guild_master) ?>
 			<?php endif ?>
 		</td>
 		<th>Guild Level</th>

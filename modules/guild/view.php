@@ -13,9 +13,9 @@ $tempTable  = new Flux_TemporaryTable($server->connection, $tableName, $fromTabl
 
 $guildID = $params->get('id');
 
-$col  = "guild.*";
+$col  = "guild.*, `char`.name AS guild_master";
 
-$sql  = "SELECT $col FROM {$server->charMapDatabase}.guild ";
+$sql  = "SELECT $col FROM {$server->charMapDatabase}.guild LEFT JOIN {$server->charMapDatabase}.`char` ON `char`.char_id = guild.char_id ";
 $sql .= "WHERE guild.guild_id = ?";
 
 $sth  = $server->connection->getStatement($sql);
