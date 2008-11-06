@@ -3,7 +3,7 @@
 <h3>
 	Top <?php echo number_format($limit=(int)Flux::config('CharRankingLimit')) ?> Richest Characters
 	<?php if (!is_null($jobClass)): ?>
-	(<?php echo htmlspecialchars($this->jobClassText($jobClass)) ?>)
+	(<?php echo htmlspecialchars($className=$this->jobClassText($jobClass)) ?>)
 	<?php endif ?>
 	on <?php echo htmlspecialchars($server->serverName) ?>
 </h3>
@@ -36,8 +36,9 @@
 		<th>Job Level</th>
 		<th colspan="2">Guild Name</th>
 	</tr>
+	<?php $topRankType = !is_null($jobClass) ? $className : 'character' ?>
 	<?php for ($i = 0; $i < $limit; ++$i): ?>
-	<tr<?php if ($i === 0) echo ' class="top-ranked"' ?>>
+	<tr<?php if ($i === 0) echo ' class="top-ranked" title="<strong>'.htmlspecialchars($chars[$i]->char_name).'</strong> is the richest '.$topRankType.'!"' ?>>
 		<td align="right"><?php echo number_format($i + 1) ?></td>
 		<?php if (isset($chars[$i])): ?>
 		<td><strong>
