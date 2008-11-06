@@ -5,8 +5,9 @@ $this->loginRequired();
 
 $title = 'List Guilds';
 
-$bind       = array();
-$sqlpartial = "WHERE 1=1 ";
+$bind        = array();
+$sqlpartial  = "LEFT JOIN {$server->charMapDatabase}.`char` ON `char`.char_id = guild.char_id ";
+$sqlpartial .= "WHERE 1=1 ";
 
 $guildID = $params->get('id');
 if ($guildID) {
@@ -80,7 +81,7 @@ $paginator->setSortableColumns(array(
 	'connectMem', 'maxMem', 'avgLevel'
 ));
 
-$col  = "guild.guild_id, guild.name AS guildName, guild.char_id AS charID, guild.master AS charName, ";
+$col  = "guild.guild_id, guild.name AS guildName, guild.char_id AS charID, `char`.name AS charName, ";
 $col .= "guild.guild_lv AS guildLevel, guild.connect_member AS connectMem, guild.max_member AS maxMem, ";
 $col .= "guild.average_lv AS avgLevel, guild.emblem_len ";
 
