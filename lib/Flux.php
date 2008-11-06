@@ -616,14 +616,22 @@ class Flux {
 			$sql2  .= "VALUES (?, ?, NOW())";
 			$sth2   = $loginAthenaGroup->connection->getStatement($sql2);
 			
+			$sql3   = "SELECT id FROM {$loginAthenaGroup->loginDatabase}.$trustTable WHERE ";
+			$sql3  .= "delete_date IS NULL AND account_id = ? AND email = ? LIMIT 1";
+			$sth3   = $loginAthenaGroup->connection->getStatement($sql3);
+			
 			$idvals = array();
 			
 			foreach ($accept as $txn) {
-				if ($loginAthenaGroup->loginServer->depositCredits($txn->account_id, $txn->credits, $txn->mc_gross) &&
-					$sth2->execute(array($txn->account_id, $txn->payer_email))) {
-						
-					$idvals[] = $txn->txn_id;
+				$loginAthenaGroup->loginServer->depositCredits($txn->account_id, $txn->credits, $txn->mc_gross);
+				$sth3->execute(array($txn->account_id, $txn->payer_email));
+				$row = $sth3->fetch();
+				
+				if (!$row) {
+					$sth2->execute(array($txn->account_id, $txn->payer_email));
 				}
+				
+				$idvals[] = $txn->txn_id;
 			}
 			
 			if (!empty($idvals)) {
