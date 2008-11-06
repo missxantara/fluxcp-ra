@@ -33,7 +33,7 @@ if ($installer->updateNeeded() && $params->get('module') != 'install') {
 	$this->redirect($this->url('install'));
 }
 
-if (Flux::config('HoldUntrustedAccount') && Flux::config('AutoUnholdAccount')) {
+if (Flux::config('AutoUnholdAccount')) {
 	Flux::processHeldCredits();
 }
 
