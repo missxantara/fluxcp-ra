@@ -97,7 +97,6 @@ return array(
 		),
 		'logdata'   => array(
 			'index'   => AccountLevel::ADMIN,
-			'paypal'  => AccountLevel::ADMIN,
 			'txnview' => AccountLevel::ADMIN,
 			'char'    => AccountLevel::ADMIN,
 			'inter'   => AccountLevel::ADMIN,
@@ -109,6 +108,9 @@ return array(
 			'npc'     => AccountLevel::ADMIN,
 			'pick'    => AccountLevel::ADMIN,
 			'zeny'    => AccountLevel::ADMIN
+		),
+		'cplog'     => array(
+			'paypal'  => AccountLevel::ADMIN,	
 		),
 		'ipban'     => array(
 			'index'    => AccountLevel::ADMIN,

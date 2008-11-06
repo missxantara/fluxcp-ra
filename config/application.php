@@ -128,7 +128,8 @@ return array(
 		'WoE Hours'     => array('module' => 'woe'),
 		"Who's Online"  => array('module' => 'character', 'action' => 'online'),
 		'Map Stats'     => array('module' => 'character', 'action' => 'mapstats'),
-		'Log Data'      => array('module' => 'logdata'),
+		'eA Logs'       => array('module' => 'logdata', 'action' => 'login'),
+		'CP Logs'       => array('module' => 'cplog', 'action' => 'paypal'),
 		'IP Ban List'   => array('module' => 'ipban'),
 		'Accounts'      => array('module' => 'account'),
 		'Characters'    => array('module' => 'character'),
@@ -170,7 +171,6 @@ return array(
 			'status-xml' => 'View Status as XML'
 		),
 		'logdata' => array(
-			'paypal'  => 'Transactions',
 			//'char'    => 'Characters',
 			//'inter'   => 'Interactions',
 			//'command' => 'Commands',
@@ -181,6 +181,9 @@ return array(
 			//'npc'     => 'NPC',
 			//'pick'    => 'Item Picks',
 			//'zeny'    => 'Zeny'
+		),
+		'cplog' => array(
+			'paypal' => 'PayPal Trasactions'
 		),
 		'reload' => array(
 			'mobskill' => 'Mob Skills'

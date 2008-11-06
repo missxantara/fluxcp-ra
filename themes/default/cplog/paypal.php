@@ -1,5 +1,5 @@
 <?php if (!defined('FLUX_ROOT')) exit; ?>
-<h2>Transactions</h2>
+<h2>PayPal Transactions</h2>
 <?php if ($transactions): ?>
 <?php echo $paginator->infoText() ?>
 <table class="horizontal-table">
