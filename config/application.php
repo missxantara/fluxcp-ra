@@ -80,6 +80,7 @@ return array(
 	'ItemShopMaxCost'      => 99,                       // Max price an item can be sold for.
 	'ItemShopMaxQuantity'  => 99,                       // Max quantity the item may be sold at once for.
 	'HideFromWhosOnline'   => 10,                       // Levels greater than or equal to this will be hidden from the "Who's Online" page.
+	'HideFromMapStats'     => 10,                       // Levels greater than or equal to this will be hidden from the "Map Stats" page.
 	'ChargeGenderChange'   => 0,                        // You can specify this as the number of credits to charge for gender change.  Can be 0 for free change.
 	'BanPaymentStatuses'   => array(                    // Payment statuses that will automatically ban the account owner if received.
 		'Cancelled_Reversal',                           // -- 'Cancelled_Reversal'
