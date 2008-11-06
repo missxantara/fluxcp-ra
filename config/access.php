@@ -14,7 +14,8 @@ return array(
 			'notify'   => AccountLevel::ANYONE,
 			'update'   => AccountLevel::ANYONE,
 			'complete' => AccountLevel::ANYONE,
-			'history'  => AccountLevel::NORMAL
+			'history'  => AccountLevel::NORMAL,
+			'trusted'  => AccountLevel::NORMAL
 		),
 		'purchase'  => array(
 			'index'    => AccountLevel::ANYONE,

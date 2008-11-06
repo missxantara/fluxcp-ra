@@ -200,7 +200,8 @@ return array(
 		),
 		'donate' => array(
 			'index'   => 'Make a Donation',
-			'history' => 'Donation History'
+			'history' => 'Donation History',
+			'trusted' => 'Trusted PayPal E-mails'
 		),
 		'ipban' => array(
 			'index' => 'IP Ban List',
