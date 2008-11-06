@@ -9,15 +9,18 @@
 		<?php endif ?>
 		<title><?php echo Flux::config('SiteTitle'); if (isset($title)) echo ": $title" ?></title>
 		<link rel="stylesheet" href="<?php echo $this->themePath('css/flux.css') ?>" type="text/css" media="screen" title="" charset="utf-8" />
+		<link href="<?php echo $this->themePath('css/flux/unitip.css') ?>" rel="stylesheet" type="text/css" media="screen" title="" charset="utf-8" />
 		<!--[if IE]>
 		<link rel="stylesheet" href="<?php echo $this->themePath('css/flux/ie.css') ?>" type="text/css" media="screen" title="" charset="utf-8" />
 		<![endif]-->	
 		<!--[if lt IE 7]>
 		<script src="<?php echo $this->themePath('js/ie7.js') ?>" type="text/javascript"></script>
+		<script type="text/javascript" src="<?php echo $this->themePath('js/flux.unitpngfix.js') ?>"></script>
 		<![endif]-->
 		<script type="text/javascript" src="<?php echo $this->themePath('js/jquery-1.2.6.min.js') ?>"></script>
 		<!--<script type="text/javascript" src="<?php echo $this->themePath('js/jquery.dropshadow.js') ?>"></script>-->
 		<script type="text/javascript" src="<?php echo $this->themePath('js/flux.datefields.js') ?>"></script>
+		<script type="text/javascript" src="<?php echo $this->themePath('js/flux.unitip.js') ?>"></script>
 		<script type="text/javascript">
 			$(document).ready(function(){
 				var inputs = 'input[type=text],input[type=password],input[type=file]';
