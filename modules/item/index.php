@@ -190,7 +190,7 @@ try {
 	}
 	
 	// Get total count and feed back to the paginator.
-	$sth = $server->connection->getStatement("SELECT COUNT(items.id) AS total FROM $tableName $sqlpartial");
+	$sth = $server->connection->getStatement("SELECT COUNT(DISTINCT items.id) AS total FROM $tableName $sqlpartial");
 	$sth->execute($bind);
 	
 	$paginator = $this->getPaginator($sth->fetch()->total);
@@ -203,7 +203,7 @@ try {
 	$col .= "defence AS defense, `range`, slots, refineable, cost, $shopTable.id AS shop_item_id, ";
 	$col .= "IFNULL(price_sell, FLOOR(price_buy/2)) AS price_sell";
 	
-	$sql  = $paginator->getSQL("SELECT $col FROM $tableName $sqlpartial");
+	$sql  = $paginator->getSQL("SELECT $col FROM $tableName $sqlpartial GROUP BY items.id");
 	$sth  = $server->connection->getStatement($sql);
 	
 	$sth->execute($bind);
