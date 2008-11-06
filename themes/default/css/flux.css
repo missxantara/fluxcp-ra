@@ -943,3 +943,7 @@ textarea {
 	color: #000;
 	border-bottom: 1px dotted #666;
 }
+
+.empty-row {
+	visibility: hidden;
+}
