@@ -39,7 +39,7 @@ $col .= "homun.skill_point AS homun_skill_point, homun.alive AS homun_alive, ";
 $col .= "pet.class AS pet_class, pet.name AS pet_name, pet.level AS pet_level, pet.intimate AS pet_intimacy, ";
 $col .= "pet.hungry AS pet_hungry, pet_mob.kName AS pet_mob_name, ";
 
-$col .= "SUM(reg.value) AS death_count";
+$col .= "reg.value AS death_count";
 
 $sql  = "SELECT $col FROM {$server->charMapDatabase}.`char` AS ch ";
 $sql .= "LEFT OUTER JOIN {$server->loginDatabase}.login ON login.account_id = ch.account_id ";
