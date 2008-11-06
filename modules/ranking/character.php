@@ -31,6 +31,11 @@ if (Flux::config('HideTempBannedCharRank')) {
 
 $sql .= "AND login.level < ? ";
 
+if ($days=Flux::config('CharRankingThreshold')) {
+	$sql    .= 'AND (UNIX_TIMESTAMP() - UNIX_TIMESTAMP(login.lastlogin)) <= ? ';
+	$bind[]  = $days * 24 * 60 * 60;
+}
+
 if (!is_null($jobClass)) {
 	$sql .= "AND ch.class = ? ";
 	$bind[] = $jobClass;

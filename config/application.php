@@ -106,6 +106,9 @@ return array(
 	'ZenyRankingLimit'    => 20,                        //
 	'RankingHideLevel'    => AccountLevel::LOWGM,       //
 	
+	'CharRankingThreshold' => 0,                         // Number of days the character must have logged in within to be listed in character ranking. (0 = disabled)
+	'ZenyRankingThreshold' => 0,                         // Number of days the character must have logged in within to be listed in zeny ranking. (0 = disabled)
+	
 	'HideTempBannedCharRank'  => false,                  // Hide temporarily banned characters from ranking.
 	'HidePermBannedCharRank'  => true,                   // Hide permanently banned characters from ranking.
 	
