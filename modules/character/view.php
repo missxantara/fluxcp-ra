@@ -39,7 +39,7 @@ $col .= "homun.skill_point AS homun_skill_point, homun.alive AS homun_alive, ";
 $col .= "pet.class AS pet_class, pet.name AS pet_name, pet.level AS pet_level, pet.intimate AS pet_intimacy, ";
 $col .= "pet.hungry AS pet_hungry, pet_mob.kName AS pet_mob_name, ";
 
-$col .= "reg.value AS death_count";
+$col .= "IFNULL(reg.value, 0) AS death_count";
 
 $sql  = "SELECT $col FROM {$server->charMapDatabase}.`char` AS ch ";
 $sql .= "LEFT OUTER JOIN {$server->loginDatabase}.login ON login.account_id = ch.account_id ";
@@ -56,8 +56,8 @@ $sql .= "LEFT OUTER JOIN {$server->charMapDatabase}.`char` AS party_leader ON pa
 $sql .= "LEFT OUTER JOIN {$server->charMapDatabase}.`homunculus` AS homun ON ch.homun_id = homun.homun_id ";
 $sql .= "LEFT OUTER JOIN {$server->charMapDatabase}.`pet` ON ch.pet_id = pet.pet_id ";
 $sql .= "LEFT OUTER JOIN {$server->charMapDatabase}.`mob_db` AS pet_mob ON pet_mob.ID = pet.class ";
-$sql .= "LEFT OUTER JOIN ragnarok.`global_reg_value` AS reg ON reg.char_id = ch.char_id ";
-$sql .= "WHERE ch.char_id = ? AND reg.str = 'PC_DIE_COUNTER'";
+$sql .= "LEFT OUTER JOIN ragnarok.`global_reg_value` AS reg ON reg.char_id = ch.char_id AND reg.str = 'PC_DIE_COUNTER' ";
+$sql .= "WHERE ch.char_id = ?";
 
 $sth  = $server->connection->getStatement($sql);
 $sth->execute(array($charID));
