@@ -115,6 +115,8 @@ return array(
 	'HideTempBannedZenyRank'  => false,                  // Hide temporarily banned characters from ranking.
 	'HidePermBannedZenyRank'  => true,                   // Hide permanently banned characters from ranking.
 	
+	'CpLoginLogShowPassword'  => false,                  // Show password in CP login log (also see access.php's SeeCpLoginLogPass).
+	
 	// These are the main menu items that should be displayed by themes.
 	// They route to modules and actions.  Whether they are displayed or
 	// not at any given time depends on the user's account level and/or
@@ -131,8 +133,8 @@ return array(
 		'WoE Hours'     => array('module' => 'woe'),
 		"Who's Online"  => array('module' => 'character', 'action' => 'online'),
 		'Map Stats'     => array('module' => 'character', 'action' => 'mapstats'),
-		'eA Logs'       => array('module' => 'logdata', 'action' => 'login'),
-		'CP Logs'       => array('module' => 'cplog', 'action' => 'paypal'),
+		'eA Logs'       => array('module' => 'logdata'),
+		'CP Logs'       => array('module' => 'cplog'),
 		'IP Ban List'   => array('module' => 'ipban'),
 		'Accounts'      => array('module' => 'account'),
 		'Characters'    => array('module' => 'character'),
@@ -186,7 +188,8 @@ return array(
 			//'zeny'    => 'Zeny'
 		),
 		'cplog' => array(
-			'paypal' => 'PayPal Trasactions'
+			'paypal' => 'PayPal Trasactions',
+			'login'  => 'Logins'
 		),
 		'reload' => array(
 			'mobskill' => 'Mob Skills'
@@ -241,6 +244,10 @@ return array(
 	// Item Types with their corresponding names.
 	// Shouldn't touch this either.
 	'ItemTypes' => include('itemtypes.php'),
+	
+	// Error Code -> Error Type mapping.
+	// Shouldn't need touching, however modifying loginerrors.php should be relatively safe.
+	'LoginErrors' => include('loginerrors.php'),
 	
 	// DON'T TOUCH. THIS IS FOR DEVELOPERS.
 	'FluxTables' => array(

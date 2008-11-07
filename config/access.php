@@ -111,7 +111,9 @@ return array(
 			'zeny'    => AccountLevel::ADMIN
 		),
 		'cplog'     => array(
-			'paypal'  => AccountLevel::ADMIN,	
+			'index'   => AccountLevel::ADMIN,
+			'paypal'  => AccountLevel::ADMIN,
+			'login'   => AccountLevel::ADMIN	
 		),
 		'ipban'     => array(
 			'index'    => AccountLevel::ADMIN,
@@ -177,6 +179,8 @@ return array(
 		'ResetLook'          => AccountLevel::LOWGM,  // Level required to reset another character's look.
 		'ResetPosition'      => AccountLevel::LOWGM,  // Level required to reset another character's position.
 		'ViewWoeDisallowed'  => AccountLevel::LOWGM,  // Level required to bypass WoE-disabled page security check.
+		'SeeCpLoginLogPass'  => AccountLevel::ADMIN,  // Level required to see password in CP login log (also requires CpLoginLogShowPassword in application.php)
+		'SearchCpLoginLogPw' => AccountLevel::ADMIN,  // Level required to search through passwords in the CP login log.
 		
 		'EditHigherPower'    => 5000,
 		'BanHigherPower'     => 5000
