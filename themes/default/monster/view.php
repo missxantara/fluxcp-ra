@@ -66,7 +66,13 @@
 		<th>Job EXP</th>
 		<td><?php echo number_format((int)$monster[0]->JEXP * $server->jobExpRates) ?></td>
 		<th>Race</th>
-		<td><?php echo number_format((int)$monster[0]->Race) ?></td>
+		<td>
+			<?php if ($race=Flux::monsterRaceName($monster[0]->Race)): ?>
+				<?php echo htmlspecialchars($race) ?>
+			<?php else: ?>
+				<span class="not-applicable">Unknown</span>
+			<?php endif ?>
+		</td>
 	</tr>
 	<tr>
 		<th>Element</th>

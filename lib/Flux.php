@@ -794,5 +794,14 @@ class Flux {
 		
 		return is_null($element) ? $neutral : $element;
 	}
+	
+	/**
+	 *
+	 */
+	public static function monsterRaceName($race)
+	{
+		$race = Flux::config("MonsterRaces.$race");
+		return $race;
+	}
 }
 ?>
