@@ -9,32 +9,37 @@ foreach ($params->toArray() as $key => $value) {
 		$__dateType  = $m[2];
 		
 		if (!array_key_exists($__dateParam, $__dates)) {
-			$__dateArray = array();
-			$__dates[$__dateParam] = new Flux_Config($__dateArray);
+			// Not too sure why, but if I don't create a separate index for this array,
+			// It will use the previous iteration's reference.
+			$__dateArray[$__dateParam] = array();
+			$__dates[$__dateParam] = new Flux_Config($__dateArray[$__dateParam]);
 		}
 		
 		$__dates[$__dateParam]->set($__dateType, $value);
 	}
+}
+
+foreach ($__dates as $__dateName => $__date) {
+	$_year   = $__date->get('year');
+	$_month  = $__date->get('month');
+	$_day    = $__date->get('day');
+	$_hour   = $__date->get('hour');
+	$_minute = $__date->get('minute');
+	$_second = $__date->get('second');
 	
-	foreach ($__dates as $__dateName => $__date) {
-		$_year   = $__date->get('year');
-		$_month  = $__date->get('month');
-		$_day    = $__date->get('day');
-		$_hour   = $__date->get('hour');
-		$_minute = $__date->get('minute');
-		$_second = $__date->get('second');
-		
-		// Construct DATE.
-		if (!is_null($_year) && !is_null($_month) && !is_null($_day)) {
-			$_format = sprintf('%04d-%02d-%02d', $_year, $_month, $_day);
-			// Construct DATETIME.
-			if (!is_null($_hour) && !is_null($_minute) && !is_null($_second)) {
-				$_format .= sprintf(' %02d:%02d:%02d', $_hour, $_minute, $_second);
-			}
-			$params->set("{$__dateName}_date", $_format);
+	// Construct DATE.
+	if (!is_null($_year) && !is_null($_month) && !is_null($_day)) {
+		$_format = sprintf('%04d-%02d-%02d', $_year, $_month, $_day);
+		// Construct DATETIME.
+		if (!is_null($_hour) && !is_null($_minute) && !is_null($_second)) {
+			$_format .= sprintf(' %02d:%02d:%02d', $_hour, $_minute, $_second);
 		}
+		$params->set("{$__dateName}_date", $_format);
 	}
 }
+echo '<pre>';
+print_r($__dates);
+echo '</pre>';
 
 $installer = Flux_Installer::getInstance();
 if ($installer->updateNeeded() && $params->get('module') != 'install') {
