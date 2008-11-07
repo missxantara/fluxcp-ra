@@ -17,14 +17,22 @@ foreach ($params->toArray() as $key => $value) {
 	}
 	
 	foreach ($__dates as $__dateName => $__date) {
-		$_year   = (int)$__date->get('year');
-		$_month  = (int)$__date->get('month');
-		$_day    = (int)$__date->get('day');
-		$_hour   = (int)$__date->get('hour');
-		$_minute = (int)$__date->get('minute');
-		$_second = (int)$__date->get('second');
-		$_format = sprintf('%04d-%02d-%02d %02d:%02d:%02d', $_year, $_month, $_day, $_hour, $_minute, $_second);
-		$params->set("{$__dateName}_date", $_format);
+		$_year   = $__date->get('year');
+		$_month  = $__date->get('month');
+		$_day    = $__date->get('day');
+		$_hour   = $__date->get('hour');
+		$_minute = $__date->get('minute');
+		$_second = $__date->get('second');
+		
+		// Construct DATE.
+		if (!is_null($_year) && !is_null($_month) && !is_null($_day)) {
+			$_format = sprintf('%04d-%02d-%02d', $_year, $_month, $_day);
+			// Construct DATETIME.
+			if (!is_null($_hour) && !is_null($_minute) && !is_null($_second)) {
+				$_format .= sprintf(' %02d:%02d:%02d', $_hour, $_minute, $_second);
+			}
+			$params->set("{$__dateName}_date", $_format);
+		}
 	}
 }
 
