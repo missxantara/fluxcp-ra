@@ -37,9 +37,6 @@ foreach ($__dates as $__dateName => $__date) {
 		$params->set("{$__dateName}_date", $_format);
 	}
 }
-echo '<pre>';
-print_r($__dates);
-echo '</pre>';
 
 $installer = Flux_Installer::getInstance();
 if ($installer->updateNeeded() && $params->get('module') != 'install') {
