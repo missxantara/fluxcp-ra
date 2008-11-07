@@ -70,7 +70,7 @@
 	</tr>
 	<tr>
 		<th>Element</th>
-		<td><?php echo number_format((int)$monster[0]->Element) ?></td>
+		<td><?php echo Flux::elementName($monster[0]->DefEle) ?> (<?php echo (int)$monster[0]->EleLv ?>)</td>
 		<th>Mode</th>
 		<td><?php echo number_format((int)$monster[0]->Mode) ?></td>
 		<th>Speed</th>

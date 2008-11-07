@@ -249,6 +249,12 @@ return array(
 	// Shouldn't need touching, however modifying loginerrors.php should be relatively safe.
 	'LoginErrors' => include('loginerrors.php'),
 	
+	// eA monster races mapping.
+	'MonsterRaces' => include('races.php'),
+	
+	// eA elements mapping.
+	'Elements' => include('elements.php'),
+	
 	// DON'T TOUCH. THIS IS FOR DEVELOPERS.
 	'FluxTables' => array(
 		'CreditsTable'        => 'cp_credits',

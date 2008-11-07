@@ -783,5 +783,16 @@ class Flux {
 		
 		return $arr;
 	}
+	
+	/**
+	 *
+	 */
+	public static function elementName($ele)
+	{
+		$neutral = Flux::config('Elements.0');
+		$element = Flux::config("Elements.$ele");
+		
+		return is_null($element) ? $neutral : $element;
+	}
 }
 ?>
