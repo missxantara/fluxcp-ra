@@ -21,13 +21,13 @@
 <table class="horizontal-table">
 	<tr>
 		<th><?php echo $paginator->sortableColumn('monster_id', 'Monster ID') ?></th>
-		<th><?php echo $paginator->sortableColumn('kName', 'kRO Name') ?></th>
-		<th><?php echo $paginator->sortableColumn('iName', 'iRO Name') ?></th>
-		<th><?php echo $paginator->sortableColumn('LV', 'Level') ?></th>
-		<th><?php echo $paginator->sortableColumn('HP', 'HP') ?></th>
-		<th><?php echo $paginator->sortableColumn('EXP', 'Base EXP') ?></th>
-		<th><?php echo $paginator->sortableColumn('JEXP', 'Job EXP') ?></th>
-		<th><?php echo $paginator->sortableColumn('DropCardid', 'Card ID') ?></th>
+		<th><?php echo $paginator->sortableColumn('kro_name', 'kRO Name') ?></th>
+		<th><?php echo $paginator->sortableColumn('iro_name', 'iRO Name') ?></th>
+		<th><?php echo $paginator->sortableColumn('level', 'Level') ?></th>
+		<th><?php echo $paginator->sortableColumn('hp', 'HP') ?></th>
+		<th><?php echo $paginator->sortableColumn('exp', 'Base EXP') ?></th>
+		<th><?php echo $paginator->sortableColumn('jexp', 'Job EXP') ?></th>
+		<th><?php echo $paginator->sortableColumn('dropcard_id', 'Card ID') ?></th>
 	</tr>
 	<?php foreach ($monsters as $monster): ?>
 	<tr>
@@ -38,18 +38,18 @@
 				<?php echo htmlspecialchars($monster->monster_id) ?>
 			<?php endif ?>
 		</td>
-		<td><?php echo htmlspecialchars($monster->kName) ?></td>
-		<td><?php echo htmlspecialchars($monster->iName) ?></td>
-		<td><?php echo number_format($monster->LV) ?></td>
-		<td><?php echo number_format($monster->HP) ?></td>
-		<td><?php echo number_format($monster->EXP * $server->baseExpRates) ?></td>
-		<td><?php echo number_format($monster->JEXP * $server->jobExpRates) ?></td>
-		<?php if ($monster->DropCardid): ?>
+		<td><?php echo htmlspecialchars($monster->kro_name) ?></td>
+		<td><?php echo htmlspecialchars($monster->iro_name) ?></td>
+		<td><?php echo number_format($monster->level) ?></td>
+		<td><?php echo number_format($monster->hp) ?></td>
+		<td><?php echo number_format($monster->exp * $server->baseExpRates) ?></td>
+		<td><?php echo number_format($monster->jexp * $server->jobExpRates) ?></td>
+		<?php if ($monster->dropcard_id): ?>
 			<td>
 				<?php if ($auth->actionAllowed('item', 'view')): ?>
-					<?php echo $this->linkToItem($monster->DropCardid, $monster->DropCardid) ?>
+					<?php echo $this->linkToItem($monster->dropcard_id, $monster->dropcard_id) ?>
 				<?php else: ?>
-					<?php echo htmlspecialchars($monster->DropCardid) ?>
+					<?php echo htmlspecialchars($monster->dropcard_id) ?>
 				<?php endif ?>
 			</td>
 		<?php else: ?>
