@@ -28,7 +28,7 @@ try {
 		$cardID         = $params->get('card_id');
 		
 		if ($monsterName) {
-			$sqlpartial .= "AND ((kro_name LIKE ? OR kro_name = ?) OR (iro_name LIKE ? OR iro_name = ?)) ";
+			$sqlpartial .= "AND ((kName LIKE ? OR kName = ?) OR (iName LIKE ? OR iName = ?)) ";
 			$bind[]      = "%$monsterName%";
 			$bind[]      = $monsterName;
 			$bind[]      = "%$monsterName%";
@@ -36,7 +36,7 @@ try {
 		}
 		
 		if ($cardID) {
-			$sqlpartial .= "AND dropcard_id = ? ";
+			$sqlpartial .= "AND DropCardid = ? ";
 			$bind[]      = $cardID;
 		}
 	}
