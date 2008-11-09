@@ -15,7 +15,7 @@ $icon = $this->iconImage($item->item_id);
 	<?php if ($icon): ?><img src="<?php echo $icon ?>" /><?php endif ?>
 	#<?php echo htmlspecialchars($item->item_id) ?>: <?php echo htmlspecialchars($item->name) ?>
 </h3>
-<p class="action"><?php echo implode(' • ', $actions) ?></p>
+<p class="action"><?php echo implode(' / ', $actions) ?></p>
 <table class="vertical-table">
 	<tr>
 		<th>Item ID</th>
