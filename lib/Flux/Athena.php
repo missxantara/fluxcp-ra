@@ -83,6 +83,14 @@ class Flux_Athena {
 	public $loginDatabase;
 	
 	/**
+	 * Logs database. (is not set until setConnection() is called.)
+	 *
+	 * @access public
+	 * @var string
+	 */
+	public $logsDatabase;
+	
+	/**
 	 * Database used for the char/map (aka everything else) SQL operations.
 	 * This does not include log-related tasks.
 	 *
@@ -124,21 +132,54 @@ class Flux_Athena {
 	public $cart;
 	
 	/**
-	 *
+	 * @access public
+	 * @var Flux_LoginAthenaGroup
 	 */
 	public $loginAthenaGroup;
 	
 	/**
+	 * Max character slots for this char/map server.
 	 *
+	 * @access public
+	 * @var int
 	 */
 	public $maxCharSlots;
 	
 	/**
+	 * Array of maps which prohibit the use of "reset position" feature.
 	 *
+	 * @access public
+	 * @var array
 	 */
 	public $resetDenyMaps;
 	
 	/**
+	 * Timezone of this char/map server pair.
+	 *
+	 * @access public
+	 * @var string
+	 */
+	public $dateTimezone;
+	
+	/**
+	 * Array of WoE times.
+	 *
+	 * @access public
+	 * @var array
+	 */
+	public $woeDayTimes = array();
+	
+	/**
+	 * Config of disallowed module/actions during WoE hours.
+	 *
+	 * @access public
+	 * @var Flux_Config
+	 */
+	public $woeDisallow;
+	
+	/**
+	 * Initialize char/map pair Flux_Athena pair.
+	 *
 	 * @param Flux_Connection $connection
 	 * @param Flux_Config $charMapConfig
 	 * @param Flux_LoginServer $loginServer
@@ -161,6 +202,7 @@ class Flux_Athena {
 		$this->mvpDropRates    = (int)$charMapConfig->getMvpDropRates();
 		$this->cardDropRates   = (int)$charMapConfig->getCardDropRates();
 		$this->maxCharSlots    = (int)$charMapConfig->getMaxCharSlots();
+		$this->dateTimezone    = $charMapConfig->getDateTimezone();
 		
 		$resetDenyMaps = $charMapConfig->getResetDenyMaps();
 		if (!$resetDenyMaps) {
@@ -172,19 +214,76 @@ class Flux_Athena {
 		else {
 			$this->resetDenyMaps = $resetDenyMaps->toArray();
 		}
+		
+		// Get WoE times specific in servers config.
+		$woeDayTimes = $charMapConfig->getWoeDayTimes();
+		if ($woeDayTimes instanceOf Flux_Config) {
+			$woeDayTimes = $woeDayTimes->toArray();
+			foreach ($woeDayTimes as $dayTime) {
+				if (!is_array($dayTime) || count($dayTime) < 4) {
+					continue;
+				}
+				
+				list ($sDay, $sTime, $eDay, $eTime) = array_slice($dayTime, 0, 4);
+				$sTime = trim($sTime);
+				$eTime = trim($eTime);
+				
+				if ($sDay < 0 || $sDay > 6 || $eDay < 0 || $eDay > 6 ||
+					!preg_match('/^\d{2}:\d{2}$/', $sTime) || !preg_match('/^\d{2}:\d{2}$/', $eTime)) {	
+					continue;
+				}
+				
+				$this->woeDayTimes[] = array(
+					'startingDay'  => $sDay,
+					'startingTime' => $sTime,
+					'endingDay'    => $eDay,
+					'endingTime'   => $eTime
+				);
+			}
+		}
+		
+		// Config used for disallowing access to certain modules during WoE.
+		$woeDisallow       = $charMapConfig->getWoeDisallow();
+		$_tempArray        = array();
+		$this->woeDisallow = new Flux_Config($_tempArray);
+		
+		if ($woeDisallow instanceOf Flux_Config) {
+			$woeDisallow  = $woeDisallow->toArray();
+			
+			foreach ($woeDisallow as $disallow) {
+				if (array_key_exists('module', $disallow)) {
+					$module = $disallow['module'];
+					if (array_key_exists('action', $disallow)) {
+						$action = $disallow['action'];
+						$this->woeDisallow->set("$module.$action", true);
+					}
+					else {
+						$this->woeDisallow->set($module, true);
+					}
+				}
+			}
+		}
 	}
 	
 	/**
+	 * Set connection object.
 	 *
+	 * @param Flux_Connection $connection
+	 * @return Flux_Connection
 	 */
 	public function setConnection(Flux_Connection $connection)
 	{
-		$this->connection = $connection;
+		$this->connection   = $connection;
+		$this->logsDatabase = $connection->logsDbConfig->getDatabase();
+		
 		return $connection;
 	}
 	
 	/**
+	 * Set cart object.
 	 *
+	 * @param Flux_ItemShop_Cart $cart
+	 * @return Flux_ItemShop_Cart
 	 */
 	public function setCart(Flux_ItemShop_Cart $cart)
 	{
@@ -204,7 +303,11 @@ class Flux_Athena {
 	}
 	
 	/**
+	 * Transfer credits from one account to another.
 	 *
+	 * @param int $fromAccountID  Account ID
+	 * @param string $targetCharName Character name of person receiving credits
+	 * @param int $credits Amount of credits
 	 */
 	public function transferCredits($fromAccountID, $targetCharName, $credits)
 	{
@@ -286,7 +389,10 @@ class Flux_Athena {
 	}
 	
 	/**
+	 * Set loginAthenaGroup object.
 	 *
+	 * @param Flux_LoginAthenaGroup $loginAthenaGroup
+	 * @return Flux_LoginAthenaGroup
 	 */
 	public function setLoginAthenaGroup(Flux_LoginAthenaGroup $loginAthenaGroup)
 	{
@@ -295,7 +401,10 @@ class Flux_Athena {
 	}
 	
 	/**
+	 * Check if a character exists with a particular char ID.
 	 *
+	 * @param int $charID
+	 * @return bool True/false if char exists or doesn't.
 	 */
 	public function charExists($charID)
 	{
@@ -312,7 +421,11 @@ class Flux_Athena {
 	}
 
 	/**
+	 * Check if a charID belongs to an accountID.
 	 *
+	 * @param int $charID
+	 * @param int $accountID
+	 * @return bool
 	 */
 	public function charBelongsToAccount($charID, $accountID)
 	{
@@ -329,7 +442,10 @@ class Flux_Athena {
 	}
 	
 	/**
+	 * Check if char with charID is online.
 	 *
+	 * @param int $charID
+	 * @return bool
 	 */
 	public function charIsOnline($charID)
 	{
@@ -346,7 +462,10 @@ class Flux_Athena {
 	}
 	
 	/**
+	 * Check if account has any online characters at the moment.
 	 *
+	 * @param int $accountId
+	 * @return bool
 	 */
 	public function accountHasOnlineChars($accountID)
 	{
@@ -363,7 +482,10 @@ class Flux_Athena {
 	}
 	
 	/**
+	 * Get character data of charID.
 	 *
+	 * @param int $charID
+	 * @return mixed Returns Flux_DataObject or false.
 	 */
 	public function getCharacter($charID)
 	{
@@ -380,7 +502,11 @@ class Flux_Athena {
 	}
 	
 	/**
+	 * Get character prefs.
 	 *
+	 * @param int $charID Character ID
+	 * @param array $prefs Only these prefs?
+	 * @return mixed Flux_Config or false.
 	 */
 	public function getPrefs($charID, array $prefs = array())
 	{
@@ -423,7 +549,11 @@ class Flux_Athena {
 	}
 	
 	/**
+	 * Set character prefs.
 	 *
+	 * @param int $charID
+	 * @param array $prefsArray pref=>value pairs.
+	 * @return bool
 	 */
 	public function setPrefs($charID, array $prefsArray)
 	{
@@ -487,7 +617,11 @@ class Flux_Athena {
 	}
 	
 	/**
+	 * Get a single character pref.
 	 *
+	 * @param int $charID
+	 * @param string $pref
+	 * @return mixed string or false.
 	 */
 	public function getPref($charID, $pref)
 	{
@@ -501,7 +635,12 @@ class Flux_Athena {
 	}
 	
 	/**
+	 * Set a single character pref.
 	 *
+	 * @param int $charID
+	 * @param string $pref
+	 * @param string $value
+	 * @return bool
 	 */
 	public function setPref($charID, $pref, $value)
 	{
@@ -509,7 +648,10 @@ class Flux_Athena {
 	}
 	
 	/**
+	 * Re-set the appearance of a character.
 	 *
+	 * @param int $charID
+	 * @return mixed
 	 */
 	public function resetLook($charID)
 	{
@@ -551,7 +693,10 @@ class Flux_Athena {
 	}
 	
 	/**
+	 * Re-set the position of a character.
 	 *
+	 * @param int $charID
+	 * @return mixed
 	 */
 	public function resetPosition($charID)
 	{
@@ -590,6 +735,45 @@ class Flux_Athena {
 		else {
 			return false;
 		}
+	}
+	
+	/**
+	 * Get the current server time, based on the DateTimezone servers.php config.
+	 *
+	 * @param string $format Similar to that of PHP's date() function.
+	 * @return string
+	 */
+	public function getServerTime($format = 'U')
+	{
+		$dateTime = date_create('now');
+		if ($this->dateTimezone) {
+			$dateTime->setTimeZone(new DateTimeZone($this->dateTimezone));
+		}
+		return $dateTime->format($format);
+	}
+	
+	/**
+	 * Check if it currently WoE according to the configured hours and timezone.
+	 *
+	 * @return bool
+	 */
+	public function isWoe()
+	{
+		$serverTime = (int)$this->getServerTime();
+		$dayNames   = array('Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday');
+			
+		foreach ($this->woeDayTimes as $woeDayTime) {
+			$sDay  = $dayNames[$woeDayTime['startingDay']];
+			$eDay  = $dayNames[$woeDayTime['endingDay']];
+			$start = strtotime("$sDay {$woeDayTime['startingTime']}");
+			$end   = strtotime("$eDay {$woeDayTime['endingTime']}");
+			
+			if ($serverTime > $start && $serverTime < $end) {
+				return true;
+			}
+		}
+		
+		return false;
 	}
 }
 ?>

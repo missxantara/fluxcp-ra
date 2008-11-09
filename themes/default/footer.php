@@ -18,7 +18,7 @@
 				<td colspan="3"></td>
 				<td id="copyright">
 					<p>
-						<strong>Powered by Flux Control Panel (<?php echo htmlspecialchars(Flux::VERSION) ?>)</strong>
+						<strong>Powered by Flux Control Panel (<?php echo htmlspecialchars(Flux::VERSION) ?><?php echo Flux::SVNVERSION ? '.'.Flux::SVNVERSION : '' ?>)</strong>
 						&mdash; Copyright &copy; 2008 Matthew Harris and Nikunj Mehta.
 					</p>
 				</td>
@@ -31,7 +31,8 @@
 				<td id="info">
 					<p>
 						Page generated in <strong><?php echo round(microtime(true) - __START__, 5) ?></strong> second(s).
-						Number of queries executed: <strong><?php echo (int)Flux::$numberOfQueries ?></strong>
+						Number of queries executed: <strong><?php echo (int)Flux::$numberOfQueries ?></strong>.
+						<?php if (Flux::config('GzipCompressOutput')): ?>Gzip Compression: <strong>Enabled</strong>.<?php endif ?>
 					</p>
 				</td>
 				<td></td>

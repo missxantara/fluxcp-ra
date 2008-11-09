@@ -9,21 +9,31 @@ foreach ($params->toArray() as $key => $value) {
 		$__dateType  = $m[2];
 		
 		if (!array_key_exists($__dateParam, $__dates)) {
-			$__dateArray = array();
-			$__dates[$__dateParam] = new Flux_Config($__dateArray);
+			// Not too sure why, but if I don't create a separate index for this array,
+			// It will use the previous iteration's reference.
+			$__dateArray[$__dateParam] = array();
+			$__dates[$__dateParam] = new Flux_Config($__dateArray[$__dateParam]);
 		}
 		
 		$__dates[$__dateParam]->set($__dateType, $value);
 	}
+}
+
+foreach ($__dates as $__dateName => $__date) {
+	$_year   = $__date->get('year');
+	$_month  = $__date->get('month');
+	$_day    = $__date->get('day');
+	$_hour   = $__date->get('hour');
+	$_minute = $__date->get('minute');
+	$_second = $__date->get('second');
 	
-	foreach ($__dates as $__dateName => $__date) {
-		$_year   = (int)$__date->get('year');
-		$_month  = (int)$__date->get('month');
-		$_day    = (int)$__date->get('day');
-		$_hour   = (int)$__date->get('hour');
-		$_minute = (int)$__date->get('minute');
-		$_second = (int)$__date->get('second');
-		$_format = sprintf('%04d-%02d-%02d %02d:%02d:%02d', $_year, $_month, $_day, $_hour, $_minute, $_second);
+	// Construct DATE.
+	if (!is_null($_year) && !is_null($_month) && !is_null($_day)) {
+		$_format = sprintf('%04d-%02d-%02d', $_year, $_month, $_day);
+		// Construct DATETIME.
+		if (!is_null($_hour) && !is_null($_minute) && !is_null($_second)) {
+			$_format .= sprintf(' %02d:%02d:%02d', $_hour, $_minute, $_second);
+		}
 		$params->set("{$__dateName}_date", $_format);
 	}
 }
@@ -33,7 +43,7 @@ if ($installer->updateNeeded() && $params->get('module') != 'install') {
 	$this->redirect($this->url('install'));
 }
 
-if (Flux::config('HoldUntrustedAccount') && Flux::config('AutoUnholdAccount')) {
+if (Flux::config('AutoUnholdAccount')) {
 	Flux::processHeldCredits();
 }
 
@@ -64,4 +74,16 @@ if (($preferred_server = $params->get('preferred_server')) && $session->getAthen
 
 // Preferred server.
 $server = $session->getAthenaServer();
+
+// WoE-based authorization.
+$_thisModule = $params->get('module');
+$_thisAction = $params->get('action');
+
+$woeDisallowModule = $server->woeDisallow->get($_thisModule);
+$woeDisallowAction = $server->woeDisallow->get("$_thisModule.$_thisAction");
+
+if (!$auth->allowedToViewWoeDisallowed && ($woeDisallowModule || $woeDisallowAction) && $server->isWoe()) {
+	$session->setMessageData('The page you have requested is not accessible during WoE.');
+	$this->redirect();
+}
 ?>

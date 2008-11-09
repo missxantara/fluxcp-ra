@@ -1,7 +1,7 @@
 <?php
-if (version_compare(PHP_VERSION, '5.2', '<')) {
+if (version_compare(PHP_VERSION, '5.2.1', '<')) {
 	echo '<h2>Error</h2>';
-	echo '<p>PHP 5.2 or higher is required to use Flux Control Panel.</p>';
+	echo '<p>PHP 5.2.1 or higher is required to use Flux Control Panel.</p>';
 	echo '<p>You are running '.PHP_VERSION.'</p>';
 	exit;
 }
@@ -18,6 +18,7 @@ define('FLUX_CONFIG_DIR', 'config');
 define('FLUX_LIB_DIR',    'lib');
 define('FLUX_MODULE_DIR', 'modules');
 define('FLUX_THEME_DIR',  'themes');
+define('FLUX_ADDON_DIR',  'addons');
 
 // Clean GPC arrays in the event magic_quotes_gpc is enabled.
 if (ini_get('magic_quotes_gpc')) {
@@ -64,6 +65,9 @@ try {
 		'messagesConfigFile' => FLUX_CONFIG_DIR.'/messages.php'
 	));
 	
+	// Set time limit.
+	set_time_limit((int)Flux::config('ScriptTimeLimit'));
+	
 	// Set default timezone for entire app.
 	$timezone = Flux::config('DateDefaultTimezone');
 	if ($timezone && !@date_default_timezone_set($timezone)) {
@@ -106,6 +110,7 @@ try {
 		Flux::config('ThemeName', 'installer');
 	}
 	
+	$sessionKey = Flux::config('SessionKey');
 	session_save_path(realpath(FLUX_DATA_DIR.'/sessions'));
 	if (!is_writable($dir=session_save_path())) {
 		throw new Flux_PermissionError("The session storage directory '$dir' is not writable.  Remedy with `chmod 0707 $dir`");
@@ -125,10 +130,10 @@ try {
 	else {
 		$sessionExpireDuration = Flux::config('SessionCookieExpire') * 60 * 60;
 		session_set_cookie_params($sessionExpireDuration, Flux::config('BaseURI'));
+		ini_set('session.name', $sessionKey);
 		session_start();
 	}
 	
-	$sessionKey = Flux::config('SessionKey');
 	if (empty($_SESSION[$sessionKey]) || !is_array($_SESSION[$sessionKey])) {
 		$_SESSION[$sessionKey] = array();
 	}
@@ -138,6 +143,12 @@ try {
 	
 	// Initialize authorization component.
 	$accessConfig = new Flux_Config(include(FLUX_CONFIG_DIR.'/access.php'));
+		
+	// Merge with add-on configs.
+	foreach (Flux::$addons as $addon) {
+		$accessConfig->merge($addon->accessConfig);
+	}
+	
 	$accessConfig->set('unauthorized.index', AccountLevel::ANYONE);
 	$authComponent = Flux_Authorization::getInstance($accessConfig, Flux::$sessionData);
 	

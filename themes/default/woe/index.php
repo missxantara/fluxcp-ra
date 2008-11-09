@@ -1,8 +1,9 @@
 <?php if (!defined('FLUX_ROOT')) exit; ?>
 <h2>War of Emperium Hours</h2>
 <?php if ($woeTimes): ?>
-<p>Below are the WoE hours for <?php echo htmlspecialchars($session->loginAthenaGroup->serverName) ?>.</p>
-<p>These hours are subject to change at anytime, but let's hope not.</p>
+<p>Below are the WoE hours for <?php echo htmlspecialchars($session->loginAthenaGroup->serverName) ?>.
+These hours are subject to change at anytime, but let's hope not.</p>
+<p>The current server time is <strong><?php echo $this->formatDateTime($server->getServerTime('Y-m-d H:i:s')) ?></strong>.</p>
 <table class="woe-table">
 	<tr>
 		<th>Servers</th>

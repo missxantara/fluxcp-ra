@@ -88,14 +88,32 @@ if (count($_POST) && $account) {
 		}
 	}
 	elseif ($params->get('unban')) {
+		$tbl = Flux::config('FluxTables.AccountCreateTable');
+		$sql = "SELECT account_id FROM {$server->loginDatabase}.$tbl WHERE confirmed = 0 AND account_id = ?";
+		$sth = $server->connection->getStatement($sql);
+		
+		$sth->execute(array($account->account_id));
+		$confirm = $sth->fetch();
+		
+		$sql = "UPDATE {$server->loginDatabase}.$tbl SET confirmed = 1, confirm_expire = NULL WHERE account_id = ?";
+		$sth = $server->connection->getStatement($sql);
+		
 		if ($tempBanned && $auth->allowedToTempUnbanAccount &&
 				$server->loginServer->unban($session->account->account_id, $reason, $account->account_id)) {
+					
+			if ($confirm) {
+				$sth->execute(array($account->account_id));
+			}
 					
 			$session->setMessageData('Account has been unbanned.');
 			$this->redirect($this->url('account', 'view', array('id' => $account->account_id)));
 		}
 		elseif ($permBanned && $auth->allowedToPermUnbanAccount &&
 				$server->loginServer->unban($session->account->account_id, $reason, $account->account_id)) {
+					
+			if ($confirm) {
+				$sth->execute(array($account->account_id));
+			}
 					
 			$session->setMessageData('Account has been unbanned.');
 			$this->redirect($this->url('account', 'view', array('id' => $account->account_id)));
@@ -115,7 +133,7 @@ $characters = array();
 foreach ($session->getAthenaServerNames() as $serverName) {
 	$athena = $session->getAthenaServer($serverName);
 	
-	$sql  = "SELECT ch.*, guild.name AS guild_name ";
+	$sql  = "SELECT ch.*, guild.name AS guild_name, guild.emblem_len AS guild_emblem_len ";
 	$sql .= "FROM {$athena->charMapDatabase}.`char` AS ch ";
 	$sql .= "LEFT OUTER JOIN guild ON guild.guild_id = ch.guild_id ";
 	$sql .= "WHERE ch.account_id = ? ORDER BY ch.char_num ASC";

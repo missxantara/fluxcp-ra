@@ -8,5 +8,7 @@ class Flux_LoginError extends Flux_Error {
 	const BANNED         = 3;
 	const PERMABANNED    = 4;
 	const IPBANNED       = 5;
+	const INVALID_SECURITY_CODE = 6;
+	const PENDING_CONFIRMATION  = 7;
 }
 ?>

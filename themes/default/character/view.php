@@ -18,8 +18,8 @@ if (($isMine || $auth->allowedToResetPosition) && $auth->actionAllowed('characte
 		onclick="return confirm(\'Are you sure you want to reset position?\')">Reset Position</a>', $this->url('character', 'resetpos', array('id' => $char->char_id)));
 }
 ?>
-<h3>Character Information for “<?php echo htmlspecialchars($char->char_name) ?>”</h3>
-<p class="action"><?php echo implode(' • ', $actions) ?></p>
+<h3>Character Information for <?php echo htmlspecialchars($char->char_name) ?></h3>
+<p class="action"><?php echo implode(' / ', $actions) ?></p>
 <table class="vertical-table">
 	<tr>
 		<th>Character ID</th>
@@ -54,7 +54,7 @@ if (($isMine || $auth->allowedToResetPosition) && $auth->actionAllowed('characte
 				<?php if ($auth->allowedToViewCharacter): ?>
 					<?php echo $this->linkToCharacter($char->partner_id, $char->partner_name) ?>
 				<?php else: ?>
-					<?php echo htmlspecialchars($char->parter_name) ?>
+					<?php echo htmlspecialchars($char->partner_name) ?>
 				<?php endif ?>
 			<?php else: ?>
 				<span class="not-applicable">None</span>
@@ -126,8 +126,10 @@ if (($isMine || $auth->allowedToResetPosition) && $auth->actionAllowed('characte
 	<tr>
 		<th>Guild Name</th>
 			<?php if ($char->guild_name): ?>
+				<?php if ($char->guild_emblem_len): ?>
 				<td><img src="<?php echo $this->emblem($char->guild_id) ?>" /></td>
-				<td>
+				<?php endif ?>
+				<td<?php if (!$char->guild_emblem_len) echo ' colspan="2"' ?>>
 					<?php if ($auth->allowedToViewGuild): ?>
 						<?php echo $this->linkToGuild($char->guild_id, $char->guild_name) ?>
 					<?php else: ?>
@@ -135,7 +137,7 @@ if (($isMine || $auth->allowedToResetPosition) && $auth->actionAllowed('characte
 					<?php endif ?>
 				</td>
 			<?php else: ?>	
-				<td colspan="2" align="center"><span class="not-applicable">None</span></td>
+				<td colspan="2"><span class="not-applicable">None</span></td>
 			<?php endif ?>
 		<th>Guild Position</th>
 		<td>
@@ -225,7 +227,7 @@ if (($isMine || $auth->allowedToResetPosition) && $auth->actionAllowed('characte
 	</tr>
 </table>
 <?php if ($char->party_name): ?>
-<h3>Other Party Members of “<?php echo htmlspecialchars($char->party_name) ?>”</h3>
+<h3>Other Party Members of <?php echo htmlspecialchars($char->party_name) ?></h3>
 	<?php if ($partyMembers): ?>
 		<p><?php echo htmlspecialchars($char->party_name) ?> has <?php echo count($partyMembers) ?> other party member(s) besides <?php echo htmlspecialchars($char->char_name) ?>.</p>
 		<table class="vertical-table">
@@ -281,7 +283,7 @@ if (($isMine || $auth->allowedToResetPosition) && $auth->actionAllowed('characte
 		<p>There are no other members in this party.</p>
 	<?php endif ?>
 <?php endif ?>
-<h3>Friends of “<?php echo htmlspecialchars($char->char_name) ?>”</h3>
+<h3>Friends of <?php echo htmlspecialchars($char->char_name) ?></h3>
 <?php if ($friends): ?>
 	<p><?php echo htmlspecialchars($char->char_name) ?> has <?php echo count($friends) ?> friend(s).</p>
 	<table class="vertical-table">
@@ -312,8 +314,10 @@ if (($isMine || $auth->allowedToResetPosition) && $auth->actionAllowed('characte
 			<td><?php echo number_format((int)$friend->base_level) ?></td>
 			<td><?php echo number_format((int)$friend->job_level) ?></td>
 			<?php if ($friend->guild_name): ?>
+				<?php if ($friend->guild_emblem_len): ?>
 				<td><img src="<?php echo $this->emblem($friend->guild_id) ?>" /></td>
-				<td>
+				<?php endif ?>
+				<td<?php if (!$friend->guild_emblem_len) echo ' colspan="2"' ?>>
 					<?php if ($auth->allowedToViewGuild): ?>
 						<?php echo $this->linkToGuild($friend->guild_id, $friend->guild_name) ?>
 					<?php else: ?>
@@ -321,7 +325,7 @@ if (($isMine || $auth->allowedToResetPosition) && $auth->actionAllowed('characte
 					<?php endif ?>
 				</td>
 			<?php else: ?>	
-				<td colspan="2" align="center"><span class="not-applicable">None</span></td>
+				<td colspan="2"><span class="not-applicable">None</span></td>
 			<?php endif ?>
 			<td>
 				<?php if ($friend->online): ?>
@@ -337,13 +341,13 @@ if (($isMine || $auth->allowedToResetPosition) && $auth->actionAllowed('characte
 	<p><?php echo htmlspecialchars($char->char_name) ?> has no friends.</p>
 <?php endif ?>
 
-<h3>Inventory Items of “<?php echo htmlspecialchars($char->char_name) ?>”</h3>
+<h3>Inventory Items of <?php echo htmlspecialchars($char->char_name) ?></h3>
 <?php if ($items): ?>
 	<p><?php echo htmlspecialchars($char->char_name) ?> has <?php echo count($items) ?> inventory item(s).</p>
 	<table class="vertical-table">
 		<tr>
 			<th>Item ID</th>
-			<th>Name</th>
+			<th colspan="2">Name</th>
 			<th>Amount</th>
 			<th>Identified</th>
 			<th>Refine Level</th>
@@ -355,9 +359,13 @@ if (($isMine || $auth->allowedToResetPosition) && $auth->actionAllowed('characte
 			</th>
 		</tr>
 		<?php foreach ($items AS $item): ?>
+		<?php $icon = $this->iconImage($item->nameid) ?>
 		<tr>
 			<td align="right"><?php echo $this->linkToItem($item->nameid, $item->nameid) ?></td>
-			<td>
+			<?php if ($icon): ?>
+			<td><img src="<?php echo htmlspecialchars($icon) ?>" /></td>
+			<?php endif ?>
+			<td<?php if (!$icon) echo ' colspan="2"' ?>>
 				<?php if ($item->name_japanese): ?>
 					<span class="item_name"><?php echo htmlspecialchars($item->name_japanese) ?></span>
 				<?php else: ?>
@@ -431,13 +439,13 @@ if (($isMine || $auth->allowedToResetPosition) && $auth->actionAllowed('characte
 	<p>There are no inventory items on this character.</p>
 <?php endif ?>
 
-<h3>Cart Inventory Items of “<?php echo htmlspecialchars($char->char_name) ?>”</h3>
+<h3>Cart Inventory Items of <?php echo htmlspecialchars($char->char_name) ?></h3>
 <?php if ($cart_items): ?>
 	<p><?php echo htmlspecialchars($char->char_name) ?> has <?php echo count($cart_items) ?> cart inventory item(s).</p>
 	<table class="vertical-table">
 		<tr>
 			<th>Item ID</th>
-			<th>Name</th>
+			<th colspan="2">Name</th>
 			<th>Amount</th>
 			<th>Identified</th>
 			<th>Refine Level</th>
@@ -449,9 +457,13 @@ if (($isMine || $auth->allowedToResetPosition) && $auth->actionAllowed('characte
 			</th>
 		</tr>
 		<?php foreach ($cart_items AS $cart_item): ?>
+		<?php $icon = $this->iconImage($cart_item->nameid) ?>
 		<tr>
 			<td align="right"><?php echo $this->linkToItem($cart_item->nameid, $cart_item->nameid) ?></td>
-			<td>
+			<?php if ($icon): ?>
+			<td><img src="<?php echo htmlspecialchars($icon) ?>" /></td>
+			<?php endif ?>
+			<td<?php if (!$icon) echo ' colspan="2"' ?>>
 				<?php if ($cart_item->name_japanese): ?>
 					<span class="item_name"><?php echo htmlspecialchars($cart_item->name_japanese) ?></span>
 				<?php else: ?>

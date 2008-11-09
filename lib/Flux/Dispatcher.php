@@ -127,7 +127,7 @@ class Flux_Dispatcher {
 		$auth = Flux_Authorization::getInstance();
 		if ($auth->actionAllowed($moduleName, $actionName) === false) {
 			if (!Flux::$sessionData->isLoggedIn()) {
-				Flux::$sessionData->setMessageData('Please login to continue.');
+				Flux::$sessionData->setMessageData('Please log-in to continue.');
 				$this->loginRequired($baseURI);
 			}
 			else {

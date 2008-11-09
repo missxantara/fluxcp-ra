@@ -11,7 +11,12 @@
 <?php endif ?>
 
 <?php if ($hasNecessaryFunds): ?>
+<?php if (empty($errorMessage)): ?>
+<p><strong>Note:</strong> You cannot change gender if you have the follow character jobs: <em><?php echo implode(', ', $badJobs) ?>.</em></p>
 <h3>Please make sure you want to really change!</h3>
+<?php else: ?>
+<p class="red"><?php echo htmlspecialchars($errorMessage) ?></p>
+<?php endif ?>
 <form action="<?php echo $this->urlWithQs ?>" method="post" class="generic-form">
 	<input type="hidden" name="changegender" value="1" />
 	<table class="generic-form-table">

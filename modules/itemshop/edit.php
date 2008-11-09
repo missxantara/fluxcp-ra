@@ -31,12 +31,13 @@ if ($item) {
 	}
 	
 	if (count($_POST)) {
-		$maxCost  = (int)Flux::config('ItemShopMaxCost');
-		$maxQty   = (int)Flux::config('ItemShopMaxQuantity');
-		$cost     = (int)$params->get('cost');
-		$quantity = (int)$params->get('qty');
-		$info     = trim($params->get('info'));
-		$image    = $files->get('image');
+		$maxCost     = (int)Flux::config('ItemShopMaxCost');
+		$maxQty      = (int)Flux::config('ItemShopMaxQuantity');
+		$cost        = (int)$params->get('cost');
+		$quantity    = (int)$params->get('qty');
+		$info        = trim($params->get('info'));
+		$image       = $files->get('image');
+		$useExisting = (int)$params->get('use_existing');
 
 		if (!$cost) {
 			$errorMessage = 'You must input a credit cost greater than zero.';
@@ -57,7 +58,7 @@ if ($item) {
 			$errorMessage = 'You must input at least some info text.';
 		}
 		else {
-			if ($shop->edit($shopItemID, $cost, $quantity, $info)) {
+			if ($shop->edit($shopItemID, $cost, $quantity, $info, $useExisting)) {
 				if ($image && $image->get('size') && !$shop->uploadShopItemImage($shopItemID, $image)) {
 					$errorMessage = 'Failed to upload image.';
 				}

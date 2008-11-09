@@ -223,26 +223,54 @@ class Flux_Template {
 	 * Render a template, but before doing so, call the action file and render
 	 * the header->view->footer in that order.
 	 *
-	 * @param arary $dataArr Key=>value pairs of variables to be exposed to the template as globals.
+	 * @param array $dataArr Key=>value pairs of variables to be exposed to the template as globals.
 	 * @access public
 	 */
 	public function render(array $dataArr = array())
 	{
-		$this->actionPath = sprintf('%s/%s/%s.php', $this->modulePath, $this->moduleName, $this->actionName);
-		if (!file_exists($this->actionPath)) {
-			$this->moduleName = $this->missingActionModuleAction[0];
-			$this->actionName = $this->missingActionModuleAction[1];
-			$this->viewName   = $this->missingActionModuleAction[1];
-			$this->actionPath = sprintf('%s/%s/%s.php', $this->modulePath, $this->moduleName, $this->actionName);
+		// GZip compression.
+		if (Flux::config('GzipCompressOutput')) {
+			header('Accept-Encoding: gzip');
+			ini_set('zlib.output_handler', '');
+			ini_set('zlib.output_compression', 'On');
+			ini_set('zlib.output_compression_level', (int)Flux::config('GzipCompressionLevel'));
 		}
 		
+		$addon = false;
+		$this->actionPath = sprintf('%s/%s/%s.php', $this->modulePath, $this->moduleName, $this->actionName);
+		
+		if (!file_exists($this->actionPath)) {
+			foreach (Flux::$addons as $_tmpAddon) {
+				if ($_tmpAddon->respondsTo($this->moduleName, $this->actionName)) {
+					$addon = $_tmpAddon;
+					$this->actionPath = sprintf('%s/%s/%s.php', $addon->moduleDir, $this->moduleName, $this->actionName);
+				}
+			}
+			
+			if (!$addon) {
+				$this->moduleName = $this->missingActionModuleAction[0];
+				$this->actionName = $this->missingActionModuleAction[1];
+				$this->viewName   = $this->missingActionModuleAction[1];
+				$this->actionPath = sprintf('%s/%s/%s.php', $this->modulePath, $this->moduleName, $this->actionName);
+			}
+		}
+		
+		$viewExists = false;
 		$this->viewPath = sprintf('%s/%s/%s.php', $this->themePath, $this->moduleName, $this->actionName);
+		
 		if (!file_exists($this->viewPath)) {
-			$this->moduleName = $this->missingViewModuleAction[0];
-			$this->actionName = $this->missingViewModuleAction[1];
-			$this->viewName   = $this->missingViewModuleAction[1];
-			$this->actionPath = sprintf('%s/%s/%s.php', $this->modulePath, $this->moduleName, $this->actionName);
-			$this->viewPath   = sprintf('%s/%s/%s.php', $this->themePath, $this->moduleName, $this->viewName);
+			if ($addon) {
+				$this->viewPath = sprintf('%s/%s/%s.php', $addon->themeDir, $this->moduleName, $this->actionName);
+				$viewExists = $addon->hasView($this->moduleName, $this->actionName);
+			}
+			
+			if (!$viewExists) {
+				$this->moduleName = $this->missingViewModuleAction[0];
+				$this->actionName = $this->missingViewModuleAction[1];
+				$this->viewName   = $this->missingViewModuleAction[1];
+				$this->actionPath = sprintf('%s/%s/%s.php', $this->modulePath, $this->moduleName, $this->actionName);
+				$this->viewPath   = sprintf('%s/%s/%s.php', $this->themePath, $this->moduleName, $this->viewName);
+			}
 		}
 		
 		$this->headerPath = sprintf('%s/%s.php', $this->themePath, $this->headerName);
@@ -493,6 +521,12 @@ class Flux_Template {
 			if ($_host && ($addr=Flux::config('ServerAddress'))) {
 				if (array_key_exists('_https', $params)) {
 					$_https = $params['_https'];
+				}
+				elseif (!empty($_SERVER['HTTPS'])) {
+					$_https = true;
+				}
+				else {
+					$_https = false;
 				}
 
 				$serverProtocol = $_https ? 'https://' : 'http://';
@@ -1157,7 +1191,7 @@ class Flux_Template {
 			$files = preg_grep("/\.($exts)$/", $imgs);
 		}
 		else {
-			$files = arary();
+			$files = array();
 		}
 		
 		if (empty($files)) {
@@ -1169,5 +1203,40 @@ class Flux_Template {
 			return preg_replace('&/{2,}&', '/', "{$this->basePath}/$imageFile");
 		}
 	}
+	
+	/**
+	 *
+	 */
+	public function iconImage($itemID)
+	{
+		$path = sprintf(FLUX_DATA_DIR."/items/icons/".Flux::config('ItemIconNameFormat'), $itemID);
+		$link = preg_replace('&/{2,}&', '/', "{$this->basePath}/$path");
+		return file_exists($path) ? $link : false;
+	}
+	
+	/**
+	 *
+	 */
+	public function itemImage($itemID)
+	{
+		$path = sprintf(FLUX_DATA_DIR."/items/images/".Flux::config('ItemImageNameFormat'), $itemID);
+		$link = preg_replace('&/{2,}&', '/', "{$this->basePath}/$path");
+		return file_exists($path) ? $link : false;
+	}
+	
+	/**
+	 *
+	 */
+	public function monsterMode($mode)
+	{
+		$modes = Flux::monsterModeToArray($mode);
+		$array = array();
+		foreach (Flux::config('MonsterModes')->toArray() as $bit => $name) {
+			if (in_array($bit, $modes)) {
+				$array[] = $name;
+			}
+		}
+		return $array;
+ 	}
 }
 ?>

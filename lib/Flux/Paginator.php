@@ -120,7 +120,7 @@ class Flux_Paginator {
 		$this->pagesToShow    = $options['pagesToShow'];
 		$this->pageVariable   = $options['pageVariable'];
 		$this->pageSeparator  = $options['pageSeparator'];
-		$this->currentPage    = isset($_GET[$this->pageVariable]) ? $_GET[$this->pageVariable] : 1;
+		$this->currentPage    = isset($_GET[$this->pageVariable]) && $_GET[$this->pageVariable] ? $_GET[$this->pageVariable] : 1;
 		
 		$this->calculatePages();
 	}
@@ -240,14 +240,25 @@ class Flux_Paginator {
 		}
 		
 		if ($hasPrev) {
-			array_unshift($pages, sprintf('<a href="%s" title="Previous Pane (#%d)" class="page-prev">&laquo; Prev.</a> ', $this->getPageURI($start - 1), $start - 1));
+			array_unshift($pages, sprintf('<a href="%s" title="Previous Pane (#%d)" class="page-prev">Prev.</a> ', $this->getPageURI($start - 1), $start - 1));
 		}
 		
 		if ($hasNext) {
-			array_push($pages, sprintf(' <a href="%s" title="Next Pane (#%d)" class="page-next">Next &raquo;</a>', $this->getPageURI($end), $end));
+			array_push($pages, sprintf(' <a href="%s" title="Next Pane (#%d)" class="page-next">Next</a>', $this->getPageURI($end), $end));
 		}
 		
-		$links = sprintf('<div class="pages">%s</div>', implode(" {$this->pageSeparator} ", $pages));
+		$links  = sprintf('<div class="pages">%s</div>', implode(" {$this->pageSeparator} ", $pages))."\n";
+		
+		if (Flux::config('ShowPageJump') && $this->numberOfPages > Flux::config('PageJumpMinimumPages')) {
+			// This is some tricky shit.  Don't even attempt to understand it =(
+			// Page jumping is entirely JavaScript dependent.
+			$pageVar = preg_quote($this->pageVariable);
+			$event   = "location.href='".$this->getPageURI(0)."'";
+			$event   = preg_replace("/$pageVar=0/", "{$this->pageVariable}='+this.value+'", $event);
+			$jump    = '<label>Page Jump: <input type="text" name="jump_to_page" id="jump_to_page" size="4" onkeypress="if (event.keyCode == 13) { %s }" /></label>';
+			$jump    = sprintf($jump, $event);
+			$links  .= sprintf('<div class="jump-to-page">%s</div>', $jump);
+		}
 		
 		if (!$this->showSinglePage && $this->numberOfPages === 1) {
 			return null;
@@ -395,9 +406,10 @@ class Flux_Paginator {
 	public function infoText()
 	{
 		$currPage = $this->currentPage;
+		$results  = Flux::config('ResultsPerPage');
 		$infoText = sprintf(
 			Flux::message('FoundSearchResults'),
-			$this->total, $this->numberOfPages, ($currPage*20-19), $currPage * 20 < $this->total ? ($currPage*20) : ($this->total)
+			$this->total, $this->numberOfPages, ($currPage*$results-($results - 1)), $currPage * $results < $this->total ? ($currPage*$results) : ($this->total)
 		);
 		return sprintf('<p class="info-text">%s</p>', $infoText);
 	}

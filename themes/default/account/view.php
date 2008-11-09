@@ -128,7 +128,7 @@
 </table>
 
 <?php if ($auth->allowedToViewAccountBanLog && $banInfo): ?>
-<h3>Ban Log for “<?php echo htmlspecialchars($account->userid) ?>” (recent to oldest)</h3>
+<h3>Ban Log for <?php echo htmlspecialchars($account->userid) ?> (recent to oldest)</h3>
 <table class="vertical-table">
 	<tr>
 		<th>Ban Type</th>
@@ -189,8 +189,10 @@
 			<td><?php echo (int)$char->job_level ?></td>
 			<td><?php echo number_format((int)$char->zeny) ?></td>
 			<?php if ($char->guild_name): ?>
+				<?php if ($char->guild_emblem_len): ?>
 				<td><img src="<?php echo $this->emblem($char->guild_id) ?>" /></td>
-				<td>
+				<?php endif ?>
+				<td<?php if (!$char->guild_emblem_len) echo ' colspan="2"' ?>>
 					<?php if ($auth->actionAllowed('guild', 'view') && $auth->allowedToViewGuild): ?>
 						<?php echo $this->linkToGuild($char->guild_id, $char->guild_name) ?>
 					<?php else: ?>
@@ -224,13 +226,13 @@
 	<?php endif ?>
 <?php endforeach ?>
 
-<h3>Storage Items of “<?php echo htmlspecialchars($account->userid) ?>”</h3>
+<h3>Storage Items of <?php echo htmlspecialchars($account->userid) ?></h3>
 <?php if ($items): ?>
 	<p><?php echo htmlspecialchars($account->userid) ?> has <?php echo count($items) ?> storage item(s).</p>
 	<table class="vertical-table">
 		<tr>
 			<th>Item ID</th>
-			<th>Name</th>
+			<th colspan="2">Name</th>
 			<th>Amount</th>
 			<th>Identified</th>
 			<th>Refine Level</th>
@@ -242,6 +244,7 @@
 			</th>
 		</tr>
 		<?php foreach ($items AS $item): ?>
+		<?php $icon = $this->iconImage($item->nameid) ?>
 		<tr>
 			<td align="right">
 				<?php if ($auth->actionAllowed('item', 'view')): ?>
@@ -250,7 +253,10 @@
 					<?php echo htmlspecialchars($item->nameid) ?>
 				<?php endif ?>
 			</td>
-			<td>
+			<?php if ($icon): ?>
+			<td><img src="<?php echo htmlspecialchars($icon) ?>" /></td>
+			<?php endif ?>
+			<td<?php if (!$icon) echo ' colspan="2"' ?>>
 				<?php if ($item->name_japanese): ?>
 					<span class="item_name"><?php echo htmlspecialchars($item->name_japanese) ?></span>
 				<?php else: ?>

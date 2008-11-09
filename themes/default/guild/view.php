@@ -18,9 +18,9 @@
 		<th>Leader Name</th>
 		<td>
 			<?php if ($auth->allowedToViewCharacter): ?>
-				<?php echo $this->linkToCharacter($guild->char_id, $guild->master) ?>
+				<?php echo $this->linkToCharacter($guild->char_id, $guild->guild_master) ?>
 			<?php else: ?>
-				<?php echo htmlspecialchars($guild->master) ?>
+				<?php echo htmlspecialchars($guild->guild_master) ?>
 			<?php endif ?>
 		</td>
 		<th>Guild Level</th>
@@ -124,7 +124,7 @@
 			<th>Position ID</th>
 			<th>Position Name</th>
 			<th>Guild Rights</th>
-			<th>Tax Level</th>
+			<th>Tax</th>
 		</tr>
 		<?php foreach ($members AS $member): ?>
 		<tr>
@@ -199,7 +199,7 @@
 	<table class="vertical-table">
 		<tr>
 			<th>Item ID</th>
-			<th>Name</th>
+			<th colspan="2">Name</th>
 			<th>Amount</th>
 			<th>Identified</th>
 			<th>Refine Level</th>
@@ -211,9 +211,13 @@
 			</th>
 		</tr>
 		<?php foreach ($items AS $item): ?>
+		<?php $icon = $this->iconImage($item->nameid) ?>
 		<tr>
 			<td align="right"><?php echo $this->linkToItem($item->nameid, $item->nameid) ?></td>
-			<td>
+			<?php if ($icon): ?>
+			<td><img src="<?php echo htmlspecialchars($icon) ?>" /></td>
+			<?php endif ?>
+			<td<?php if (!$icon) echo ' colspan="2"' ?>>
 				<?php if ($item->name_japanese): ?>
 					<span class="item_name"><?php echo htmlspecialchars($item->name_japanese) ?></span>
 				<?php else: ?>

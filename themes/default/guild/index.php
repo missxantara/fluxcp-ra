@@ -1,18 +1,18 @@
 <?php if (!defined('FLUX_ROOT')) exit; ?>
 <h2>Guilds</h2>
+<p class="toggler"><a href="javascript:toggleSearchForm()">Search...</a></p>
 <form action="<?php echo $this->url ?>" method="get" class="search-form">
 	<?php echo $this->moduleActionFormInputs($params->get('module')) ?>
-	<p>Search for guilds(s):</p>
 	<p>
 		<label for="id">Guild ID:</label>
 		<input type="text" name="id" id="id" value="<?php echo htmlspecialchars($params->get('id')) ?>" />
-		…
+		...
 		<label for="guild_name">Guild Name:</label>
 		<input type="text" name="guild_name" id="guild_name" value="<?php echo htmlspecialchars($params->get('guild_name')) ?>" />
-		…
+		...
 		<label for="char_id">Leader ID:</label>
 		<input type="text" name="char_id" id="char_id" value="<?php echo htmlspecialchars($params->get('char_id')) ?>" />
-		…
+		...
 		<label for="master">Leader Name:</label>
 		<input type="text" name="master" id="master" value="<?php echo htmlspecialchars($params->get('master')) ?>" />
 	</p>
@@ -24,7 +24,7 @@
 			<option value="lt"<?php if ($guild_level_op == 'lt') echo ' selected="selected"' ?>>is less than</option>
 		</select>
 		<input type="text" name="guild_level" id="guild_level" value="<?php echo htmlspecialchars($params->get('guild_level')) ?>" />
-		…
+		...
 		<label for="connect_member">Online Members:</label>
 		<select name="connect_member_op">
 			<option value="eq"<?php if (($connect_member_op=$params->get('connect_member_op')) == 'eq') echo ' selected="selected"' ?>>is equal to</option>
@@ -32,7 +32,7 @@
 			<option value="lt"<?php if ($connect_member_op == 'lt') echo ' selected="selected"' ?>>is less than</option>
 		</select>
 		<input type="text" name="connect_member" id="connect_member" value="<?php echo htmlspecialchars($params->get('connect_member')) ?>" />
-		…
+		...
 		<label for="max_member">Capacity:</label>
 		<select name="max_member_op">
 			<option value="eq"<?php if (($max_member_op=$params->get('max_member_op')) == 'eq') echo ' selected="selected"' ?>>is equal to</option>
@@ -56,7 +56,7 @@
 </form>
 <?php if ($guilds): ?>
 <?php echo $paginator->infoText() ?>
-<table class="vertical-table">
+<table class="horizontal-table">
 	<tr>
 		<th><?php echo $paginator->sortableColumn('guild.guild_id', 'Guild ID') ?></th>
 		<th colspan="2"><?php echo $paginator->sortableColumn('guildName', 'Guild Name') ?></th>
@@ -76,8 +76,12 @@
 				<?php echo htmlspecialchars($guild->guild_id) ?>
 			<?php endif ?>
 		</td>
+		<?php if ($guild->emblem_len): ?>
 		<td><img src="<?php echo $this->emblem($guild->guild_id) ?>" /></td>
 		<td><?php echo htmlspecialchars($guild->guildName) ?></td>
+		<?php else: ?>
+		<td colspan="2"><?php echo htmlspecialchars($guild->guildName) ?></td>
+		<?php endif ?>
 		<td>
 			<?php if ($auth->allowedToViewCharacter): ?>
 				<?php echo $this->linkToCharacter($guild->charID, $guild->charID) ?>

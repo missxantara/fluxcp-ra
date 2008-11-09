@@ -37,6 +37,14 @@ class Flux_LoginAthenaGroup {
 	public $loginDatabase;
 	
 	/**
+	 * Logs database.
+	 *
+	 * @access public
+	 * @var string
+	 */
+	public $logsDatabase;
+	
+	/**
 	 * Array of Flux_Athena instances.
 	 *
 	 * @access public
@@ -55,6 +63,7 @@ class Flux_LoginAthenaGroup {
 		$this->connection    = $connection;
 		$this->loginServer   = $loginServer;
 		$this->loginDatabase = $loginServer->config->getDatabase();
+		$this->logsDatabase  = $connection->logsDbConfig->getDatabase();
 		
 		// Assign connection to LoginServer, used mainly to enable
 		// authentication feature.

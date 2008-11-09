@@ -26,7 +26,7 @@ $col .= "partner.name AS partner_name, partner.char_id AS partner_id, ";
 $col .= "mother.name AS mother_name, mother.char_id AS mother_id, ";
 $col .= "father.name AS father_name, father.char_id AS father_id, ";
 $col .= "child.name AS child_name, child.char_id AS child_id, ";
-$col .= "guild.guild_id, guild.name AS guild_name, ";
+$col .= "guild.guild_id, guild.name AS guild_name, guild.emblem_len AS guild_emblem_len, ";
 $col .= "guild_position.name AS guild_position, guild_position.exp_mode AS guild_tax, ";
 $col .= "party.name AS party_name, party.leader_char AS party_leader_id, party_leader.name AS party_leader_name, ";
 
@@ -39,7 +39,7 @@ $col .= "homun.skill_point AS homun_skill_point, homun.alive AS homun_alive, ";
 $col .= "pet.class AS pet_class, pet.name AS pet_name, pet.level AS pet_level, pet.intimate AS pet_intimacy, ";
 $col .= "pet.hungry AS pet_hungry, pet_mob.kName AS pet_mob_name, ";
 
-$col .= "SUM(reg.value) AS death_count";
+$col .= "IFNULL(reg.value, 0) AS death_count";
 
 $sql  = "SELECT $col FROM {$server->charMapDatabase}.`char` AS ch ";
 $sql .= "LEFT OUTER JOIN {$server->loginDatabase}.login ON login.account_id = ch.account_id ";
@@ -56,8 +56,8 @@ $sql .= "LEFT OUTER JOIN {$server->charMapDatabase}.`char` AS party_leader ON pa
 $sql .= "LEFT OUTER JOIN {$server->charMapDatabase}.`homunculus` AS homun ON ch.homun_id = homun.homun_id ";
 $sql .= "LEFT OUTER JOIN {$server->charMapDatabase}.`pet` ON ch.pet_id = pet.pet_id ";
 $sql .= "LEFT OUTER JOIN {$server->charMapDatabase}.`mob_db` AS pet_mob ON pet_mob.ID = pet.class ";
-$sql .= "LEFT OUTER JOIN (SELECT value, char_id FROM {$server->charMapDatabase}.`global_reg_value` WHERE str = 'PC_DIE_COUNTER') AS reg ON reg.char_id = ch.char_id ";
-$sql .= "WHERE ch.char_id = ? GROUP BY ch.char_id";
+$sql .= "LEFT OUTER JOIN {$server->charMapDatabase}.`global_reg_value` AS reg ON reg.char_id = ch.char_id AND reg.str = 'PC_DIE_COUNTER' ";
+$sql .= "WHERE ch.char_id = ?";
 
 $sth  = $server->connection->getStatement($sql);
 $sth->execute(array($charID));
@@ -79,7 +79,7 @@ if ($char) {
 	$title = "Viewing Character ({$char->char_name})";
 	
 	$sql  = "SELECT fr.char_id, fr.name, fr.class, fr.base_level, fr.job_level, ";
-	$sql .= "guild.guild_id, guild.name AS guild_name, fr.online ";
+	$sql .= "guild.guild_id, guild.name AS guild_name, guild.emblem_len AS guild_emblem_len, fr.online ";
 	$sql .= "FROM {$server->charMapDatabase}.`char` AS fr ";
 	$sql .= "LEFT OUTER JOIN guild ON guild.guild_id = fr.guild_id ";
 	$sql .= "LEFT OUTER JOIN friends ON friends.friend_id = fr.char_id ";

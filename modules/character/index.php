@@ -13,11 +13,12 @@ $sqlpartial .= "LEFT OUTER JOIN {$server->charMapDatabase}.`char` AS partner ON 
 $sqlpartial .= "LEFT OUTER JOIN {$server->charMapDatabase}.`char` AS mother ON mother.char_id = ch.mother ";
 $sqlpartial .= "LEFT OUTER JOIN {$server->charMapDatabase}.`char` AS father ON father.char_id = ch.father ";
 $sqlpartial .= "LEFT OUTER JOIN {$server->charMapDatabase}.`char` AS child ON child.char_id = ch.child ";
-$sqlpartial .= "WHERE 1=1 ";
+$sqlwhere    = "WHERE 1=1 ";
+$sqlcount    = '';
 
 $charID = $params->get('char_id');
 if ($charID) {
-	$sqlpartial .= "AND ch.char_id = ? ";
+	$sqlwhere   .= "AND ch.char_id = ? ";
 	$bind[]      = $charID;
 }
 else {
@@ -42,19 +43,20 @@ else {
 	$slot        = $params->get('slot');
 	
 	if ($account) {
+		$sqlcount .= "LEFT OUTER JOIN {$server->loginDatabase}.login ON login.account_id = ch.account_id ";
 		if (preg_match('/^\d+$/', $account)) {
-			$sqlpartial .= "AND login.account_id = ? ";
+			$sqlwhere   .= "AND login.account_id = ? ";
 			$bind[]      = $account;
 		}
 		else {
-			$sqlpartial .= "AND (login.userid LIKE ? OR login.userid = ?) ";
+			$sqlwhere   .= "AND (login.userid LIKE ? OR login.userid = ?) ";
 			$bind[]      = "%$account%";
 			$bind[]      = $account;
 		}
 	}
 	
 	if ($charName) {
-		$sqlpartial .= "AND (ch.name LIKE ? OR ch.name = ?) ";
+		$sqlwhere   .= "AND (ch.name LIKE ? OR ch.name = ?) ";
 		$bind[]      = "%$charName%";
 		$bind[]      = $charName;
 	}
@@ -65,7 +67,7 @@ else {
 		
 		if (count($classIDs)) {
 			$classIDs    = array_keys($classIDs);
-			$sqlpartial .= "AND (";
+			$sqlwhere   .= "AND (";
 			$partial     = '';
 			
 			foreach ($classIDs as $id) {
@@ -74,78 +76,84 @@ else {
 			}
 			
 			$partial     = preg_replace('/\s*OR\s*$/', '', $partial);
-			$sqlpartial .= "$partial) ";
+			$sqlwhere   .= "$partial) ";
 		}
 		else {
-			$sqlpartial .= 'AND ch.class IS NULL ';
+			$sqlwhere .= 'AND ch.class IS NULL ';
 		}
 	}
 	
 	if (in_array($baseLevelOp, $opValues) && trim($baseLevel) != '') {
 		$op          = $opMapping[$baseLevelOp];
-		$sqlpartial .= "AND ch.base_level $op ? ";
+		$sqlwhere   .= "AND ch.base_level $op ? ";
 		$bind[]      = $baseLevel;
 	}
 	
 	if (in_array($jobLevelOp, $opValues) && trim($jobLevel) != '') {
 		$op          = $opMapping[$jobLevelOp];
-		$sqlpartial .= "AND ch.job_level $op ? ";
+		$sqlwhere   .= "AND ch.job_level $op ? ";
 		$bind[]      = $jobLevel;
 	}
 	
 	if (in_array($zenyOp, $opValues) && trim($zeny) != '') {
 		$op          = $opMapping[$zenyOp];
-		$sqlpartial .= "AND ch.zeny $op ? ";
+		$sqlwhere   .= "AND ch.zeny $op ? ";
 		$bind[]      = $zeny;
 	}
 	
 	if ($guild) {
-		$sqlpartial .= "AND (guild.name LIKE ? OR guild.name = ?) ";
+		$sqlcount   .= "LEFT OUTER JOIN {$server->charMapDatabase}.guild_member ON guild_member.char_id = ch.char_id ";
+		$sqlcount   .= "LEFT OUTER JOIN {$server->charMapDatabase}.guild ON guild.guild_id = guild_member.guild_id ";
+		$sqlwhere   .= "AND (guild.name LIKE ? OR guild.name = ?) ";
 		$bind[]      = "%$guild%";
 		$bind[]      = $guild;
 	}
 	
 	if ($partner) {
-		$sqlpartial .= "AND (partner.name LIKE ? OR partner.name = ?) ";
+		$sqlcount   .= "LEFT OUTER JOIN {$server->charMapDatabase}.`char` AS partner ON partner.char_id = ch.partner_id ";
+		$sqlwhere   .= "AND (partner.name LIKE ? OR partner.name = ?) ";
 		$bind[]      = "%$partner%";
 		$bind[]      = $partner;
 	}
 	
 	if ($mother) {
-		$sqlpartial .= "AND (mother.name LIKE ? OR mother.name = ?) ";
+		$sqlcount   .= "LEFT OUTER JOIN {$server->charMapDatabase}.`char` AS mother ON mother.char_id = ch.mother ";
+		$sqlwhere   .= "AND (mother.name LIKE ? OR mother.name = ?) ";
 		$bind[]      = "%$mother%";
 		$bind[]      = $mother;
 	}
 	
 	if ($father) {
-		$sqlpartial .= "AND (father.name LIKE ? OR father.name = ?) ";
+		$sqlcount   .= "LEFT OUTER JOIN {$server->charMapDatabase}.`char` AS father ON father.char_id = ch.father ";
+		$sqlwhere   .= "AND (father.name LIKE ? OR father.name = ?) ";
 		$bind[]      = "%$father%";
 		$bind[]      = $father;
 	}
 	
 	if ($child) {
-		$sqlpartial .= "AND (child.name LIKE ? OR child.name = ?) ";
+		$sqlcount   .= "LEFT OUTER JOIN {$server->charMapDatabase}.`char` AS child ON child.char_id = ch.child ";
+		$sqlwhere   .= "AND (child.name LIKE ? OR child.name = ?) ";
 		$bind[]      = "%$child%";
 		$bind[]      = $child;
 	}
 	
 	if ($online == 'on' || $online == 'off') {
 		if ($online == 'on') {
-			$sqlpartial .= "AND ch.online > 0 ";
+			$sqlwhere .= "AND ch.online > 0 ";
 		}
 		else {
-			$sqlpartial .= "AND ch.online < 1 ";
+			$sqlwhere .= "AND ch.online < 1 ";
 		}
 	}
 	
 	if (in_array($slotOp, $opValues) && trim($slot) != '') {
 		$op          = $opMapping[$slotOp];
-		$sqlpartial .= "AND ch.char_num $op ? ";
+		$sqlwhere   .= "AND ch.char_num $op ? ";
 		$bind[]      = $slot - 1;
 	}
 }
 
-$sql  = "SELECT COUNT(ch.char_id) AS total FROM {$server->charMapDatabase}.`char` AS ch $sqlpartial";
+$sql  = "SELECT COUNT(ch.char_id) AS total FROM {$server->charMapDatabase}.`char` AS ch $sqlcount $sqlwhere";
 $sth  = $server->connection->getStatement($sql);
 
 $sth->execute($bind);
@@ -164,7 +172,7 @@ $col .= "mother.name AS mother_name, mother.char_id AS mother_id, ";
 $col .= "father.name AS father_name, father.char_id AS father_id, ";
 $col .= "child.name AS child_name, child.char_id AS child_id";
 
-$sql  = "SELECT $col FROM {$server->charMapDatabase}.`char` AS ch $sqlpartial";
+$sql  = "SELECT $col FROM {$server->charMapDatabase}.`char` AS ch $sqlpartial $sqlwhere";
 $sql  = $paginator->getSQL($sql);
 $sth  = $server->connection->getStatement($sql);
 

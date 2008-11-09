@@ -43,6 +43,7 @@ $markdownURL = 'http://daringfireball.net/projects/markdown/syntax';
 		<th><label for="image">Image</label></th>
 		<td>
 			<input type="file" name="image" id="image" />
+			<label>Attempt to use existing item image? <input type="checkbox" name="use_existing" value="1"<?php if ($params->get('use_existing')) echo ' checked="checked"' ?> /></label>
 		</td>
 	</tr>
 	<tr>

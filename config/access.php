@@ -14,7 +14,8 @@ return array(
 			'notify'   => AccountLevel::ANYONE,
 			'update'   => AccountLevel::ANYONE,
 			'complete' => AccountLevel::ANYONE,
-			'history'  => AccountLevel::NORMAL
+			'history'  => AccountLevel::NORMAL,
+			'trusted'  => AccountLevel::NORMAL
 		),
 		'purchase'  => array(
 			'index'    => AccountLevel::ANYONE,
@@ -28,7 +29,8 @@ return array(
 		'itemshop'  => array(
 			'add'      => AccountLevel::ADMIN,
 			'edit'     => AccountLevel::ADMIN,
-			'delete'   => AccountLevel::ADMIN
+			'delete'   => AccountLevel::ADMIN,
+			'imagedel' => AccountLevel::ADMIN
 		),
 		'account'   => array(
 			'index'    => AccountLevel::LOWGM,
@@ -43,7 +45,11 @@ return array(
 			'edit'       => AccountLevel::ADMIN,
 			'changesex'  => AccountLevel::NORMAL,
 			'confirm'    => AccountLevel::UNAUTH,
-			'resend'     => AccountLevel::UNAUTH
+			'resend'     => AccountLevel::UNAUTH,
+			'resetpass'  => AccountLevel::UNAUTH,
+			'resetpw'    => AccountLevel::UNAUTH,
+			'changemail' => AccountLevel::NORMAL,
+			'confirmemail' => AccountLevel::NORMAL
 		),
 		'character' => array(
 			'index'    => AccountLevel::LOWGM,
@@ -52,7 +58,8 @@ return array(
 			'prefs'    => AccountLevel::NORMAL,
 			'changeslot' => AccountLevel::NORMAL,
 			'resetlook'  => AccountLevel::NORMAL,
-			'resetpos'   => AccountLevel::NORMAL
+			'resetpos'   => AccountLevel::NORMAL,
+			'mapstats'   => AccountLevel::ANYONE
 		),
 		'guild'     => array(
 			'emblem'   => AccountLevel::ANYONE,
@@ -91,7 +98,6 @@ return array(
 		),
 		'logdata'   => array(
 			'index'   => AccountLevel::ADMIN,
-			'paypal'  => AccountLevel::ADMIN,
 			'txnview' => AccountLevel::ADMIN,
 			'char'    => AccountLevel::ADMIN,
 			'inter'   => AccountLevel::ADMIN,
@@ -103,6 +109,14 @@ return array(
 			'npc'     => AccountLevel::ADMIN,
 			'pick'    => AccountLevel::ADMIN,
 			'zeny'    => AccountLevel::ADMIN
+		),
+		'cplog'     => array(
+			'index'   => AccountLevel::ADMIN,
+			'paypal'  => AccountLevel::ADMIN,
+			'login'   => AccountLevel::ADMIN,
+			'resetpass'  => AccountLevel::ADMIN,
+			'changepass' => AccountLevel::ADMIN,
+			'changemail' => AccountLevel::ADMIN
 		),
 		'ipban'     => array(
 			'index'    => AccountLevel::ADMIN,
@@ -158,6 +172,7 @@ return array(
 		'ModifyCharPrefs'    => AccountLevel::ADMIN,  // Ability to modify another person's character preferences.
 		'IgnoreHiddenPref'   => AccountLevel::HELPER, // Ability to see users on "Who's Online" page, hidden or not.
 		'IgnoreHiddenPref2'  => AccountLevel::HELPER, // Ability to see users on "Who's Online" page, hidden by app config or not.
+		'SeeHiddenMapStats'  => AccountLevel::HELPER, // Ability to see hidden map statistics.
 		'ChangeSlot'         => AccountLevel::LOWGM,  // Level required to change another character's slot.
 		'ModifyIpBan'        => AccountLevel::ADMIN,  // Level required to modify an existing IP ban.
 		'HideFromZenyRank'   => AccountLevel::NORMAL, // Ability to set "Hide from zeny ranking" pref.
@@ -166,6 +181,11 @@ return array(
 		'ViewRawTxnLogData'  => AccountLevel::ADMIN,  // Level required to view Raw Transaction Log in txnview page.
 		'ResetLook'          => AccountLevel::LOWGM,  // Level required to reset another character's look.
 		'ResetPosition'      => AccountLevel::LOWGM,  // Level required to reset another character's position.
+		'ViewWoeDisallowed'  => AccountLevel::LOWGM,  // Level required to bypass WoE-disabled page security check.
+		'SeeCpLoginLogPass'  => AccountLevel::ADMIN,  // Level required to see password in CP login log (also requires CpLoginLogShowPassword in application.php)
+		'SearchCpLoginLogPw' => AccountLevel::ADMIN,  // Level required to search through passwords in the CP login log.
+		'SeeCpResetPass'     => AccountLevel::ADMIN,  // Level required to see passwords in CP log's "password resets" page.
+		'SearchCpResetPass'  => AccountLevel::ADMIN,  // Level required to search passwords in CP log's "password resets" page.
 		
 		'EditHigherPower'    => 5000,
 		'BanHigherPower'     => 5000

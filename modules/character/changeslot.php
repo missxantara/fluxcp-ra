@@ -68,13 +68,20 @@ if ($char) {
 				$sth->execute(array($slot-1, $charID));
 				
 				if ($otherChar) {
-					$session->setMessageData("You have successfully changed {$char->name}'s slot with {$otherChar->name}.");
+					$otherNum = $char->char_num + 1;
+					$session->setMessageData("You have successfully swapped {$char->name}'s slot with {$otherChar->name} (#$otherNum and #$slot).");
 				}
 				else {
-					$session->setMessageData("You have successfully changed {$char->name}'s slot.");
+					$session->setMessageData("You have successfully changed {$char->name}'s slot to #$slot.");
 				}
 				
-				$this->redirect();
+				$isMine = $char->account_id == $session->account->account_id;
+				if ($auth->actionAllowed('character', 'view') && ($isMine || $auth->allowedToViewCharacter)) {
+					$this->redirect($this->url('character', 'view', array('id' => $char->char_id)));
+				}
+				else {
+					$this->redirect();
+				}
 			}
 		}
 	}

@@ -252,7 +252,7 @@ class Flux_SessionData {
 	 * @throws Flux_LoginError
 	 * @access public
 	 */
-	public function login($server, $username, $password)
+	public function login($server, $username, $password, $securityCode = null)
 	{
 		$loginAthenaGroup = Flux::getServerGroupByName($server);
 		if (!$loginAthenaGroup) {
@@ -265,6 +265,10 @@ class Flux_SessionData {
 		
 		if (!$loginAthenaGroup->isAuth($username, $password)) {
 			throw new Flux_LoginError('Invalid login', Flux_LoginError::INVALID_LOGIN);
+		}
+		
+		if (!is_null($securityCode) && Flux::config('UseLoginCaptcha') && $securityCode != $this->securityCode) {
+			throw new Flux_LoginError('Invalid security code', Flux_LoginError::INVALID_SECURITY_CODE);
 		}
 		
 		$creditsTable  = Flux::config('FluxTables.CreditsTable');
@@ -286,6 +290,18 @@ class Flux_SessionData {
 				}
 				elseif (!Flux::config('AllowTempBanLogin')) {
 					throw new Flux_LoginError('Temporarily banned', Flux_LoginError::BANNED);
+				}
+			}
+			if ($row->state == 5) {
+				$createTable = Flux::config('FluxTables.AccountCreateTable');
+				$sql  = "SELECT id FROM {$loginAthenaGroup->loginDatabase}.$createTable ";
+				$sql .= "WHERE account_id = ? AND confirmed = 0";
+				$sth  = $loginAthenaGroup->connection->getStatement($sql);
+				$sth->execute(array($row->account_id));
+				$row2 = $sth->fetch();
+				
+				if ($row2 && $row2->id) {
+					throw new Flux_LoginError('Pending confirmation', Flux_LoginError::PENDING_CONFIRMATION);
 				}
 			}
 			if (!Flux::config('AllowPermBanLogin') && $row->state == 5) {

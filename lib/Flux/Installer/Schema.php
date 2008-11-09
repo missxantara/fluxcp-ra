@@ -183,15 +183,29 @@ class Flux_Installer_Schema {
 			$charMapServerName  = null;
 			$databaseName       = $mainServer->loginAthenaGroup->loginDatabase;
 			$connection         = $mainServer->loginAthenaGroup->connection;
-			$availableSchemaDir = FLUX_DATA_DIR."/schemas/logindb";
+			$availableSchemaDir = array(FLUX_DATA_DIR."/schemas/logindb");
 			$installedSchemaDir = FLUX_DATA_DIR."/logs/schemas/logindb/$mainServerName";
+			
+			foreach (Flux::$addons as $addon) {
+				$_schemaDir = "{$addon->addonDir}/schemas/logindb";
+				if (file_exists($_schemaDir) && is_dir($_schemaDir)) {
+					$availableSchemaDir[] = $_schemaDir;
+				}
+			}
 		}
 		else {
 			$charMapServerName  = $charMapServer->athena->serverName;
 			$databaseName       = $charMapServer->athena->charMapDatabase;
 			$connection         = $charMapServer->athena->connection;
-			$availableSchemaDir = FLUX_DATA_DIR."/schemas/charmapdb";
+			$availableSchemaDir = array(FLUX_DATA_DIR."/schemas/charmapdb");
 			$installedSchemaDir = FLUX_DATA_DIR."/logs/schemas/charmapdb/$mainServerName/{$charMapServer->athena->serverName}";
+			
+			foreach (Flux::$addons as $addon) {
+				$_schemaDir = "{$addon->addonDir}/schemas/charmapdb";
+				if (file_exists($_schemaDir) && is_dir($_schemaDir)) {
+					$availableSchemaDir[] = $_schemaDir;
+				}
+			}
 		}
 		
 		$dataArray = array(
@@ -199,17 +213,23 @@ class Flux_Installer_Schema {
 			'charMapServerName'  => $charMapServerName,
 			'databaseName'       => $databaseName,
 			'connection'         => $connection,
-			'availableSchemaDir' => $availableSchemaDir,
+			//'availableSchemaDir' => $availableSchemaDir,
 			'installedSchemaDir' => $installedSchemaDir,
 		);
 		
 		$availableSchemas = array();
 		$installedSchemas = array();
 		
-		$directories = array(
+		$directories = array();
+		foreach ($availableSchemaDir as $dir) {
+			$directories[] = array($dir, 'availableSchemas', 'sql');
+		}
+		$directories[] = array($installedSchemaDir, 'installedSchemas', 'txt');
+		
+		/*$directories = array(
 			array($availableSchemaDir, 'availableSchemas', 'sql'),
 			array($installedSchemaDir, 'installedSchemas', 'txt')
-		);
+		);*/
 		
 		foreach ($directories as $directory) {
 			list ($schemaDir, $schemaArray, $fileExt) = $directory;
@@ -225,6 +245,9 @@ class Flux_Installer_Schema {
 				if (preg_match('/^(\w+)\.(\d+)$/', $schemaName, $m)) {
 					$schemaName    = $m[1];
 					$schemaVersion = $m[2];
+					
+					// Dynamically set schema directory.
+					$dataArray['availableSchemaDir'] = $directory;
 					
 					if (!array_key_exists($schemaName, $schemas)) {
 						$schemas[$schemaName] = array(

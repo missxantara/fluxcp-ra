@@ -51,7 +51,7 @@ class Flux_Config {
 	}
 	
 	/**
-	 * This is here… for no real GOOD reason, but should the need arise, at
+	 * This is here... for no real GOOD reason, but should the need arise, at
 	 * least you aren't deprived of access to it.
 	 *
 	 * @return array Configuration array.
@@ -211,6 +211,15 @@ class Flux_Config {
 			}
 			return $this->set($m[1], $args[0], $options);
 		}
+	}
+	
+	/**
+	 *
+	 */
+	public function merge(Flux_Config $config, $recursive = true)
+	{
+		$mergeMethod     = $recursive ? 'array_merge_recursive' : 'array_merge';
+		$this->configArr = $mergeMethod($this->configArr, $config->toArray());
 	}
 }
 ?>

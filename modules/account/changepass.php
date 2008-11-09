@@ -49,6 +49,14 @@ if (count($_POST)) {
 			$sth = $server->connection->getStatement($sql);
 			
 			if ($sth->execute(array($newPassword, $session->account->account_id))) {
+				$pwChangeTable = Flux::config('FluxTables.ChangePasswordTable');
+				
+				$sql  = "INSERT INTO {$server->loginDatabase}.$pwChangeTable ";
+				$sql .= "(account_id, old_password, new_password, change_ip, change_date) ";
+				$sql .= "VALUES (?, ?, ?, ?, NOW())";
+				$sth  = $server->connection->getStatement($sql);
+				$sth->execute(array($session->account->account_id, $currentPassword, $newPassword, $_SERVER['REMOTE_ADDR']));
+				
 				$session->setMessageData(Flux::message('PasswordHasBeenChanged'));
 				$session->logout();
 				$this->redirect($this->url('account', 'login'));

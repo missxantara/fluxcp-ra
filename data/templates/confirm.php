@@ -28,7 +28,7 @@ $emailTitle = sprintf('%s Account Confirmation', $siteTitle);
 		<?php endif ?>
 		
 		<p>
-			<table style="margin: 0 auto">
+			<table style="margin-left: 18px">
 				<tr>
 					<td align="right">Account:&nbsp;&nbsp;</td>
 					<th align="left">{AccountUsername}</th>

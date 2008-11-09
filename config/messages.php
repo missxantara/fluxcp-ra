@@ -21,6 +21,7 @@ return array(
 	'TemporarilyBanned'       => 'Your account is temporarily banned.',
 	'PermanentlyBanned'       => 'Your account is permanently banned.',
 	'IpBanned'                => 'The IP address you are behind is banned.',
+	'PendingConfirmation'     => 'Your account is pending e-mail confirmation.',
 	'FoundSearchResults'      => 'Found a total of %d record(s) across %d page(s).  Displaying result(s) %d-%d.',
 	'LoginToDonate'           => 'Please log-in to make a donation.',
 	'LoginPageMakeAccount'    => 'Don\'t have an account? <a href="%s">Create one!</a>',

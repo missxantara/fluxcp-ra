@@ -1,18 +1,18 @@
 <?php if (!defined('FLUX_ROOT')) exit; ?>
 <h2>Items</h2>
+<p class="toggler"><a href="javascript:toggleSearchForm()">Search...</a></p>
 <form class="search-form" method="get">
 	<?php echo $this->moduleActionFormInputs($params->get('module')) ?>
-	<p>Search for item(s):</p>
 	<p>
 		<label for="item_id">Item ID:</label>
 		<input type="text" name="item_id" id="item_id" value="<?php echo htmlspecialchars($params->get('item_id')) ?>" />
-		…
+		...
 		<label for="name">Name:</label>
 		<input type="text" name="name" id="name" value="<?php echo htmlspecialchars($params->get('name')) ?>" />
-		…
+		...
 		<label for="type">Type:</label>
 		<input type="text" name="type" id="type" value="<?php echo htmlspecialchars($params->get('type')) ?>" />
-		…
+		...
 		<label for="npc_buy">NPC Buy:</label>
 		<select name="npc_buy_op">
 			<option value="eq"<?php if (($npc_buy_op=$params->get('npc_buy_op')) == 'eq') echo ' selected="selected"' ?>>is equal to</option>
@@ -29,7 +29,7 @@
 			<option value="lt"<?php if ($npc_sell_op == 'lt') echo ' selected="selected"' ?>>is less than</option>
 		</select>
 		<input type="text" name="npc_sell" id="npc_sell" value="<?php echo htmlspecialchars($params->get('npc_sell')) ?>" />
-		…
+		...
 		<label for="weight">Weight:</label>
 		<select name="weight_op">
 			<option value="eq"<?php if (($weight_op=$params->get('weight_op')) == 'eq') echo ' selected="selected"' ?>>is equal to</option>
@@ -37,7 +37,7 @@
 			<option value="lt"<?php if ($weight_op == 'lt') echo ' selected="selected"' ?>>is less than</option>
 		</select>
 		<input type="text" name="weight" id="weight" value="<?php echo htmlspecialchars($params->get('weight')) ?>" />
-		…
+		...
 		<label for="attack">Attack:</label>
 		<select name="attack_op">
 			<option value="eq"<?php if (($attack_op=$params->get('attack_op')) == 'eq') echo ' selected="selected"' ?>>is equal to</option>
@@ -54,7 +54,7 @@
 			<option value="lt"<?php if ($defense_op == 'lt') echo ' selected="selected"' ?>>is less than</option>
 		</select>
 		<input type="text" name="defense" id="defense" value="<?php echo htmlspecialchars($params->get('defense')) ?>" />
-		…
+		...
 		<label for="range">Range:</label>
 		<select name="range_op">
 			<option value="eq"<?php if (($range_op=$params->get('range_op')) == 'eq') echo ' selected="selected"' ?>>is equal to</option>
@@ -62,7 +62,7 @@
 			<option value="lt"<?php if ($range_op == 'lt') echo ' selected="selected"' ?>>is less than</option>
 		</select>
 		<input type="text" name="range" id="range" value="<?php echo htmlspecialchars($params->get('range')) ?>" />
-		…
+		...
 		<label for="slots">Slots:</label>
 		<select name="slots_op">
 			<option value="eq"<?php if (($slots_op=$params->get('slots_op')) == 'eq') echo ' selected="selected"' ?>>is equal to</option>
@@ -78,14 +78,14 @@
 			<option value="yes"<?php if ($refineable == 'yes') echo ' selected="selected"' ?>>Yes</option>
 			<option value="no"<?php if ($refineable == 'no') echo ' selected="selected"' ?>>No</option>
 		</select>
-		…
+		...
 		<label for="for_sale">For Sale:</label>
 		<select name="for_sale" id="for_sale">
 			<option value=""<?php if (!($for_sale=$params->get('for_sale'))) echo ' selected="selected"' ?>>All</option>
 			<option value="yes"<?php if ($for_sale == 'yes') echo ' selected="selected"' ?>>Yes</option>
 			<option value="no"<?php if ($for_sale == 'no') echo ' selected="selected"' ?>>No</option>
 		</select>
-		…
+		...
 		<label for="custom">Custom:</label>
 		<select name="custom" id="custom">
 			<option value=""<?php if (!($custom=$params->get('custom'))) echo ' selected="selected"' ?>>All</option>
@@ -102,7 +102,7 @@
 <table class="horizontal-table">
 	<tr>
 		<th><?php echo $paginator->sortableColumn('item_id', 'Item ID') ?></th>
-		<th><?php echo $paginator->sortableColumn('name', 'Name') ?></th>
+		<th colspan="2"><?php echo $paginator->sortableColumn('name', 'Name') ?></th>
 		<th>Type</th>
 		<th><?php echo $paginator->sortableColumn('price_buy', 'NPC Buy') ?></th>
 		<th><?php echo $paginator->sortableColumn('price_sell', 'NPC Sell') ?></th>
@@ -124,7 +124,12 @@
 				<?php echo htmlspecialchars($item->item_id) ?>
 			<?php endif ?>
 		</td>
-		<td><?php echo htmlspecialchars($item->name) ?></td>
+		<?php if ($icon=$this->iconImage($item->item_id)): ?>
+			<td><img src="<?php echo htmlspecialchars($icon) ?>?nocache=<?php echo rand() ?>" /></td>
+			<td><?php echo htmlspecialchars($item->name) ?></td>
+		<?php else: ?>
+			<td colspan="2"><?php echo htmlspecialchars($item->name) ?></td>
+		<?php endif ?>
 		<td>
 			<?php if ($type=$this->itemTypeText($item->type)): ?>
 				<?php echo htmlspecialchars($type); echo " (".$item->type.")"; ?>

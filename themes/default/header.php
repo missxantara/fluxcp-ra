@@ -3,21 +3,24 @@
 	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html>
 	<head>
-		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 		<?php if (isset($metaRefresh)): ?>
-		<meta http-equiv="refresh" content="<?php echo $metaRefresh['seconds'] ?>; URL=<?php echo $metaRefresh['location'] ?>">
+		<meta http-equiv="refresh" content="<?php echo $metaRefresh['seconds'] ?>; URL=<?php echo $metaRefresh['location'] ?>" />
 		<?php endif ?>
 		<title><?php echo Flux::config('SiteTitle'); if (isset($title)) echo ": $title" ?></title>
 		<link rel="stylesheet" href="<?php echo $this->themePath('css/flux.css') ?>" type="text/css" media="screen" title="" charset="utf-8" />
+		<link href="<?php echo $this->themePath('css/flux/unitip.css') ?>" rel="stylesheet" type="text/css" media="screen" title="" charset="utf-8" />
 		<!--[if IE]>
 		<link rel="stylesheet" href="<?php echo $this->themePath('css/flux/ie.css') ?>" type="text/css" media="screen" title="" charset="utf-8" />
 		<![endif]-->	
 		<!--[if lt IE 7]>
 		<script src="<?php echo $this->themePath('js/ie7.js') ?>" type="text/javascript"></script>
+		<script type="text/javascript" src="<?php echo $this->themePath('js/flux.unitpngfix.js') ?>"></script>
 		<![endif]-->
 		<script type="text/javascript" src="<?php echo $this->themePath('js/jquery-1.2.6.min.js') ?>"></script>
 		<!--<script type="text/javascript" src="<?php echo $this->themePath('js/jquery.dropshadow.js') ?>"></script>-->
 		<script type="text/javascript" src="<?php echo $this->themePath('js/flux.datefields.js') ?>"></script>
+		<script type="text/javascript" src="<?php echo $this->themePath('js/flux.unitip.js') ?>"></script>
 		<script type="text/javascript">
 			$(document).ready(function(){
 				var inputs = 'input[type=text],input[type=password],input[type=file]';
@@ -55,15 +58,33 @@
 			}
 		</script>
 		
-		<?php if ($session->isLoggedIn()): ?>
 		<script type="text/javascript">
 			function updatePreferredServer(sel){
 				var preferred = sel.options[sel.selectedIndex].value;
 				document.preferred_server_form.preferred_server.value = preferred;
 				document.preferred_server_form.submit();
 			}
+			
+			// Preload spinner image.
+			var spinner = new Image();
+			spinner.src = '<?php echo $this->themePath('img/spinner.gif') ?>';
+			
+			function refreshSecurityCode(imgSelector){
+				$(imgSelector).attr('src', spinner.src);
+				
+				// Load image, spinner will be active until loading is complete.
+				var clean = <?php echo Flux::config('UseCleanUrls') ? 'true' : 'false' ?>;
+				var image = new Image();
+				image.src = "<?php echo $this->url('captcha') ?>"+(clean ? '?nocache=' : '&nocache=')+Math.random();
+				
+				$(imgSelector).attr('src', image.src);
+			}
+			function toggleSearchForm()
+			{
+				//$('.search-form').toggle();
+				$('.search-form').slideToggle('fast');
+			}
 		</script>
-		<?php endif ?>
 	</head>
 	<body>
 		<table cellspacing="0" cellpadding="0" width="100%">
@@ -72,8 +93,7 @@
 				<td bgcolor="#8ebceb" width="20"></td>
 				<td bgcolor="#8ebceb" colspan="3">
 					<a href="<?php echo $this->basePath ?>">
-						<img src="<?php echo $this->themePath($session->account->level >= Flux::config('AdminMenuLevel') ? 'img/logo_admin.gif' : 'img/logo.gif') ?>"
-							title="<?php echo htmlspecialchars(Flux::config('SiteTitle')) ?>" id="logo" />
+						<img src="<?php echo $this->themePath($session->account->level >= Flux::config('AdminMenuLevel') ? 'img/logo_admin.gif' : 'img/logo.gif') ?>" id="logo" />
 					</a>
 				</td>
 				<td bgcolor="#8ebceb" width="20"></td>

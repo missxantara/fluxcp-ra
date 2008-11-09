@@ -7,6 +7,11 @@ require_once 'Flux/CharServer.php';
 require_once 'Flux/MapServer.php';
 require_once 'Flux/Athena.php';
 require_once 'Flux/LoginAthenaGroup.php';
+require_once 'Flux/Addon.php';
+require_once 'functions/svn_version.php';
+
+// Get the SVN revision of the top-level directory (FLUX_ROOT).
+define('FLUX_SVNVERSION', svn_version());
 
 /**
  * The Flux class contains methods related to the application on the larger
@@ -18,6 +23,11 @@ class Flux {
 	 * Current version.
 	 */
 	const VERSION = '1.0.0';
+	
+	/**
+	 * Top-level revision.
+	 */
+	const SVNVERSION = FLUX_SVNVERSION;
 	
 	/**
 	 * Application-specific configuration object.
@@ -82,6 +92,11 @@ class Flux {
 	public static $numberOfQueries = 0;
 	
 	/**
+	 *
+	 */
+	public static $addons = array();
+	
+	/**
 	 * Initialize Flux application. This will handle configuration parsing and
 	 * instanciating of objects crucial to the control panel.
 	 *
@@ -107,6 +122,9 @@ class Flux {
 		
 		// Initialize server objects.
 		self::initializeServerObjects();
+		
+		// Initialize add-ons.
+		self::initializeAddons();
 	}
 	
 	/**
@@ -140,6 +158,28 @@ class Flux {
 				
 				// Add into registry.
 				self::registerAthenaServer($config->getServerName(), $charMapServer->getServerName(), $athena);
+			}
+		}
+	}
+	
+	/**
+	 *
+	 */
+	public static function initializeAddons()
+	{
+		if (!is_dir(FLUX_ADDON_DIR)) {
+			return false;
+		}
+			
+		foreach (glob(FLUX_ADDON_DIR.'/*') as $addonDir) {
+			if (is_dir($addonDir)) {
+				$addonName   = basename($addonDir);
+				$addonObject = new Flux_Addon($addonName, $addonDir);
+				self::$addons[$addonName] = $addonObject;
+				
+				// Merge configurations.
+				self::$appConfig->merge($addonObject->addonConfig);
+				self::$messagesConfig->merge($addonObject->messagesConfig);
 			}
 		}
 	}
@@ -212,8 +252,11 @@ class Flux {
 	 */
 	public static function parseConfigFile($filename)
 	{
+		ob_start();
 		// Uses require, thus assumes the file returns an array.
-		return self::parseConfig(require($filename));
+		$config = require $filename;
+		ob_end_clean();
+		return self::parseConfig($config);
 	}
 	
 	/**
@@ -234,6 +277,12 @@ class Flux {
 		}
 		elseif (!($config->getPayPalReceiverEmails() instanceOf Flux_Config)) {
 			self::raise("PayPalReceiverEmails must be an array.");
+		}
+		
+		// Sanitize BaseURI. (leading forward slash is mandatory.)
+		$baseURI = $config->get('BaseURI');
+		if (strlen($baseURI) && $baseURI[0] != '/') {
+			$config->set('BaseURI', "/$baseURI");
 		}
 		
 		return $config;
@@ -524,7 +573,7 @@ class Flux {
 	}
 	
 	/**
-	 *
+	 * Process donations that have been put on hold.
 	 */
 	public static function processHeldCredits()
 	{
@@ -567,14 +616,22 @@ class Flux {
 			$sql2  .= "VALUES (?, ?, NOW())";
 			$sth2   = $loginAthenaGroup->connection->getStatement($sql2);
 			
+			$sql3   = "SELECT id FROM {$loginAthenaGroup->loginDatabase}.$trustTable WHERE ";
+			$sql3  .= "delete_date IS NULL AND account_id = ? AND email = ? LIMIT 1";
+			$sth3   = $loginAthenaGroup->connection->getStatement($sql3);
+			
 			$idvals = array();
 			
 			foreach ($accept as $txn) {
-				if ($loginAthenaGroup->loginServer->depositCredits($txn->account_id, $txn->credits, $txn->mc_gross) &&
-					$sth2->execute(array($txn->account_id, $txn->payer_email))) {
-						
-					$idvals[] = $txn->txn_id;
+				$loginAthenaGroup->loginServer->depositCredits($txn->account_id, $txn->credits, $txn->mc_gross);
+				$sth3->execute(array($txn->account_id, $txn->payer_email));
+				$row = $sth3->fetch();
+				
+				if (!$row) {
+					$sth2->execute(array($txn->account_id, $txn->payer_email));
 				}
+				
+				$idvals[] = $txn->txn_id;
 			}
 			
 			if (!empty($idvals)) {
@@ -589,7 +646,8 @@ class Flux {
 	}
 	
 	/**
-	 *
+	 * Get array of equip_location bits. (bit => loc_name pairs)
+	 * @return array
 	 */
 	public static function getEquipLocationList()
 	{
@@ -608,7 +666,8 @@ class Flux {
 	}	
 	
 	/**
-	 *
+	 * Get array of equip_upper bits. (bit => upper_name pairs)
+	 * @return array
 	 */
 	public static function getEquipUpperList()
 	{
@@ -620,7 +679,7 @@ class Flux {
 	}
 	
 	/**
-	 *
+	 * Get array of equip_jobs bits. (bit => job_name pairs)
 	 */
 	public static function getEquipJobsList()
 	{
@@ -655,7 +714,9 @@ class Flux {
 	}
 	
 	/**
-	 *
+	 * Check whether a particular item type is stackable.
+	 * @param int $type
+	 * @return bool
 	 */
 	public static function isStackableItemType($type)
 	{
@@ -664,7 +725,10 @@ class Flux {
 	}
 	
 	/**
-	 *
+	 * Perform a bitwise AND from each bit in getEquipLocationList() on $bitmask
+	 * to determine which bits have been set.
+	 * @param int $bitmask
+	 * @return array
 	 */
 	public static function equipLocationsToArray($bitmask)
 	{
@@ -681,7 +745,10 @@ class Flux {
 	}
 	
 	/**
-	 *
+	 * Perform a bitwise AND from each bit in getEquipUpperList() on $bitmask
+	 * to determine which bits have been set.
+	 * @param int $bitmask
+	 * @return array
 	 */
 	public static function equipUpperToArray($bitmask)
 	{
@@ -698,7 +765,10 @@ class Flux {
 	}
 	
 	/**
-	 *
+	 * Perform a bitwise AND from each bit in getEquipJobsList() on $bitmask
+	 * to determine which bits have been set.
+	 * @param int $bitmask
+	 * @return array
 	 */
 	public static function equipJobsToArray($bitmask)
 	{
@@ -712,6 +782,43 @@ class Flux {
 		}
 		
 		return $arr;
+	}
+	
+	/**
+	 *
+	 */
+	public static function monsterModeToArray($bitmask)
+	{
+		$arr  = array();
+		$bits = self::config('MonsterModes')->toArray();
+		
+		foreach ($bits as $bit => $name) {
+			if ($bitmask & $bit) {
+				$arr[] = $bit;
+			}
+		}
+		
+		return $arr;
+	}
+	
+	/**
+	 *
+	 */
+	public static function elementName($ele)
+	{
+		$neutral = Flux::config('Elements.0');
+		$element = Flux::config("Elements.$ele");
+		
+		return is_null($element) ? $neutral : $element;
+	}
+	
+	/**
+	 *
+	 */
+	public static function monsterRaceName($race)
+	{
+		$race = Flux::config("MonsterRaces.$race");
+		return $race;
 	}
 }
 ?>

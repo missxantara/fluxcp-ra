@@ -44,7 +44,8 @@ else {
 	$balance        = $params->get('balance');
 	$loginCountOp   = $params->get('logincount_op');
 	$loginCount     = $params->get('logincount');
-	$lastLoginDate  = $params->get('last_login_date');
+	$lastLoginDateA = $params->get('last_login_after_date');
+	$lastLoginDateB = $params->get('last_login_before_date');
 	
 	if ($username) {
 		$sqlpartial .= "AND (login.userid LIKE ? OR login.userid = ?) ";
@@ -116,14 +117,14 @@ else {
 		$bind[]      = $loginCount;
 	}
 	
-	if ($lastLoginDate && ($timestamp = strtotime($lastLoginDate))) {
-		$year        = date('Y', $timestamp);
-		$month       = date('m', $timestamp);
-		$day         = date('d', $timestamp);
-		$sqlpartial .= 'AND (YEAR(login.lastlogin) = ? AND MONTH(login.lastlogin) = ? AND DAY(login.lastlogin) = ?) ';
-		$bind[]      = $year;
-		$bind[]      = $month;
-		$bind[]      = $day;
+	if ($lastLoginDateB && ($timestamp = strtotime($lastLoginDateB))) {
+		$sqlpartial .= 'AND login.lastlogin < ? ';
+		$bind[]      = date('Y-m-d', $timestamp);
+	}
+	
+	if ($lastLoginDateA && ($timestamp = strtotime($lastLoginDateA))) {
+		$sqlpartial .= 'AND login.lastlogin > ? ';
+		$bind[]      = date('Y-m-d', $timestamp);
 	}
 }
 
@@ -133,9 +134,9 @@ $sth->execute($bind);
 
 $paginator = $this->getPaginator($sth->fetch()->total);
 $paginator->setSortableColumns(array(
-	'login.account_id' => 'asc', 'userid', 'user_pass',
-	'sex', 'level', 'state', 'balance',
-	'email', 'logincount', 'lastlogin', 'last_ip',
+	'login.account_id' => 'asc', 'login.userid', 'login.user_pass',
+	'login.sex', 'level', 'state', 'balance',
+	'login.email', 'logincount', 'lastlogin', 'last_ip',
 	'reg_date'
 ));
 

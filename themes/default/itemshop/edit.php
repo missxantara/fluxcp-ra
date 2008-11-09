@@ -47,8 +47,14 @@ $markdownURL = 'http://daringfireball.net/projects/markdown/syntax';
 		<th><label for="image">Image</label></th>
 		<td>
 			<input type="file" name="image" id="image" />
+			<label>Attempt to use existing item image? <input type="checkbox" name="use_existing" value="1"<?php if ($item->shop_item_use_existing) echo ' checked="checked"' ?> /></label>
 			<?php if ($image=$this->shopItemImage($item->shop_item_id)): ?>
-			<p>Current image:</p>
+			<p>
+				Current image:
+				<?php if ($auth->actionAllowed('itemshop', 'imagedel')): ?>
+					<a href="<?php echo $this->url('itemshop', 'imagedel', array('id' => $item->shop_item_id)) ?>">(Delete)</a>
+				<?php endif ?>
+			</p>
 			<p><img src="<?php echo $image ?>" /></p>
 			<?php endif ?>
 		</td>
