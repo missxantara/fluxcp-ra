@@ -240,11 +240,11 @@ class Flux_Paginator {
 		}
 		
 		if ($hasPrev) {
-			array_unshift($pages, sprintf('<a href="%s" title="Previous Pane (#%d)" class="page-prev">&laquo; Prev.</a> ', $this->getPageURI($start - 1), $start - 1));
+			array_unshift($pages, sprintf('<a href="%s" title="Previous Pane (#%d)" class="page-prev">Prev.</a> ', $this->getPageURI($start - 1), $start - 1));
 		}
 		
 		if ($hasNext) {
-			array_push($pages, sprintf(' <a href="%s" title="Next Pane (#%d)" class="page-next">Next &raquo;</a>', $this->getPageURI($end), $end));
+			array_push($pages, sprintf(' <a href="%s" title="Next Pane (#%d)" class="page-next">Next</a>', $this->getPageURI($end), $end));
 		}
 		
 		$links  = sprintf('<div class="pages">%s</div>', implode(" {$this->pageSeparator} ", $pages))."\n";
