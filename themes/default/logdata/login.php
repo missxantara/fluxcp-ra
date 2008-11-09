@@ -1,6 +1,6 @@
 <?php if (!defined('FLUX_ROOT')) exit; ?>
 <h2>Logins</h2>
-<p class="toggler"><a href="javascript:toggleSearchForm()">Search…</a></p>
+<p class="toggler"><a href="javascript:toggleSearchForm()">Search...</a></p>
 <form action="<?php echo $this->url ?>" method="get" class="search-form">
 	<?php echo $this->moduleActionFormInputs($params->get('module'), $params->get('action')) ?>
 	<p>
@@ -14,13 +14,13 @@
 	<p>
 		<label for="ip">IP Address:</label>
 		<input type="text" name="ip" id="ip" value="<?php echo htmlspecialchars($params->get('ip')) ?>" />
-		…
+		...
 		<label for="user">Username:</label>
 		<input type="text" name="user" id="user" value="<?php echo htmlspecialchars($params->get('user')) ?>" />
-		…
+		...
 		<label for="log">Log Message:</label>
 		<input type="text" name="log" id="log" value="<?php echo htmlspecialchars($params->get('log')) ?>" />
-		…
+		...
 		<label for="rcode">Response:</label>
 		<input type="text" name="rcode" id="rcode" value="<?php echo htmlspecialchars($params->get('rcode')) ?>" />
 		

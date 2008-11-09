@@ -1,6 +1,6 @@
 <?php if (!defined('FLUX_ROOT')) exit; ?>
 <h2>Logins</h2>
-<p class="toggler"><a href="javascript:toggleSearchForm()">Search…</a></p>
+<p class="toggler"><a href="javascript:toggleSearchForm()">Search...</a></p>
 <form action="<?php echo $this->url ?>" method="get" class="search-form">
 	<?php echo $this->moduleActionFormInputs($params->get('module'), $params->get('action')) ?>
 	<p>
@@ -11,7 +11,7 @@
 		<input type="checkbox" name="use_login_before" id="use_login_before"<?php if ($params->get('use_login_before')) echo ' checked="checked"' ?> />
 		<?php echo $this->dateField('login_before') ?>
 		<?php if ($auth->allowedToSearchCpLoginLogPw): ?>
-		…
+		...
 		<label for="password">Password:</label>
 		<input type="text" name="password" id="password" value="<?php echo htmlspecialchars($params->get('password')) ?>" />
 		<?php endif ?>
@@ -19,13 +19,13 @@
 	<p>
 		<label for="account_id">Account ID:</label>
 		<input type="text" name="account_id" id="account_id" value="<?php echo htmlspecialchars($params->get('account_id')) ?>" />
-		…
+		...
 		<label for="username">Username:</label>
 		<input type="text" name="username" id="username" value="<?php echo htmlspecialchars($params->get('username')) ?>" />
-		…
+		...
 		<label for="ip">IP Address:</label>
 		<input type="text" name="ip" id="ip" value="<?php echo htmlspecialchars($params->get('ip')) ?>" />
-		…
+		...
 		<label for="error_code">Error Code:</label>
 		<select name="error_code" id="error_code">
 			<option value="all"<?php if (is_null($params->get('error_code')) || strtolower($params->get('error_code') == 'all')) echo ' selected="selected"' ?>>All</option>

@@ -2,16 +2,16 @@
 <h2>Who's Online?</h2>
 <h3>Showing players on-line <?php echo htmlspecialchars($server->serverName) ?>.</h3>
 <?php if ($auth->allowedToSearchWhosOnline): ?>
-	<p class="toggler"><a href="javascript:toggleSearchForm()">Search…</a></p>
+	<p class="toggler"><a href="javascript:toggleSearchForm()">Search...</a></p>
 	<form action="<?php echo $this->url ?>" method="get" class="search-form">
 		<?php echo $this->moduleActionFormInputs($params->get('module'), $params->get('action')) ?>
 		<p>
 			<label for="char_name">Character Name:</label>
 			<input type="text" name="char_name" id="char_name" value="<?php echo htmlspecialchars($params->get('char_name')) ?>" />
-			…
+			...
 			<label for="char_class">Job Class:</label>
 			<input type="text" name="char_class" id="char_class" value="<?php echo htmlspecialchars($params->get('char_class')) ?>" />
-			…
+			...
 			<label for="guild_name">Guild:</label>
 			<input type="text" name="guild_name" id="guild_name" value="<?php echo htmlspecialchars($params->get('guild_name')) ?>" />
 

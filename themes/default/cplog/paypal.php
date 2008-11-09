@@ -1,18 +1,18 @@
 <?php if (!defined('FLUX_ROOT')) exit; ?>
 <h2>PayPal Transactions</h2>
-<p class="toggler"><a href="javascript:toggleSearchForm()">Search…</a></p>
+<p class="toggler"><a href="javascript:toggleSearchForm()">Search...</a></p>
 <form action="<?php echo $this->url ?>" method="get" class="search-form">
 	<?php echo $this->moduleActionFormInputs($params->get('module'), $params->get('action')) ?>
 	<p>
 		<label for="txn_id">Transaction ID:</label>
 		<input type="text" name="txn_id" id="txn_id" value="<?php echo htmlspecialchars($params->get('txn_id')) ?>" />
-		…
+		...
 		<label for="parent_txn_id">Parent Transaction ID:</label>
 		<input type="text" name="parent_txn_id" id="parent_txn_id" value="<?php echo htmlspecialchars($params->get('parent_txn_id')) ?>" />
-		…
+		...
 		<label for="status">Status:</label>
 		<input type="text" name="status" id="status" value="<?php echo htmlspecialchars($params->get('status')) ?>" />
-		…
+		...
 		<label for="email">E-mail:</label>
 		<input type="text" name="email" id="email" value="<?php echo htmlspecialchars($params->get('email')) ?>" />
 	</p>
@@ -24,7 +24,7 @@
 			<option value="lt"<?php if ($amount_op == 'lt') echo ' selected="selected"' ?>>is less than</option>
 		</select>
 		<input type="text" name="amount" id="amount" value="<?php echo htmlspecialchars($params->get('amount')) ?>" />
-		…
+		...
 		<label for="credits">Credits:</label>
 		<select name="credits_op">
 			<option value="eq"<?php if (($credits_op=$params->get('credits_op')) == 'eq') echo ' selected="selected"' ?>>is equal to</option>
@@ -32,7 +32,7 @@
 			<option value="lt"<?php if ($credits_op == 'lt') echo ' selected="selected"' ?>>is less than</option>
 		</select>
 		<input type="text" name="credits" id="credits" value="<?php echo htmlspecialchars($params->get('credits')) ?>" />
-		…
+		...
 		<label for="account">Account:</label>
 		<input type="text" name="account" id="account" value="<?php echo htmlspecialchars($params->get('account')) ?>" />
 	</p>

@@ -51,7 +51,7 @@ class Flux_Config {
 	}
 	
 	/**
-	 * This is here… for no real GOOD reason, but should the need arise, at
+	 * This is here... for no real GOOD reason, but should the need arise, at
 	 * least you aren't deprived of access to it.
 	 *
 	 * @return array Configuration array.

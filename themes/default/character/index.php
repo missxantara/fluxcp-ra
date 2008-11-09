@@ -1,18 +1,18 @@
 <?php if (!defined('FLUX_ROOT')) exit; ?>
 <h2>Characters</h2>
-<p class="toggler"><a href="javascript:toggleSearchForm()">Search…</a></p>
+<p class="toggler"><a href="javascript:toggleSearchForm()">Search...</a></p>
 <form action="<?php echo $this->url ?>" method="get" class="search-form">
 	<?php echo $this->moduleActionFormInputs($params->get('module')) ?>
 	<p>
 		<label for="char_id">Character ID:</label>
 		<input type="text" name="char_id" id="char_id" value="<?php echo htmlspecialchars($params->get('char_id')) ?>" />
-		…
+		...
 		<label for="account">Account:</label>
 		<input type="text" name="account" id="account" value="<?php echo htmlspecialchars($params->get('account')) ?>" />
-		…
+		...
 		<label for="char_name">Character:</label>
 		<input type="text" name="char_name" id="char_name" value="<?php echo htmlspecialchars($params->get('char_name')) ?>" />
-		…
+		...
 		<label for="char_class">Job Class:</label>
 		<input type="text" name="char_class" id="char_class" value="<?php echo htmlspecialchars($params->get('char_class')) ?>" />
 	</p>
@@ -24,7 +24,7 @@
 			<option value="lt"<?php if ($base_level_op == 'lt') echo ' selected="selected"' ?>>is less than</option>
 		</select>
 		<input type="text" name="base_level" id="base_level" value="<?php echo htmlspecialchars($params->get('base_level')) ?>" />
-		…
+		...
 		<label for="job_level">Job Level:</label>
 		<select name="job_level_op">
 			<option value="eq"<?php if (($job_level_op=$params->get('job_level_op')) == 'eq') echo ' selected="selected"' ?>>is equal to</option>
@@ -32,7 +32,7 @@
 			<option value="lt"<?php if ($job_level_op == 'lt') echo ' selected="selected"' ?>>is less than</option>
 		</select>
 		<input type="text" name="job_level" id="job_level" value="<?php echo htmlspecialchars($params->get('job_level')) ?>" />
-		…
+		...
 		<label for="zeny">Zeny:</label>
 		<select name="zeny_op">
 			<option value="eq"<?php if (($zeny_op=$params->get('zeny_op')) == 'eq') echo ' selected="selected"' ?>>is equal to</option>
@@ -44,16 +44,16 @@
 	<p>
 		<label for="guild">Guild:</label>
 		<input type="text" name="guild" id="guild" value="<?php echo htmlspecialchars($params->get('guild')) ?>" />
-		…
+		...
 		<label for="partner">Partner:</label>
 		<input type="text" name="partner" id="partner" value="<?php echo htmlspecialchars($params->get('partner')) ?>" />
-		…
+		...
 		<label for="mother">Mother:</label>
 		<input type="text" name="mother" id="mother" value="<?php echo htmlspecialchars($params->get('mother')) ?>" />
-		…
+		...
 		<label for="father">Father:</label>
 		<input type="text" name="father" id="father" value="<?php echo htmlspecialchars($params->get('father')) ?>" />
-		…
+		...
 		<label for="child">Child:</label>
 		<input type="text" name="child" id="child" value="<?php echo htmlspecialchars($params->get('child')) ?>" />
 	</p>
@@ -64,7 +64,7 @@
 			<option value="on"<?php if ($online == 'on') echo ' selected="selected"' ?>>Online</option>
 			<option value="off"<?php if ($online == 'off') echo ' selected="selected"' ?>>Offline</option>
 		</select>
-		…
+		...
 		<label for="slot">Slot Number:</label>
 		<select name="slot_op">
 			<option value="eq"<?php if (($slot_op=$params->get('slot_op')) == 'eq') echo ' selected="selected"' ?>>is equal to</option>

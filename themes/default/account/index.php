@@ -1,26 +1,26 @@
 <?php if (!defined('FLUX_ROOT')) exit; ?>
 <h2>Accounts</h2>
-<p class="toggler"><a href="javascript:toggleSearchForm()">Search…</a></p>
+<p class="toggler"><a href="javascript:toggleSearchForm()">Search...</a></p>
 <form action="<?php echo $this->url ?>" method="get" class="search-form">
 	<?php echo $this->moduleActionFormInputs($params->get('module')) ?>
 	<p>
 		<label for="account_id">Account ID:</label>
 		<input type="text" name="account_id" id="account_id" value="<?php echo htmlspecialchars($params->get('account_id')) ?>" />
-		…
+		...
 		<label for="username">Username:</label>
 		<input type="text" name="username" id="username" value="<?php echo htmlspecialchars($params->get('username')) ?>" />
 		<?php if ($searchPassword): ?>
-		…
+		...
 		<label for="password">Password:</label>
 		<input type="text" name="password" id="password" value="<?php echo htmlspecialchars($params->get('password')) ?>" />
 		<?php endif ?>
-		…
+		...
 		<label for="email">E-mail:</label>
 		<input type="text" name="email" id="email" value="<?php echo htmlspecialchars($params->get('email')) ?>" />
-		…
+		...
 		<label for="last_ip">Last Used IP:</label>
 		<input type="text" name="last_ip" id="last_ip" value="<?php echo htmlspecialchars($params->get('last_ip')) ?>" />
-		…
+		...
 		<label for="gender">Gender:</label>
 		<select name="gender" id="gender">
 			<option value=""<?php if (!in_array($gender=$params->get('gender'), array('M', 'F'))) echo ' selected="selected"' ?>>All</option>
@@ -36,7 +36,7 @@
 			<option value="banned"<?php if ($account_state == 'banned') echo ' selected="selected"' ?>>Temporarily Banned</option>
 			<option value="permabanned"<?php if ($account_state == 'permabanned') echo ' selected="selected"' ?>>Permanently Banned</option>
 		</select>
-		…
+		...
 		<label for="account_level">Account Level:</label>
 		<select name="account_level_op">
 			<option value="eq"<?php if (($account_level_op=$params->get('account_level_op')) == 'eq') echo ' selected="selected"' ?>>is equal to</option>
@@ -44,7 +44,7 @@
 			<option value="lt"<?php if ($account_level_op == 'lt') echo ' selected="selected"' ?>>is less than</option>
 		</select>
 		<input type="text" name="account_level" id="account_level" value="<?php echo htmlspecialchars($params->get('account_level')) ?>" />
-		…
+		...
 		<label for="balance">Credit Balance:</label>
 		<select name="balance_op">
 			<option value="eq"<?php if (($balance_op=$params->get('balance_op')) == 'eq') echo ' selected="selected"' ?>>is equal to</option>
@@ -61,7 +61,7 @@
 			<option value="lt"<?php if ($logincount_op == 'lt') echo ' selected="selected"' ?>>is less than</option>
 		</select>
 		<input type="text" name="logincount" id="logincount" value="<?php echo htmlspecialchars($params->get('logincount')) ?>" />
-		…
+		...
 		<label for="use_last_login_after">Login Between:</label>
 		<input type="checkbox" name="use_last_login_after" id="use_last_login_after"<?php if ($params->get('use_last_login_after')) echo ' checked="checked"' ?> />
 		<?php echo $this->dateField('last_login_after') ?>
