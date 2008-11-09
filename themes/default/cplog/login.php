@@ -54,7 +54,13 @@
 	</tr>
 	<?php foreach ($logins as $login): ?>
 	<tr>
-		<td align="right"><?php echo $login->account_id ?></td>
+		<td align="right">
+			<?php if ($auth->actionAllowed('account', 'view') && $auth->allowedToViewAccount): ?>
+				<?php echo $this->linkToAccount($login->account_id, $login->account_id) ?>
+			<?php else: ?>
+				<?php echo $login->account_id ?>
+			<?php endif ?>
+		</td>
 		<td><?php echo htmlspecialchars($login->username) ?></td>
 		<?php if ($showPassword && $seePassword): ?>
 		<td><?php echo htmlspecialchars($login->password) ?></td>
