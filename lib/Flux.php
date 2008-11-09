@@ -787,6 +787,23 @@ class Flux {
 	/**
 	 *
 	 */
+	public static function monsterModeToArray($bitmask)
+	{
+		$arr  = array();
+		$bits = self::config('MonsterModes')->toArray();
+		
+		foreach ($bits as $bit => $name) {
+			if ($bitmask & $bit) {
+				$arr[] = $bit;
+			}
+		}
+		
+		return $arr;
+	}
+	
+	/**
+	 *
+	 */
 	public static function elementName($ele)
 	{
 		$neutral = Flux::config('Elements.0');

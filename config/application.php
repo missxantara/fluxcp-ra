@@ -255,6 +255,9 @@ return array(
 	// eA elements mapping.
 	'Elements' => include('elements.php'),
 	
+	// eA monster modes mapping.
+	'MonsterModes' => include('monstermode.php'),
+	
 	// DON'T TOUCH. THIS IS FOR DEVELOPERS.
 	'FluxTables' => array(
 		'CreditsTable'        => 'cp_credits',

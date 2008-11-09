@@ -1,203 +1,189 @@
 <?php if (!defined('FLUX_ROOT')) exit; ?>
 <h2>Viewing Monster</h2>
-<?php if ($monster[0]): ?>
-<h3>#<?php echo htmlspecialchars($monster[0]->monster_id) ?>: “<?php echo htmlspecialchars($monster[0]->kName) ?>” / “<?php echo htmlspecialchars($monster[0]->iName) ?>”
-<?php if ($monster[0]->MEXP): ?>: MvP<?php endif ?></h3>
+<?php if ($monster): ?>
+<h3>
+	#<?php echo $monster->monster_id ?>: <?php echo htmlspecialchars($monster->kro_name) ?>
+	<?php if ($monster->mvp_exp): ?>
+		<span class="mvp">(MVP)</span>
+	<?php endif ?>
+</h3>
 <table class="vertical-table">
 	<tr>
 		<th>Monster ID</th>
-		<td><?php echo htmlspecialchars($monster[0]->monster_id) ?></td>
-		<th>kRO Name</th>
-		<td><?php echo htmlspecialchars($monster[0]->kName) ?></td>
-		<th>iRO Name</th>
-		<td><?php echo htmlspecialchars($monster[0]->iName) ?></td>
-	</tr>
-	<tr>
+		<td><?php echo $monster->monster_id ?></td>
 		<th>Sprite</th>
-		<td><?php echo htmlspecialchars($monster[0]->Sprite) ?></td>
+		<td><?php echo htmlspecialchars($monster->sprite) ?></td>
+		<?php if ($itemDrops): ?>
+		<td rowspan="13" style="vertical-align: top">
+			<h3><?php echo htmlspecialchars($monster->kro_name) ?> Item Drops</h3>
+			<table class="vertical-table">
+				<tr>
+					<th>Item ID</th>
+					<th colspan="2">Item Name</th>
+					<th>Drop Chance</th>
+				</tr>
+				<?php foreach ($itemDrops as $itemDrop): ?>
+				<tr class="item-drop-<?php echo $itemDrop['type'] ?>"
+					title="<strong><?php echo htmlspecialchars($itemDrop['name']) ?></strong> (<?php echo (float)$itemDrop['chance'] ?>%)">
+					<td align="right">
+						<?php if ($auth->actionAllowed('item', 'view')): ?>
+							<?php echo $this->linkToItem($itemDrop['id'], $itemDrop['id']) ?>
+						<?php else: ?>
+							<?php echo htmlspecialchars($itemDrop['id']) ?>
+						<?php endif ?>
+					</td>
+					<?php if ($image=$this->iconImage($itemDrop['id'])): ?>
+						<td><img src="<?php echo $image ?>" /></td>
+						<td><?php echo htmlspecialchars($itemDrop['name']) ?></td>
+					<?php else: ?>
+						<td colspan="2">
+							<?php if ($itemDrop['type'] == 'mvp'): ?>
+								<span class="mvp">MVP!</span>
+							<?php endif ?>
+							<?php echo htmlspecialchars($itemDrop['name']) ?>
+						</td>
+					<?php endif ?>
+					<td><?php echo (float)$itemDrop['chance'] ?>%</td>
+				</tr>
+				<?php endforeach ?>
+			</table>
+		</td>
+		<?php endif ?>
+	</tr>
+	<tr>
+		<th>kRO Name</th>
+		<td><?php echo htmlspecialchars($monster->kro_name) ?></td>
 		<th>HP</th>
-		<td><?php echo number_format((int)$monster[0]->HP) ?></td>
+		<td><?php echo number_format($monster->hp) ?></td>
+	</tr>
+	<tr>
+		<th>iRO Name</th>
+		<td><?php echo htmlspecialchars($monster->iro_name) ?></td>
 		<th>SP</th>
-		<td><?php echo number_format((int)$monster[0]->SP) ?></td>
+		<td><?php echo number_format($monster->sp) ?></td>
 	</tr>
 	<tr>
-		<th>Level</th>
-		<td><?php echo number_format((int)$monster[0]->LV) ?></td>
-		<th>ATK1</th>
-		<td><?php echo number_format((int)$monster[0]->ATK1) ?></td>
-		<th>ATK2</th>
-		<td><?php echo number_format((int)$monster[0]->ATK2) ?></td>
-	</tr>
-	<tr>
-		<th>Range1</th>
-		<td><?php echo number_format((int)$monster[0]->Range1) ?></td>
-		<th>Range2</th>
-		<td><?php echo number_format((int)$monster[0]->Range2) ?></td>
-		<th>Range3</th>
-		<td><?php echo number_format((int)$monster[0]->Range3) ?></td>
-	</tr>
-	<tr>
-		<th>STR</th>
-		<td><?php echo number_format((int)$monster[0]->STR) ?></td>
-		<th>AGI</th>
-		<td><?php echo number_format((int)$monster[0]->AGI) ?></td>
-		<th>VIT</th>
-		<td><?php echo number_format((int)$monster[0]->VIT) ?></td>
-	</tr>
-	<tr>
-		<th>INT</th>
-		<td><?php echo number_format((int)$monster[0]->INT) ?></td>
-		<th>DEX</th>
-		<td><?php echo number_format((int)$monster[0]->DEX) ?></td>
-		<th>LUK</th>
-		<td><?php echo number_format((int)$monster[0]->LUK) ?></td>
-	</tr>
-	<tr>
-		<th>DEF</th>
-		<td><?php echo number_format((int)$monster[0]->DEF) ?></td>
-		<th>MDEF</th>
-		<td><?php echo number_format((int)$monster[0]->MDEF) ?></td>
-		<th>Scale</th>
-		<td><?php echo number_format((int)$monster[0]->Scale) ?></td>
-	</tr>
-	<tr>
-		<th>Base EXP</th>
-		<td><?php echo number_format((int)$monster[0]->EXP * $server->baseExpRates) ?></td>
-		<th>Job EXP</th>
-		<td><?php echo number_format((int)$monster[0]->JEXP * $server->jobExpRates) ?></td>
 		<th>Race</th>
 		<td>
-			<?php if ($race=Flux::monsterRaceName($monster[0]->Race)): ?>
+			<?php if ($race=Flux::monsterRaceName($monster->race)): ?>
 				<?php echo htmlspecialchars($race) ?>
 			<?php else: ?>
 				<span class="not-applicable">Unknown</span>
-			<?php endif ?>
+			<?php endif ?>	
 		</td>
+		<th>Level</th>
+		<td><?php echo number_format($monster->level) ?></td>
 	</tr>
 	<tr>
 		<th>Element</th>
-		<td><?php echo Flux::elementName($monster[0]->DefEle) ?> (<?php echo (int)$monster[0]->EleLv ?>)</td>
-		<th>Mode</th>
-		<td><?php echo number_format((int)$monster[0]->Mode) ?></td>
+		<td><?php echo Flux::elementName($monster->element) ?> (Level <?php echo floor($monster->element_level) ?>)</td>
 		<th>Speed</th>
-		<td><?php echo number_format((int)$monster[0]->Speed) ?></td>
+		<td><?php echo number_format($monster->speed) ?></td>
 	</tr>
 	<tr>
-		<th>aDelay</th>
-		<td><?php echo number_format((int)$monster[0]->aDelay) ?></td>
-		<th>aMotion</th>
-		<td><?php echo number_format((int)$monster[0]->aMotion) ?></td>
-		<th>dMotion</th>
-		<td><?php echo number_format((int)$monster[0]->dMotion) ?></td>
+		<th>Experience</th>
+		<td><?php echo number_format($monster->base_exp*$server->baseExpRates) ?></td>
+		<th>Attack</th>
+		<td><?php echo number_format($monster->attack1) ?>~<?php echo number_format($monster->attack2) ?></td>
 	</tr>
-	
-	<?php
-	$rewards       = array();
-	$rewardsPer    = array();
-	$rewardsList   = array();
-	$rewardsName   = array();
-	
-	for ($loop = 1; $loop <= 3; $loop++) {
-		$id            = "MVP".$loop."id";
-		$Per           = "MVP".$loop."per";
-		$Name          = "MVP".$loop."name";
-		$rewards[]     = $monster[0]->$id;
-		$rewardsPer[]  = $monster[0]->$Per * $server->mvpDropRates / 100;
-		$rewardsList[] = "MvP Reward ".$loop;
-		$rewardsName[] = $monster[$loop]->$Name;
-	}
-	
-		for ($loop = 1; $loop <= 9; $loop++) {
-		$id            = "Drop".$loop."id";
-		$Per           = "Drop".$loop."per";
-		$Name          = "Drop".$loop."name";
-		$rewards[]     = $monster[0]->$id;
-		$rewardsPer[]  = $monster[0]->$Per * $server->dropRates / 100;
-		$rewardsList[] = "Drop".$loop;
-		$rewardsName[] = $monster[$loop+3]->$Name;
-	}
-	
-	$rewards[]     = $monster[0]->DropCardid;
-	$rewardsPer[]  = $monster[0]->DropCardper * $server->cardDropRates / 100.000;
-	$rewardsList[] = "Card";
-	$rewardsName[] = $monster[13]->DropCardname;
-	
-	if ($monster[0]->MEXP): ?>
 	<tr>
-		<th>MvP EXP Reward</th>
-		<td colspan="3"><?php echo number_format((int)$monster[0]->MEXP * $server->mvpExpRates) ?></td>
-		<th>Reward Chance</th>
-		<td><?php echo number_format((int)$monster[0]->ExpPer/100)."%" ?></td>
+		<th>Job Experience</th>
+		<td><?php echo number_format($monster->job_exp*$server->jobExpRates) ?></td>
+		<th>Defense</th>
+		<td><?php echo number_format($monster->defense) ?></td>
 	</tr>
-	<?php endif ?>
-	<?php for ($reward = 0; $reward <= 12; $reward++) {
-	if ($rewards[$reward]) {
-	echo "
 	<tr>
-		<th>$rewardsList[$reward]</th>
-		<td colspan=\"3\">".$this->linkToItem($rewards[$reward], $rewardsName[$reward]." (#".$rewards[$reward].")")."</td>
-		<th>$rewardsList[$reward] Chance</th>";
-		if ($rewardsPer[$reward] > 100)
-			$rewardsPer[$reward] = 100;
-	echo "
-		<td>".$rewardsPer[$reward]."%</td>
+		<th>MVP Experience</th>
+		<td><?php echo number_format($monster->mvp_exp*$server->mvpExpRates) ?></td>
+		<th>Magic Defense</th>
+		<td><?php echo number_format($monster->magic_defense) ?></td>
 	</tr>
-	";
-	} }
-	if (!is_readable($mobDB)) {
-		echo "<td colspan=\"17\" align=\"center\">Mob Skill DB could not be read.</td>";
-	} else if (filesize($mobDB) == 0) {
-		echo "<td colspan=\"6\" align=\"center\">The Mob Skill DB needs to be reloaded by an Admin.</td>";
-	} else {
-		echo "
-		</table>
-		<br />
-		<h3>Monster Skills</h3>
-		<table class=\"vertical-table\">
-		<tr>
-		<th>Info</th>
+	<tr>
+		<th>Attack Delay</th>
+		<td><?php echo number_format($monster->attack_delay) ?> ms</td>
+		<th>Attack Range</th>
+		<td><?php echo number_format($monster->range1) ?></td>
+	</tr>
+	<tr>
+		<th>Attack Motion</th>
+		<td><?php echo number_format($monster->attack_motion) ?> ms</td>
+		<th>Spell Range</th>
+		<td><?php echo number_format($monster->range2) ?></td>
+	</tr>
+	<tr>
+		<th>Delay Motion</th>
+		<td><?php echo number_format($monster->defense_motion) ?> ms</td>
+		<th>Vision Range</th>
+		<td><?php echo number_format($monster->range3) ?></td>
+	</tr>
+	<tr>
+		<th>Monster Mode</th>
+		<td colspan="3">
+			<ul class="monster-mode">
+			<?php foreach ($this->monsterMode($monster->mode) as $mode): ?>
+				<li><?php echo htmlspecialchars($mode) ?></li>
+			<?php endforeach ?>
+			</ul>
+		</td>
+	</tr>
+	<tr>
+		<th>Monster Stats</th>
+		<td colspan="3">
+			<table class="character-stats">
+				<tr>
+					<td><span class="stat-name">STR</span></td>
+					<td><span class="stat-value"><?php echo number_format((int)$monster->strength) ?></span></td>
+					<td><span class="stat-name">AGI</span></td>
+					<td><span class="stat-value"><?php echo number_format((int)$monster->agility) ?></span></td>
+					<td><span class="stat-name">VIT</span></td>
+					<td><span class="stat-value"><?php echo number_format((int)$monster->vitality) ?></span></td>
+				</tr>
+				<tr>
+					<td><span class="stat-name">INT</span></td>
+					<td><span class="stat-value"><?php echo number_format((int)$monster->intelligence) ?></span></td>
+					<td><span class="stat-name">DEX</span></td>
+					<td><span class="stat-value"><?php echo number_format((int)$monster->dexterity) ?></span></td>
+					<td><span class="stat-name">LUK</span></td>
+					<td><span class="stat-value"><?php echo number_format((int)$monster->luck) ?></span></td>
+				</tr>
+			</table>
+		</td>
+	</tr>
+</table>
+
+<h3>Monster Skills for “<?php echo htmlspecialchars($monster->kro_name) ?>”</h3>
+<?php if (!filesize($skillDB)): ?>
+<p><strong>Mob skill database needs to be reloaded!</strong></p>
+<?php elseif (empty($skillDB)): ?>
+<p>No skills found for <?php echo htmlspecialchars($monster->kro_name) ?>.</p>
+<?php else: ?>
+<table class="vertical-table">
+	<tr>
+		<th>Name</th>
+		<th>Level</th>
 		<th>State</th>
-		<th>Skill ID</th>
-		<th>Skill Level</th>
 		<th>Rate</th>
 		<th>Cast Time</th>
 		<th>Delay</th>
 		<th>Cancelable</th>
 		<th>Target</th>
 		<th>Condition</th>
-		<th>Value</th>
-		<th>Val1</th>
-		<th>Val2</th>
-		<th>Val3</th>
-		<th>Val4</th>
-		<th>Val5</th>
-		<th>Emotion</th>
-		</tr>";
-		if (count($skills) == 0)
-			echo "<td colspan=\"17\" align=\"center\">This monster has no skills.</td>";
-		foreach ($skills as $skill) {
-			$skill = explode(',', $skill);
-			$info = explode('@', $skill[1],2);
-			$skill[1] = $info[1];
-			echo "
-			<tr>";
-			$skill[5] = ($skill[5]/100.00)."%";
-			$skill[6] = ($skill[6]/100.00)." sec";
-			$skill[7] = ($skill[7]/100.00)." sec";
-			for ($a = 1; $a <= 17; $a++) {
-				if (trim($skill[$a]) != "")
-					echo "<td>$skill[$a]</td>";
-				else
-					echo "<td><span class=\"not-applicable\">None</span></td>";
-			}
-			echo "
-			</tr>";
-		}
-	}
-	echo "
-	</tr>";
-	?>
+	</tr>	
+	<?php foreach ($mobSkills as $skill): ?>
+	<tr>
+		<td><?php echo htmlspecialchars($skill['name']) ?></td>
+		<td><?php echo htmlspecialchars($skill['level']) ?></td>
+		<td><?php echo htmlspecialchars(ucfirst($skill['state'])) ?></td>
+		<td><?php echo $skill['rate'] ?>%</td>
+		<td><?php echo $skill['cast_time'] ?>s</td>
+		<td><?php echo $skill['delay'] ?>s</td>
+		<td><?php echo htmlspecialchars(ucfirst($skill['cancelable'])) ?></td>
+		<td><?php echo htmlspecialchars(ucfirst($skill['target'])) ?></td>
+		<td><em><?php echo htmlspecialchars($skill['condition']) ?></em></td>
+	</tr>
+	<?php endforeach ?>
 </table>
+<?php endif ?>
 <?php else: ?>
 <p>No such monster was found. <a href="javascript:history.go(-1)">Go back</a>.</p>
 <?php endif ?>

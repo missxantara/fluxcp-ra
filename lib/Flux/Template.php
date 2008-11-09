@@ -1223,5 +1223,20 @@ class Flux_Template {
 		$link = preg_replace('&/{2,}&', '/', "{$this->basePath}/$path");
 		return file_exists($path) ? $link : false;
 	}
+	
+	/**
+	 *
+	 */
+	public function monsterMode($mode)
+	{
+		$modes = Flux::monsterModeToArray($mode);
+		$array = array();
+		foreach (Flux::config('MonsterModes')->toArray() as $bit => $name) {
+			if (in_array($bit, $modes)) {
+				$array[] = $name;
+			}
+		}
+		return $array;
+ 	}
 }
 ?>

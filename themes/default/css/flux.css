@@ -304,7 +304,7 @@ label:hover {
 }
 
 .vertical-table th {
-	padding: 5px 10px;
+	padding: 10px 10px;
 	background-color: #eee;
 }
 
@@ -946,4 +946,32 @@ textarea {
 
 .empty-row {
 	visibility: hidden;
+}
+
+.item-drop-mvp td {
+	color: #000;
+	background-color: #F8F8FF;
+}
+
+.item-drop-card td {
+	color: #000;
+	background-color: #F0FFFF;
+}
+
+.mvp {
+	font-size: xx-small;
+	font-weight: bold;
+	color: #ff0000;
+	vertical-align: top;
+}
+
+.monster-mode {
+	margin: 0;
+	padding: 0;
+	list-style: square inside;
+}
+
+.monster-mode li {
+	padding: 1px;
+	border-bottom: 1px dotted #eee;
 }
