@@ -1,6 +1,9 @@
 <?php if (!defined('FLUX_ROOT')) exit; ?>
 <h2>Register</h2>
 <p>Please read our <a href="<?php echo $this->url('service', 'tos') ?>">Terms of Service</a> (ToS) before registering for an account, to ensure that you understand the rules of holding an account with our private Ragnarok Online game server.</p>
+<?php if (Flux::config('RequireEmailConfirm')): ?>
+<p><strong>Note:</strong> You will need to provide a working e-mail address to confirm your account before you can log-in.</p>
+<?php endif ?>
 <?php if (isset($errorMessage)): ?>
 <p class="red" style="font-weight: bold"><?php echo htmlspecialchars($errorMessage) ?></p>
 <?php endif ?>
