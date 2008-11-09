@@ -128,7 +128,7 @@
 </table>
 
 <?php if ($auth->allowedToViewAccountBanLog && $banInfo): ?>
-<h3>Ban Log for “<?php echo htmlspecialchars($account->userid) ?>” (recent to oldest)</h3>
+<h3>Ban Log for <?php echo htmlspecialchars($account->userid) ?> (recent to oldest)</h3>
 <table class="vertical-table">
 	<tr>
 		<th>Ban Type</th>
@@ -226,7 +226,7 @@
 	<?php endif ?>
 <?php endforeach ?>
 
-<h3>Storage Items of “<?php echo htmlspecialchars($account->userid) ?>”</h3>
+<h3>Storage Items of <?php echo htmlspecialchars($account->userid) ?></h3>
 <?php if ($items): ?>
 	<p><?php echo htmlspecialchars($account->userid) ?> has <?php echo count($items) ?> storage item(s).</p>
 	<table class="vertical-table">

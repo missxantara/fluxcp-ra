@@ -18,8 +18,8 @@ if (($isMine || $auth->allowedToResetPosition) && $auth->actionAllowed('characte
 		onclick="return confirm(\'Are you sure you want to reset position?\')">Reset Position</a>', $this->url('character', 'resetpos', array('id' => $char->char_id)));
 }
 ?>
-<h3>Character Information for “<?php echo htmlspecialchars($char->char_name) ?>”</h3>
-<p class="action"><?php echo implode(' • ', $actions) ?></p>
+<h3>Character Information for <?php echo htmlspecialchars($char->char_name) ?></h3>
+<p class="action"><?php echo implode(' / ', $actions) ?></p>
 <table class="vertical-table">
 	<tr>
 		<th>Character ID</th>
@@ -227,7 +227,7 @@ if (($isMine || $auth->allowedToResetPosition) && $auth->actionAllowed('characte
 	</tr>
 </table>
 <?php if ($char->party_name): ?>
-<h3>Other Party Members of “<?php echo htmlspecialchars($char->party_name) ?>”</h3>
+<h3>Other Party Members of <?php echo htmlspecialchars($char->party_name) ?></h3>
 	<?php if ($partyMembers): ?>
 		<p><?php echo htmlspecialchars($char->party_name) ?> has <?php echo count($partyMembers) ?> other party member(s) besides <?php echo htmlspecialchars($char->char_name) ?>.</p>
 		<table class="vertical-table">
@@ -283,7 +283,7 @@ if (($isMine || $auth->allowedToResetPosition) && $auth->actionAllowed('characte
 		<p>There are no other members in this party.</p>
 	<?php endif ?>
 <?php endif ?>
-<h3>Friends of “<?php echo htmlspecialchars($char->char_name) ?>”</h3>
+<h3>Friends of <?php echo htmlspecialchars($char->char_name) ?></h3>
 <?php if ($friends): ?>
 	<p><?php echo htmlspecialchars($char->char_name) ?> has <?php echo count($friends) ?> friend(s).</p>
 	<table class="vertical-table">
@@ -341,7 +341,7 @@ if (($isMine || $auth->allowedToResetPosition) && $auth->actionAllowed('characte
 	<p><?php echo htmlspecialchars($char->char_name) ?> has no friends.</p>
 <?php endif ?>
 
-<h3>Inventory Items of “<?php echo htmlspecialchars($char->char_name) ?>”</h3>
+<h3>Inventory Items of <?php echo htmlspecialchars($char->char_name) ?></h3>
 <?php if ($items): ?>
 	<p><?php echo htmlspecialchars($char->char_name) ?> has <?php echo count($items) ?> inventory item(s).</p>
 	<table class="vertical-table">
@@ -439,7 +439,7 @@ if (($isMine || $auth->allowedToResetPosition) && $auth->actionAllowed('characte
 	<p>There are no inventory items on this character.</p>
 <?php endif ?>
 
-<h3>Cart Inventory Items of “<?php echo htmlspecialchars($char->char_name) ?>”</h3>
+<h3>Cart Inventory Items of <?php echo htmlspecialchars($char->char_name) ?></h3>
 <?php if ($cart_items): ?>
 	<p><?php echo htmlspecialchars($char->char_name) ?> has <?php echo count($cart_items) ?> cart inventory item(s).</p>
 	<table class="vertical-table">
