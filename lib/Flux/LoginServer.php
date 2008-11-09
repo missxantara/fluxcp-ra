@@ -223,6 +223,7 @@ class Flux_LoginServer extends Flux_BaseServer {
 	{
 		$info = $this->getBanInfo($accountID);
 		$table = Flux::config('FluxTables.AccountBanTable');
+		$createTable = Flux::config('FluxTables.AccountCreateTable');
 		
 		if (!$info || !$info->ban_type) {
 			$sql  = "INSERT INTO {$this->loginDatabase}.$table (account_id, banned_by, ban_type, ban_until, ban_date, ban_reason) ";
@@ -231,6 +232,10 @@ class Flux_LoginServer extends Flux_BaseServer {
 			$res  = $sth->execute(array($accountID, $unbannedBy, $unbanReason));
 			
 			if ($res) {
+				$sql  = "UPDATE {$this->loginDatabase}.$createTable SET confirmed = 1, confirm_expire = NULL WHERE account_id = ?";
+				$sth  = $this->connection->getStatement($sql);
+				$sth->execute(array($accountID));
+				
 				$sql  = "UPDATE {$this->loginDatabase}.login SET state = 0, unban_time = 0 WHERE account_id = ?";
 				$sth  = $this->connection->getStatement($sql);
 				return $sth->execute(array($accountID));
