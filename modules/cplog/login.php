@@ -55,21 +55,20 @@ if (!is_null($errorCode) && strtolower($errorCode) != 'all') {
 	}
 }
 
-$sql = "SELECT COUNT(id) AS total FROM {$server->loginDatabase}.$loginLogTable AS log $sqlpartial";
+$sql = "SELECT COUNT(id) AS total FROM {$server->loginDatabase}.$loginLogTable $sqlpartial";
 $sth = $server->connection->getStatement($sql);
 $sth->execute($bind);
 
 $paginator = $this->getPaginator($sth->fetch()->total);
-
-$sql = "SELECT account_id, username, password, ip, login_date, error_code FROM {$server->loginDatabase}.$loginLogTable AS log $sqlpartial";
-$sql = $paginator->getSQL($sql);
-$sth = $server->connection->getStatement($sql);
-$sth->execute($bind);
-
 $paginator->setSortableColumns(array(
 	'account_id', 'username', 'password', 'ip',
 	'login_date' => 'desc', 'error_code'
 ));
+
+$sql = "SELECT account_id, username, password, ip, login_date, error_code FROM {$server->loginDatabase}.$loginLogTable $sqlpartial";
+$sql = $paginator->getSQL($sql);
+$sth = $server->connection->getStatement($sql);
+$sth->execute($bind);
 
 $logins = $sth->fetchAll();
 $loginErrors = Flux::config('LoginErrors');
