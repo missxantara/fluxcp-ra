@@ -267,7 +267,7 @@ class Flux_SessionData {
 			throw new Flux_LoginError('Invalid login', Flux_LoginError::INVALID_LOGIN);
 		}
 		
-		if (Flux::config('UseLoginCaptcha') && $securityCode != $this->securityCode) {
+		if (!is_null($securityCode) && Flux::config('UseLoginCaptcha') && $securityCode != $this->securityCode) {
 			throw new Flux_LoginError('Invalid security code', Flux_LoginError::INVALID_SECURITY_CODE);
 		}
 		
