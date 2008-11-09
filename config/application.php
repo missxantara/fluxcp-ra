@@ -117,6 +117,8 @@ return array(
 	
 	'CpLoginLogShowPassword'  => false,                  // Show password in CP login log (also see access.php's SeeCpLoginLogPass).
 	
+	'CpResetLogShowPassword'  => false,                  // Show password in CP "password resets" log (also see access.php's SeeCpResetPass).
+	
 	// These are the main menu items that should be displayed by themes.
 	// They route to modules and actions.  Whether they are displayed or
 	// not at any given time depends on the user's account level and/or
@@ -189,7 +191,10 @@ return array(
 		),
 		'cplog' => array(
 			'paypal' => 'PayPal Trasactions',
-			'login'  => 'Logins'
+			'login'  => 'Logins',
+			'resetpass'  => 'Password Resets',
+			//'changepass' => 'Password Changes',
+			//'changemail' => 'E-mail Changes'
 		),
 		'reload' => array(
 			'mobskill' => 'Mob Skills'

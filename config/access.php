@@ -113,7 +113,10 @@ return array(
 		'cplog'     => array(
 			'index'   => AccountLevel::ADMIN,
 			'paypal'  => AccountLevel::ADMIN,
-			'login'   => AccountLevel::ADMIN	
+			'login'   => AccountLevel::ADMIN,
+			'resetpass'  => AccountLevel::ADMIN,
+			'changepass' => AccountLevel::ADMIN,
+			'changemail' => AccountLevel::ADMIN
 		),
 		'ipban'     => array(
 			'index'    => AccountLevel::ADMIN,
@@ -181,6 +184,8 @@ return array(
 		'ViewWoeDisallowed'  => AccountLevel::LOWGM,  // Level required to bypass WoE-disabled page security check.
 		'SeeCpLoginLogPass'  => AccountLevel::ADMIN,  // Level required to see password in CP login log (also requires CpLoginLogShowPassword in application.php)
 		'SearchCpLoginLogPw' => AccountLevel::ADMIN,  // Level required to search through passwords in the CP login log.
+		'SeeCpResetPass'     => AccountLevel::ADMIN,  // Level required to see passwords in CP log's "password resets" page.
+		'SearchCpResetPass'  => AccountLevel::ADMIN,  // Level required to search passwords in CP log's "password resets" page.
 		
 		'EditHigherPower'    => 5000,
 		'BanHigherPower'     => 5000
