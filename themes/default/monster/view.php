@@ -22,6 +22,7 @@
 					<th colspan="2">Item Name</th>
 					<th>Drop Chance</th>
 				</tr>
+				<?php $mvpDrops = 0; ?>
 				<?php foreach ($itemDrops as $itemDrop): ?>
 				<tr class="item-drop-<?php echo $itemDrop['type'] ?>"
 					title="<strong><?php echo htmlspecialchars($itemDrop['name']) ?></strong> (<?php echo (float)$itemDrop['chance'] ?>%)">
@@ -43,6 +44,7 @@
 					<?php else: ?>
 						<td colspan="2">
 							<?php if ($itemDrop['type'] == 'mvp'): ?>
+							<?php ++$mvpDrops; ?>
 								<span class="mvp">MVP!</span>
 							<?php endif ?>
 							<?php echo htmlspecialchars($itemDrop['name']) ?>
@@ -51,6 +53,13 @@
 					<td><?php echo (float)$itemDrop['chance'] ?>%</td>
 				</tr>
 				<?php endforeach ?>
+				<?php if ($mvpDrops > 1): ?>
+				<tr>
+					<td colspan="4" align="center">
+						<p><em>Note: Only <strong>one</strong> MVP drop will be rewarded.</em></p>
+					</td>
+				</tr>
+				<?php endif ?>
 			</table>
 		</td>
 		<?php endif ?>
