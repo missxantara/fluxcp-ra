@@ -183,6 +183,7 @@
 		<th>Cancelable</th>
 		<th>Target</th>
 		<th>Condition</th>
+		<th>Value</th>
 	</tr>	
 	<?php foreach ($mobSkills as $skill): ?>
 	<tr>
@@ -195,6 +196,13 @@
 		<td><?php echo htmlspecialchars(ucfirst($skill['cancelable'])) ?></td>
 		<td><?php echo htmlspecialchars(ucfirst($skill['target'])) ?></td>
 		<td><em><?php echo htmlspecialchars($skill['condition']) ?></em></td>
+		<td>
+			<?php if (!is_null($skill['value']) && trim($skill['value']) !== ''): ?>
+				<?php echo htmlspecialchars($skill['value']) ?>
+			<?php else: ?>
+				<span class="not-applicable">None</span>
+			<?php endif ?>
+		</td>
 	</tr>
 	<?php endforeach ?>
 </table>
