@@ -37,6 +37,7 @@
 						<td><img src="<?php echo $image ?>" /></td>
 						<td>
 							<?php if ($itemDrop['type'] == 'mvp'): ?>
+							<?php ++$mvpDrops; ?>
 								<span class="mvp">MVP!</span>
 							<?php endif ?>
 							<?php echo htmlspecialchars($itemDrop['name']) ?>
