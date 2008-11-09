@@ -12,6 +12,14 @@
 		…
 		<label for="card_id">Card ID:</label>
 		<input type="text" name="card_id" id="card_id" value="<?php echo htmlspecialchars($params->get('card_id')) ?>" />
+		…
+		<label for="mvp">MVP:</label>
+		<select name="mvp" id="mvp">
+			<option value="all"<?php if (!($mvpParam=strtolower($params->get('mvp'))) || $mvpParam == 'all') echo ' selected="selected"' ?>>All</option>
+			<option value="yes"<?php if ($mvpParam == 'yes') echo ' selected="selected"' ?>>Yes</option>
+			<option value="no"<?php if ($mvpParam == 'no') echo ' selected="selected"' ?>>No</option>
+		</select>
+		
 		<input type="submit" value="Search" />
 		<input type="button" value="Reset" onclick="reload()" />
 	</p>
@@ -38,7 +46,12 @@
 				<?php echo htmlspecialchars($monster->monster_id) ?>
 			<?php endif ?>
 		</td>
-		<td><?php echo htmlspecialchars($monster->kro_name) ?></td>
+		<td>
+			<?php if ($monster->mvp_exp): ?>
+			<span class="mvp">MVP!</span>
+			<?php endif ?>
+			<?php echo htmlspecialchars($monster->kro_name) ?>
+		</td>
 		<td><?php echo htmlspecialchars($monster->iro_name) ?></td>
 		<td><?php echo number_format($monster->level) ?></td>
 		<td><?php echo number_format($monster->hp) ?></td>

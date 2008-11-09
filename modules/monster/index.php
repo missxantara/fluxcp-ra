@@ -26,6 +26,7 @@ try {
 		$opValues       = array_keys($opMapping);
 		$monsterName    = $params->get('name');
 		$cardID         = $params->get('card_id');
+		$mvp            = strtolower($params->get('mvp'));
 		
 		if ($monsterName) {
 			$sqlpartial .= "AND ((kName LIKE ? OR kName = ?) OR (iName LIKE ? OR iName = ?)) ";
@@ -39,6 +40,13 @@ try {
 			$sqlpartial .= "AND DropCardid = ? ";
 			$bind[]      = $cardID;
 		}
+		
+		if ($mvp == 'yes') {
+			$sqlpartial .= 'AND MEXP > 0 ';
+		}
+		elseif ($mvp == 'no') {
+			$sqlpartial .= 'AND MEXP = 0 ';
+		}
 	}
 	
 	// Get total count and feed back to the paginator.
@@ -51,7 +59,7 @@ try {
 	));
 	
 	$col  = "origin_table, monsters.ID AS monster_id, kName AS kro_name, iName AS iro_name, ";
-	$col .= "LV AS level, HP AS hp, EXP AS exp, JEXP AS jexp, DropCardid AS dropcard_id";
+	$col .= "LV AS level, HP AS hp, EXP AS exp, JEXP AS jexp, DropCardid AS dropcard_id, mexp AS mvp_exp";
 	
 	$sql  = $paginator->getSQL("SELECT $col FROM $tableName $sqlpartial");
 	$sth  = $server->connection->getStatement($sql);
