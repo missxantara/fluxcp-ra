@@ -292,6 +292,18 @@ class Flux_SessionData {
 					throw new Flux_LoginError('Temporarily banned', Flux_LoginError::BANNED);
 				}
 			}
+			if ($row->state == 5) {
+				$createTable = Flux::config('FluxTables.AccountCreateTable');
+				$sql  = "SELECT id FROM {$loginAthenaGroup->loginDatabase}.$createTable ";
+				$sql .= "WHERE account_id = ? AND confirmed = 0";
+				$sth  = $loginAthenaGroup->connection->getStatement($sql);
+				$sth->execute(array($row->account_id));
+				$row2 = $sth->fetch();
+				
+				if ($row2 && $row2->id) {
+					throw new Flux_LoginError('Pending confirmation', Flux_LoginError::PENDING_CONFIRMATION);
+				}
+			}
 			if (!Flux::config('AllowPermBanLogin') && $row->state == 5) {
 				throw new Flux_LoginError('Permanently banned', Flux_LoginError::PERMABANNED);
 			}

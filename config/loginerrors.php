@@ -6,6 +6,7 @@ return array(
 	3 => 'Temporarily Banned',
 	4 => 'Permanently Banned',
 	5 => 'IP Banned',
-	6 => 'Invalid Security Code'
+	6 => 'Invalid Security Code',
+	7 => 'Pending Confirmation'
 )
 ?>

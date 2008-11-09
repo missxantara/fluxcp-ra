@@ -77,6 +77,9 @@ if (count($_POST)) {
 			case Flux_LoginError::INVALID_SECURITY_CODE:
 				$errorMessage = Flux::message('InvalidSecurityCode');
 				break;
+			case Flux_LoginError::PENDING_CONFIRMATION:
+				$errorMessage = Flux::message('PendingConfirmation');
+				break;
 			default:
 				$errorMessage = Flux::message('CriticalLoginError');
 				break;
