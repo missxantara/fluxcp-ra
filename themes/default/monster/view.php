@@ -34,7 +34,12 @@
 					</td>
 					<?php if ($image=$this->iconImage($itemDrop['id'])): ?>
 						<td><img src="<?php echo $image ?>" /></td>
-						<td><?php echo htmlspecialchars($itemDrop['name']) ?></td>
+						<td>
+							<?php if ($itemDrop['type'] == 'mvp'): ?>
+								<span class="mvp">MVP!</span>
+							<?php endif ?>
+							<?php echo htmlspecialchars($itemDrop['name']) ?>
+						</td>
 					<?php else: ?>
 						<td colspan="2">
 							<?php if ($itemDrop['type'] == 'mvp'): ?>
