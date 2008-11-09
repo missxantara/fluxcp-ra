@@ -124,7 +124,7 @@
 			<th>Position ID</th>
 			<th>Position Name</th>
 			<th>Guild Rights</th>
-			<th>Tax Level</th>
+			<th>Tax</th>
 		</tr>
 		<?php foreach ($members AS $member): ?>
 		<tr>
