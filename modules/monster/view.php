@@ -69,8 +69,8 @@ if ($monster) {
 	$sth->execute(array_values($dropIDs));
 	$items = $sth->fetchAll();
 	
+	$needToSet = array();
 	if ($items) {
-		$needToSet = array();
 		foreach ($dropIDs AS $dropField => $dropID) {
 			$needToSet[$dropField] = true;
 		}
