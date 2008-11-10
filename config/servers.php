@@ -34,6 +34,7 @@ return array(
 			'Address'  => '127.0.0.1',
 			'Port'     => 6900,
 			'UseMD5'   => true,
+			'NoCase'   => true, // eA account case-sensitivity; Default: Case-INsensitive (true).
 			//'Database' => 'ragnarok'
 		),
 		'CharMapServers' => array(

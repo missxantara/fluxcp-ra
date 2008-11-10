@@ -74,8 +74,15 @@ class Flux_LoginServer extends Flux_BaseServer {
 			return false;
 		}
 		
-		$sql = "SELECT userid FROM {$this->loginDatabase}.login WHERE sex != 'S' AND level >= 0 AND userid = ? AND user_pass = ? LIMIT 1";
-		$sth = $this->connection->getStatement($sql);
+		$sql  = "SELECT userid FROM {$this->loginDatabase}.login WHERE sex != 'S' AND level >= 0 ";
+		if ($this->config->getNoCase()) {
+			$sql .= 'AND LOWER(userid) = LOWER(?) ';
+		}
+		else {
+			$sql .= 'AND CAST(userid AS BINARY) = ? ';
+		}
+		$sql .= "AND user_pass = ? LIMIT 1";
+		$sth  = $this->connection->getStatement($sql);
 		$sth->execute(array($username, $password));
 		
 		$res = $sth->fetch();
@@ -117,8 +124,15 @@ class Flux_LoginServer extends Flux_BaseServer {
 			throw new Flux_RegisterError('Invalid security code', Flux_RegisterError::INVALID_SECURITY_CODE);
 		}
 		
-		$sql = "SELECT userid FROM {$this->loginDatabase}.login WHERE userid = ? LIMIT 1";
-		$sth = $this->connection->getStatement($sql);
+		$sql  = "SELECT userid FROM {$this->loginDatabase}.login WHERE ";
+		if ($this->config->getNoCase()) {
+			$sql .= 'LOWER(userid) = LOWER(?) ';
+		}
+		else {
+			$sql .= 'BINARY userid = ? ';
+		}
+		$sql .= 'LIMIT 1';
+		$sth  = $this->connection->getStatement($sql);
 		$sth->execute(array($username));
 		
 		$res = $sth->fetch();
