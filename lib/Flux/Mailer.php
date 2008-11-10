@@ -33,6 +33,9 @@ class Flux_Mailer {
 			if ($user=Flux::config('MailerSMTPUsername')) {
 				$pm->SMTPAuth = true;
 				
+				if (Flux::config('MailerSMTPUseTLS')) {
+					$pm->SMTPSecure = 'tls';
+				}
 				if (Flux::config('MailerSMTPUseSSL')) {
 					$pm->SMTPSecure = 'ssl';
 				}
