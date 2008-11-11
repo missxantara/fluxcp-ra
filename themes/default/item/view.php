@@ -22,7 +22,10 @@ $icon = $this->iconImage($item->item_id);
 		<th>Item ID</th>
 		<td><?php echo htmlspecialchars($item->item_id) ?></td>
 		<?php if ($image=$this->itemImage($item->item_id)): ?>
-		<td rowspan="5"><img src="<?php echo $image ?>" /></td>
+		<td rowspan="8"
+			style="width: 150px; text-align: center; vertical-alignment: middle">
+			<img src="<?php echo $image ?>" />
+		</td>
 		<?php endif ?>
 		<th>For Sale</th>
 		<td>
@@ -82,19 +85,19 @@ $icon = $this->iconImage($item->item_id);
 	</tr>
 	<tr>
 		<th>Range</th>
-		<td<?php if ($image) echo ' colspan="2"' ?>><?php echo number_format((int)$item->range) ?></td>
+		<td><?php echo number_format((int)$item->range) ?></td>
 		<th>Defense</th>
 		<td><?php echo number_format((int)$item->defence) ?></td>
 	</tr>
 	<tr>
 		<th>Slots</th>
-		<td<?php if ($image) echo ' colspan="2"' ?>><?php echo number_format((int)$item->slots) ?></td>
+		<td><?php echo number_format((int)$item->slots) ?></td>
 		<th>Refineable</th>
 		<td><?php echo number_format((int)$item->refineable) ?></td>
 	</tr>
 	<tr>
 		<th>Equip Level</th>
-		<td<?php if ($image) echo ' colspan="2"' ?>><?php echo number_format((int)$item->equip_level) ?></td>
+		<td><?php echo number_format((int)$item->equip_level) ?></td>
 		<th>Weapon Level</th>
 		<td><?php echo number_format((int)$item->weapon_level) ?></td>
 	</tr>
