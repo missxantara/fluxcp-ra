@@ -77,7 +77,7 @@
 			<?php endif ?>
 		</td>
 		<?php if ($guild->emblem_len): ?>
-		<td><img src="<?php echo $this->emblem($guild->guild_id) ?>" /></td>
+		<td width="24"><img src="<?php echo $this->emblem($guild->guild_id) ?>" /></td>
 		<td><?php echo htmlspecialchars($guild->guildName) ?></td>
 		<?php else: ?>
 		<td colspan="2"><?php echo htmlspecialchars($guild->guildName) ?></td>
