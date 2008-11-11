@@ -125,7 +125,7 @@
 			<?php endif ?>
 		</td>
 		<?php if ($icon=$this->iconImage($item->item_id)): ?>
-			<td><img src="<?php echo htmlspecialchars($icon) ?>?nocache=<?php echo rand() ?>" /></td>
+			<td width="24"><img src="<?php echo htmlspecialchars($icon) ?>?nocache=<?php echo rand() ?>" /></td>
 			<td><?php echo htmlspecialchars($item->name) ?></td>
 		<?php else: ?>
 			<td colspan="2"><?php echo htmlspecialchars($item->name) ?></td>
