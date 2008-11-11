@@ -10,8 +10,7 @@ if ($auth->actionAllowed('item', 'copy')) {
 	$actions[] = sprintf('<a href="%s">Duplicate Item</a>', $this->url('item', 'copy', array('id' => $item->item_id)));
 }
 
-$icon    = $this->iconImage($item->item_id);
-$rowspan = ($isCustom && $auth->allowedToSeeItemDb2Scripts) || (!$isCustom && $auth->allowedToSeeItemDbScripts) ? 15 : 12;
+$icon = $this->iconImage($item->item_id);
 ?>
 <h3>
 	<?php if ($icon): ?><img src="<?php echo $icon ?>" /><?php endif ?>
@@ -44,7 +43,6 @@ $rowspan = ($isCustom && $auth->allowedToSeeItemDb2Scripts) || (!$isCustom && $a
 				</span>
 			<?php endif ?>
 		</td>
-
 	</tr>
 	<tr>
 		<th>Identifier</th>
@@ -177,6 +175,43 @@ $rowspan = ($isCustom && $auth->allowedToSeeItemDb2Scripts) || (!$isCustom && $a
 	</tr>
 	<?php endif ?>
 </table>
+<?php if ($itemDrops): ?>
+<h3><?php echo htmlspecialchars($item->name) ?> Dropped By</h3>
+<table class="vertical-table">
+	<tr>
+		<th>Monster ID</th>
+		<th>Monster Name</th>
+		<th><?php echo htmlspecialchars($item->name) ?> Drop Chance</th>
+		<th>Monster Level</th>
+		<th>Monster Race</th>
+		<th>Monster Element</th>
+	</tr>
+	<?php foreach ($itemDrops as $itemDrop): ?>
+	<tr class="item-drop-<?php echo $itemDrop['type'] ?>">
+		<td align="right">
+			<?php if ($auth->actionAllowed('monster', 'view')): ?>
+				<?php echo $this->linkToMonster($itemDrop['monster_id'], $itemDrop['monster_id']) ?>
+			<?php else: ?>
+				<?php echo $itemDrop['monster_id'] ?>
+			<?php endif ?>
+		</td>
+		<td>
+			<?php if ($itemDrop['type'] == 'mvp'): ?>
+				<span class="mvp">MVP!</span>
+			<?php endif ?>
+			<?php echo htmlspecialchars($itemDrop['monster_name']) ?>
+		</td>
+		<td><strong><?php echo $itemDrop['drop_chance'] ?>%</strong></td>
+		<td><?php echo number_format($itemDrop['monster_level']) ?></td>
+		<td><?php echo Flux::monsterRaceName($itemDrop['monster_race']) ?></td>
+		<td>
+			Level <?php echo floor($itemDrop['monster_ele_lv']) ?>
+			<em><?php echo Flux::elementName($itemDrop['monster_element']) ?></em>
+		</td>
+	</tr>
+	<?php endforeach ?>
+</table>
+<?php endif ?>
 <?php else: ?>
 <p>No such item was found. <a href="javascript:history.go(-1)">Go back</a>.</p>
 <?php endif ?>
