@@ -15,7 +15,7 @@ if (!is_null($jobClass) && !array_key_exists($jobClass, $classes)) {
 }
 
 $col  = "ch.char_id, ch.name AS char_name, ch.class AS char_class, ch.base_level, ch.base_exp, ch.job_level, ch.job_exp, ";
-$col .= "ch.guild_id, guild.name AS guild_name";
+$col .= "ch.guild_id, guild.name AS guild_name, guild.emblem_len AS guild_emblem_len";
 
 $sql  = "SELECT $col FROM {$server->charMapDatabase}.`char` AS ch ";
 $sql .= "LEFT JOIN {$server->charMapDatabase}.guild ON guild.guild_id = ch.guild_id ";
