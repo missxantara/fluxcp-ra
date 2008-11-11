@@ -9,7 +9,9 @@ if ($auth->actionAllowed('item', 'edit')) {
 if ($auth->actionAllowed('item', 'copy')) {
 	$actions[] = sprintf('<a href="%s">Duplicate Item</a>', $this->url('item', 'copy', array('id' => $item->item_id)));
 }
-$icon = $this->iconImage($item->item_id);
+
+$icon    = $this->iconImage($item->item_id);
+$rowspan = ($isCustom && $auth->allowedToSeeItemDb2Scripts) || (!$isCustom && $auth->allowedToSeeItemDbScripts) ? 15 : 12;
 ?>
 <h3>
 	<?php if ($icon): ?><img src="<?php echo $icon ?>" /><?php endif ?>
@@ -42,6 +44,7 @@ $icon = $this->iconImage($item->item_id);
 				</span>
 			<?php endif ?>
 		</td>
+
 	</tr>
 	<tr>
 		<th>Identifier</th>
@@ -99,7 +102,7 @@ $icon = $this->iconImage($item->item_id);
 	</tr>
 	<tr>
 		<th>Equip Locations</th>
-		<td colspan="<?php echo $image ? 5 : 3 ?>">
+		<td colspan="<?php echo $image ? 4 : 3 ?>">
 			<?php if ($locs=$this->equipLocations($item->equip_locations)): ?>
 				<?php echo htmlspecialchars(implode(' + ', $locs)) ?>
 			<?php else: ?>
@@ -109,7 +112,7 @@ $icon = $this->iconImage($item->item_id);
 	</tr>
 	<tr>
 		<th>Equip Upper</th>
-		<td colspan="<?php echo $image ? 5 : 3 ?>">
+		<td colspan="<?php echo $image ? 4 : 3 ?>">
 			<?php if ($upper=$this->equipUpper($item->equip_upper)): ?>
 				<?php echo htmlspecialchars(implode(' / ', $upper)) ?>
 			<?php else: ?>
@@ -119,7 +122,7 @@ $icon = $this->iconImage($item->item_id);
 	</tr>
 	<tr>
 		<th>Equippable Jobs</th>
-		<td colspan="<?php echo $image ? 5 : 3 ?>">
+		<td colspan="<?php echo $image ? 4 : 3 ?>">
 			<?php if ($jobs=$this->equippableJobs($item->equip_jobs)): ?>
 				<?php echo htmlspecialchars(implode(' / ', $jobs)) ?>
 			<?php else: ?>
@@ -129,7 +132,7 @@ $icon = $this->iconImage($item->item_id);
 	</tr>
 	<tr>
 		<th>Equip Gender</th>
-		<td colspan="<?php echo $image ? 5 : 3 ?>">
+		<td colspan="<?php echo $image ? 4 : 3 ?>">
 			<?php if ($item->equip_genders === '0'): ?>
 				Female
 			<?php elseif ($item->equip_genders === '1'): ?>
@@ -144,7 +147,7 @@ $icon = $this->iconImage($item->item_id);
 	<?php if (($isCustom && $auth->allowedToSeeItemDb2Scripts) || (!$isCustom && $auth->allowedToSeeItemDbScripts)): ?>
 	<tr>
 		<th>Item Use Script</th>
-		<td colspan="<?php echo $image ? 5 : 3 ?>">
+		<td colspan="<?php echo $image ? 4 : 3 ?>">
 			<?php if ($script=$this->displayScript($item->script)): ?>
 				<?php echo $script ?>
 			<?php else: ?>
@@ -154,7 +157,7 @@ $icon = $this->iconImage($item->item_id);
 	</tr>
 	<tr>
 		<th>Equip Script</th>
-		<td colspan="<?php echo $image ? 5 : 3 ?>">
+		<td colspan="<?php echo $image ? 4 : 3 ?>">
 			<?php if ($script=$this->displayScript($item->equip_script)): ?>
 				<?php echo $script ?>
 			<?php else: ?>
@@ -164,7 +167,7 @@ $icon = $this->iconImage($item->item_id);
 	</tr>
 	<tr>
 		<th>Unequip Script</th>
-		<td colspan="<?php echo $image ? 5 : 3 ?>">
+		<td colspan="<?php echo $image ? 4 : 3 ?>">
 			<?php if ($script=$this->displayScript($item->unequip_script)): ?>
 				<?php echo $script ?>
 			<?php else: ?>
