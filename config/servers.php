@@ -14,7 +14,12 @@ return array(
 			'Username'   => 'ragnarok',
 			'Password'   => 'ragnarok',
 			'Database'   => 'ragnarok',
-			'Persistent' => true
+			'Persistent' => true,
+			'Timezone'   => null // Example: '+0:00' is UTC.
+			// The possible values of 'Timezone' is as documented from the MySQL website:
+			// "The value can be given as a string indicating an offset from UTC, such as '+10:00' or '-6:00'."
+			// "The value can be given as a named time zone, such as 'Europe/Helsinki', 'US/Eastern', or 'MET'." (see below continuation!)
+			// **"Named time zones can be used only if the time zone information tables in the mysql database have been created and populated."
 		),
 		// This is kept separate because many people choose to have their logs
 		// database accessible under different credentials, and often on a
@@ -27,7 +32,8 @@ return array(
 			'Username'   => 'ragnarok',
 			'Password'   => 'ragnarok',
 			'Database'   => 'ragnarok',
-			'Persistent' => true
+			'Persistent' => true,
+			'Timezone'   => null // Possible values is as described in the comment in DbConfig.
 		),
 		// Login server configuration.
 		'LoginServer'    => array(
