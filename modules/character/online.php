@@ -74,8 +74,14 @@ $sql  = "SELECT COUNT(ch.char_id) AS total FROM {$server->charMapDatabase}.`char
 $sth  = $server->connection->getStatement($sql);
 
 $sth->execute($bind);
+
+$sortable = array('char_name' => 'asc', 'base_level', 'job_level', 'guild_name');
+if ($auth->allowedToViewOnlinePosition) {
+	$sortable[] = 'last_map';
+}
+
 $paginator = $this->getPaginator($sth->fetch()->total);
-$paginator->setSortableColumns(array('char_name' => 'asc', 'base_level', 'job_level', 'guild_name', 'last_map'));
+$paginator->setSortableColumns($sortable);
 
 $sql  = "SELECT COUNT(ch.char_id) - {$paginator->total} AS total FROM {$server->charMapDatabase}.`char` AS ch ";
 $sql .= "WHERE ch.online > 0";
