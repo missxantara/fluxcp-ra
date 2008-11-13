@@ -34,7 +34,11 @@
 		<th><?php echo $paginator->sortableColumn('base_level', 'Base Level') ?></th>
 		<th><?php echo $paginator->sortableColumn('job_level', 'Job Level') ?></th>
 		<th colspan="2"><?php echo $paginator->sortableColumn('guild_name', 'Guild') ?></th>
-		<th><?php echo $paginator->sortableColumn('last_map', 'Map') ?></th>
+		<?php if ($auth->allowedToViewOnlinePosition): ?>
+			<th><?php echo $paginator->sortableColumn('last_map', 'Map') ?></th>
+		<?php else: ?>
+			<th>Map</th>
+		<?php endif ?>
 	</tr>
 	<?php foreach ($chars as $char): ?>
 	<tr>
