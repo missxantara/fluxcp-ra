@@ -40,7 +40,7 @@ if ($item) {
 	$fromTables = array("{$server->charMapDatabase}.mob_db", "{$server->charMapDatabase}.mob_db2");
 	$mobTable   = new Flux_TemporaryTable($server->connection, $mobDB, $fromTables);
 	
-	$col  = 'ID AS monster_id, kName AS monster_name, LV AS monster_level, ';
+	$col  = 'ID AS monster_id, iName AS monster_name, LV AS monster_level, ';
 	$col .= 'Race AS monster_race, (Element%10) AS monster_element, (Element/20) AS monster_ele_lv, ';
 	
 	// Normal drops.
@@ -83,7 +83,7 @@ if ($item) {
 	$sql .= 'MVP2id = ? OR ';
 	$sql .= 'MVP3id = ? ';
 	
-	//$sql .= 'GROUP BY ID, kName';
+	//$sql .= 'GROUP BY ID, iName';
 	
 	$sth  = $server->connection->getStatement($sql);
 	$res = $sth->execute(array_fill(0, 13, $itemID));
