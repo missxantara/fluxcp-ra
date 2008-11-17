@@ -93,7 +93,13 @@ $icon = $this->iconImage($item->item_id);
 		<th>Slots</th>
 		<td><?php echo number_format((int)$item->slots) ?></td>
 		<th>Refineable</th>
-		<td><?php echo number_format((int)$item->refineable) ?></td>
+		<td>
+			<?php if ($item->refineable): ?>
+				Yes
+			<?php else: ?>
+				No
+			<?php endif ?>
+		</td>
 	</tr>
 	<tr>
 		<th>Equip Level</th>
