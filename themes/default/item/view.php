@@ -69,7 +69,7 @@ $icon = $this->iconImage($item->item_id);
 		<th>NPC Buy</th>
 		<td><?php echo number_format((int)$item->price_buy) ?></td>
 		<th>Weight</th>
-		<td><?php echo number_format((int)$item->weight) ?></td>
+		<td><?php echo round($item->weight, 1) ?></td>
 	</tr>
 	<tr>
 		<th>NPC Sell</th>

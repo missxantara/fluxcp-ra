@@ -16,7 +16,7 @@ $itemID = $params->get('id');
 
 $col  = 'items.id AS item_id, name_english AS identifier, ';
 $col .= 'name_japanese AS name, type, ';
-$col .= 'price_buy, price_sell, CAST(weight/10 AS UNSIGNED INTEGER) AS weight, attack, defence, `range`, slots, ';
+$col .= 'price_buy, price_sell, weight/10 AS weight, attack, defence, `range`, slots, ';
 $col .= 'equip_jobs, equip_upper, equip_genders, equip_locations, ';
 $col .= 'weapon_level, equip_level, refineable, view, script, ';
 $col .= 'equip_script, unequip_script, origin_table, ';

@@ -139,7 +139,7 @@
 		</td>
 		<td><?php echo number_format((int)$item->price_buy) ?></td>
 		<td><?php echo number_format((int)$item->price_sell) ?></td>
-		<td><?php echo number_format((int)$item->weight) ?></td>
+		<td><?php echo round($item->weight, 1) ?></td>
 		<td><?php echo number_format((int)$item->attack) ?></td>
 		<td><?php echo number_format((int)$item->defense) ?></td>
 		<td><?php echo number_format((int)$item->range) ?></td>
