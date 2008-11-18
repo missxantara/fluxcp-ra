@@ -220,9 +220,9 @@ class Flux_PaymentNotifyRequest {
 									$acc = $sth->fetch();
 									
 									$this->logPayPal('Updating account credit balance from %s to %s', (int)$acc->balance, $acc->balance + $credits);
-									$servGroup->loginServer->depositCredits($accountID, $credits, $amount);
+									$res = $servGroup->loginServer->depositCredits($accountID, $credits, $amount);
 
-									if ($sth->execute(array($credits, $amount))) {
+									if ($res) {
 										$this->logPayPal('Deposited credits.');
 									}
 									else {
