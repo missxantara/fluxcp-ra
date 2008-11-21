@@ -125,7 +125,7 @@
 			<?php endif ?>
 		</td>
 		<?php if ($icon=$this->iconImage($item->item_id)): ?>
-			<td><img src="<?php echo htmlspecialchars($icon) ?>?nocache=<?php echo rand() ?>" /></td>
+			<td width="24"><img src="<?php echo htmlspecialchars($icon) ?>?nocache=<?php echo rand() ?>" /></td>
 			<td><?php echo htmlspecialchars($item->name) ?></td>
 		<?php else: ?>
 			<td colspan="2"><?php echo htmlspecialchars($item->name) ?></td>
@@ -139,7 +139,7 @@
 		</td>
 		<td><?php echo number_format((int)$item->price_buy) ?></td>
 		<td><?php echo number_format((int)$item->price_sell) ?></td>
-		<td><?php echo number_format((int)$item->weight) ?></td>
+		<td><?php echo round($item->weight, 1) ?></td>
 		<td><?php echo number_format((int)$item->attack) ?></td>
 		<td><?php echo number_format((int)$item->defense) ?></td>
 		<td><?php echo number_format((int)$item->range) ?></td>

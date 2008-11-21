@@ -39,7 +39,7 @@
 			<th><label for="npc_buy">NPC Buy</label></th>
 			<td><input type="text" name="npc_buy" id="npc_buy" value="<?php echo htmlspecialchars($npcBuy) ?>" /></td>
 			<th><label for="weight">Weight</label></th>
-			<td><input type="text" name="weight" id="weight" value="<?php echo htmlspecialchars($weight) ?>" /></td>
+			<td><input type="text" name="weight" id="weight" value="<?php echo htmlspecialchars(round($weight, 1)) ?>" /></td>
 		</tr>
 		<tr>
 			<th><label for="npc_sell">NPC Sell</label></th>

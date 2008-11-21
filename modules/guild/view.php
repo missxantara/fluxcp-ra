@@ -23,20 +23,20 @@ $sth->execute(array($guildID));
 
 $guild = $sth->fetch();
 
-$col  = "alliance_id, name";
+$col  = "guild_alliance.alliance_id, guild.name";
 
-$sql  = "SELECT $col FROM {$server->charMapDatabase}.guild_alliance ";
-$sql .= "WHERE guild_id = ? AND opposition = 0 ORDER BY alliance_id ASC";
+$sql  = "SELECT $col FROM {$server->charMapDatabase}.guild_alliance LEFT JOIN {$server->charMapDatabase}.guild ON guild_alliance.alliance_id = guild.guild_id ";
+$sql .= "WHERE guild_alliance.guild_id = ? AND guild_alliance.opposition = 0 ORDER BY guild_alliance.alliance_id ASC";
 
 $sth  = $server->connection->getStatement($sql);
 $sth->execute(array($guildID));
 
 $alliances = $sth->fetchAll();
 
-$col  = "alliance_id, name";
+$col  = "guild_alliance.alliance_id, guild.name";
 
-$sql  = "SELECT $col FROM {$server->charMapDatabase}.guild_alliance ";
-$sql .= "WHERE guild_id = ? AND opposition = 1 ORDER BY alliance_id ASC";
+$sql  = "SELECT $col FROM {$server->charMapDatabase}.guild_alliance LEFT JOIN {$server->charMapDatabase}.guild ON guild_alliance.alliance_id = guild.guild_id ";
+$sql .= "WHERE guild_alliance.guild_id = ? AND guild_alliance.opposition = 1 ORDER BY guild_alliance.alliance_id ASC";
 
 $sth  = $server->connection->getStatement($sql);
 $sth->execute(array($guildID));

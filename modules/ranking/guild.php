@@ -3,7 +3,7 @@ if (!defined('FLUX_ROOT')) exit;
 
 $title = 'Guild Ranking';
 
-$col  = "g.guild_id, g.name, g.guild_lv, g.exp, g.average_lv, ";
+$col  = "g.guild_id, g.name, g.guild_lv, g.exp, g.average_lv, g.emblem_len, ";
 $col .= "(SELECT COUNT(char_id) FROM {$server->charMapDatabase}.`char` WHERE `char`.guild_id = g.guild_id) AS members";
 
 $sql  = "SELECT $col FROM {$server->charMapDatabase}.guild AS g ";

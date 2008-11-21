@@ -2,7 +2,7 @@
 <h2>Viewing Monster</h2>
 <?php if ($monster): ?>
 <h3>
-	#<?php echo $monster->monster_id ?>: <?php echo htmlspecialchars($monster->kro_name) ?>
+	#<?php echo $monster->monster_id ?>: <?php echo htmlspecialchars($monster->iro_name) ?>
 	<?php if ($monster->mvp_exp): ?>
 		<span class="mvp">(MVP)</span>
 	<?php endif ?>
@@ -15,7 +15,7 @@
 		<td><?php echo htmlspecialchars($monster->sprite) ?></td>
 		<?php if ($itemDrops): ?>
 		<td rowspan="13" style="vertical-align: top">
-			<h3><?php echo htmlspecialchars($monster->kro_name) ?> Item Drops</h3>
+			<h3><?php echo htmlspecialchars($monster->iro_name) ?> Item Drops</h3>
 			<table class="vertical-table">
 				<tr>
 					<th>Item ID</th>
@@ -166,11 +166,11 @@
 	</tr>
 </table>
 
-<h3>Monster Skills for “<?php echo htmlspecialchars($monster->kro_name) ?>”</h3>
+<h3>Monster Skills for “<?php echo htmlspecialchars($monster->iro_name) ?>”</h3>
 <?php if (!filesize($skillDB)): ?>
 <p><strong>Mob skill database needs to be reloaded!</strong></p>
 <?php elseif (empty($skillDB)): ?>
-<p>No skills found for <?php echo htmlspecialchars($monster->kro_name) ?>.</p>
+<p>No skills found for <?php echo htmlspecialchars($monster->iro_name) ?>.</p>
 <?php else: ?>
 <table class="vertical-table">
 	<tr>

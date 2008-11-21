@@ -98,6 +98,10 @@ class Flux_Connection {
 				$sth = $this->getStatement("SET NAMES ?");
 				$sth->execute(array($encoding));
 			}
+			if ($timezone=$this->dbConfig->getTimezone()) {
+				$sth = $this->getStatement("SET time_zone = ?");
+				$sth->execute(array($timezone));
+			}
 		}
 		return $this->pdoMain;
 	}
@@ -118,6 +122,10 @@ class Flux_Connection {
 			if ($encoding=$this->logsDbConfig->getEncoding()) {
 				$sth = $this->getStatementForLogs("SET NAMES ?");
 				$sth->execute(array($encoding));
+			}
+			if ($timezone=$this->logsDbConfig->getTimezone()) {
+				$sth = $this->getStatementForLogs("SET time_zone = ?");
+				$sth->execute(array($timezone));
 			}
 		}
 		return $this->pdoLogs;
