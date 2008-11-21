@@ -111,8 +111,8 @@ try {
 	}
 	
 	$sessionKey = Flux::config('SessionKey');
-	session_save_path(realpath(FLUX_DATA_DIR.'/sessions'));
-	if (!is_writable($dir=session_save_path())) {
+	session_save_path($dir=realpath(FLUX_DATA_DIR.'/sessions'));
+	if (!is_writable($dir)) {
 		throw new Flux_PermissionError("The session storage directory '$dir' is not writable.  Remedy with `chmod 0707 $dir`");
 	}
 	elseif (!is_writable($dir=realpath(FLUX_DATA_DIR.'/logs'))) {
