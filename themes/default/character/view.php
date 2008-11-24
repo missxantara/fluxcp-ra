@@ -33,7 +33,13 @@ if (($isMine || $auth->allowedToResetPosition) && $auth->actionAllowed('characte
 		<th>Character</th>
 		<td colspan="2"><?php echo htmlspecialchars($char->char_name) ?></td>
 		<th>Account</th>
-		<td><?php echo $this->linkToAccount($char->char_account_id, $char->userid) ?></td>
+		<td>
+			<?php if ($isMine): ?>
+				<a href="<?php echo $this->url('account', 'view') ?>"><?php echo htmlspecialchars($char->userid) ?></a>
+			<?php else: ?>
+				<?php echo $this->linkToAccount($char->char_account_id, $char->userid) ?>
+			<?php endif ?>
+		</td>
 		<th>Job Class</th>
 		<td>
 			<?php if ($job=$this->jobClassText($char->char_class)): ?>
