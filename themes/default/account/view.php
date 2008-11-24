@@ -14,7 +14,13 @@
 		<th>Username</th>
 		<td><?php echo $account->userid ?></td>
 		<th>Account ID</th>
-		<td><?php echo $account->account_id ?></td>
+		<td>
+			<?php if ($auth->allowedToSeeAccountID): ?>
+				<?php echo $account->account_id ?>
+			<?php else: ?>
+				<span class="not-applicable">Not Applicable</span>
+			<?php endif ?>
+		</td>
 	</tr>
 	<tr>
 		<th>E-mail</th>

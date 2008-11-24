@@ -25,7 +25,13 @@ if (($isMine || $auth->allowedToResetPosition) && $auth->actionAllowed('characte
 		<th>Character ID</th>
 		<td colspan="2"><?php echo htmlspecialchars($char->char_id) ?></td>
 		<th>Account ID</th>
-		<td><?php echo htmlspecialchars($char->char_account_id) ?></td>
+		<td>
+			<?php if ($auth->allowedToSeeAccountID): ?>
+				<?php echo htmlspecialchars($char->char_account_id) ?>
+			<?php else: ?>
+				<span class="not-applicable">Not Applicable</span>
+			<?php endif ?>
+		</td>
 		<th>Character Slot</th>
 		<td><?php echo number_format($char->char_num+1) ?></td>
 	</tr>
