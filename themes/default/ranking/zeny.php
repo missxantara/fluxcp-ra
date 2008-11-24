@@ -53,8 +53,10 @@
 		<td><?php echo number_format($chars[$i]->base_level) ?></td>
 		<td><?php echo number_format($chars[$i]->job_level) ?></td>
 		<?php if ($chars[$i]->guild_name): ?>
+		<?php if ($chars[$i]->guild_emblem_len): ?>
 		<td width="24"><img src="<?php echo $this->emblem($chars[$i]->guild_id) ?>" /></td>
-		<td>
+		<?php endif ?>
+		<td<?php if (!$chars[$i]->guild_emblem_len) echo ' colspan="2"' ?>>
 			<?php if ($auth->actionAllowed('guild', 'view') && $auth->allowedToViewGuild): ?>
 				<?php echo $this->linkToGuild($chars[$i]->guild_id, $chars[$i]->guild_name) ?>
 			<?php else: ?>
