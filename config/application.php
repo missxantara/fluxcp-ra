@@ -191,7 +191,7 @@ return array(
 			//'zeny'    => 'Zeny'
 		),
 		'cplog' => array(
-			'paypal' => 'PayPal Trasactions',
+			'paypal' => 'PayPal Transactions',
 			'login'  => 'Logins',
 			'resetpass'  => 'Password Resets',
 			//'changepass' => 'Password Changes',
