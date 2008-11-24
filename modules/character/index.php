@@ -166,7 +166,7 @@ $paginator->setSortableColumns(array(
 
 $col  = "ch.account_id, ch.char_id, ch.name AS char_name, ch.char_num, ";
 $col .= "ch.online, ch.base_level, ch.job_level, ch.class, ch.zeny, ";
-$col .= "guild.guild_id, guild.name AS guild_name, ";
+$col .= "guild.guild_id, guild.name AS guild_name, guild.emblem_len AS guild_emblem_len, ";
 $col .= "login.userid, partner.name AS partner_name, partner.char_id AS partner_id, ";
 $col .= "mother.name AS mother_name, mother.char_id AS mother_id, ";
 $col .= "father.name AS father_name, father.char_id AS father_id, ";
