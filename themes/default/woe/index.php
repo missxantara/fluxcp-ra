@@ -3,7 +3,7 @@
 <?php if ($woeTimes): ?>
 <p>Below are the WoE hours for <?php echo htmlspecialchars($session->loginAthenaGroup->serverName) ?>.
 These hours are subject to change at anytime, but let's hope not.</p>
-<p>The current server time is <strong><?php echo $this->formatDateTime($server->getServerTime('Y-m-d H:i:s')) ?></strong>.</p>
+<p>The current server time is: <strong class="important"><?php echo $server->getServerTime('Y-m-d H:i:s (l)') ?></strong>.</p>
 <table class="woe-table">
 	<tr>
 		<th>Servers</th>
