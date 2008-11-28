@@ -187,6 +187,7 @@ return array(
 		'SeeCpResetPass'     => AccountLevel::ADMIN,  // Level required to see passwords in CP log's "password resets" page.
 		'SearchCpResetPass'  => AccountLevel::ADMIN,  // Level required to search passwords in CP log's "password resets" page.
 		'SeeAccountID'       => AccountLevel::LOWGM,  // Level required to see Account ID on account view and character view pages.
+		'SeeUnknownItems'    => AccountLevel::LOWGM,  // Level required to see unidentified items as identified.
 		
 		'EditHigherPower'    => 5000,
 		'BanHigherPower'     => 5000

@@ -149,6 +149,11 @@ $col  = "storage.*, items.name_japanese, items.type";
 $sql  = "SELECT $col FROM {$server->charMapDatabase}.storage ";
 $sql .= "LEFT JOIN {$server->charMapDatabase}.items ON items.id = storage.nameid ";
 $sql .= "WHERE storage.account_id = ? ";
+
+if (!$auth->allowedToSeeUnknownItems) {
+	$sql .= 'AND storage.identify > 0 ';
+}
+
 $sql .= "ORDER BY storage.nameid ASC, storage.identify DESC, ";
 $sql .= "storage.attribute DESC, storage.refine ASC";
 

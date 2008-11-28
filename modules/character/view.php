@@ -109,6 +109,11 @@ if ($char) {
 	$sql  = "SELECT $col FROM {$server->charMapDatabase}.inventory ";
 	$sql .= "LEFT JOIN {$server->charMapDatabase}.items ON items.id = inventory.nameid ";
 	$sql .= "WHERE inventory.char_id = ? ";
+	
+	if (!$auth->allowedToSeeUnknownItems) {
+		$sql .= 'AND inventory.identify > 0 ';
+	}
+	
 	$sql .= "ORDER BY IF(inventory.equip > 0, 1, 0) DESC, inventory.nameid ASC, inventory.identify DESC, ";
 	$sql .= "inventory.attribute DESC, inventory.refine ASC";
 	
@@ -156,6 +161,11 @@ if ($char) {
 	$sql  = "SELECT $col FROM {$server->charMapDatabase}.cart_inventory ";
 	$sql .= "LEFT JOIN {$server->charMapDatabase}.items ON items.id = cart_inventory.nameid ";
 	$sql .= "WHERE cart_inventory.char_id = ? ";
+	
+	if (!$auth->allowedToSeeUnknownItems) {
+		$sql .= 'AND cart_inventory.identify > 0 ';
+	}
+	
 	$sql .= "ORDER BY cart_inventory.nameid ASC, cart_inventory.identify DESC, ";
 	$sql .= "cart_inventory.attribute DESC, cart_inventory.refine ASC";
 	
