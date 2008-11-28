@@ -109,7 +109,7 @@ if ($char) {
 	$sql  = "SELECT $col FROM {$server->charMapDatabase}.inventory ";
 	$sql .= "LEFT JOIN {$server->charMapDatabase}.items ON items.id = inventory.nameid ";
 	$sql .= "WHERE inventory.char_id = ? ";
-	$sql .= "ORDER BY inventory.nameid ASC, inventory.identify DESC, ";
+	$sql .= "ORDER BY IF(inventory.equip > 0, 1, 0) DESC, inventory.nameid ASC, inventory.identify DESC, ";
 	$sql .= "inventory.attribute DESC, inventory.refine ASC";
 	
 	$sth  = $server->connection->getStatement($sql);

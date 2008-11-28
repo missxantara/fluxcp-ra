@@ -372,7 +372,7 @@ if (($isMine || $auth->allowedToResetPosition) && $auth->actionAllowed('characte
 		</tr>
 		<?php foreach ($items AS $item): ?>
 		<?php $icon = $this->iconImage($item->nameid) ?>
-		<tr>
+		<tr<?php if ($item->equip) echo ' class="equipped"' ?>>
 			<td align="right"><?php echo $this->linkToItem($item->nameid, $item->nameid) ?></td>
 			<?php if ($icon): ?>
 			<td><img src="<?php echo htmlspecialchars($icon) ?>" /></td>

@@ -975,3 +975,8 @@ textarea {
 	padding: 1px;
 	border-bottom: 1px dotted #eee;
 }
+
+.equipped td {
+	color: #25292b;
+	background-color: #f1ffff;
+}
