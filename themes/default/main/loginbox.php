@@ -22,8 +22,8 @@
 				<?php endforeach ?>
 			</select>.
 			<?php endif ?>
-			<form action="<?php echo $this->url ?>" method="post" name="preferred_server_form" style="display: none">
-				<input type="hidden" name="preferred_server" value="">
+			<form action="<?php echo $this->urlWithQs ?>" method="post" name="preferred_server_form" style="display: none">
+				<input type="hidden" name="preferred_server" value="" />
 			</form>
 			</span>
 		</td>

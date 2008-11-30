@@ -68,7 +68,7 @@ if ($params->get('merchant_return_link') && $ppReturn['txn_id'] && $ppReturn['tx
 if (($preferred_server = $params->get('preferred_server')) && $session->getAthenaServer($preferred_server)) {
 	$session->setAthenaServerNameData($params->get('preferred_server'));
 	if (!array_key_exists('preferred_server', $_GET)) {
-		$this->redirect($this->url);
+		$this->redirect($this->urlWithQs);
 	}
 }
 
