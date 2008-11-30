@@ -125,7 +125,7 @@
 		<td><?php echo number_format((int)$char->zeny) ?></td>
 		<?php if ($char->guild_name): ?>
 			<?php if ($char->guild_emblem_len): ?>
-			<td><img src="<?php echo $this->emblem($char->guild_id) ?>" /></td>
+			<td width="24"><img src="<?php echo $this->emblem($char->guild_id) ?>" /></td>
 			<?php endif ?>
 			<td<?php if (!$char->guild_emblem_len) echo ' colspan="2"' ?>>
 				<?php if ($auth->actionAllowed('guild', 'view') && $auth->allowedToViewGuild): ?>
