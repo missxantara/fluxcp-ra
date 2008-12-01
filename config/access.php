@@ -131,7 +131,8 @@ return array(
 			'index'    => AccountLevel::ANYONE
 		),
 		'install'   => array(
-			'index'    => AccountLevel::ANYONE
+			'index'    => AccountLevel::ANYONE,
+			'reinstall' => AccountLevel::ADMIN
 		),
 		'test'      => array(
 			'*'        => AccountLevel::ANYONE

@@ -150,6 +150,7 @@ return array(
 		'Items'         => array('module' => 'item'),
 		'Monsters'      => array('module' => 'monster'),
 		'Send Mail'     => array('module' => 'mail'),
+		'Re-Install'    => array('module' => 'install', 'action' => 'reinstall'),
 		//'Google'        => array('exturl' => 'http://www.google.com')
 	),
 	
