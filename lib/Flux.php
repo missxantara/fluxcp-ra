@@ -183,7 +183,7 @@ class Flux {
 				
 				// Merge configurations.
 				self::$appConfig->merge($addonObject->addonConfig);
-				self::$messagesConfig->merge($addonObject->messagesConfig);
+				self::$messagesConfig->merge($addonObject->messagesConfig, false);
 			}
 		}
 	}
