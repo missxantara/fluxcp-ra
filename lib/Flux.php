@@ -106,7 +106,8 @@ class Flux {
 	 */
 	public static function initialize($options = array())
 	{
-		$required = array('appConfigFile', 'serversConfigFile', 'messagesConfigFile');
+		//$required = array('appConfigFile', 'serversConfigFile', 'messagesConfigFile');
+		$required = array('appConfigFile', 'serversConfigFile');
 		foreach ($required as $option) {
 			if (!array_key_exists($option, $options)) {
 				self::raise("Missing required option `$option' in Flux::initialize()");
@@ -118,7 +119,10 @@ class Flux {
 		// below methods for more details on what's being done.
 		self::$appConfig      = self::parseAppConfigFile($options['appConfigFile']);
 		self::$serversConfig  = self::parseServersConfigFile($options['serversConfigFile']);
-		self::$messagesConfig = self::parseMessagesConfigFile($options['messagesConfigFile']);
+		//self::$messagesConfig = self::parseMessagesConfigFile($options['messagesConfigFile']); // Deprecated.
+		
+		// Using newer language system.
+		self::$messagesConfig = self::parseLanguageConfigFile();
 		
 		// Initialize server objects.
 		self::initializeServerObjects();
@@ -252,7 +256,7 @@ class Flux {
 	 */
 	public static function parseConfigFile($filename)
 	{
-		$cachefile = FLUX_DATA_DIR.'/tmp/'.basename(str_replace(' ', '', ucwords(str_replace(array('/', '\\'), ' ', $filename))), '.php').'.cache.php';
+		$cachefile = FLUX_DATA_DIR.'/tmp/'.basename(str_replace(' ', '', ucwords(str_replace(array('/', '\\', '_'), ' ', $filename))), '.php').'.cache.php';
 		if (file_exists($cachefile) && filemtime($cachefile) > filemtime($filename)) {
 			$fp = fopen($cachefile, 'r');
 			fseek($fp, 28); // Ignore PHP string.
@@ -421,7 +425,7 @@ class Flux {
 	}
 	
 	/**
-	 * Parses a messages configuration file.
+	 * Parses a messages configuration file. (Deprecated)
 	 *
 	 * @param string $filename
 	 * @access public
@@ -431,6 +435,38 @@ class Flux {
 		$config = self::parseConfigFile($filename);
 		// Nothing yet.
 		return $config;
+	}
+	
+	/**
+	 * Parses a language configuration file, can also parse a language config
+	 * for any addon.
+	 *
+	 * @param string $addonName
+	 * @access public
+	 */
+	public static function parseLanguageConfigFile($addonName=null)
+	{
+		$default = $addonName ? FLUX_ADDON_DIR."/$addonName/lang/en_us.php" : FLUX_LANG_DIR.'/en_us.php';
+		$current = $default;
+		
+		if ($lang=self::config('DefaultLanguage')) {
+			$current = $addonName ? FLUX_ADDON_DIR."/$addonName/lang/$lang.php" : FLUX_LANG_DIR."/$lang.php";
+		}
+		
+		if (file_exists($default)) {
+			$def = self::parseConfigFile($default);
+		}
+		else {
+			$def = array();
+			$def = new Flux_Config($def);
+		}
+		
+		if ($current != $default && file_exists($current)) {
+			$cur = self::parseConfigFile($current);
+			$def->merge($cur, false);
+		}
+		
+		return $def;
 	}
 	
 	/**

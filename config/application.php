@@ -7,6 +7,7 @@ return array(
 	'InstallerPassword'    => 'secretpassword',         // Installer/updater password.
 	'DefaultLoginGroup'    => null,
 	'DefaultCharMapServer' => null,
+	'DefaultLanguage'      => 'en_us',                  // Specify the default control panel language (see FLUX_ROOT/lang/ directory for available languages.)
 	'SiteTitle'            => 'Flux Control Panel',     // This value is only used if the theme decides to use it.
 	'ThemeName'            => 'default',                // The theme name of the theme you would like to use.  Themes are in FLUX_ROOT/themes.
 	'ScriptTimeLimit'      => 0,                        // Script execution time limit. Specifies (in seconds) how long a page should run before timing out. (0 means forever)

@@ -19,6 +19,7 @@ define('FLUX_LIB_DIR',    'lib');
 define('FLUX_MODULE_DIR', 'modules');
 define('FLUX_THEME_DIR',  'themes');
 define('FLUX_ADDON_DIR',  'addons');
+define('FLUX_LANG_DIR',   'lang');
 
 // Clean GPC arrays in the event magic_quotes_gpc is enabled.
 if (ini_get('magic_quotes_gpc')) {
@@ -62,7 +63,7 @@ try {
 	Flux::initialize(array(
 		'appConfigFile'      => FLUX_CONFIG_DIR.'/application.php',
 		'serversConfigFile'  => FLUX_CONFIG_DIR.'/servers.php',
-		'messagesConfigFile' => FLUX_CONFIG_DIR.'/messages.php'
+		//'messagesConfigFile' => FLUX_CONFIG_DIR.'/messages.php' // No longer needed (Deprecated)
 	));
 	
 	// Set time limit.
@@ -142,7 +143,7 @@ try {
 	Flux::$sessionData = new Flux_SessionData($_SESSION[$sessionKey], $hasUpdates);
 	
 	// Initialize authorization component.
-	$accessConfig = new Flux_Config(include(FLUX_CONFIG_DIR.'/access.php'));
+	$accessConfig = Flux::parseConfigFile(FLUX_CONFIG_DIR.'/access.php');
 		
 	// Merge with add-on configs.
 	foreach (Flux::$addons as $addon) {
