@@ -1,7 +1,7 @@
 <?php
 if (!defined('FLUX_ROOT')) exit;
 
-$title    = 'Character Ranking';
+$title    = 'Zeny Ranking';
 $classes  = Flux::config('JobClasses')->toArray();
 $jobClass = $params->get('jobclass');
 $bind     = array((int)Flux::config('RankingHideLevel'));
