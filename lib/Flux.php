@@ -457,8 +457,8 @@ class Flux {
 			$def = self::parseConfigFile($default);
 		}
 		else {
-			$def = array();
-			$def = new Flux_Config($def);
+			$tmp = array();
+			$def = new Flux_Config($tmp);
 		}
 		
 		if ($current != $default && file_exists($current)) {
