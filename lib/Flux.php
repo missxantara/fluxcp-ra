@@ -252,11 +252,34 @@ class Flux {
 	 */
 	public static function parseConfigFile($filename)
 	{
-		ob_start();
-		// Uses require, thus assumes the file returns an array.
-		$config = require $filename;
-		ob_end_clean();
-		return self::parseConfig($config);
+		$cachefile = FLUX_DATA_DIR.'/tmp/'.basename(str_replace(' ', '', ucwords(str_replace(array('/', '\\'), ' ', $filename))), '.php').'.cache.php';
+		if (file_exists($cachefile) && filemtime($cachefile) > filemtime($filename)) {
+			$fp = fopen($cachefile, 'r');
+			fseek($fp, 28); // Ignore PHP string.
+			
+			$s = '';
+			while (!feof($fp)) {
+				$s .= fread($fp, 256);
+			}
+			
+			fclose($fp);
+			return unserialize($s);
+		}
+		else {
+			ob_start();
+			// Uses require, thus assumes the file returns an array.
+			$config = require $filename;
+			ob_end_clean();
+			
+			// Cache config file.
+			$cf = self::parseConfig($config);
+			$fp = fopen($cachefile, 'w');
+			fwrite($fp, '<?php exit("Forbidden."); ?>');
+			fwrite($fp, $s=serialize($cf), strlen($s));
+			fclose($fp);
+			
+			return $cf;
+		}
 	}
 	
 	/**
