@@ -3,7 +3,7 @@ if (!defined('FLUX_ROOT')) exit;
 
 $this->loginRequired();
 
-$title = 'Credit Transfer History';
+$title = Flux::message('XferLogTitle');
 
 $xferTable = Flux::config('FluxTables.CreditTransferTable');
 

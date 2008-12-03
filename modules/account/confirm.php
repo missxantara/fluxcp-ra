@@ -1,7 +1,7 @@
 <?php
 if (!defined('FLUX_ROOT')) exit;
 
-$title = 'Confirm Account';
+$title = Flux::message('AccountConfirmTitle');
 
 $user  = $params->get('user');
 $code  = $params->get('code');
@@ -32,8 +32,8 @@ $sth  = $loginAthenaGroup->connection->getStatement($sql);
 
 $sth->execute(array($account->account_id));
 
-$loginAthenaGroup->loginServer->unban(null, 'Account has been confirmed and activated.', $account->account_id);
+$loginAthenaGroup->loginServer->unban(null, Flux::message('AccountConfirmUnban'), $account->account_id);
 
-$session->setMessageData('Your account has been confirmed and activated, you may now log-in.');
+$session->setMessageData(Flux::message('AccountConfirmMessage'));
 $this->redirect();
 ?>

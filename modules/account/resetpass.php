@@ -1,7 +1,7 @@
 <?php
 if (!defined('FLUX_ROOT')) exit;
 
-$title = 'Reset Password';
+$title = Flux::message('ResetPassTitle');
 
 $serverNames    = $this->getServerNames();
 $resetPassTable = Flux::config('FluxTables.ResetPasswordTable');
@@ -12,10 +12,10 @@ if (count($_POST)) {
 	$groupName = $params->get('login');
 	
 	if (!$userid) {
-		$errorMessage = 'Please enter your account username.';
+		$errorMessage = Flux::message('ResetPassEnterAccount');
 	}
 	elseif (!$email) {
-		$errorMessage = 'Please enter your e-mail address.';
+		$errorMessage = Flux::message('ResetPassEnterEmail');
 	}
 	else {
 		if (!$groupName || !($loginAthenaGroup=Flux::getServerGroupByName($groupName))) {
@@ -46,10 +46,10 @@ if (count($_POST)) {
 		}
 
 		if (empty($sent)) {
-			$errorMessage = 'Failed to send reset password e-mail.';
+			$errorMessage = Flux::message('ResetPassFailed');
 		}
 		else {
-			$session->setMessageData('An e-mail has been sent with details on how to reset your password.');
+			$session->setMessageData(Flux::message('ResetPassEmailSent'));
 			$this->redirect();
 		}
 	}

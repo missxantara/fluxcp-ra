@@ -1,7 +1,7 @@
 <?php
 if (!defined('FLUX_ROOT')) exit;
 
-$title = 'Log In';
+$title = Flux::message('LoginTitle');
 $loginLogTable = Flux::config('FluxTables.LoginLogTable');
 
 if (count($_POST)) {

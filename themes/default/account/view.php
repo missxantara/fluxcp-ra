@@ -1,5 +1,5 @@
 <?php if (!defined('FLUX_ROOT')) exit; ?>
-<h2>Viewing Account</h2>
+<h2><?php echo htmlspecialchars(Flux::message('AccountViewHeading')) ?></h2>
 <?php if (!empty($errorMessage)): ?>
 <p class="red"><?php echo htmlspecialchars($errorMessage) ?></p>
 <?php endif ?>
@@ -11,121 +11,122 @@
 </p>
 <table class="vertical-table">
 	<tr>
-		<th>Username</th>
+		<th><?php echo htmlspecialchars(Flux::message('UsernameLabel')) ?></th>
 		<td><?php echo $account->userid ?></td>
-		<th>Account ID</th>
+		<th><?php echo htmlspecialchars(Flux::message('AccountIdLabel')) ?></th>
 		<td>
 			<?php if ($auth->allowedToSeeAccountID): ?>
 				<?php echo $account->account_id ?>
 			<?php else: ?>
-				<span class="not-applicable">Not Applicable</span>
+				<span class="not-applicable"><?php echo htmlspecialchars(Flux::message('NotApplicableLabel')) ?></span>
 			<?php endif ?>
 		</td>
 	</tr>
 	<tr>
-		<th>E-mail</th>
+		<th><?php echo htmlspecialchars(Flux::message('EmailAddressLabel')) ?></th>
 		<td>
 			<?php if ($account->email): ?>
 				<?php echo htmlspecialchars($account->email) ?>
 			<?php else: ?>
-				<span class="not-applicable">None</span>
+				<span class="not-applicable"><?php echo htmlspecialchars(Flux::message('NoneLabel')) ?></span>
 			<?php endif ?>
 		</td>
-		<th>Account Level</th>
+		<th><?php echo htmlspecialchars(Flux::message('AccountLevelLabel')) ?></th>
 		<td><?php echo (int)$account->level ?></td>
 	</tr>
 	<tr>
-		<th>Gender</th>
+		<th><?php echo htmlspecialchars(Flux::message('GenderLabel')) ?></th>
 		<td>
 			<?php if ($gender = $this->genderText($account->sex)): ?>
 				<?php echo $gender ?>
 			<?php else: ?>
-				<span class="not-applicable">Unknown</span>
+				<span class="not-applicable"><?php echo htmlspecialchars(Flux::message('UnknownLabel')) ?></span>
 			<?php endif ?>
 		</td>
-		<th>Account State</th>
+		<th><?php echo htmlspecialchars(Flux::message('AccountStateLabel')) ?></th>
 		<td>
 			<?php if (($state = $this->accountStateText($account->state)) && !$account->unban_time): ?>
 				<?php echo $state ?>
 			<?php elseif ($account->unban_time): ?>
 				<span class="account-state state-banned">
-					Banned Until
-					<?php echo htmlspecialchars(date(Flux::config('DateTimeFormat'), $account->unban_time)) ?>
+					<?php printf(htmlspecialchars(Flux::message('AccountStateTempBanned')), date(Flux::config('DateTimeFormat'), $account->unban_time)) ?>
 				</span>
 			<?php else: ?>
-				<span class="account-state state-unknown">Unknown</span>
+				<span class="account-state state-unknown"><?php echo htmlspecialchars(Flux::message('UnknownLabel')) ?></span>
 			<?php endif ?>
 		</td>
 	</tr>
 	<tr>
-		<th>Login Count</th>
+		<th><?php echo htmlspecialchars(Flux::message('LoginCountLabel')) ?></th>
 		<td><?php echo number_format((int)$account->logincount) ?></td>
-		<th>Credit Balance</th>
+		<th><?php echo htmlspecialchars(Flux::message('CreditBalanceLabel')) ?></th>
 		<td>
 			<?php echo number_format((int)$account->balance) ?>
 			<?php if ($auth->allowedToDonate && $isMine): ?>
-				<a href="<?php echo $this->url('donate') ?>">(Donate!)</a>
+				<a href="<?php echo $this->url('donate') ?>"><?php echo htmlspecialchars(Flux::message('AccountViewDonateLink')) ?></a>
 			<?php endif ?>
 		</td>
 	</tr>
 	<tr>
-		<th>Last Login Date</th>
+		<th><?php echo htmlspecialchars(Flux::message('LastLoginDateLabel')) ?></th>
 		<td colspan="3">
 			<?php if (!$account->lastlogin || $account->lastlogin == '0000-00-00 00:00:00'): ?>
-				<span class="not-applicable">Never</span>
+				<span class="not-applicable"><?php echo htmlspecialchars(Flux::message('NeverLabel')) ?></span>
 			<?php else: ?>
 				<?php echo $this->formatDateTime($account->lastlogin) ?>
 			<?php endif ?>
 		</td>
 	</tr>
 	<tr>
-		<th>Last Used IP</th>
+		<th><?php echo htmlspecialchars(Flux::message('LastUsedIpLabel')) ?></th>
 		<td colspan="3">
 			<?php if ($account->last_ip): ?>
 				<?php echo $account->last_ip ?>
 			<?php else: ?>
-				<span class="not-applicable">None</span>
+				<span class="not-applicable"><?php echo htmlspecialchars(Flux::message('NoneLabel')) ?></span>
 			<?php endif ?>
 		</td>
 	</tr>
 	<?php if ($showTempBan): ?>
 	<tr>
-		<th>Temporary Ban</th>
+		<th><?php echo htmlspecialchars(Flux::message('AccountViewTempBanLabel')) ?></th>
 		<td colspan="3">
 			<form action="<?php echo $this->urlWithQs ?>" method="post">
 				<input type="hidden" name="tempban" value="1" />
-				<label>Reason:<br /><textarea name="reason" class="block reason"></textarea></label>
-				<label>Ban Until:</label>
+				<label><?php echo htmlspecialchars(Flux::message('AccountBanReasonLabel')) ?><br /><textarea name="reason" class="block reason"></textarea></label>
+				<label><?php echo htmlspecialchars(Flux::message('AccountBanUntilLabel')) ?></label>
 				<?php echo $this->dateTimeField('tempban'); ?>
-				<input type="submit" value="Ban Account" onclick="return confirm('Are you sure?')" />
+				<input type="submit" value="<?php echo htmlspecialchars(Flux::message('AccountTempBanButton')) ?>"
+					onclick="return confirm('<?php echo $banconfirm=htmlspecialchars(str_replace("'", "\\'", Flux::message('AccountBanConfirm'))) ?>')" />
 			</form>
 		</td>
 	</tr>
 	<?php endif ?>
 	<?php if ($showPermBan): ?>
 	<tr>
-		<th>Permanent Ban</th>
+		<th><?php echo htmlspecialchars(Flux::message('AccountViewPermBanLabel')) ?></th>
 		<td colspan="3">
 			<form action="<?php echo $this->urlWithQs ?>" method="post">
 				<input type="hidden" name="permban" value="1" />
-				<label>Reason:<br /><textarea name="reason" class="block reason"></textarea></label>
-				<input type="submit" value="Permanently Ban Account" onclick="return confirm('Are you sure?')" />
+				<label><?php echo htmlspecialchars(Flux::message('AccountBanReasonLabel')) ?><br /><textarea name="reason" class="block reason"></textarea></label>
+				<input type="submit" value="<?php echo htmlspecialchars(Flux::message('AccountPermBanButton')) ?>"
+					onclick="return confirm('<?php echo $banconfirm ?>')" />
 			</form>
 		</td>
 	</tr>
 	<?php endif ?>
 	<?php if ($showUnban): ?>
 	<tr>
-		<th>Remove Ban</th>
+		<th><?php echo htmlspecialchars(Flux::message('AccountViewUnbanLabel')) ?></th>
 		<td colspan="3">
 			<form action="<?php echo $this->urlWithQs ?>" method="post">
 				<input type="hidden" name="unban" value="1" />
 			<?php if ($tempBanned && $auth->allowedToTempUnbanAccount): ?>
-				<label>Reason:<br /><textarea name="reason" class="block reason"></textarea></label>
-				<input type="submit" value="Remove Temporary Ban" />
+				<label><?php echo htmlspecialchars(Flux::message('AccountBanReasonLabel')) ?>:<br /><textarea name="reason" class="block reason"></textarea></label>
+				<input type="submit" value="<?php echo htmlspecialchars(Flux::message('AccountTempUnbanButton')) ?>" />
 			<?php elseif ($permBanned && $auth->allowedToPermUnbanAccount): ?>
-				<label>Reason:<br /><textarea name="reason" class="block reason"></textarea></label>
-				<input type="submit" value="Remove Permanent Ban" />
+				<label><?php echo htmlspecialchars(Flux::message('AccountBanReasonLabel')) ?>:<br /><textarea name="reason" class="block reason"></textarea></label>
+				<input type="submit" value="<?php echo htmlspecialchars(Flux::message('AccountPermUnbanButton')) ?>" />
 			<?php endif ?>
 			</form>
 		</td>
@@ -134,13 +135,13 @@
 </table>
 
 <?php if ($auth->allowedToViewAccountBanLog && $banInfo): ?>
-<h3>Ban Log for <?php echo htmlspecialchars($account->userid) ?> (recent to oldest)</h3>
+<h3><?php echo htmlspecialchars(sprintf(Flux::message('AccountBanLogSubHeading'), $account->userid)) ?></h3>
 <table class="vertical-table">
 	<tr>
-		<th>Ban Type</th>
-		<th>Ban Date</th>
-		<th>Ban Reason</th>
-		<th>Banned By</th>
+		<th><?php echo htmlspecialchars(Flux::message('BanLogBanTypeLabel')) ?></th>
+		<th><?php echo htmlspecialchars(Flux::message('BanLogBanDateLabel')) ?></th>
+		<th><?php echo htmlspecialchars(Flux::message('BanLogBanReasonLabel')) ?></th>
+		<th><?php echo htmlspecialchars(Flux::message('BanLogBannedByLabel')) ?></th>
 	</tr>
 	<?php foreach ($banInfo as $ban): ?>
 	<tr>
@@ -155,7 +156,7 @@
 					<?php echo htmlspecialchars($ban->userid) ?>
 				<?php endif ?>
 			<?php else: ?>
-				<strong>Control Panel</strong>
+				<strong><?php echo htmlspecialchars(Flux::message('BanLogBannedByCP')) ?></strong>
 			<?php endif ?>
 		</td>
 	</tr>
@@ -164,20 +165,20 @@
 <?php endif ?>
 
 <?php foreach ($characters as $serverName => $chars): $zeny = 0; ?>
-	<h3>Characters on <?php echo htmlspecialchars($serverName) ?></h3>
+	<h3><?php echo htmlspecialchars(sprintf(Flux::message('AccountViewCharSubHead'), $serverName)) ?></h3>
 	<?php if ($chars): ?>
 	<table class="vertical-table">
 		<tr>
-			<th>Slot</th>
-			<th>Character Name</th>
-			<th>Job Class</th>
-			<th>Base Level</th>
-			<th>Job Level</th>
-			<th>Zeny</th>
-			<th colspan="2">Guild</th>
-			<th>Status</th>
+			<th><?php echo htmlspecialchars(Flux::message('AccountViewSlotLabel')) ?></th>
+			<th><?php echo htmlspecialchars(Flux::message('AccountViewCharLabel')) ?></th>
+			<th><?php echo htmlspecialchars(Flux::message('AccountViewClassLabel')) ?></th>
+			<th><?php echo htmlspecialchars(Flux::message('AccountViewLvlLabel')) ?></th>
+			<th><?php echo htmlspecialchars(Flux::message('AccountViewJlvlLabel')) ?></th>
+			<th><?php echo htmlspecialchars(Flux::message('AccountViewZenyLabel')) ?></th>
+			<th colspan="2"><?php echo htmlspecialchars(Flux::message('AccountViewGuildLabel')) ?></th>
+			<th><?php echo htmlspecialchars(Flux::message('AccountViewStatusLabel')) ?></th>
 			<?php if (($isMine || $auth->allowedToModifyCharPrefs) && $auth->actionAllowed('character', 'prefs')): ?>
-			<th>Preferences</th>
+			<th><?php echo htmlspecialchars(Flux::message('AccountViewPrefsLabel')) ?></th>
 			<?php endif ?>
 		</tr>
 		<?php foreach ($chars as $char): $zeny += $char->zeny; ?>
@@ -206,20 +207,20 @@
 					<?php endif ?>
 				</td>
 			<?php else: ?>	
-				<td colspan="2" align="center"><span class="not-applicable">None</span></td>
+				<td colspan="2" align="center"><span class="not-applicable"><?php echo htmlspecialchars(Flux::message('NoneLabel')) ?></span></td>
 			<?php endif ?>
 			<td>
 				<?php if ($char->online): ?>
-					<span class="online">Online</span>
+					<span class="online"><?php echo htmlspecialchars(Flux::message('OnlineLabel')) ?></span>
 				<?php else: ?>
-					<span class="offline">Offline</span>
+					<span class="offline"><?php echo htmlspecialchars(Flux::message('OfflineLabel')) ?></span>
 				<?php endif ?>
 			</td>
 			<?php if (($isMine || $auth->allowedToModifyCharPrefs) && $auth->actionAllowed('character', 'prefs')): ?>
 			<td>
 				<a href="<?php echo $this->url('character', 'prefs', array('id' => $char->char_id)) ?>"
 					class="block-link">
-					Modify Preferences
+					<?php echo htmlspecialchars(Flux::message('CharModifyPrefsLink')) ?>
 				</a>
 			</td>
 			<?php endif ?>
@@ -228,25 +229,25 @@
 		</table>
 		<p>Total Zeny: <strong><?php echo number_format($zeny) ?></strong></p>
 	<?php else: ?>
-	<p>This account has no characters on <?php echo htmlspecialchars($serverName) ?>.</p>
+	<p><?php echo htmlspecialchars(sprintf(Flux::message('AccountViewNoChars'), $serverName)) ?></p>
 	<?php endif ?>
 <?php endforeach ?>
 
-<h3>Storage Items of <?php echo htmlspecialchars($account->userid) ?></h3>
+<h3><?php echo htmlspecialchars(sprintf(Flux::message('AccountViewStorage'), $account->userid)) ?></h3>
 <?php if ($items): ?>
-	<p><?php echo htmlspecialchars($account->userid) ?> has <?php echo count($items) ?> storage item(s).</p>
+	<p><?php echo htmlspecialchars(sprintf(Flux::message('AccountViewStorageCount'), $account->userid, count($items))) ?></p>
 	<table class="vertical-table">
 		<tr>
-			<th>Item ID</th>
-			<th colspan="2">Name</th>
-			<th>Amount</th>
-			<th>Identified</th>
-			<th>Refine Level</th>
-			<th>Broken</th>
-			<th>Card0</th>
-			<th>Card1</th>
-			<th>Card2</th>
-			<th>Card3</th>
+			<th><?php echo htmlspecialchars(Flux::message('ItemIdLabel')) ?></th>
+			<th colspan="2"><?php echo htmlspecialchars(Flux::message('ItemNameLabel')) ?></th>
+			<th><?php echo htmlspecialchars(Flux::message('ItemAmountLabel')) ?></th>
+			<th><?php echo htmlspecialchars(Flux::message('ItemIdentifyLabel')) ?></th>
+			<th><?php echo htmlspecialchars(Flux::message('ItemRefineLabel')) ?></th>
+			<th><?php echo htmlspecialchars(Flux::message('ItemBrokenLabel')) ?></th>
+			<th><?php echo htmlspecialchars(Flux::message('ItemCard0Label')) ?></th>
+			<th><?php echo htmlspecialchars(Flux::message('ItemCard1Label')) ?></th>
+			<th><?php echo htmlspecialchars(Flux::message('ItemCard2Label')) ?></th>
+			<th><?php echo htmlspecialchars(Flux::message('ItemCard3Label')) ?></th>
 			</th>
 		</tr>
 		<?php foreach ($items AS $item): ?>
@@ -266,23 +267,23 @@
 				<?php if ($item->name_japanese): ?>
 					<span class="item_name"><?php echo htmlspecialchars($item->name_japanese) ?></span>
 				<?php else: ?>
-					<span class="not-applicable">Unknown Item</span>
+					<span class="not-applicable"><?php echo htmlspecialchars(Flux::message('UnknownLabel')) ?></span>
 				<?php endif ?>
 			</td>
 			<td><?php echo number_format($item->amount) ?></td>
 			<td>
 				<?php if ($item->identify): ?>
-					<span class="identified yes">Yes</span>
+					<span class="identified yes"><?php echo htmlspecialchars(Flux::message('YesLabel')) ?></span>
 				<?php else: ?>
-					<span class="identified no">No</span>
+					<span class="identified no"><?php echo htmlspecialchars(Flux::message('NoLabel')) ?></span>
 				<?php endif ?>
 			</td>
 			<td><?php echo htmlspecialchars($item->refine) ?></td>
 			<td>
 				<?php if ($item->attribute): ?>
-					<span class="broken yes">Yes</span>
+					<span class="broken yes"><?php echo htmlspecialchars(Flux::message('YesLabel')) ?></span>
 				<?php else: ?>
-					<span class="broken no">No</span>
+					<span class="broken no"><?php echo htmlspecialchars(Flux::message('NoLabel')) ?></span>
 				<?php endif ?>
 			</td>
 			<td>
@@ -301,7 +302,7 @@
 						<?php endif ?>
 					<?php endif ?>
 				<?php else: ?>
-					<span class="not-applicable">None</span>
+					<span class="not-applicable"><?php echo htmlspecialchars(Flux::message('NoneLabel')) ?></span>
 				<?php endif ?>
 			</td>
 			<td>
@@ -320,7 +321,7 @@
 						<?php endif ?>
 					<?php endif ?>
 				<?php else: ?>
-					<span class="not-applicable">None</span>
+					<span class="not-applicable"><?php echo htmlspecialchars(Flux::message('NoneLabel')) ?></span>
 				<?php endif ?>
 			</td>
 			<td>
@@ -339,7 +340,7 @@
 						<?php endif ?>
 					<?php endif ?>
 				<?php else: ?>
-					<span class="not-applicable">None</span>
+					<span class="not-applicable"><?php echo htmlspecialchars(Flux::message('NoneLabel')) ?></span>
 				<?php endif ?>
 			</td>
 			<td>
@@ -358,19 +359,19 @@
 						<?php endif ?>
 					<?php endif ?>
 				<?php else: ?>
-					<span class="not-applicable">None</span>
+					<span class="not-applicable"><?php echo htmlspecialchars(Flux::message('NoneLabel')) ?></span>
 				<?php endif ?>
 			</td>
 		</tr>
 		<?php endforeach ?>
 	</table>
 <?php else: ?>
-	<p>There are no storage items on this account.</p>
+	<p><?php echo htmlspecialchars(Flux::message('AccountViewNoStorage')) ?></p>
 <?php endif ?>
 
 <?php else: ?>
 <p>
-	Records indicate that the account you're trying to view does not exist.
-	<a href="javascript:history.go(-1)">Go back</a>.
+	<?php echo htmlspecialchars(Flux::message('AccountViewNotFound')) ?>
+	<a href="javascript:history.go(-1)"><?php echo htmlspecialchars(Flux::message('GoBackLabel')) ?></a>
 </p>
 <?php endif ?>

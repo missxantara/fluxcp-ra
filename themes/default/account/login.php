@@ -1,5 +1,5 @@
 <?php if (!defined('FLUX_ROOT')) exit; ?>
-<h2>Log In</h2>
+<h2><?php echo htmlspecialchars(Flux::message('LoginHeading')) ?></h2>
 <?php if (isset($errorMessage)): ?>
 <p class="red"><?php echo htmlspecialchars($errorMessage) ?></p>
 <?php else: ?>
@@ -15,16 +15,16 @@
 	<?php endif ?>
 	<table class="generic-form-table">
 		<tr>
-			<th><label for="login_username">Your Username</label></th>
+			<th><label for="login_username"><?php echo htmlspecialchars(Flux::message('AccountUsernameLabel')) ?></label></th>
 			<td><input type="text" name="username" id="login_username" value="<?php echo htmlspecialchars($params->get('username')) ?>" /></td>
 		</tr>
 		<tr>
-			<th><label for="login_password">Your Password</label></th>
+			<th><label for="login_password"><?php echo htmlspecialchars(Flux::message('AccountPasswordLabel')) ?></label></th>
 			<td><input type="password" name="password" id="login_password" /></td>
 		</tr>
 		<?php if (count($serverNames) > 1): ?>
 		<tr>
-			<th><label for="login_server">Log into</label></th>
+			<th><label for="login_server"><?php echo htmlspecialchars(Flux::message('AccountServerLabel')) ?></label></th>
 			<td>
 				<select name="server" id="login_server"<?php if (count($serverNames) === 1) echo ' disabled="disabled"' ?>>
 					<?php foreach ($serverNames as $serverName): ?>
@@ -36,7 +36,7 @@
 		<?php endif ?>
 		<?php if (Flux::config('UseLoginCaptcha')): ?>
 		<tr>
-			<th><label for="register_security_code">Security Code</label></th>
+			<th><label for="register_security_code"><?php echo htmlspecialchars(Flux::message('AccountSecurityLabel')) ?></label></th>
 			<td>
 				<div class="security-code">
 					<img src="<?php echo $this->url('captcha') ?>" />
@@ -44,14 +44,14 @@
 				
 				<input type="text" name="security_code" id="register_security_code" />
 				<div style="font-size: smaller;" class="action">
-					<strong><a href="javascript:refreshSecurityCode('.security-code img')">Refresh Security Code</a></strong>
+					<strong><a href="javascript:refreshSecurityCode('.security-code img')"><?php echo htmlspecialchars(Flux::message('RefreshSecurityCode')) ?></a></strong>
 				</div>
 			</td>
 		</tr>
 		<?php endif ?>
 		<tr>
 			<td align="right" colspan="2">
-				<input type="submit" value="Log In" />
+				<input type="submit" value="<?php echo htmlspecialchars(Flux::message('LoginButton')) ?>" />
 			</td>
 		</tr>
 	</table>

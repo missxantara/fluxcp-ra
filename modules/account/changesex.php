@@ -3,6 +3,8 @@ if (!defined('FLUX_ROOT')) exit;
 
 $this->loginRequired();
 
+$title = Flux::message('GenderChangeTitle');
+
 $cost     = +(int)Flux::config('ChargeGenderChange');
 $jobIndex = Flux::config('JobClassIndex');
 $badJobs  = array('Bard', 'Clown', 'Gypsy', 'Dancer');
@@ -42,8 +44,7 @@ if (count($_POST)) {
 	
 	foreach ($classes as $class) {
 		if (in_array($class, $bad)) {
-			$errorMessage  = 'You cannot change your gender if any of your characters is a: ';
-			$errorMessage .= implode(', ', $badJobs);
+			$errorMessage = sprintf(Flux::message('GenderChangeBadChars'), implode(', ', $badJobs));
 			break;
 		}
 	}

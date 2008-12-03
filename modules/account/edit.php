@@ -3,7 +3,7 @@ if (!defined('FLUX_ROOT')) exit;
 
 $this->loginRequired();
 
-$title = 'Modify Account';
+$title = Flux::message('AccountEditTitle');
 
 $accountID = $params->get('id');
 
@@ -29,10 +29,10 @@ if ($account) {
 	$isMine = $account->account_id == $session->account->account_id;
 	
 	if ($isMine) {
-		$title = "Modifying My Account";
+		$title = Flux::message('AccountEditTitle2');
 	}
 	else {
-		$title = "Modifying Account ({$account->userid})";
+		$title = sprintf(Flux::message('AccountEditTitle3'), $account->userid);
 	}
 	
 	if (count($_POST)) {
@@ -45,22 +45,22 @@ if ($account) {
 		$balance    = (int)$params->get('balance');
 		
 		if ($isMine && $account->level != $level) {
-			$errorMessage = 'You cannot modify your own account level.';
+			$errorMessage = Flux::message('CannotModifyOwnLevel');
 		}
 		elseif ($account->level != $level && !$auth->allowedToEditAccountLevel) {
-			$errorMessage = 'You cannot modify account levels.';
+			$errorMessage = Flux::message('CannotModifyAnyLevel');
 		}
 		elseif ($level > $session->account->level) {
-			$errorMessage = 'You cannot set an account level to be higher than your own.';
+			$errorMessage = Flux::message('CannotModifyLevelSoHigh');
 		}
 		elseif (!in_array($gender, array('M', 'F'))) {
-			$errorMessage = 'Gender must be male or female.';
+			$errorMessage = Flux::message('InvalidGender');
 		}
 		elseif ($account->balance != $balance && !$auth->allowedToEditAccountBalance) {
-			$errorMessage = 'You cannot modify account balances.';
+			$errorMessage = Flux::message('CannotModifyBalance');
 		}
 		elseif ($lastLogin && !preg_match('/^\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}$/', $lastLogin)) {
-			$errorMessage = 'Invalid last login date.';
+			$errorMessage = Flux::message('InvalidLastLoginDate');
 		}
 		else {
 			$bind = array(
@@ -90,7 +90,7 @@ if ($account) {
 				$session->loginServer->depositCredits($account->account_id, $deposit);
 			}
 			
-			$session->setMessageData('Account has been modified.');
+			$session->setMessageData(Flux::message('AccountModified'));
 			$this->redirect($this->url('account', 'view', array('id' => $account->account_id)));
 		}
 	}

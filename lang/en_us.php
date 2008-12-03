@@ -1,7 +1,131 @@
 <?php
-return array(
+return array(	
+	// Generic/Misc.
+	'YesLabel'                => 'Yes',
+	'NoLabel'                 => 'No',
+	'NoteLabel'               => 'Note',
+	'GenderTypeMale'          => 'Male',
+	'GenderTypeFemale'        => 'Female',
+	'GenderTypeServer'        => 'Server',
+	'RefreshSecurityCode'     => 'Refresh Security Code',
+	'NoneLabel'               => 'None',
+	'NeverLabel'              => 'Never',
+	'NotApplicableLabel'      => 'Not Applicable',
+	'UnknownLabel'            => 'Unknown',
+	'IsEqualToLabel'          => 'is equal to',
+	'IsGreaterThanLabel'      => 'is greater than',
+	'IsLessThanLabel'         => 'is less than',
+	'AllLabel'                => 'All',
+	'SearchLabel'             => 'Search…',
+	'GoBackLabel'             => 'Go back to previous page…',
+	'SearchButton'            => 'Search',
+	'ResetButton'             => 'Reset',
+	'FilterButton'            => 'Filter',
 	'NotAcceptingDonations'   => "We're sorry, but we are currently not accepting any donations.  We apologize for the inconvenience.",
 	//'NotAcceptingDonations'   => "We're sorry, but our donation system is currently undergoing maintenance, please try again later.",
+	'FoundSearchResults'      => 'Found a total of %d record(s) across %d page(s).  Displaying result(s) %d-%d.',
+	'LoginToDonate'           => 'Please log-in to make a donation.',
+	'UnknownCharacter'        => 'No such character found.',
+	'AccountIdLabel'          => 'Account ID',
+	'AccountLevelLabel'       => 'Account Level',
+	'AccountStateLabel'       => 'Account State',
+	'CreditBalanceLabel'      => 'Credit Balance',
+	'UsernameLabel'           => 'Username',
+	'PasswordLabel'           => 'Password',
+	'EmailAddressLabel'       => 'E-mail',
+	'GenderLabel'             => 'Gender',
+	'LoginCountLabel'         => 'Login Count',
+	'LastLoginDateLabel'      => 'Last Login Date',
+	'LastUsedIpLabel'         => 'Last Used IP',
+	'AccountStateNormal'      => 'Normal',
+	'AccountStatePermBanned'  => 'Permanently Banned',
+	'AccountStateTempBanned'  => 'Temp. Banned (unban: %s)',
+	'OnlineLabel'             => 'Online',
+	'OfflineLabel'            => 'Offline',
+	'ItemIdLabel'             => 'Item ID',
+	'ItemNameLabel'           => 'Item Name',
+	'ItemAmountLabel'         => 'Amount',
+	'ItemIdentifyLabel'       => 'Identified',
+	'ItemRefineLabel'         => 'Refined',
+	'ItemBrokenLabel'         => 'Broken',
+	'ItemCard0Label'          => 'Card 0',
+	'ItemCard1Label'          => 'Card 1',
+	'ItemCard2Label'          => 'Card 2',
+	'ItemCard3Label'          => 'Card 3',
+	
+	// Module: account
+	// - account/changemail
+	'EmailChangeTitle'        => 'Change E-mail',
+	'EnterEmailAddress'       => 'Please enter an e-mail address.',
+	'EmailCannotBeSame'       => 'Your new e-mail cannot be the same as your current.',
+	'EmailAlreadyRegistered'  => "The e-mail address you've entered is already registered to another account.",
+	'EmailChangeSent'         => 'An e-mail has been sent to your new address with a link that will confirm the change.',
+	'EmailAddressChanged'     => 'Your e-mail address has been changed!',
+	'EmailChangeFailed'       => 'Failed to change e-mail address.  Please try again later.',
+	'EmailChangeHeading'      => 'Change E-mail',
+	'EmailChangeInfo'         => 'If you would like to change the e-mail address registered under your account, you can fill out the below form.',
+	'EmailChangeInfo2'        => 'After submitting the form, you will be required to confirm your new e-mail address (an e-mail will be sent to the new address with a link).',
+	'EmailChangeLabel'        => 'New E-mail Address',
+	'EmailChangeInputNote'    => 'Must be a valid e-mail address!',
+	'EmailChangeButton'       => 'Change E-mail Address',
+	// - account/changepass
+	'PasswordChangeTitle'     => 'Change Password',
+	'NeedCurrentPassword'     => 'Please enter your current password.',
+	'NeedNewPassword'         => 'Please enter your new password.',
+	'OldPasswordInvalid'      => "The password you provided doesn't match the one we have on record.",
+	'ConfirmNewPassword'      => 'Please confirm your new password.',
+	'NewPasswordSameAsOld'    => 'New password cannot be the same as your current password.',
+	'PasswordHasBeenChanged'  => 'Your password has been changed, please log-in again.',
+	'FailedToChangePassword'  => 'Failed to change your password.  Please contact an admin.',
+	'PasswordChangeHeading'   => 'Change Your Password',
+	'PasswordChangeInfo'      => 'Please enter your current password, then enter the new password you would like to use and re-enter it to confirm.',
+	'CurrentPasswordLabel'    => 'Current Password',
+	'NewPasswordLabel'        => 'New Password',
+	'NewPasswordConfirmLabel' => 'Re-enter New Password',
+	'PasswordChangeNote'      => 'Please be sure to enter the correct information.',
+	'PasswordChangeNote2'     => 'After changing your password, you will be logged out.',
+	'PasswordChangeButton'    => 'Change Password',
+	// - account/changesex
+	'GenderChangeTitle'       => 'Change Gender',
+	'GenderChangeBadChars'    => 'You cannot change your gender if any of your characters is a: %s',
+	'GenderChanged'           => 'Your gender has been changed and %d credit(s) have been deducted from your account.',
+	'GenderChangedForFree'    => 'Your gender has been changed.',
+	'GenderChangeHeading'     => 'Change Your Gender',
+	'GenderChangeCost'        => 'Gender changes cost %d credit(s).',
+	'GenderChangeBalance'     => 'Your current balance is %d credit(s).',
+	'GenderChangeNoFunds'     => 'You do not have enough credits to perform a gender change at this time.',
+	'GenderChangeCharInfo'    => 'You cannot change gender if you have the follow character jobs: %s',
+	'GenderChangeSubHeading'  => 'Please make sure you want to really change!',
+	'GenderChangeFormText'    => 'Would you like to change your gender to %s?',
+	'GenderChangeConfirm'     => 'Are you absolutely sure you want to change your gender?',
+	'GenderChangeButton'      => 'Yes, do it please.',
+	// - account/confirm
+	'AccountConfirmTitle'     => 'Confirm Account',
+	'AccountConfirmUnban'     => 'Account has been confirmed and activated.',
+	'AccountConfirmMessage'   => 'Your account has been confirmed and activated, you may now log-in.',
+	// - account/confirmemail
+	'EmailConfirmTitle'       => 'Confirm E-mail',
+	'EmailConfirmFailed'      => 'There has been a technical difficulty while updating your e-mail address, please contact an admin.',
+	'EmailConfirmChanged'     => 'Your e-mail address has been changed!',
+	// - account/create
+	'AccountCreateTitle'      => 'Create an Account',
+	'AccountConfirmBan'       => 'Awaiting account activation: %s',
+	'AccountCreateEmailSent'  => 'An e-mail has been sent containing account activation details, please check your e-mail and activate your account to log-in.',
+	'AccountCreateFailed'     => 'Your account has been created, but unfortunately we failed to send an e-mail due to technical difficulties. Please contact a staff member and request for assistance.',
+	'AccountCreated'          => 'Congratulations, you have been registered successfully and automatically logged in.',
+	'AccountCreateHeading'    => 'Register',
+	'AccountCreateTerms'      => 'Terms of Service',
+	'AccountCreateInfo'       => 'Please read our %s (ToS) before registering for an account, to ensure that you understand the rules of holding an account with our private Ragnarok Online game server.',
+	'AccountCreateInfo2'      => 'By clicking "Create My Account", you agree to be bound by our %s.',
+	'AccountCreateGenderInfo' => "The gender you choose here will affect your in-game character's gender!",
+	'AccountServerLabel'      => 'Server',
+	'AccountUsernameLabel'    => 'Your Username',
+	'AccountPasswordLabel'    => 'Your Password',
+	'AccountPassConfirmLabel' => 'Confirm Password',
+	'AccountEmailLabel'       => 'E-mail Address',
+	'AccountGenderLabel'      => 'Gender',
+	'AccountSecurityLabel'    => 'Security Code',
+	'AccountCreateButton'     => 'Create My Account',
 	'InvalidLoginServer'      => 'Invalid login server selected, please try again with a valid server.',
 	'InvalidLoginCredentials' => 'Invalid login credentials, please verify that you typed the correct info and try again.',
 	'UnexpectedLoginError'    => 'Unexpected error occurred, please try again or report to an admin.',
@@ -18,29 +142,251 @@ return array(
 	'InvalidServer'           => "The server you've selected does not exist.",
 	'InvalidSecurityCode'     => 'Please enter the security code as it is, case-sensitively.',
 	'CriticalRegisterError'   => 'Something bad happened.  Report to an administrator ASAP.',
+	// - account/edit
+	'AccountEditTitle'        => 'Modify Account',
+	'AccountEditTitle2'       => 'Modifying My Account',
+	'AccountEditTitle3'       => 'Modifiying Account (%s)',
+	'CannotModifyOwnLevel'    => 'You cannot modify your own account level.',
+	'CannotModifyAnyLevel'    => 'You cannot modify account levels.',
+	'CannotModifyLevelSoHigh' => 'You cannot set an account level to be higher than your own.',
+	'CannotModifyBalance'     => 'You cannot modify account balances.',
+	'InvalidLastLoginDate'    => 'Invalid last login date.',
+	'AccountModified'         => 'Account has been modified.',
+	'AccountEditHeading'      => 'Modify Account',
+	'AccountEditButton'       => 'Modify Account',
+	'AccountEditNotFound'     => 'No such account.',
+	// - account/index
+	'AccountIndexTitle'       => 'List Accounts',
+	'AccountIndexHeading'     => 'Accounts',
+	'LoginBetweenLabel'       => 'Login Between',
+	'AccountIndexNotFound'    => 'No such account.',
+	// - account/login
+	'LoginTitle'              => 'Log In',
+	'LoginHeading'            => 'Log In',
+	'LoginButton'             => 'Log In',
+	'LoginPageMakeAccount'    => 'Don\'t have an account? <a href="%s">Create one!</a>',
 	'TemporarilyBanned'       => 'Your account is temporarily banned.',
 	'PermanentlyBanned'       => 'Your account is permanently banned.',
 	'IpBanned'                => 'The IP address you are behind is banned.',
 	'PendingConfirmation'     => 'Your account is pending e-mail confirmation.',
-	'FoundSearchResults'      => 'Found a total of %d record(s) across %d page(s).  Displaying result(s) %d-%d.',
-	'LoginToDonate'           => 'Please log-in to make a donation.',
-	'LoginPageMakeAccount'    => 'Don\'t have an account? <a href="%s">Create one!</a>',
-	'NeedCurrentPassword'     => 'Please enter your current password.',
-	'NeedNewPassword'         => 'Please enter your new password.',
-	'ConfirmNewPassword'      => 'Please confirm your new password.',
-	'NewPasswordSameAsOld'    => 'New password cannot be the same as your current password.',
-	'OldPasswordInvalid'      => "The password you provided doesn't match the one we have on record.",
-	'PasswordHasBeenChanged'  => 'Your password has been changed, please log-in again.',
-	'FailedToChangePassword'  => 'Failed to change your password.  Please contact an admin.',
-	'GenderChanged'           => 'Your gender has been changed and %d credit(s) have been deducted from your account.',
-	'GenderChangedForFree'    => 'Your gender has been changed.',
-	'UnknownCharacter'        => 'No such character found.',
+	// - account/logout
+	'LogoutTitle'             => 'Logout',
+	'LogoutHeading'           => 'Logout',
+	'LogoutInfo'              => 'You are now logged out.',
+	'LogoutInfo2'             => 'Please wait a moment while you are <a href="%s">redirected</a>…',
+	// - account/resend
+	'ResendTitle'             => 'Resend Confirmation E-mail',
+	'ResendEnterUsername'     => 'Please enter your account username.',
+	'ResendEnterEmail'        => 'Please enter your e-mail address.',
+	'ResendFailed'            => 'Failed to resend confirmation code.',
+	'ResendEmailSent'         => 'Your confirmation code has been resent, please check your e-mail and proceed to activate your account.',
+	'ResendHeading'           => 'Resend Confirmation E-mail',
+	'ResendInfo'              => 'Please enter your account name and e-mail address you used during the registration of the account to have us resend your confirmation e-mail.',
+	'ResendServerLabel'       => 'Registered Server',
+	'ResendAccountLabel'      => 'Account Username',
+	'ResendEmailLabel'        => 'E-mail Address',
+	'ResendServerInfo'        => 'This is the server the account was registered on.',
+	'ResendAccountInfo'       => 'This is the account name you registered.',
+	'ResendEmailInfo'         => 'This is the e-mail address you used during the registration of the above account.',
+	'ResendButton'            => 'Resend Confirmation E-mail',
+	// - account/resetpass
+	'ResetPassTitle'          => 'Reset Password',
+	'ResetPassEnterAccount'   => 'Please enter your account username.',
+	'ResetPassEnterEmail'     => 'Please enter your e-mail address.',
+	'ResetPassFailed'         => 'Failed to send reset password e-mail.',
+	'ResetPassEmailSent'      => 'An e-mail has been sent with details on how to reset your password.',
+	'ResetPassTitle'          => 'Reset Password',
+	'ResetPassInfo'           => 'If you lost your password, you can re-set it by entering the e-mail address you used to register your account.',
+	'ResetPassInfo2'          => 'An e-mail will then be sent to the specified address with a link allowing you to reset your password, therefore a valid e-mail address is required.',
+	'ResetPassServerLabel'    => 'Registered Server',
+	'ResetPassAccountLabel'   => 'Account Username',
+	'ResetPassEmailLabel'     => 'E-mail Address',
+	'ResetPassServerInfo'     => 'This is the server the account was registered on.',
+	'ResetPassAccountInfo'    => 'This is the account name you registered.',
+	'ResetPassEmailInfo'      => 'This is the e-mail address you used during the registration of the above account.',
+	'ResetPassButton'         => 'Send Reset Password E-mail',
+	// - account/resetpw
+	'ResetPwTitle'            => 'Reset Password',
+	'ResetPwFailed'           => 'Failed to re-set password, please try again later.',
+	'ResetPwDone'             => 'Your password has been reset and an e-mail containing your new password has been sent to you.',
+	'ResetPwDone2'            => 'Your password has been reset, but we failed to deliver the e-mail containing your new password.  Please reset again to resolve this issue.',
+	// - account/transfer
+	'TransferTitle'           => 'Transfer Donation Credits',
+	'TransferGreaterThanOne'  => 'You can only transfer credits in amounts greater than 1.',
+	'TransferEnterCharName'   => 'You must input the character name of who will receive the credits.',
+	'TransferNoCharExists'    => "Character '%s' does not exist. Please make sure you typed it correctly.",
+	'TransferNoBalance'       => 'You do not have a sufficient balance to make the transfer.',
+	'TransferUnexpectedError' => 'Unexpected error occurred.',
+	'TransferSuccessful'      => 'Credits have been transferred!',
+	'TransferHeading'         => 'Transfer Donation Credits',
+	'TransferSubHeading'      => 'Credits will be transferred to a character on the %s server.',
+	'TransferInfo'            => 'You currently have %s credit(s).',
+	'TransferInfo2'           => 'Enter the amount you would like to transfer and the character name belonging to the account you would like your credits transferred to.',
+	'TransferAmountLabel'     => 'Amount of Credits',
+	'TransferCharNameLabel'   => 'Character Name',
+	'TransferAmountInfo'      => 'This is the amount of credits you would like to send.',
+	'TransferCharNameInfo'    => 'This is the character name of who will be receiving the credits.',
+	'TransferConfirm'         => 'Are you sure you want to do this?',
+	'TransferButton'          => 'Transfer',
+	'TransferNoCredits'       => 'You have no credits available in your account.',
+	// - account/view
+	'AccountViewTitle'        => 'View Account',
+	'AccountViewTitle2'       => 'Viewing Account (%s)',
+	'AccountViewTitle3'       => 'Viewing My Account',
+	'AccountTempBanFailed'    => 'Failed to temporarily ban account.',
+	'AccountPermBanFailed'    => 'Failed to permanently ban account.',
+	'AccountTempBanUnauth'    => 'You are unauthorized to place temporary bans on this account.',
+	'AccountPermBanUnauth'    => 'You are unauthorized to place permanent bans on this account.',
+	'AccountLiftTempBan'      => 'Account has been unbanned.',
+	'AccountLiftPermBan'      => 'Account has been unbanned.',
+	'AccountLiftBanUnauth'    => "You are unauthorized to remove this account's ban status.",
+	'AccountViewHeading'      => 'Viewing Account',
+	'AccountViewDonateLink'   => '(Donate!)',
+	'AccountViewTempBanLabel' => 'Temporary Ban',
+	'AccountViewPermBanLabel' => 'Permanent Ban',
+	'AccountViewUnbanLabel'   => 'Remove Ban',
+	'AccountBanReasonLabel'   => 'Reason:',
+	'AccountBanUntilLabel'    => 'Ban Until:',
+	'AccountTempBanButton'    => 'Ban Account',
+	'AccountPermBanButton'    => 'Permanently Ban Account',
+	'AccountTempUnbanButton'  => 'Remove Temporary Ban',
+	'AccountPermUnbanButton'  => 'Remove Permanent Ban',
+	'AccountBanConfirm'       => 'Are you sure?',
+	'AccountBanLogSubHeading' => 'Ban Log for %s (recent to oldest)',
+	'BanLogBanTypeLabel'      => 'Ban Type',
+	'BanLogBanDateLabel'      => 'Ban Date',
+	'BanLogBanReasonLabel'    => 'Ban Reason',
+	'BanLogBannedByLabel'     => 'Banned By',
+	'BanLogBannedByCP'        => 'Control Panel',
+	'BanTypeUnbanned'         => 'Unbanned',
+	'BanTypePermBanned'       => 'Permanently Banned',
+	'BanTypeTempBanned'       => 'Temporarily Banned',
+	'AccountViewCharSubHead'  => 'Characters on %s',
+	'AccountViewSlotLabel'    => 'Slot',
+	'AccountViewCharLabel'    => 'Character Name',
+	'AccountViewClassLabel'   => 'Job Class',
+	'AccountViewLvlLabel'     => 'Base Level',
+	'AccountViewJlvlLabel'    => 'Job Level',
+	'AccountViewZenyLabel'    => 'Zeny',
+	'AccountViewGuildLabel'   => 'Guild',
+	'AccountViewStatusLabel'  => 'Status',
+	'AccountViewPrefsLabel'   => 'Preferences',
+	'CharModifyPrefsLink'     => 'Modify Preferences',
+	'AccountViewNoChars'      => 'This account has no characters on %s.',
+	'AccountViewStorage'      => 'Storage Items of %s',
+	'AccountViewStorageCount' => '%s has %s storage item(s).',
+	'AccountViewNoStorage'    => 'There are no storage items on this account.',
+	'AccountViewNotFound'     => "Records indicate that the account you're trying to view does not exist.",
+	// - account/xferlog
+	'XferLogTitle'            => 'Credit Transfer History',
+	'XferLogHeading'          => 'Credit Transfer History',
+	'XferLogReceivedSubHead'  => 'Transfers: Received',
+	'XferLogSentSubHead'      => 'Transfers: Sent',
+	'XferLogCreditsLabel'     => 'Credits',
+	'XferLogFromLabel'        => 'From E-mail',
+	'XferLogDateLabel'        => 'Transfer Date',
+	'XferLogCharNameLabel'    => 'To Character',
+	'XferLogNotReceived'      => 'You have not received any credit transfers.',
+	'XferLogNotSent'          => 'You have not sent any credit transfers.',
+	
+	// Module: character
+	// - character/changeslot
+	// - character/index
+	// - character/mapstats
+	// - character/online
+	// - character/prefs
+	// - character/resetlook
+	'CantResetLookWhenOnline' => 'Cannot reset look while %s is online.',
+	'ResetLookSuccessful'     => "%s's look has been reset!",
+	'ResetLookFailed'         => "Failed to reset %s's look.",
+	// - character/resetpos
 	'CantResetPosWhenOnline'  => 'Cannot reset position while %s is online.',
 	'CantResetFromCurrentMap' => "You cannot reset %s's position from the current map.",
 	'ResetPositionSuccessful' => "%s's position has been reset!",
 	'ResetPositionFailed'     => "Failed to reset %s's position.",
-	'CantResetLookWhenOnline' => 'Cannot reset look while %s is online.',
-	'ResetLookSuccessful'     => "%s's look has been reset!",
-	'ResetLookFailed'         => "Failed to reset %s's look.",
+	// - character/view
+	
+	// Module: cplog
+	// - cplog/index.php
+	// - cplog/login.php
+	// - cplog/paypal.php
+	// - cplog/resetpass.php
+	// - cplog/txnview.php
+	
+	// Module: donate
+	// - donate/complete
+	// - donate/history
+	// - donate/index
+	// - donate/trusted
+	
+	// Module: guild
+	// - guild/export
+	// - guild/index
+	// - guild/view
+	
+	// Module: ipban
+	// - ipban/add
+	// - ipban/edit
+	// - ipban/index
+	// - ipban/unban
+	
+	// Module: item
+	// - item/add
+	// - item/copy
+	// - item/edit
+	// - item/index
+	// - item/view
+	
+	// Module: itemshop
+	// - itemshop/add
+	// - itemshop/delete
+	// - itemshop/edit
+	// - itemshop/imagedel
+	
+	// Module: logdata
+	// - logdata/index
+	// - logdata/login
+	
+	// Module: mail
+	// - mail/index
+	
+	// Module: main
+	// - main/index
+	// - main/pagenotfound
+	// - main/preprocess
+	
+	// Module: monster
+	// - monster/index
+	// - monster/view
+	
+	// Module: purchase
+	// - purchase/add
+	// - purchase/cart
+	// - purchase/checkout
+	// - purchase/clear
+	// - purchase/index
+	// - purchase/pending
+	// - purchase/remove
+	
+	// Module: ranking
+	// - ranking/character
+	// - ranking/guild
+	// - ranking/zeny
+	
+	// Module: reload
+	// - reload/index
+	// - reload/mobskill
+	
+	// Module: server
+	// - server/status
+	
+	// Module: service
+	// - service/tos
+	
+	// Module: unauthorized
+	// - unauthorized/index
+	
+	// Module: woe
+	// - woe/index
 );
 ?>

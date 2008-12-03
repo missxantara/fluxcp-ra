@@ -3,6 +3,8 @@ if (!defined('FLUX_ROOT')) exit;
 
 $this->loginRequired();
 
+$title = Flux::message('EmailConfirmTitle');
+
 $account = $params->get('account');
 $code    = $params->get('code');
 $login   = $params->get('login');
@@ -35,7 +37,7 @@ $sql = "UPDATE {$server->loginDatabase}.$emailChangeTable SET change_date = NOW(
 $sth = $server->connection->getStatement($sql);
 
 if (!$sth->execute(array($_SERVER['REMOTE_ADDR'], $row->id))) {
-	$session->setMessageData('There has been a technical difficulty while updating your e-mail address, please contact an admin.');
+	$session->setMessageData(Flux::message('EmailConfirmFailed'));
 	$this->redirect();
 }
 else {
@@ -43,11 +45,11 @@ else {
 	$sth = $server->connection->getStatement($sql);
 	
 	if (!$sth->execute(array($row->email, $account))) {
-		$session->setMessageData('There has been a technical difficulty while updating your e-mail address, please contact an admin.');
+		$session->setMessageData(Flux::message('EmailConfirmFailed'));
 		$this->redirect();
 	}
 	else {
-		$session->setMessageData('Your e-mail address has been changed!');
+		$session->setMessageData(Flux::message('EmailConfirmChanged'));
 		$this->redirect();
 	}
 }

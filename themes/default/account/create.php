@@ -1,6 +1,6 @@
 <?php if (!defined('FLUX_ROOT')) exit; ?>
-<h2>Register</h2>
-<p>Please read our <a href="<?php echo $this->url('service', 'tos') ?>">Terms of Service</a> (ToS) before registering for an account, to ensure that you understand the rules of holding an account with our private Ragnarok Online game server.</p>
+<h2><?php echo htmlspecialchars(Flux::message('AccountCreateHeading')) ?></h2>
+<p><?php printf(htmlspecialchars(Flux::message('AccountCreateInfo')), '<a href="'.$this->url('service', 'tos').'">'.Flux::message('AccountCreateTerms').'</a>') ?></p>
 <?php if (Flux::config('RequireEmailConfirm')): ?>
 <p><strong>Note:</strong> You will need to provide a working e-mail address to confirm your account before you can log-in.</p>
 <?php endif ?>
@@ -14,7 +14,7 @@
 	<table class="generic-form-table">
 		<?php if (count($serverNames) > 1): ?>
 		<tr>
-			<th><label for="register_server">Choose a Server</label></th>
+			<th><label for="register_server"><?php echo htmlspecialchars(Flux::message('AccountServerLabel')) ?></label></th>
 			<td>
 				<select name="server" id="register_server"<?php if (count($serverNames) === 1) echo ' disabled="disabled"' ?>>
 				<?php foreach ($serverNames as $serverName): ?>
@@ -26,39 +26,39 @@
 		<?php endif ?>
 		
 		<tr>
-			<th><label for="register_username">Your Username</label></th>
+			<th><label for="register_username"><?php echo htmlspecialchars(Flux::message('AccountUsernameLabel')) ?></label></th>
 			<td><input type="text" name="username" id="register_username" value="<?php echo htmlspecialchars($params->get('username')) ?>" /></td>
 		</tr>
 		
 		<tr>
-			<th><label for="register_password">Your Password</label></th>
+			<th><label for="register_password"><?php echo htmlspecialchars(Flux::message('AccountPasswordLabel')) ?></label></th>
 			<td><input type="password" name="password" id="register_password" /></td>
 		</tr>
 		
 		<tr>
-			<th><label for="register_confirm_password">Confirm Password</label></th>
+			<th><label for="register_confirm_password"><?php echo htmlspecialchars(Flux::message('AccountPassConfirmLabel')) ?></label></th>
 			<td><input type="password" name="confirm_password" id="register_confirm_password" /></td>
 		</tr>
 		
 		<tr>
-			<th><label for="register_email_address">Email Address</label></th>
+			<th><label for="register_email_address"><?php echo htmlspecialchars(Flux::message('AccountEmailLabel')) ?></label></th>
 			<td><input type="text" name="email_address" id="register_email_address" value="<?php echo htmlspecialchars($params->get('email_address')) ?>" /></td>
 		</tr>
 		
 		<tr>
-			<th><label>Gender</label></th>
+			<th><label><?php echo htmlspecialchars(Flux::message('AccountGenderLabel')) ?></label></th>
 			<td>
 				<p>
-					<label><input type="radio" name="gender" id="register_gender_m" value="M"<?php if ($params->get('gender') === 'M') echo ' checked="checked"' ?> /> Male</label>
-					<label><input type="radio" name="gender" id="register_gender_f" value="F"<?php if ($params->get('gender') === 'F') echo ' checked="checked"' ?> /> Female</label>
-					<strong title="The gender you choose here will affect your in-game character's gender!">?</strong>
+					<label><input type="radio" name="gender" id="register_gender_m" value="M"<?php if ($params->get('gender') === 'M') echo ' checked="checked"' ?> /> <?php echo $this->genderText('M') ?></label>
+					<label><input type="radio" name="gender" id="register_gender_f" value="F"<?php if ($params->get('gender') === 'F') echo ' checked="checked"' ?> /> <?php echo $this->genderText('F') ?></label>
+					<strong title="<?php echo htmlspecialchars(Flux::message('AccountCreateGenderInfo')) ?>">?</strong>
 				</p>
 			</td>
 		</tr>
 		
 		<?php if (Flux::config('UseCaptcha')): ?>
 		<tr>
-			<th><label for="register_security_code">Security Code</label></th>
+			<th><label for="register_security_code"><?php echo htmlspecialchars(Flux::message('AccountSecurityLabel')) ?></label></th>
 			<td>
 				<div class="security-code">
 					<img src="<?php echo $this->url('captcha') ?>" />
@@ -66,7 +66,7 @@
 				
 				<input type="text" name="security_code" id="register_security_code" />
 				<div style="font-size: smaller;" class="action">
-					<strong><a href="javascript:refreshSecurityCode('.security-code img')">Refresh Security Code</a></strong>
+					<strong><a href="javascript:refreshSecurityCode('.security-code img')"><?php echo htmlspecialchars(Flux::message('RefreshSecurityCode')) ?></a></strong>
 				</div>
 			</td>
 		</tr>
@@ -76,11 +76,10 @@
 			<td></td>
 			<td>
 				<div style="margin-bottom: 5px">
-					By clicking "Create My Account",<br />
-					<strong>you agree to be bound</strong> by our <a href="<?php echo $this->url('service', 'tos') ?>">Terms of Service</a>.
+					<?php printf(htmlspecialchars(Flux::message('AccountCreateInfo2')), '<a href="'.$this->url('service', 'tos').'">'.Flux::message('AccountCreateTerms').'</a>') ?>
 				</div>
 				<div>
-					<button type="submit"><strong>Create My Account</strong></button>
+					<button type="submit"><strong><?php echo htmlspecialchars(Flux::message('AccountCreateButton')) ?></strong></button>
 				</div>
 			</td>
 		</tr>

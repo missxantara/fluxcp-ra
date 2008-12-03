@@ -3,7 +3,7 @@ if (!defined('FLUX_ROOT')) exit;
 
 $this->loginRequired();
 
-$title = 'View Account';
+$title = Flux::message('AccountViewTitle');
 
 require_once 'Flux/TemporaryTable.php';
 
@@ -39,11 +39,11 @@ if (!$isMine) {
 	$account = $sth->fetch();
 	
 	if ($account) {
-		$title = "Viewing Account ({$account->userid})";
+		$title = sprintf(Flux::message('AccountViewTitle2'), $account->userid);
 	}
 }
 else {
-	$title = 'Viewing My Account';
+	$title = Flux::message('AccountViewTitle3');
 }
 
 $banSuperior = $account && (($account->level > $session->account->level && $auth->allowedToBanHigherPower) || $account->level <= $session->account->level);
@@ -66,11 +66,11 @@ if (count($_POST) && $account) {
 				$this->redirect($this->url('account', 'view', array('id' => $account->account_id)));
 			}
 			else {
-				$errorMessage = 'Failed to temporarily ban account.';
+				$errorMessage = Flux::message('AccountTempBanFailed');
 			}
 		}
 		else {
-			$errorMessage = 'You are unauthorized to place temporary bans on this account.';
+			$errorMessage = Flux::message('AccountTempBanUnauth');
 		}
 	}
 	elseif ($params->get('permban')) {
@@ -80,11 +80,11 @@ if (count($_POST) && $account) {
 				$this->redirect($this->url('account', 'view', array('id' => $account->account_id)));
 			}
 			else {
-				$errorMessage = 'Failed to permanently ban account.';
+				$errorMessage = Flux::message('AccountPermBanFailed');
 			}
 		}
 		else {
-			$errorMessage = 'You are unauthorized to place permanent bans on this account.';
+			$errorMessage = Flux::message('AccountPermBanUnauth');
 		}
 	}
 	elseif ($params->get('unban')) {
@@ -105,7 +105,7 @@ if (count($_POST) && $account) {
 				$sth->execute(array($account->account_id));
 			}
 					
-			$session->setMessageData('Account has been unbanned.');
+			$session->setMessageData(Flux::message('AccountLiftTempBan'));
 			$this->redirect($this->url('account', 'view', array('id' => $account->account_id)));
 		}
 		elseif ($permBanned && $auth->allowedToPermUnbanAccount &&
@@ -115,11 +115,11 @@ if (count($_POST) && $account) {
 				$sth->execute(array($account->account_id));
 			}
 					
-			$session->setMessageData('Account has been unbanned.');
+			$session->setMessageData(Flux::message('AccountLiftPermBan'));
 			$this->redirect($this->url('account', 'view', array('id' => $account->account_id)));
 		}
 		else {
-			$errorMessage = "You are unauthorized to remove this account's ban status.";
+			$errorMessage = Flux::message('AccountLiftBanUnauth');
 		}
 	}
 }
@@ -154,43 +154,45 @@ if (!$auth->allowedToSeeUnknownItems) {
 	$sql .= 'AND storage.identify > 0 ';
 }
 
-$sql .= "ORDER BY storage.nameid ASC, storage.identify DESC, ";
-$sql .= "storage.attribute DESC, storage.refine ASC";
+if ($account) {
+	$sql .= "ORDER BY storage.nameid ASC, storage.identify DESC, ";
+	$sql .= "storage.attribute DESC, storage.refine ASC";
 
-$sth  = $server->connection->getStatement($sql);
-$sth->execute(array($account->account_id));
+	$sth  = $server->connection->getStatement($sql);
+	$sth->execute(array($account->account_id));
 
-$items = $sth->fetchAll();
-$cards = array();
+	$items = $sth->fetchAll();
+	$cards = array();
 
-if ($items) {
-	$cardIDs = array();
-	
-	foreach ($items as $item) {
-		if ($item->card0) {
-			$cardIDs[] = $item->card0;
+	if ($items) {
+		$cardIDs = array();
+
+		foreach ($items as $item) {
+			if ($item->card0) {
+				$cardIDs[] = $item->card0;
+			}
+			if ($item->card1) {
+				$cardIDs[] = $item->card1;
+			}
+			if ($item->card2) {
+				$cardIDs[] = $item->card2;
+			}
+			if ($item->card3) {
+				$cardIDs[] = $item->card3;
+			}
 		}
-		if ($item->card1) {
-			$cardIDs[] = $item->card1;
-		}
-		if ($item->card2) {
-			$cardIDs[] = $item->card2;
-		}
-		if ($item->card3) {
-			$cardIDs[] = $item->card3;
-		}
-	}
-	
-	if ($cardIDs) {
-		$ids = implode(',', array_fill(0, count($cardIDs), '?'));
-		$sql = "SELECT id, name_japanese FROM {$server->charMapDatabase}.items WHERE id IN ($ids)";
-		$sth = $server->connection->getStatement($sql);
-	
-		$sth->execute($cardIDs);
-		$temp = $sth->fetchAll();
-		if ($temp) {
-			foreach ($temp as $card) {
-				$cards[$card->id] = $card->name_japanese;
+
+		if ($cardIDs) {
+			$ids = implode(',', array_fill(0, count($cardIDs), '?'));
+			$sql = "SELECT id, name_japanese FROM {$server->charMapDatabase}.items WHERE id IN ($ids)";
+			$sth = $server->connection->getStatement($sql);
+
+			$sth->execute($cardIDs);
+			$temp = $sth->fetchAll();
+			if ($temp) {
+				foreach ($temp as $card) {
+					$cards[$card->id] = $card->name_japanese;
+				}
 			}
 		}
 	}

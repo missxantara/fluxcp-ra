@@ -1,3 +1,3 @@
 <?php if (!defined('FLUX_ROOT')) exit; ?>
-<h2>Logout</h2>
-<p><strong>You are now logged out.</strong>  Please wait a moment while you are <a href="<?php echo $metaRefresh['location'] ?>">redirected</a>.</p>
+<h2><?php echo htmlspecialchars(Flux::message('LogoutHeading')) ?></h2>
+<p><strong><?php echo htmlspecialchars(Flux::message('LogoutInfo')) ?></strong> <?php printf(Flux::message('LogoutInfo2'), $metaRefresh['location']) ?></p>
