@@ -387,6 +387,9 @@ return array(
 	
 	// Module: unauthorized
 	// - unauthorized/index
+	'UnauthorizedTitle'       => 'Unauthorized',
+	'UnauthorizedHeading'     => 'Unauthorized',
+	'UnauthorizedInfo'        => 'You are unauthorized to view this page. <a href="%s">Redirecting…</a>',
 	
 	// Module: woe
 	// - woe/index

@@ -1,3 +1,3 @@
 <?php if (!defined('FLUX_ROOT')) exit; ?>
-<h2 class="red">Unauthorized</h2>
-<p>You are unauthorized to view this page. <a href="<?php echo $metaRefresh['location'] ?>">Redirecting...</a></p>
+<h2 class="red"><?php echo htmlspecialchars(Flux::message('UnauthorizedHeading')) ?></h2>
+<p><?php printf(Flux::message('UnauthorizedInfo'), $metaRefresh['location']) ?></p>
