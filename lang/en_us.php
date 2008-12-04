@@ -328,9 +328,39 @@ return array(
 	
 	// Module: ipban
 	// - ipban/add
+	'IpbanAddTitle'           => 'Add IP Ban',
+	'IpbanEnterIpPattern'     => 'Please input an IP address or pattern.',
+	'IpbanInvalidPattern'     => 'Invalid IP address or pattern.',
+	'IpbanEnterReason'        => 'Please enter a reason for the IP ban.',
+	'IpbanSelectUnbanDate'    => 'Unban date is required.',
+	'IpbanFutureDate'         => 'Unban date must be specified to a future date.',
+	'IpbanAlreadyBanned'      => 'A matching IP (%s) has already been banned.',
+	'IpbanPatternBanned'      => "The IP address/pattern '%s' has been banned.",
+	'IpbanAddFailed'          => 'Failed to add IP ban.',
+	'IpbanAddHeading'         => 'Add IP Ban',
+	'IpbanIpAddressLabel'     => 'IP Address',
+	'IpbanReasonLabel'        => 'Ban Reason',
+	'IpbanUnbanDateLabel'     => 'Unban Date',
+	'IpbanIpAddressInfo'      => 'You may specify a pattern such as 218.139.*.*',
+	'IpbanAddButton'          => 'Add IP Ban',
 	// - ipban/edit
+	'IpbanEditTitle'          => 'Modify IP Ban',
+	'IpbanEditFailed'         => 'Failed to modify IP ban.',
+	'IpbanEditHeading'        => 'Modify IP Ban',
+	'IpbanEditButton'         => 'Modify IP Ban',
 	// - ipban/index
+	'IpbanListTitle'          => 'IP Ban List',
+	'IpbanListHeading'        => 'IP Ban List',
+	'IpbanBannedIpLabel'      => 'Banned IP',
+	'IpbanBanDateLabel'       => 'Ban Date',
+	'IpbanBanReasonLabel'     => 'Ban Reason',
+	'IpbanBanExpireLabel'     => 'Ban Expiration Date',
+	'IpbanModifyLink'         => 'Modify',
+	'IpbanUnbanButton'        => 'Unban Selected',
+	'IpbanListNoBans'         => 'There are currently no IP bans.',
 	// - ipban/unban
+	'IpbanNothingToUnban'     => 'Nothing to unban.',
+	'IpbanUnbanned'           => 'Lifted selected IP ban(s)!',
 	
 	// Module: item
 	// - item/add

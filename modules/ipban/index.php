@@ -3,7 +3,7 @@ if (!defined('FLUX_ROOT')) exit;
 
 $this->loginRequired();
 
-$title = 'IP Ban List';
+$title = Flux::message('IpbanListTitle');
 
 $sqlpartial = "WHERE rtime > NOW() ";
 
