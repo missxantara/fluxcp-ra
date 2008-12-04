@@ -6,7 +6,7 @@
 <?php if ($account): ?>
 <p class="action">
 	<?php if (($account->level <= $session->account->level || $auth->allowedToEditHigherPower) && $auth->actionAllowed('account', 'edit')): ?>
-	<a href="<?php echo $this->url('account', 'edit', array('id' => $account->account_id)) ?>">Modify Account</a>
+	<a href="<?php echo $this->url('account', 'edit', array('id' => $account->account_id)) ?>"><?php echo htmlspecialchars(Flux::message('ModifyAccountLink')) ?></a>
 	<?php endif ?>
 </p>
 <table class="vertical-table">

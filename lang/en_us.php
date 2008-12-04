@@ -230,6 +230,8 @@ return array(
 	'TransferButton'          => 'Transfer',
 	'TransferNoCredits'       => 'You have no credits available in your account.',
 	// - account/view
+	// * account/view submenus
+	'ModifyAccountLink'       => 'Modify Account',
 	'AccountViewTitle'        => 'View Account',
 	'AccountViewTitle2'       => 'Viewing Account (%s)',
 	'AccountViewTitle3'       => 'Viewing My Account',

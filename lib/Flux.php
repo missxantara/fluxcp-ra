@@ -254,20 +254,13 @@ class Flux {
 	 * @param string $filename
 	 * @access public
 	 */
-	public static function parseConfigFile($filename)
+	public static function parseConfigFile($filename, $cache=true)
 	{
-		$cachefile = FLUX_DATA_DIR.'/tmp/'.basename(str_replace(' ', '', ucwords(str_replace(array('/', '\\', '_'), ' ', $filename))), '.php').'.cache.php';
-		if (file_exists($cachefile) && filemtime($cachefile) > filemtime($filename)) {
-			$fp = fopen($cachefile, 'r');
-			fseek($fp, 28); // Ignore PHP string.
-			
-			$s = '';
-			while (!feof($fp)) {
-				$s .= fread($fp, 256);
-			}
-			
-			fclose($fp);
-			return unserialize($s);
+		$basename  = basename(str_replace(' ', '', ucwords(str_replace(array('/', '\\', '_'), ' ', $filename))), '.php').'.cache.php';
+		$cachefile = FLUX_DATA_DIR."/tmp/$basename";
+		
+		if ($cache && file_exists($cachefile) && filemtime($cachefile) > filemtime($filename)) {
+			return unserialize(file_get_contents($cachefile, null, null, 28));
 		}
 		else {
 			ob_start();
@@ -277,10 +270,13 @@ class Flux {
 			
 			// Cache config file.
 			$cf = self::parseConfig($config);
-			$fp = fopen($cachefile, 'w');
-			fwrite($fp, '<?php exit("Forbidden."); ?>');
-			fwrite($fp, $s=serialize($cf), strlen($s));
-			fclose($fp);
+
+			if ($cache) {
+				$fp = fopen($cachefile, 'w');
+				fwrite($fp, '<?php exit("Forbidden."); ?>');
+				fwrite($fp, $s=serialize($cf), strlen($s));
+				fclose($fp);
+			}
 			
 			return $cf;
 		}
@@ -294,7 +290,7 @@ class Flux {
 	 */
 	public static function parseAppConfigFile($filename)
 	{
-		$config = self::parseConfigFile($filename);
+		$config = self::parseConfigFile($filename, false);
 		
 		if (!$config->getThemeName()) {
 			self::raise('ThemeName is required in application configuration.');
