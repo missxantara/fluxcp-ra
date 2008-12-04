@@ -411,6 +411,14 @@ return array(
 	
 	// Module: server
 	// - server/status
+	'ServerStatusTitle'       => 'Current Server Status',
+	'ServerStatusHeading'     => 'Server Status',
+	'ServerStatusInfo'        => "Understanding the online and offline status of each server can help you understand how an issue can relate to your problem. For example, if the login server is offline it means that you won't be able to log into the game. The character server and map servers are necessary for the actual gameplay past the point of logging in.",
+	'ServerStatusServerLabel' => 'Server',
+	'ServerStatusLoginLabel'  => 'Login Server',
+	'ServerStatusCharLabel'   => 'Character Server',
+	'ServerStatusMapLabel'    => 'Map Server',
+	'ServerStatusOnlineLabel' => 'Players Online',
 	
 	// Module: service
 	// - service/tos

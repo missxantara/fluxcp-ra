@@ -1,19 +1,15 @@
 <?php if (!defined('FLUX_ROOT')) exit; ?>
-<h2>Server Status</h2>
-<p>
-	Understanding the online and offline status of each server can help you understand how an issue can relate to your problem.
-	For example, if the login server is offline it means that you won't be able to log into the game.
-	The character server and map servers are necessary for the actual gameplay past the point of logging in.
-</p>
+<h2><?php echo htmlspecialchars(Flux::message('ServerStatusHeading')) ?></h2>
+<p><?php echo htmlspecialchars(Flux::message('ServerStatusInfo')) ?></p>
 <?php foreach ($serverStatus as $privServerName => $gameServers): ?>
 <h3>Server Status for <?php echo htmlspecialchars($privServerName) ?></h3>
 <table id="server_status">
 	<tr>
-		<td class="status">Server</td>
-		<td class="status">Login Server</td>
-		<td class="status">Character Server</td>
-		<td class="status">Map Server</td>
-		<td class="status">Players Online</td>
+		<td class="status"><?php echo htmlspecialchars(Flux::message('ServerStatusServerLabel')) ?></td>
+		<td class="status"><?php echo htmlspecialchars(Flux::message('ServerStatusLoginLabel')) ?></td>
+		<td class="status"><?php echo htmlspecialchars(Flux::message('ServerStatusCharLabel')) ?></td>
+		<td class="status"><?php echo htmlspecialchars(Flux::message('ServerStatusMapLabel')) ?></td>
+		<td class="status"><?php echo htmlspecialchars(Flux::message('ServerStatusOnlineLabel')) ?></td>
 	</tr>
 	<?php foreach ($gameServers as $serverName => $gameServer): ?>
 	<tr>

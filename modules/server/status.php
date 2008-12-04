@@ -1,7 +1,7 @@
 <?php
 if (!defined('FLUX_ROOT')) exit;
 
-$title = 'Current Server Status';
+$title = Flux::message('ServerStatusTitle');
 $cache = FLUX_DATA_DIR.'/tmp/ServerStatus.cache';
 
 if (file_exists($cache) && (time() - filemtime($cache)) < (Flux::config('ServerStatusCache') * 60)) {
