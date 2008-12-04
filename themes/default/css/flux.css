@@ -466,6 +466,25 @@ label:hover {
 	color: #bbb;
 }
 
+#pagemenu {
+	margin-top: 5px;
+	padding: 5px 0;
+	font-size: 8pt;
+	color: #888;
+	border-width: 1px 0;
+	border-style: dotted;
+	border-color: #ddd;
+}
+
+#pagemenu a {
+	color: #777974;
+	text-decoration: underline;
+}
+
+#pagemenu a:hover {
+	color: #729fcf;
+}
+
 #loginbox {
 	margin-bottom: 10px;
 	color: #555;

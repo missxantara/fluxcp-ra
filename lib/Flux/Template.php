@@ -336,6 +336,25 @@ class Flux_Template {
 		
 		include $this->actionPath;
 		
+		$pageMenuFile   = FLUX_ROOT."/modules/{$this->moduleName}/pagemenu/{$this->actionName}.php";
+		$pageMenuItems  = array();
+		
+		// Get the main menu file first (located in the actual module).
+		if (file_exists($pageMenuFile)) {
+			ob_start();
+			$pageMenuItems = include $pageMenuFile;
+			ob_end_clean();
+		}
+		
+		$addonPageMenuFiles = glob(FLUX_ADDON_DIR."/*/modules/{$this->moduleName}/pagemenu/{$this->actionName}.php");
+		if ($addonPageMenuFiles) {
+			foreach ($addonPageMenuFiles as $addonPageMenuFile) {
+				ob_start();
+				$pageMenuItems = array_merge($pageMenuItems, include $addonPageMenuFile);
+				ob_end_clean();
+			}
+		}
+		
 		if (file_exists($this->headerPath)) {
 			include $this->headerPath;
 		}
