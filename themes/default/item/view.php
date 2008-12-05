@@ -1,22 +1,11 @@
 <?php if (!defined('FLUX_ROOT')) exit; ?>
 <h2>Viewing Item</h2>
 <?php if ($item): ?>
-<?php
-$actions = array();
-if ($auth->actionAllowed('item', 'edit')) {
-	$actions[] = sprintf('<a href="%s">Modify Item</a>', $this->url('item', 'edit', array('id' => $item->item_id)));
-}
-if ($auth->actionAllowed('item', 'copy')) {
-	$actions[] = sprintf('<a href="%s">Duplicate Item</a>', $this->url('item', 'copy', array('id' => $item->item_id)));
-}
-
-$icon = $this->iconImage($item->item_id);
-?>
+<?php $icon = $this->iconImage($item->item_id); ?>
 <h3>
 	<?php if ($icon): ?><img src="<?php echo $icon ?>" /><?php endif ?>
 	#<?php echo htmlspecialchars($item->item_id) ?>: <?php echo htmlspecialchars($item->name) ?>
 </h3>
-<p class="action"><?php echo implode(' / ', $actions) ?></p>
 <table class="vertical-table">
 	<tr>
 		<th>Item ID</th>
