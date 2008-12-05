@@ -158,7 +158,7 @@ class Flux_Connection {
 	{
 		$dbh = $this->getConnection();
 		$sth = $dbh->prepare($statement, $options);
-		$sth->setFetchMode(PDO::FETCH_CLASS, 'Flux_DataObject', array(null));
+		$sth->setFetchMode(PDO::FETCH_CLASS, 'Flux_DataObject', array(null, array('dbconfig' => $this->dbConfig)));
 		
 		if ($sth) {
 			return new Flux_Connection_Statement($sth);
@@ -178,7 +178,7 @@ class Flux_Connection {
 	{
 		$dbh = $this->getLogsConnection();
 		$sth = $dbh->prepare($statement, $options);
-		$sth->setFetchMode(PDO::FETCH_CLASS, 'Flux_DataObject', array(null));
+		$sth->setFetchMode(PDO::FETCH_CLASS, 'Flux_DataObject', array(null, array('dbconfig' => $this->logsDbConfig)));
 		
 		if ($sth) {
 			return new Flux_Connection_Statement($sth);
