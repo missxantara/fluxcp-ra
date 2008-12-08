@@ -40,6 +40,12 @@ init = function () {
 // next, add the tooltip function to those elements
 unitipize = function (element) {
 	var a = element;
+	var id = a.getAttribute('id');
+	
+	if (id != null && id.indexOf('recaptcha_') == 0) {
+		return;
+	}
+	
 	//altText = (a.alt && a.getAttribute("alt") != '' ) ? true : false;
 	//var sTitle = (altText == true) ? a.getAttribute("alt") : a.getAttribute("title");				
 	var sTitle = a.getAttribute('title');
