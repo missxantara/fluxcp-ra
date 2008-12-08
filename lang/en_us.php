@@ -140,7 +140,7 @@ return array(
 	'InvalidEmailAddress'     => "The e-mail address you've entered is not in a valid e-mail address format.",
 	'InvalidGender'           => 'Gender should be "M" or "F"',
 	'InvalidServer'           => "The server you've selected does not exist.",
-	'InvalidSecurityCode'     => 'Please enter the security code as it is, case-sensitively.',
+	'InvalidSecurityCode'     => 'Please enter the security code correctly.',
 	'CriticalRegisterError'   => 'Something bad happened.  Report to an administrator ASAP.',
 	// - account/edit
 	'AccountEditTitle'        => 'Modify Account',

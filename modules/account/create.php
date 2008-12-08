@@ -1,6 +1,11 @@
 <?php
 if (!defined('FLUX_ROOT')) exit;
 
+if (Flux::config('UseCaptcha') && Flux::config('EnableReCaptcha')) {
+	require_once 'recaptcha/recaptchalib.php';
+	$recaptcha = recaptcha_get_html(Flux::config('ReCaptchaPublicKey'));
+}
+
 $title = Flux::message('AccountCreateTitle');
 
 $serverNames = $this->getServerNames();
@@ -65,7 +70,7 @@ if (count($_POST)) {
 				$this->redirect();
 			}
 			else {
-				$session->login($server->serverName, $username, $password);
+				$session->login($server->serverName, $username, $password, false);
 				$session->setMessageData(Flux::message('AccountCreated'));
 				$this->redirect();
 			}

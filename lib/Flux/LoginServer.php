@@ -120,8 +120,23 @@ class Flux_LoginServer extends Flux_BaseServer {
 		elseif (!in_array(strtoupper($gender), array('M', 'F'))) {
 			throw new Flux_RegisterError('Invalid gender', Flux_RegisterError::INVALID_GENDER);
 		}
-		elseif (Flux::config('UseCaptcha') && $securityCode !== Flux::$sessionData->securityCode) {
-			throw new Flux_RegisterError('Invalid security code', Flux_RegisterError::INVALID_SECURITY_CODE);
+		elseif (Flux::config('UseCaptcha')) {
+			if (Flux::config('EnableReCaptcha')) {
+				require_once 'recaptcha/recaptchalib.php';
+				$resp = recaptcha_check_answer(
+					Flux::config('ReCaptchaPrivateKey'),
+					$_SERVER['REMOTE_ADDR'],
+					// Checks POST fields.
+					$_POST['recaptcha_challenge_field'],
+					$_POST['recaptcha_response_field']);
+				
+				if (!$resp->is_valid) {
+					throw new Flux_RegisterError('Invalid security code', Flux_RegisterError::INVALID_SECURITY_CODE);
+				}
+			}
+			elseif (strtolower($securityCode) !== strtolower(Flux::$sessionData->securityCode)) {
+				throw new Flux_RegisterError('Invalid security code', Flux_RegisterError::INVALID_SECURITY_CODE);
+			}
 		}
 		
 		$sql  = "SELECT userid FROM {$this->loginDatabase}.login WHERE ";

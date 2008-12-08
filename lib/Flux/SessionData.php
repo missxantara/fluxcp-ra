@@ -267,8 +267,23 @@ class Flux_SessionData {
 			throw new Flux_LoginError('Invalid login', Flux_LoginError::INVALID_LOGIN);
 		}
 		
-		if (!is_null($securityCode) && Flux::config('UseLoginCaptcha') && $securityCode != $this->securityCode) {
-			throw new Flux_LoginError('Invalid security code', Flux_LoginError::INVALID_SECURITY_CODE);
+		if ($securityCode !== false && Flux::config('UseLoginCaptcha')) {
+			if (strtolower($securityCode) != strtolower($this->securityCode)) {
+				throw new Flux_LoginError('Invalid security code', Flux_LoginError::INVALID_SECURITY_CODE);
+			}
+			elseif (Flux::config('EnableReCaptcha')) {
+				require_once 'recaptcha/recaptchalib.php';
+				$resp = recaptcha_check_answer(
+					Flux::config('ReCaptchaPrivateKey'),
+					$_SERVER['REMOTE_ADDR'],
+					// Checks POST fields.
+					$_POST['recaptcha_challenge_field'],
+					$_POST['recaptcha_response_field']);
+				
+				if (!$resp->is_valid) {
+					throw new Flux_LoginError('Invalid security code', Flux_LoginError::INVALID_SECURITY_CODE);
+				}
+			}
 		}
 		
 		$creditsTable  = Flux::config('FluxTables.CreditsTable');

@@ -36,21 +36,26 @@
 		<?php endif ?>
 		<?php if (Flux::config('UseLoginCaptcha')): ?>
 		<tr>
+			<?php if (Flux::config('EnableReCaptcha')): ?>
+			<th><label for="register_security_code"><?php echo htmlspecialchars(Flux::message('AccountSecurityLabel')) ?></label></th>
+			<td><?php echo $recaptcha ?></td>
+			<?php else: ?>
 			<th><label for="register_security_code"><?php echo htmlspecialchars(Flux::message('AccountSecurityLabel')) ?></label></th>
 			<td>
 				<div class="security-code">
 					<img src="<?php echo $this->url('captcha') ?>" />
 				</div>
-				
 				<input type="text" name="security_code" id="register_security_code" />
 				<div style="font-size: smaller;" class="action">
 					<strong><a href="javascript:refreshSecurityCode('.security-code img')"><?php echo htmlspecialchars(Flux::message('RefreshSecurityCode')) ?></a></strong>
 				</div>
 			</td>
+			<?php endif ?>
 		</tr>
 		<?php endif ?>
 		<tr>
-			<td align="right" colspan="2">
+			<td></td>
+			<td>
 				<input type="submit" value="<?php echo htmlspecialchars(Flux::message('LoginButton')) ?>" />
 			</td>
 		</tr>

@@ -58,6 +58,10 @@
 		
 		<?php if (Flux::config('UseCaptcha')): ?>
 		<tr>
+			<?php if (Flux::config('EnableReCaptcha')): ?>
+			<th><label for="register_security_code"><?php echo htmlspecialchars(Flux::message('AccountSecurityLabel')) ?></label></th>
+			<td><?php echo $recaptcha ?></td>
+			<?php else: ?>
 			<th><label for="register_security_code"><?php echo htmlspecialchars(Flux::message('AccountSecurityLabel')) ?></label></th>
 			<td>
 				<div class="security-code">
@@ -69,6 +73,7 @@
 					<strong><a href="javascript:refreshSecurityCode('.security-code img')"><?php echo htmlspecialchars(Flux::message('RefreshSecurityCode')) ?></a></strong>
 				</div>
 			</td>
+			<?php endif ?>
 		</tr>
 		<?php endif ?>
 		
