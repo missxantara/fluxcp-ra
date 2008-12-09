@@ -203,5 +203,24 @@ class Flux_Connection {
 
 		return true;
 	}
+	
+	/**
+	 *
+	 */
+	public function isCaseSensitive($database, $table, $column, $useLogsConnection = false)
+	{
+		$stm = $useLogsConnection ? 'getStatementForLogs' : 'getStatement';
+		$sql = 'SELECT COLLATION_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA = ? AND TABLE_NAME = ? AND COLUMN_NAME = ?';
+		$sth = $this->$stm($sql);
+		$sth->execute(array($database, $table, $column));
+		
+		$row = $sth->fetch();
+		if (preg_match('/_ci$/', $row->COLLATION_NAME)) {
+			return false;
+		}
+		else {
+			return true;
+		}
+	}
 }
 ?>
