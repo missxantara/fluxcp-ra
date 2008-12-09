@@ -36,5 +36,8 @@
 </table>
 <?php echo $paginator->getHTML() ?>
 <?php else: ?>
-
+<p>
+	<?php echo htmlspecialchars(Flux::message('HistoryNoEmailChanges')) ?>
+	<a href="javascript:history.go(-1)"><?php echo htmlspecialchars(Flux::message('GoBackLabel')) ?></a>
+</p>
 <?php endif ?>

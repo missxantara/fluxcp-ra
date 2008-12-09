@@ -343,6 +343,7 @@ return array(
 	'HistoryEmailNewAddress'  => 'New E-Mail',
 	'HistoryEmailChangeDate'  => 'Change Date',
 	'HistoryEmailChangeIp'    => 'Change IP',
+	'HistoryNoEmailChanges'   => 'No e-mail change attempts found.',
 	// - history/gamelogin
 	'HistoryGameLoginTitle'   => 'Game Logins',
 	'HistoryGameLoginHeading' => 'Game Logins',
