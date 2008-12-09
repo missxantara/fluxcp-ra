@@ -326,6 +326,35 @@ return array(
 	// - guild/index
 	// - guild/view
 	
+	// Module: history
+	// - history/cplogin
+	'HistoryCpLoginTitle'     => 'Control Panel Logins',
+	'HistoryCpLoginHeading'   => 'Control Panel Logins',
+	'HistoryLoginDateLabel'   => 'Login Date/Time',
+	'HistoryIpAddrLabel'      => 'IP Address',
+	'HistoryErrorCodeLabel'   => 'Error Code',
+	'HistoryNoCpLogins'       => 'No control panel login attempts found.',
+	// -history/emailchange
+	'HistoryEmailTitle'       => 'E-Mail Changes',
+	'HistoryEmailHeading'     => 'E-Mail Changes',
+	'HistoryEmailRequestDate' => 'Request Date/Time',
+	'HistoryEmailRequestIp'   => 'Request IP',
+	'HistoryEmailOldAddress'  => 'Old E-Mail',
+	'HistoryEmailNewAddress'  => 'New E-Mail',
+	'HistoryEmailChangeDate'  => 'Change Date',
+	'HistoryEmailChangeIp'    => 'Change IP',
+	// - history/gamelogin
+	'HistoryGameLoginTitle'   => 'Game Logins',
+	'HistoryGameLoginHeading' => 'Game Logins',
+	'HistoryRepsCodeLabel'    => 'Response Code',
+	'HistoryLogMessageLabel'  => 'Log Message',
+	'HistoryNoGameLogins'     => 'No in-game login attempts found.',
+	// - history/index
+	'HistoryIndexTitle'       => 'My Account History',
+	'HistoryIndexHeading'     => 'My Account History',
+	'HistoryIndexInfo'        => 'Here you can view past account activity of your account.',
+	'HistoryIndexInfo2'       => 'Please select an action from the menu.',
+	
 	// Module: ipban
 	// - ipban/add
 	'IpbanAddTitle'           => 'Add IP Ban',

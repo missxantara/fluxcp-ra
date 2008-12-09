@@ -146,6 +146,12 @@ return array(
 		),
 		'mail'      => array(
 			'index'   => AccountLevel::ADMIN
+		),
+		'history'   => array(
+			'index'       => AccountLevel::NORMAL,
+			'cplogin'     => AccountLevel::NORMAL,
+			'gamelogin'   => AccountLevel::NORMAL,
+			'emailchange' => AccountLevel::NORMAL
 		)
 	),
 	// General feature permissions, handled by the modules themselves.

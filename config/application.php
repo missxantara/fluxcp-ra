@@ -134,6 +134,7 @@ return array(
 		'Register'      => array('module' => 'account', 'action' => 'create'),
 		'Login'         => array('module' => 'account', 'action' => 'login'),
 		'Logout'        => array('module' => 'account', 'action' => 'logout'),
+		'History'       => array('module' => 'history'),
 		'My Account'    => array('module' => 'account', 'action' => 'view'),
 		'Purchase'      => array('module' => 'purchase'),
 		'Donate'        => array('module' => 'donate'),
@@ -162,6 +163,13 @@ return array(
 	// Sub-menu items that are displayed for any action belonging to a
 	// particular module. The format it simple.
 	'SubMenuItems' => array(
+		'history' => array(
+			'gamelogin'  => 'Game Logins',
+			'cplogin'    => 'CP Logins',
+			'emailchange'=> 'E-Mail Changes',
+			//'passchange' => 'Password Changes', // not implemented
+			//'passreset'  => 'Password Resets'   // not implemented
+		),
 		'account' => array(
 			'index'      => 'List Accounts',
 			'view'       => 'View Account',
