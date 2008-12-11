@@ -292,6 +292,9 @@ class Flux {
 	{
 		$config = self::parseConfigFile($filename, false);
 		
+		if (!$config->getServerAddress()) {
+			self::raise("ServerAddress must be specified in your application config.");
+		}
 		if (!$config->getThemeName()) {
 			self::raise('ThemeName is required in application configuration.');
 		}

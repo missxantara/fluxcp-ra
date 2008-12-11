@@ -89,6 +89,16 @@ label:hover {
 	background-color: #333;
 }
 
+.notice {
+	display: block;
+	padding: 10px;
+	font-weight: normal;
+	font-size: 120%;
+	color: #204a87;
+	background-color: #F0FFFF;
+	border: 1px solid #87CEEB;
+}
+
 .center {
 	text-align: center;
 }
