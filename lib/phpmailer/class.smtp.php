@@ -170,6 +170,7 @@ class SMTP {
       return false;
     }
 
+	$extra = ''; // FluxCP: Temporarily added to prevent PHP notice, but it doesn't seem to do anything yet.
     fputs($this->smtp_conn,"STARTTLS" . $extra . $this->CRLF);
 
     $rply = $this->get_lines();
