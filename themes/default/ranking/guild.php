@@ -1,7 +1,7 @@
 <?php if (!defined('FLUX_ROOT')) exit; ?>
 <h2>Guild Ranking</h2>
 <h3>
-	Top <?php echo number_format($limit=(int)Flux::config('CharRankingLimit')) ?> Guilds
+	Top <?php echo number_format($limit=(int)Flux::config('GuildRankingLimit')) ?> Guilds
 	on <?php echo htmlspecialchars($server->serverName) ?>
 </h3>
 <?php if ($guilds): ?>
