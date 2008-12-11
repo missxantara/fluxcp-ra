@@ -16,7 +16,7 @@ $itemName           = htmlspecialchars(sprintf('Donation Credits: %s CREDIT(s)',
 ?>
 <form action="https://<?php echo Flux::config('PayPalIpnUrl') ?>/cgi-bin/webscr" method="post">
 <input type="hidden" name="cmd" value="_donations" />
-<input type="hidden" name="notify_url" value="<?php echo $this->url('donate', 'update', array('_host' => true)) ?>" />
+<input type="hidden" name="notify_url" value="<?php echo $this->url('donate', 'notify', array('_host' => true)) ?>" />
 <input type="hidden" name="return" value="<?php echo $this->url('main', 'index', array('_host' => true)) ?>" />
 <input type="hidden" name="custom" value="<?php echo $customDataEscaped ?>" />
 <input type="hidden" name="business" value="<?php echo $businessEmail ?>" />
