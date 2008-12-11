@@ -250,11 +250,11 @@ class Flux_LoginServer extends Flux_BaseServer {
 	 */
 	public function unban($unbannedBy, $unbanReason, $accountID)
 	{
-		$info = $this->getBanInfo($accountID);
+		//$info = $this->getBanInfo($accountID);
 		$table = Flux::config('FluxTables.AccountBanTable');
 		$createTable = Flux::config('FluxTables.AccountCreateTable');
 		
-		if (!$info || !$info->ban_type) {
+		//if (!$info || !$info->ban_type) {
 			$sql  = "INSERT INTO {$this->loginDatabase}.$table (account_id, banned_by, ban_type, ban_until, ban_date, ban_reason) ";
 			$sql .= "VALUES (?, ?, 0, '0000-00-00 00:00:00', NOW(), ?)";
 			$sth  = $this->connection->getStatement($sql);
@@ -272,10 +272,10 @@ class Flux_LoginServer extends Flux_BaseServer {
 			else {
 				return false;
 			}
-		}
-		else {
-			return false;
-		}
+		//}
+		//else {
+			//return false;
+		//}
 	}
 	
 	/**

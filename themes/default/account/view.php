@@ -117,10 +117,10 @@
 			<form action="<?php echo $this->urlWithQs ?>" method="post">
 				<input type="hidden" name="unban" value="1" />
 			<?php if ($tempBanned && $auth->allowedToTempUnbanAccount): ?>
-				<label><?php echo htmlspecialchars(Flux::message('AccountBanReasonLabel')) ?>:<br /><textarea name="reason" class="block reason"></textarea></label>
+				<label><?php echo htmlspecialchars(Flux::message('AccountBanReasonLabel')) ?><br /><textarea name="reason" class="block reason"></textarea></label>
 				<input type="submit" value="<?php echo htmlspecialchars(Flux::message('AccountTempUnbanButton')) ?>" />
 			<?php elseif ($permBanned && $auth->allowedToPermUnbanAccount): ?>
-				<label><?php echo htmlspecialchars(Flux::message('AccountBanReasonLabel')) ?>:<br /><textarea name="reason" class="block reason"></textarea></label>
+				<label><?php echo htmlspecialchars(Flux::message('AccountBanReasonLabel')) ?><br /><textarea name="reason" class="block reason"></textarea></label>
 				<input type="submit" value="<?php echo htmlspecialchars(Flux::message('AccountPermUnbanButton')) ?>" />
 			<?php endif ?>
 			</form>
