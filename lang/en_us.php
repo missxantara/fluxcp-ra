@@ -440,6 +440,12 @@ return array(
 	// - reload/mobskill
 	
 	// Module: server
+	// - server/info
+	'ServerInfoTitle'         => 'Server Information',
+	'ServerInfoHeading'       => 'Server Information',
+	'ServerInfoText'          => "Here you'll find various server information.",
+	'ServerInfoSubHeading'    => 'Information for %s',
+	'ServerInfoSubHeading2'   => 'Job Class Information for %s',
 	// - server/status
 	'ServerStatusTitle'       => 'Current Server Status',
 	'ServerStatusHeading'     => 'Server Status',

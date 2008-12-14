@@ -139,6 +139,7 @@ return array(
 		'My Account'    => array('module' => 'account', 'action' => 'view'),
 		'Purchase'      => array('module' => 'purchase'),
 		'Donate'        => array('module' => 'donate'),
+		'Information'   => array('module' => 'server', 'action' => 'info'),
 		'Server Status' => array('module' => 'server', 'action' => 'status'),
 		'WoE Hours'     => array('module' => 'woe'),
 		"Who's Online"  => array('module' => 'character', 'action' => 'online'),

@@ -94,7 +94,8 @@ return array(
 		),
 		'server'    => array(
 			'status'     => AccountLevel::ANYONE,
-			'status-xml' => AccountLevel::ANYONE
+			'status-xml' => AccountLevel::ANYONE,
+			'info'       => AccountLevel::ANYONE
 		),
 		'logdata'   => array(
 			'index'   => AccountLevel::ADMIN,
