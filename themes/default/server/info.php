@@ -30,7 +30,7 @@
 
 <h3><?php echo htmlspecialchars(sprintf(Flux::message('ServerInfoSubHeading2'), $server->serverName)) ?></h3>
 <div class="generic-form-div">
-	<table class="generic-form-table">
+	<table class="generic-form-table job-classes">
 		<tr>
 		<?php $i = 1; $x = 5 ?>
 		<?php foreach ($info['classes'] as $class => $total): ?>
@@ -43,7 +43,7 @@
 		<?php endforeach ?>
 		<?php --$i ?>
 		<?php while (($i++) % $x): ?>
-			<td colspan="2">&nbsp;</td>
+			<td>&nbsp;</td>
 		<?php endwhile ?>
 		</tr>
 	</table>

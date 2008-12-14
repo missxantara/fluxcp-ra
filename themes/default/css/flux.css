@@ -1009,3 +1009,12 @@ textarea {
 	color: #25292b;
 	background-color: #f1ffff;
 }
+
+.job-classes {
+	border-spacing: 0;
+}
+
+.job-classes td {
+	padding-right: 10px;
+	border-right: 1px solid #eee;
+}
