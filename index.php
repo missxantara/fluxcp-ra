@@ -176,14 +176,11 @@ catch (Exception $e) {
 		$today = date('Ymd');
 		$eLog  = new Flux_LogFile("$exceptionDir/$today.log");
 		
-		// Get backtrace.
-		ob_start();
-		debug_print_backtrace();
-		$backtrace = ob_get_clean();
-		
 		// Log exception.
-		$eLog->puts('Exception %s: %s', get_class($e), $e->getMessage());
-		$eLog->puts('Backtrace for %s: %s', get_class($e), $backtrace);
+		$eLog->puts('(%s) Exception %s: %s', get_class($e), get_class($e), $e->getMessage());
+		foreach (explode("\n", $e->getTraceAsString()) as $traceLine) {
+			$eLog->puts('(%s) **TRACE** %s', get_class($e), $traceLine);
+		}
 	}
 	
 	require_once FLUX_CONFIG_DIR.'/error.php';
