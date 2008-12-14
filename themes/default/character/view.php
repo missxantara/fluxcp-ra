@@ -41,7 +41,7 @@
 		<th>Base Level</th>
 		<td colspan="2"><?php echo number_format((int)$char->char_base_level) ?></td>
 		<th>B. Experience</th>
-		<td><?php echo number_format((int)$char->char_base_exp) ?></td>
+		<td><?php echo number_format($char->char_base_exp) ?></td>
 		<th>Partner</th>
 		<td>
 			<?php if ($char->partner_name): ?>
@@ -59,7 +59,7 @@
 		<th>Job Level</th>
 		<td colspan="2"><?php echo number_format((int)$char->char_job_level) ?></td>
 		<th>J. Experience</th>
-		<td><?php echo number_format((int)$char->char_job_exp) ?></td>
+		<td><?php echo number_format($char->char_job_exp) ?></td>
 		<th>Child</th>
 		<td>
 			<?php if ($char->child_name): ?>
