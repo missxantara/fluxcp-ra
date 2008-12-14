@@ -446,6 +446,11 @@ return array(
 	'ServerInfoText'          => "Here you'll find various server information.",
 	'ServerInfoSubHeading'    => 'Information for %s',
 	'ServerInfoSubHeading2'   => 'Job Class Information for %s',
+	'ServerInfoAccountLabel'  => 'Accounts',
+	'ServerInfoCharLabel'     => 'Characters',
+	'ServerInfoGuildLabel'    => 'Guilds',
+	'ServerInfoPartyLabel'    => 'Parties',
+	'ServerInfoZenyLabel'     => 'Zeny',
 	// - server/status
 	'ServerStatusTitle'       => 'Current Server Status',
 	'ServerStatusHeading'     => 'Server Status',

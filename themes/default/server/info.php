@@ -6,23 +6,23 @@
 <div class="generic-form-div">
 	<table class="generic-form-table">
 		<tr>
-			<th><label>Accounts</label></th>
+			<th><label><?php echo htmlspecialchars(Flux::message('ServerInfoAccountLabel')) ?></label></th>
 			<td><p><?php echo number_format($info['accounts']) ?></p></td>
 		</tr>
 		<tr>
-			<th><label>Characters</label></th>
+			<th><label><?php echo htmlspecialchars(Flux::message('ServerInfoCharLabel')) ?></label></th>
 			<td><p><?php echo number_format($info['characters']) ?></p></td>
 		</tr>
 		<tr>
-			<th><label>Guilds</label></th>
+			<th><label><?php echo htmlspecialchars(Flux::message('ServerInfoGuildLabel')) ?></label></th>
 			<td><p><?php echo number_format($info['guilds']) ?></p></td>
 		</tr>
 		<tr>
-			<th><label>Parties</label></th>
+			<th><label><?php echo htmlspecialchars(Flux::message('ServerInfoPartyLabel')) ?></label></th>
 			<td><p><?php echo number_format($info['parties']) ?></p></td>
 		</tr>
 		<tr>
-			<th><label>Zeny</label></th>
+			<th><label><?php echo htmlspecialchars(Flux::message('ServerInfoZenyLabel')) ?></label></th>
 			<td><p><?php echo number_format($info['zeny']) ?></p></td>
 		</tr>
 	</table>
