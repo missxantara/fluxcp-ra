@@ -56,5 +56,4 @@ if ($classes) {
 }
 
 arsort($info['classes']);
-var_dump($info);
 ?>
