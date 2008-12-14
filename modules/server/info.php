@@ -36,9 +36,14 @@ $sth->execute();
 $info['parties'] += $sth->fetch()->total;
 
 // Zeny.
-$sql = "SELECT SUM(zeny) AS total FROM {$server->charMapDatabase}.`char`";
+$sql = "SELECT SUM(zeny) AS total FROM {$server->charMapDatabase}.`char` ";
+if ($hideLevel=Flux::config('InfoHideZenyLevel')) {
+	$sql .= "LEFT JOIN {$server->loginDatabase}.login ON login.account_id = `char`.account_id ";
+	$sql .= "WHERE login.level < ?";
+	$bind = array($hideLevel);
+}
 $sth = $server->connection->getStatement($sql);
-$sth->execute();
+$sth->execute($hideLevel ? $bind : array());
 $info['zeny'] += $sth->fetch()->total;
 
 // Job classes.

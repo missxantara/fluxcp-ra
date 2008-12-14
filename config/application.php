@@ -112,6 +112,7 @@ return array(
 	'GuildRankingLimit'   => 20,                        //
 	'ZenyRankingLimit'    => 20,                        //
 	'RankingHideLevel'    => AccountLevel::LOWGM,       //
+	'InfoHideZenyLevel'   => AccountLevel::LOWGM,       // Level of account to hide zeny from in server information page.
 	
 	'CharRankingThreshold' => 0,                         // Number of days the character must have logged in within to be listed in character ranking. (0 = disabled)
 	'ZenyRankingThreshold' => 0,                         // Number of days the character must have logged in within to be listed in zeny ranking. (0 = disabled)
