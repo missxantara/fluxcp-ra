@@ -56,7 +56,6 @@ if ($classes) {
 	foreach ($classes as $class) {
 		$classnum = (int)$class->class;
 		$info['classes'][Flux::config("JobClasses.$classnum")] = $class->total;
-		if (!Flux::config("JobClasses.$classnum")) { var_dump($class->class); }
 	}
 }
 
