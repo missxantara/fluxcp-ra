@@ -3,7 +3,7 @@ if (!defined('FLUX_ROOT')) exit;
 
 $this->loginRequired();
 
-$title = 'Add IP Ban';
+$title = Flux::message('IpbanAddTitle');
 
 if (count($_POST)) {
 	if (!$params->get('addipban')) {
@@ -15,19 +15,19 @@ if (count($_POST)) {
 	$rtime  = trim($params->get('rtime_date'));
 	
 	if (!$list) {
-		$errorMessage = 'Please input an IP address or pattern.';
+		$errorMessage = Flux::message('IpbanEnterIpPattern');
 	}
 	elseif (!preg_match('/^(\d{1,3})\.(\d{1,3}|\*)\.(\d{1,3}|\*)\.(\d{1,3}|\*)$/', $list, $m)) {
-		$errorMessage = 'Invalid IP address or pattern.';
+		$errorMessage = Flux::message('IpbanInvalidPattern');
 	}
 	elseif (!$reason) {
-		$errorMessage = 'Please enter a reason for the IP ban.';
+		$errorMessage = Flux::message('IpbanEnterReason');
 	}
 	elseif (!$rtime) {
-		$errorMessage = 'Unban date is required.';
+		$errorMessage = Flux::message('IpbanSelectUnbanDate');
 	}
 	elseif (strtotime($rtime) <= time()) {
-		$errorMessage = 'Unban date must be specified to a future date.';
+		$errorMessage = Flux::message('IpbanFutureDate');
 	}
 	else {
 		$listArr   = array();
@@ -44,7 +44,7 @@ if (count($_POST)) {
 		$ipban = $sth->fetch();
 		
 		if ($ipban && $ipban->list) {
-			$errorMessage = "A matching IP ({$ipban->list}) has already been banned.";
+			$errorMessage = sprintf(Flux::message('IpbanAlreadyBanned'), $ipban->list);
 		}
 		else {
 			$sql  = "INSERT INTO {$server->loginDatabase}.ipbanlist (list, reason, rtime, btime) ";
@@ -52,11 +52,11 @@ if (count($_POST)) {
 			$sth  = $server->connection->getStatement($sql);
 			
 			if ($sth->execute(array($list, $reason, $rtime))) {
-				$session->setMessageData("The IP address/pattern '$list' has been banned.");
+				$session->setMessageData(sprintf(Flux::message('IpbanPatternBanned'), $list));
 				$this->redirect($this->url('ipban'));
 			}
 			else {
-				$errorMessage = 'Failed to add IP ban.';
+				$errorMessage = Flux::message('IpbanAddFailed');
 			}
 		}
 	}

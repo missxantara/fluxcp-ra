@@ -27,7 +27,7 @@ function imagecreatefrombmpstring($im) {
 			$g = ord($palette{$j++});
 			$r = ord($palette{$j++});
 			$a = ord($palette{$j++});
-			if ( ($r == 255) && ($g == 0) && ($b == 255))
+			if ( ($r & 0xf8 == 0xf8) && ($g == 0) && ($b & 0xf8 == 0xf8))
 				$a = 127; // alpha = 255 on 0xFF00FF
 			$pal[$n++] = imagecolorallocatealpha($imres, $r, $g, $b, $a);
 		}
@@ -43,7 +43,7 @@ function imagecreatefrombmpstring($im) {
 				$g = ord($scan_line{$j++});
 				$r = ord($scan_line{$j++});
 				$a = 0;
-				if ( ($r == 255) && ($g == 0) && ($b == 255))
+				if ( ($r & 0xf8 == 0xf8) && ($g == 0) && ($b & 0xf8 == 0xf8))
 					$a = 127; // alpha = 255 on 0xFF00FF
 				$col=imagecolorallocatealpha($imres, $r, $g, $b, $a);
 				imagesetpixel($imres, $n++, $i, $col);

@@ -10,6 +10,9 @@
 		<title><?php echo Flux::config('SiteTitle'); if (isset($title)) echo ": $title" ?></title>
 		<link rel="stylesheet" href="<?php echo $this->themePath('css/flux.css') ?>" type="text/css" media="screen" title="" charset="utf-8" />
 		<link href="<?php echo $this->themePath('css/flux/unitip.css') ?>" rel="stylesheet" type="text/css" media="screen" title="" charset="utf-8" />
+		<?php if (Flux::config('EnableReCaptcha')): ?>
+		<link href="<?php echo $this->themePath('css/flux/recaptcha.css') ?>" rel="stylesheet" type="text/css" media="screen" title="" charset="utf-8" />
+		<?php endif ?>
 		<!--[if IE]>
 		<link rel="stylesheet" href="<?php echo $this->themePath('css/flux/ie.css') ?>" type="text/css" media="screen" title="" charset="utf-8" />
 		<![endif]-->	
@@ -85,6 +88,15 @@
 				$('.search-form').slideToggle('fast');
 			}
 		</script>
+		
+		<?php if (Flux::config('EnableReCaptcha') && Flux::config('ReCaptchaTheme')): ?>
+		<script type="text/javascript">
+			 var RecaptchaOptions = {
+			    theme : '<?php echo Flux::config('ReCaptchaTheme') ?>'
+			 };
+		</script>
+		<?php endif ?>
+		
 	</head>
 	<body>
 		<table cellspacing="0" cellpadding="0" width="100%">
@@ -125,6 +137,10 @@
 						<tr>
 							<td bgcolor="#f5f5f5"></td>
 							<td bgcolor="#f5f5f5">
+								<?php if (Flux::config('DebugMode') && @gethostbyname(Flux::config('ServerAddress')) == '127.0.0.1'): ?>
+									<p class="notice">Please change your <strong>ServerAddress</strong> directive in your application config to your server's real address (e.g., myserver.com).</p>
+								<?php endif ?>
+								
 								<!-- Messages -->
 								<?php if ($message=$session->getMessage()): ?>
 									<p class="message"><?php echo htmlspecialchars($message) ?></p>
@@ -132,6 +148,9 @@
 								
 								<!-- Sub menu -->
 								<?php include 'main/submenu.php' ?>
+								
+								<!-- Page menu -->
+								<?php include 'main/pagemenu.php' ?>
 								
 								<!-- Credit balance -->
 								<?php if (in_array($params->get('module'), array('donate', 'purchase'))) include 'main/balance.php' ?>

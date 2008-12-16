@@ -5,7 +5,7 @@ if (!defined('FLUX_ROOT')) exit;
 //	$this->deny();
 //}
 
-$title = 'Resend Confirmation E-mail';
+$title = Flux::message('ResendTitle');
 
 $serverNames = $this->getServerNames();
 $createTable = Flux::config('FluxTables.AccountCreateTable');
@@ -16,10 +16,10 @@ if (count($_POST)) {
 	$groupName = $params->get('login');
 	
 	if (!$userid) {
-		$errorMessage = 'Please enter your account username.';
+		$errorMessage = Flux::message('ResendEnterUsername');
 	}
 	elseif (!$email) {
-		$errorMessage = 'Please enter your e-mail address.';
+		$errorMessage = Flux::message('ResendEnterEmail');
 	}
 	else {
 		if (!$groupName || !($loginAthenaGroup=Flux::getServerGroupByName($groupName))) {
@@ -42,10 +42,10 @@ if (count($_POST)) {
 		}
 
 		if (empty($sent)) {
-			$errorMessage = 'Failed to resend confirmation code.';
+			$errorMessage = Flux::message('ResendFailed');
 		}
 		else {
-			$session->setMessageData('Your confirmation code has been resent, please check your e-mail and proceed to activate your account.');
+			$session->setMessageData(Flux::message('ResendEmailSent'));
 			$this->redirect();
 		}
 	}

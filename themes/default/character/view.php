@@ -1,31 +1,19 @@
 <?php if (!defined('FLUX_ROOT')) exit; ?>
 <h2>Viewing Character</h2>
 <?php if ($char): ?>
-<?php
-$actions = array();
-if (($isMine || $auth->allowedToModifyCharPrefs) && $auth->actionAllowed('character', 'prefs')) {
-	$actions[] = sprintf('<a href="%s">Modify Preferences</a>', $this->url('character', 'prefs', array('id' => $char->char_id)));
-}
-if (($isMine || $auth->allowedToChangeSlot) && $auth->actionAllowed('character', 'changeslot')) {
-	$actions[] = sprintf('<a href="%s">Change Slot</a>', $this->url('character', 'changeslot', array('id' => $char->char_id)));
-}
-if (($isMine || $auth->allowedToResetLook) && $auth->actionAllowed('character', 'resetlook')) {
-	$actions[] = sprintf('<a href="%s"
-		onclick="return confirm(\'Are you sure you want to reset look?\')">Reset Look</a>', $this->url('character', 'resetlook', array('id' => $char->char_id)));
-}
-if (($isMine || $auth->allowedToResetPosition) && $auth->actionAllowed('character', 'resetpos')) {
-	$actions[] = sprintf('<a href="%s"
-		onclick="return confirm(\'Are you sure you want to reset position?\')">Reset Position</a>', $this->url('character', 'resetpos', array('id' => $char->char_id)));
-}
-?>
 <h3>Character Information for <?php echo htmlspecialchars($char->char_name) ?></h3>
-<p class="action"><?php echo implode(' / ', $actions) ?></p>
 <table class="vertical-table">
 	<tr>
 		<th>Character ID</th>
 		<td colspan="2"><?php echo htmlspecialchars($char->char_id) ?></td>
 		<th>Account ID</th>
-		<td><?php echo htmlspecialchars($char->char_account_id) ?></td>
+		<td>
+			<?php if ($auth->allowedToSeeAccountID): ?>
+				<?php echo htmlspecialchars($char->char_account_id) ?>
+			<?php else: ?>
+				<span class="not-applicable">Not Applicable</span>
+			<?php endif ?>
+		</td>
 		<th>Character Slot</th>
 		<td><?php echo number_format($char->char_num+1) ?></td>
 	</tr>
@@ -33,7 +21,13 @@ if (($isMine || $auth->allowedToResetPosition) && $auth->actionAllowed('characte
 		<th>Character</th>
 		<td colspan="2"><?php echo htmlspecialchars($char->char_name) ?></td>
 		<th>Account</th>
-		<td><?php echo $this->linkToAccount($char->char_account_id, $char->userid) ?></td>
+		<td>
+			<?php if ($isMine): ?>
+				<a href="<?php echo $this->url('account', 'view') ?>"><?php echo htmlspecialchars($char->userid) ?></a>
+			<?php else: ?>
+				<?php echo $this->linkToAccount($char->char_account_id, $char->userid) ?>
+			<?php endif ?>
+		</td>
 		<th>Job Class</th>
 		<td>
 			<?php if ($job=$this->jobClassText($char->char_class)): ?>
@@ -47,7 +41,7 @@ if (($isMine || $auth->allowedToResetPosition) && $auth->actionAllowed('characte
 		<th>Base Level</th>
 		<td colspan="2"><?php echo number_format((int)$char->char_base_level) ?></td>
 		<th>B. Experience</th>
-		<td><?php echo number_format((int)$char->char_base_exp) ?></td>
+		<td><?php echo number_format($char->char_base_exp) ?></td>
 		<th>Partner</th>
 		<td>
 			<?php if ($char->partner_name): ?>
@@ -65,7 +59,7 @@ if (($isMine || $auth->allowedToResetPosition) && $auth->actionAllowed('characte
 		<th>Job Level</th>
 		<td colspan="2"><?php echo number_format((int)$char->char_job_level) ?></td>
 		<th>J. Experience</th>
-		<td><?php echo number_format((int)$char->char_job_exp) ?></td>
+		<td><?php echo number_format($char->char_job_exp) ?></td>
 		<th>Child</th>
 		<td>
 			<?php if ($char->child_name): ?>
@@ -360,7 +354,7 @@ if (($isMine || $auth->allowedToResetPosition) && $auth->actionAllowed('characte
 		</tr>
 		<?php foreach ($items AS $item): ?>
 		<?php $icon = $this->iconImage($item->nameid) ?>
-		<tr>
+		<tr<?php if ($item->equip) echo ' class="equipped"' ?>>
 			<td align="right"><?php echo $this->linkToItem($item->nameid, $item->nameid) ?></td>
 			<?php if ($icon): ?>
 			<td><img src="<?php echo htmlspecialchars($icon) ?>" /></td>

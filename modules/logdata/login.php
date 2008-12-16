@@ -60,13 +60,15 @@ $sth->execute($bind);
 $logins = $sth->fetchAll();
 
 if ($logins) {
+	$noCase    = $server->loginServer->config->getNoCase();
 	$usernames = array();
 	foreach ($logins as $_tmplogin) {
-		$usernames[] = $_tmplogin->user;
+		$usernames[] = $noCase ? strtolower($_tmplogin->user) : $_tmplogin->user;
 	}
 	
-	$sql  = "SELECT userid, account_id FROM {$server->loginDatabase}.login WHERE ";
-	$sql .= "sex != 'S' AND level >= 0 AND userid IN (".implode(',', array_fill(0, count($usernames), '?')).")";
+	$uid  = $noCase ? 'LOWER(userid)' : 'userid';
+	$sql  = "SELECT $uid AS userid, account_id FROM {$server->loginDatabase}.login WHERE ";
+	$sql .= "sex != 'S' AND level >= 0 AND $uid IN (".implode(',', array_fill(0, count($usernames), '?')).")";
 	$sth  = $server->connection->getStatement($sql);
 	$sth->execute($usernames);
 	
@@ -74,12 +76,14 @@ if ($logins) {
 	if ($data) {
 		$accounts = array();
 		foreach ($data as $row) {
-			$accounts[$row->userid] = $row->account_id;
+			$userid = $noCase ? strtolower($row->userid) : $row->userid;
+			$accounts[$userid] = $row->account_id;
 		}
 		
 		foreach ($logins as $_tmplogin) {
-			if (array_key_exists($_tmplogin->user, $accounts)) {
-				$_tmplogin->account_id = $accounts[$_tmplogin->user];
+			$userid = $noCase ? strtolower($_tmplogin->user) : $_tmplogin->user;
+			if (array_key_exists($userid, $accounts)) {
+				$_tmplogin->account_id = $accounts[$userid];
 			}
 		}
 	}

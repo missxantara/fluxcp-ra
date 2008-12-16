@@ -1,4 +1,7 @@
 <?php
+require_once 'Flux/Config.php';
+require_once 'Flux/Error.php';
+
 /**
  * Objectifies a given object.
  */
@@ -12,6 +15,21 @@ class Flux_DataObject {
 	protected $_data = array();
 	
 	/**
+	 *
+	 */
+	protected $_dbConfig;
+	
+	/**
+	 *
+	 */
+	protected $_encFrom;
+	
+	/**
+	 *
+	 */
+	protected $_encTo;
+	
+	/**
 	 * Create new DataObject.
 	 *
 	 * @param StdClass $object
@@ -20,6 +38,18 @@ class Flux_DataObject {
 	 */ 
 	public function __construct(array $data = null, $defaults = array())
 	{
+		if (array_key_exists('dbconfig', $defaults) && $defaults['dbconfig'] instanceOf Flux_Config) {
+			$this->_dbConfig = $defaults['dbconfig'];
+			unset($defaults['dbconfig']);
+		}
+		else {
+			$tmpArr = array();
+			$this->_dbConfig = new Flux_Config($tmpArr);
+		}
+		
+		$this->_encFrom = $this->_dbConfig->getEncoding();
+		$this->_encTo   = $this->_encFrom ? $this->_dbConfig->get('Convert') : false;
+
 		if (!is_null($data)) {
 			$this->_data = $data;
 		}
@@ -27,6 +57,12 @@ class Flux_DataObject {
 		foreach ($defaults as $prop => $value) {
 			if (!isset($this->_data[$prop])) {
 				$this->_data[$prop] = $value;
+			}
+		}
+		
+		if ($this->_encTo) {
+			foreach ($this->_data as $prop => $value) {
+				$this->_data[$prop] = iconv($this->_encFrom, $this->_encTo, $value);
 			}
 		}
 	}

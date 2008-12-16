@@ -1,7 +1,12 @@
 <?php
 if (!defined('FLUX_ROOT')) exit;
 
-$title = 'Create an Account';
+if (Flux::config('UseCaptcha') && Flux::config('EnableReCaptcha')) {
+	require_once 'recaptcha/recaptchalib.php';
+	$recaptcha = recaptcha_get_html(Flux::config('ReCaptchaPublicKey'));
+}
+
+$title = Flux::message('AccountCreateTitle');
 
 $serverNames = $this->getServerNames();
 
@@ -52,22 +57,21 @@ if (count($_POST)) {
 				$sth  = $server->connection->getStatement($sql);
 				$sth->execute($bind);
 				
-				$session->loginServer->permanentlyBan(null, "Awaiting account activation: $code", $result);
+				$session->loginServer->permanentlyBan(null, sprintf(Flux::message('AccountConfirmBan'), $code), $result);
 				
 				if ($sent) {
-					$message  = 'An e-mail has been sent containing account activation details, please check your e-mail and activate your account to log-in.';
+					$message  = Flux::message('AccountCreateEmailSent');
 				}
 				else {
-					$message  = 'Your account has been created, but unfortunately we failed to send an e-mail due to technical difficulties. ';
-					$message .= 'Please contact a staff member and request for assistance.';
+					$message  = Flux::message('AccountCreateFailed');
 				}
 				
 				$session->setMessageData($message);
 				$this->redirect();
 			}
 			else {
-				$session->login($server->serverName, $username, $password);
-				$session->setMessageData('Congratulations, you have been registered successfully and automatically logged in.');
+				$session->login($server->serverName, $username, $password, false);
+				$session->setMessageData(Flux::message('AccountCreated'));
 				$this->redirect();
 			}
 		}

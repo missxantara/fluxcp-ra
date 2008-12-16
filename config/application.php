@@ -7,6 +7,7 @@ return array(
 	'InstallerPassword'    => 'secretpassword',         // Installer/updater password.
 	'DefaultLoginGroup'    => null,
 	'DefaultCharMapServer' => null,
+	'DefaultLanguage'      => 'en_us',                  // Specify the default control panel language (see FLUX_ROOT/lang/ directory for available languages.)
 	'SiteTitle'            => 'Flux Control Panel',     // This value is only used if the theme decides to use it.
 	'ThemeName'            => 'default',                // The theme name of the theme you would like to use.  Themes are in FLUX_ROOT/themes.
 	'ScriptTimeLimit'      => 0,                        // Script execution time limit. Specifies (in seconds) how long a page should run before timing out. (0 means forever)
@@ -14,6 +15,7 @@ return array(
 	'ItemIconNameFormat'   => '%d.gif',                 // The filename format for item icons (defaults to {itemid}.gif).
 	'ItemImageNameFormat'  => '%d.png',                 // The filename format for item images (defaults to {itemid}.png).
 	'ForceEmptyEmblem'     => false,                    // Forcefully display empty guild emblems, helpful when you don't have GD2 installed.
+	'EmblemCacheInterval'  => 12,                       // Hourly interval to re-cache guild emblems (set to 0 to disable emblem cache).
 	'SessionCookieExpire'  => 48,                       // Duration in hours.
 	'AdminMenuLevel'       => AccountLevel::LOWGM,      // The starting level for which module actions are moved into the admin menu for display.
 	'DateDefaultTimezone'  => null,                     // The default timezone, consult the PHP manual for valid timezones: http://php.net/timezones (null for defaut system TZ)
@@ -56,6 +58,10 @@ return array(
 	'DebugMode'            => true,                     // Set to false to minimize technical details from being output by Flux.
 	'UseCaptcha'           => true,                     // Use CAPTCHA image for account registration to prevent automated account creations. (Requires GD2/FreeType2)
 	'UseLoginCaptcha'      => false,                    // Use CAPTCHA image for account logins. (Requires GD2/FreeType2)
+	'EnableReCaptcha'      => false,                    // Enables the use of reCAPTCHA instead of Flux's native GD2 library (http://recaptcha.net)
+	'ReCaptchaPublicKey'   => '...',                    // This is your reCAPTCHA public key [REQUIRED FOR RECAPTCHA] (sign up at http://recaptcha.net)
+	'ReCaptchaPrivateKey'  => '...',                    // This is your reCAPTCHA private key [REQUIRED FOR RECAPTCHA] (sign up at http://recaptcha.net)
+	'ReCaptchaTheme'       => 'white',                  // ReCaptcha theme to use (see: http://wiki.recaptcha.net/index.php/Theme)
 	'DisplaySinglePages'   => true,                     // Whether or not to display paging for single page results.
 	'ForwardYears'         => 15,                       // (Visual) The number of years to display ahead of the current year in date inputs.
 	'BackwardYears'        => 30,                       // (Visual) The number of years to display behind the current year in date inputs.
@@ -106,6 +112,7 @@ return array(
 	'GuildRankingLimit'   => 20,                        //
 	'ZenyRankingLimit'    => 20,                        //
 	'RankingHideLevel'    => AccountLevel::LOWGM,       //
+	'InfoHideZenyLevel'   => AccountLevel::LOWGM,       // Level of account to hide zeny from in server information page.
 	
 	'CharRankingThreshold' => 0,                         // Number of days the character must have logged in within to be listed in character ranking. (0 = disabled)
 	'ZenyRankingThreshold' => 0,                         // Number of days the character must have logged in within to be listed in zeny ranking. (0 = disabled)
@@ -129,9 +136,11 @@ return array(
 		'Register'      => array('module' => 'account', 'action' => 'create'),
 		'Login'         => array('module' => 'account', 'action' => 'login'),
 		'Logout'        => array('module' => 'account', 'action' => 'logout'),
+		'History'       => array('module' => 'history'),
 		'My Account'    => array('module' => 'account', 'action' => 'view'),
 		'Purchase'      => array('module' => 'purchase'),
 		'Donate'        => array('module' => 'donate'),
+		'Information'   => array('module' => 'server', 'action' => 'info'),
 		'Server Status' => array('module' => 'server', 'action' => 'status'),
 		'WoE Hours'     => array('module' => 'woe'),
 		"Who's Online"  => array('module' => 'character', 'action' => 'online'),
@@ -150,12 +159,20 @@ return array(
 		'Items'         => array('module' => 'item'),
 		'Monsters'      => array('module' => 'monster'),
 		'Send Mail'     => array('module' => 'mail'),
+		'Re-Install'    => array('module' => 'install', 'action' => 'reinstall'),
 		//'Google'        => array('exturl' => 'http://www.google.com')
 	),
 	
 	// Sub-menu items that are displayed for any action belonging to a
 	// particular module. The format it simple.
 	'SubMenuItems' => array(
+		'history' => array(
+			'gamelogin'  => 'Game Logins',
+			'cplogin'    => 'CP Logins',
+			'emailchange'=> 'E-Mail Changes',
+			//'passchange' => 'Password Changes', // not implemented
+			//'passreset'  => 'Password Resets'   // not implemented
+		),
 		'account' => array(
 			'index'      => 'List Accounts',
 			'view'       => 'View Account',
@@ -191,7 +208,7 @@ return array(
 			//'zeny'    => 'Zeny'
 		),
 		'cplog' => array(
-			'paypal' => 'PayPal Trasactions',
+			'paypal' => 'PayPal Transactions',
 			'login'  => 'Logins',
 			'resetpass'  => 'Password Resets',
 			//'changepass' => 'Password Changes',

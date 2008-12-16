@@ -106,7 +106,8 @@ class Flux {
 	 */
 	public static function initialize($options = array())
 	{
-		$required = array('appConfigFile', 'serversConfigFile', 'messagesConfigFile');
+		//$required = array('appConfigFile', 'serversConfigFile', 'messagesConfigFile');
+		$required = array('appConfigFile', 'serversConfigFile');
 		foreach ($required as $option) {
 			if (!array_key_exists($option, $options)) {
 				self::raise("Missing required option `$option' in Flux::initialize()");
@@ -118,7 +119,10 @@ class Flux {
 		// below methods for more details on what's being done.
 		self::$appConfig      = self::parseAppConfigFile($options['appConfigFile']);
 		self::$serversConfig  = self::parseServersConfigFile($options['serversConfigFile']);
-		self::$messagesConfig = self::parseMessagesConfigFile($options['messagesConfigFile']);
+		//self::$messagesConfig = self::parseMessagesConfigFile($options['messagesConfigFile']); // Deprecated.
+		
+		// Using newer language system.
+		self::$messagesConfig = self::parseLanguageConfigFile();
 		
 		// Initialize server objects.
 		self::initializeServerObjects();
@@ -179,7 +183,7 @@ class Flux {
 				
 				// Merge configurations.
 				self::$appConfig->merge($addonObject->addonConfig);
-				self::$messagesConfig->merge($addonObject->messagesConfig);
+				self::$messagesConfig->merge($addonObject->messagesConfig, false);
 			}
 		}
 	}
@@ -250,13 +254,32 @@ class Flux {
 	 * @param string $filename
 	 * @access public
 	 */
-	public static function parseConfigFile($filename)
+	public static function parseConfigFile($filename, $cache=true)
 	{
-		ob_start();
-		// Uses require, thus assumes the file returns an array.
-		$config = require $filename;
-		ob_end_clean();
-		return self::parseConfig($config);
+		$basename  = basename(str_replace(' ', '', ucwords(str_replace(array('/', '\\', '_'), ' ', $filename))), '.php').'.cache.php';
+		$cachefile = FLUX_DATA_DIR."/tmp/$basename";
+		
+		if ($cache && file_exists($cachefile) && filemtime($cachefile) > filemtime($filename)) {
+			return unserialize(file_get_contents($cachefile, null, null, 28));
+		}
+		else {
+			ob_start();
+			// Uses require, thus assumes the file returns an array.
+			$config = require $filename;
+			ob_end_clean();
+			
+			// Cache config file.
+			$cf = self::parseConfig($config);
+
+			if ($cache) {
+				$fp = fopen($cachefile, 'w');
+				fwrite($fp, '<?php exit("Forbidden."); ?>');
+				fwrite($fp, $s=serialize($cf), strlen($s));
+				fclose($fp);
+			}
+			
+			return $cf;
+		}
 	}
 	
 	/**
@@ -267,8 +290,11 @@ class Flux {
 	 */
 	public static function parseAppConfigFile($filename)
 	{
-		$config = self::parseConfigFile($filename);
+		$config = self::parseConfigFile($filename, false);
 		
+		if (!$config->getServerAddress()) {
+			self::raise("ServerAddress must be specified in your application config.");
+		}
 		if (!$config->getThemeName()) {
 			self::raise('ThemeName is required in application configuration.');
 		}
@@ -398,7 +424,7 @@ class Flux {
 	}
 	
 	/**
-	 * Parses a messages configuration file.
+	 * Parses a messages configuration file. (Deprecated)
 	 *
 	 * @param string $filename
 	 * @access public
@@ -408,6 +434,38 @@ class Flux {
 		$config = self::parseConfigFile($filename);
 		// Nothing yet.
 		return $config;
+	}
+	
+	/**
+	 * Parses a language configuration file, can also parse a language config
+	 * for any addon.
+	 *
+	 * @param string $addonName
+	 * @access public
+	 */
+	public static function parseLanguageConfigFile($addonName=null)
+	{
+		$default = $addonName ? FLUX_ADDON_DIR."/$addonName/lang/en_us.php" : FLUX_LANG_DIR.'/en_us.php';
+		$current = $default;
+		
+		if ($lang=self::config('DefaultLanguage')) {
+			$current = $addonName ? FLUX_ADDON_DIR."/$addonName/lang/$lang.php" : FLUX_LANG_DIR."/$lang.php";
+		}
+		
+		if (file_exists($default)) {
+			$def = self::parseConfigFile($default);
+		}
+		else {
+			$tmp = array();
+			$def = new Flux_Config($tmp);
+		}
+		
+		if ($current != $default && file_exists($current)) {
+			$cur = self::parseConfigFile($current);
+			$def->merge($cur, false);
+		}
+		
+		return $def;
 	}
 	
 	/**

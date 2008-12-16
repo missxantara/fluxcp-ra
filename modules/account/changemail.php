@@ -3,7 +3,7 @@ if (!defined('FLUX_ROOT')) exit;
 
 $this->loginRequired();
 
-$title = 'Change E-mail';
+$title = Flux::message('EmailChangeTitle');
 
 $emailChangeTable = Flux::config('FluxTables.ChangeEmailTable');
 
@@ -11,13 +11,13 @@ if (count($_POST)) {
 	$email = trim($params->get('email'));
 	
 	if (!$email) {
-		$errorMessage = 'Please enter an e-mail address.';
+		$errorMessage = Flux::message('EnterEmailAddress');
 	}
 	elseif ($email == $session->account->email) {
-		$errorMessage = 'Your new e-mail cannot be the same as your current.';
+		$errorMessage = '';
 	}
 	elseif (!preg_match('/(.+?)@(.+?)/', $email)) {
-		$errorMessage = 'Please enter a well formatted e-mail address.';
+		$errorMessage = Flux::message('EmailCannotBeSame');
 	}
 	elseif (!Flux::config('AllowDuplicateEmails')) {
 		$sql = "SELECT email FROM {$server->loginDatabase}.login WHERE email = ? LIMIT 1";
@@ -26,7 +26,7 @@ if (count($_POST)) {
 		
 		$row = $sth->fetch();
 		if ($row && $row->email) {
-			$errorMessage = "The e-mail address you've entered is already registered to another account.";
+			$errorMessage = Flux::message('EmailAlreadyRegistered');
 		}
 	}
 	
@@ -55,7 +55,7 @@ if (count($_POST)) {
 				));
 
 				if ($sent) {
-					$session->setMessageData('An e-mail has been sent to your new address with a link that will confirm the change.');
+					$session->setMessageData(Flux::message('EmailChangeSent'));
 					$this->redirect();
 				}
 				else {
@@ -80,7 +80,7 @@ if (count($_POST)) {
 				$res  = $sth->execute(array($code, $session->account->account_id, $old, $email, $ip, $ip));
 				
 				if ($res) {
-					$session->setMessageData('Your e-mail address has been changed!');
+					$session->setMessageData(Flux::message('EmailAddressChanged'));
 					$this->redirect();
 				}
 				else {
@@ -94,7 +94,7 @@ if (count($_POST)) {
 	}
 	
 	if (!empty($fail)) {
-		$errorMessage = 'Failed to change e-mail address.  Please try again later.';
+		$errorMessage = Flux::message('EmailChangeFailed');
 	}
 }
 ?>

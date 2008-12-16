@@ -22,7 +22,7 @@ class Flux_Addon {
 		$files = array(
 			'addonConfig'    => "{$this->configDir}/addon.php",
 			'accessConfig'   => "{$this->configDir}/access.php",
-			'messagesConfig' => "{$this->configDir}/messages.php"
+			//'messagesConfig' => "{$this->configDir}/messages.php" // Deprecated.
 		);
 		
 		foreach ($files as $configName => $filename) {
@@ -35,6 +35,9 @@ class Flux_Addon {
 				$this->{$configName} = new Flux_Config($tempArr);
 			}
 		}
+		
+		// Use new language system for messages (also supports addons).
+		$this->messagesConfig = Flux::parseLanguageConfigFile($name);
 	}
 	
 	public function respondsTo($module, $action = null)

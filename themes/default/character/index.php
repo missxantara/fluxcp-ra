@@ -124,8 +124,10 @@
 		<td><?php echo number_format((int)$char->job_level) ?></td>
 		<td><?php echo number_format((int)$char->zeny) ?></td>
 		<?php if ($char->guild_name): ?>
-			<td><img src="<?php echo $this->emblem($char->guild_id) ?>" /></td>
-			<td>
+			<?php if ($char->guild_emblem_len): ?>
+			<td width="24"><img src="<?php echo $this->emblem($char->guild_id) ?>" /></td>
+			<?php endif ?>
+			<td<?php if (!$char->guild_emblem_len) echo ' colspan="2"' ?>>
 				<?php if ($auth->actionAllowed('guild', 'view') && $auth->allowedToViewGuild): ?>
 					<?php echo $this->linkToGuild($char->guild_id, $char->guild_name) ?>
 				<?php else: ?>

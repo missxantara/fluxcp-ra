@@ -19,6 +19,7 @@ define('FLUX_LIB_DIR',    'lib');
 define('FLUX_MODULE_DIR', 'modules');
 define('FLUX_THEME_DIR',  'themes');
 define('FLUX_ADDON_DIR',  'addons');
+define('FLUX_LANG_DIR',   'lang');
 
 // Clean GPC arrays in the event magic_quotes_gpc is enabled.
 if (ini_get('magic_quotes_gpc')) {
@@ -62,7 +63,7 @@ try {
 	Flux::initialize(array(
 		'appConfigFile'      => FLUX_CONFIG_DIR.'/application.php',
 		'serversConfigFile'  => FLUX_CONFIG_DIR.'/servers.php',
-		'messagesConfigFile' => FLUX_CONFIG_DIR.'/messages.php'
+		//'messagesConfigFile' => FLUX_CONFIG_DIR.'/messages.php' // No longer needed (Deprecated)
 	));
 	
 	// Set time limit.
@@ -142,7 +143,7 @@ try {
 	Flux::$sessionData = new Flux_SessionData($_SESSION[$sessionKey], $hasUpdates);
 	
 	// Initialize authorization component.
-	$accessConfig = new Flux_Config(include(FLUX_CONFIG_DIR.'/access.php'));
+	$accessConfig = Flux::parseConfigFile(FLUX_CONFIG_DIR.'/access.php');
 		
 	// Merge with add-on configs.
 	foreach (Flux::$addons as $addon) {
@@ -175,14 +176,11 @@ catch (Exception $e) {
 		$today = date('Ymd');
 		$eLog  = new Flux_LogFile("$exceptionDir/$today.log");
 		
-		// Get backtrace.
-		ob_start();
-		debug_print_backtrace();
-		$backtrace = ob_get_clean();
-		
 		// Log exception.
-		$eLog->puts('Exception %s: %s', get_class($e), $e->getMessage());
-		$eLog->puts('Backtrace for %s: %s', get_class($e), $backtrace);
+		$eLog->puts('(%s) Exception %s: %s', get_class($e), get_class($e), $e->getMessage());
+		foreach (explode("\n", $e->getTraceAsString()) as $traceLine) {
+			$eLog->puts('(%s) **TRACE** %s', get_class($e), $traceLine);
+		}
 	}
 	
 	require_once FLUX_CONFIG_DIR.'/error.php';

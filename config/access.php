@@ -94,7 +94,8 @@ return array(
 		),
 		'server'    => array(
 			'status'     => AccountLevel::ANYONE,
-			'status-xml' => AccountLevel::ANYONE
+			'status-xml' => AccountLevel::ANYONE,
+			'info'       => AccountLevel::ANYONE
 		),
 		'logdata'   => array(
 			'index'   => AccountLevel::ADMIN,
@@ -131,7 +132,8 @@ return array(
 			'index'    => AccountLevel::ANYONE
 		),
 		'install'   => array(
-			'index'    => AccountLevel::ANYONE
+			'index'    => AccountLevel::ANYONE,
+			'reinstall' => AccountLevel::ADMIN
 		),
 		'test'      => array(
 			'*'        => AccountLevel::ANYONE
@@ -145,6 +147,12 @@ return array(
 		),
 		'mail'      => array(
 			'index'   => AccountLevel::ADMIN
+		),
+		'history'   => array(
+			'index'       => AccountLevel::NORMAL,
+			'cplogin'     => AccountLevel::NORMAL,
+			'gamelogin'   => AccountLevel::NORMAL,
+			'emailchange' => AccountLevel::NORMAL
 		)
 	),
 	// General feature permissions, handled by the modules themselves.
@@ -186,6 +194,8 @@ return array(
 		'SearchCpLoginLogPw' => AccountLevel::ADMIN,  // Level required to search through passwords in the CP login log.
 		'SeeCpResetPass'     => AccountLevel::ADMIN,  // Level required to see passwords in CP log's "password resets" page.
 		'SearchCpResetPass'  => AccountLevel::ADMIN,  // Level required to search passwords in CP log's "password resets" page.
+		'SeeAccountID'       => AccountLevel::LOWGM,  // Level required to see Account ID on account view and character view pages.
+		'SeeUnknownItems'    => AccountLevel::LOWGM,  // Level required to see unidentified items as identified.
 		
 		'EditHigherPower'    => 5000,
 		'BanHigherPower'     => 5000

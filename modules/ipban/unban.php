@@ -8,7 +8,7 @@ if (!count($_POST) || !$params->get('unban') ) {
 }
 
 if (!(($unbanList=$params->get('unban_list')) instanceOf Flux_Config) || !count($unbanList=$unbanList->toArray())) {
-	$session->setMessageData('Nothing to unban.');
+	$session->setMessageData(Flux::message('IpbanNothingToUnban'));
 	$this->redirect($this->url('ipban'));
 }
 
@@ -25,11 +25,11 @@ $sql  = "UPDATE {$server->loginDatabase}.ipbanlist SET rtime = '0000-00-00 00:00
 $sth  = $server->connection->getStatement($sql);
 
 if ($sth->execute($bind)) {
-	$session->setMessageData('Lifted selected IP ban(s)!');
+	$session->setMessageData(Flux::message('IpbanUnbanned'));
 	$this->redirect($this->url('ipban'));
 }
 else {
-	$session->setMessageData('Nothing to unban.');
+	$session->setMessageData(Flux::message('IpbanNothingToUnban'));
 	$this->redirect($this->url('ipban'));
 }
 ?>

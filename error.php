@@ -74,7 +74,7 @@
 		</table>
 		
 		<h2 class="heading">Exception Trace As String</h2>
-		<pre><?php echo htmlspecialchars($e->getTraceAsString()) ?></pre>
+		<pre><?php echo htmlspecialchars(preg_replace('/PDO->__construct\\((.+?)\\)/', 'PDO->__construct(*hidden*)', $e->getTraceAsString())) ?></pre>
 		<?php endif ?>
 	</body>
 </html>

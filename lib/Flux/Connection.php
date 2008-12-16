@@ -158,7 +158,7 @@ class Flux_Connection {
 	{
 		$dbh = $this->getConnection();
 		$sth = $dbh->prepare($statement, $options);
-		$sth->setFetchMode(PDO::FETCH_CLASS, 'Flux_DataObject', array(null));
+		$sth->setFetchMode(PDO::FETCH_CLASS, 'Flux_DataObject', array(null, array('dbconfig' => $this->dbConfig)));
 		
 		if ($sth) {
 			return new Flux_Connection_Statement($sth);
@@ -178,7 +178,7 @@ class Flux_Connection {
 	{
 		$dbh = $this->getLogsConnection();
 		$sth = $dbh->prepare($statement, $options);
-		$sth->setFetchMode(PDO::FETCH_CLASS, 'Flux_DataObject', array(null));
+		$sth->setFetchMode(PDO::FETCH_CLASS, 'Flux_DataObject', array(null, array('dbconfig' => $this->logsDbConfig)));
 		
 		if ($sth) {
 			return new Flux_Connection_Statement($sth);
@@ -202,6 +202,25 @@ class Flux_Connection {
 		$this->dbConfig->setPassword($password);
 
 		return true;
+	}
+	
+	/**
+	 *
+	 */
+	public function isCaseSensitive($database, $table, $column, $useLogsConnection = false)
+	{
+		$stm = $useLogsConnection ? 'getStatementForLogs' : 'getStatement';
+		$sql = 'SELECT COLLATION_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA = ? AND TABLE_NAME = ? AND COLUMN_NAME = ?';
+		$sth = $this->$stm($sql);
+		$sth->execute(array($database, $table, $column));
+		
+		$row = $sth->fetch();
+		if (preg_match('/_ci$/', $row->COLLATION_NAME)) {
+			return false;
+		}
+		else {
+			return true;
+		}
 	}
 }
 ?>

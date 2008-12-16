@@ -87,6 +87,11 @@ $col  = "guild_storage.*, items.name_japanese, items.type";
 $sql  = "SELECT $col FROM {$server->charMapDatabase}.guild_storage ";
 $sql .= "LEFT JOIN {$server->charMapDatabase}.items ON items.id = guild_storage.nameid ";
 $sql .= "WHERE guild_storage.guild_id = ? ";
+
+if (!$auth->allowedToSeeUnknownItems) {
+	$sql .= 'AND guild_storage.identify > 0 ';
+}
+
 $sql .= "ORDER BY guild_storage.nameid ASC, guild_storage.identify DESC, ";
 $sql .= "guild_storage.attribute ASC, guild_storage.refine ASC";
 

@@ -3,7 +3,7 @@ if (!defined('FLUX_ROOT')) exit;
 
 $this->loginRequired();
 
-$title = 'View Account';
+$title = Flux::message('AccountViewTitle');
 
 require_once 'Flux/TemporaryTable.php';
 
@@ -30,7 +30,7 @@ if (!$isMine) {
 	}
 	
 	$sql  = "SELECT login.*, {$creditColumns} FROM {$server->loginDatabase}.login ";
-	$sql .= "LEFT OUTER JOIN {$creditsTable} AS credits ON login.account_id = credits.account_id ";
+	$sql .= "LEFT OUTER JOIN {$server->loginDatabase}.{$creditsTable} AS credits ON login.account_id = credits.account_id ";
 	$sql .= "WHERE login.sex != 'S' AND login.level >= 0 AND login.account_id = ? LIMIT 1";
 	$sth  = $server->connection->getStatement($sql);
 	$sth->execute(array($accountID));
@@ -39,11 +39,11 @@ if (!$isMine) {
 	$account = $sth->fetch();
 	
 	if ($account) {
-		$title = "Viewing Account ({$account->userid})";
+		$title = sprintf(Flux::message('AccountViewTitle2'), $account->userid);
 	}
 }
 else {
-	$title = 'Viewing My Account';
+	$title = Flux::message('AccountViewTitle3');
 }
 
 $banSuperior = $account && (($account->level > $session->account->level && $auth->allowedToBanHigherPower) || $account->level <= $session->account->level);
@@ -66,11 +66,11 @@ if (count($_POST) && $account) {
 				$this->redirect($this->url('account', 'view', array('id' => $account->account_id)));
 			}
 			else {
-				$errorMessage = 'Failed to temporarily ban account.';
+				$errorMessage = Flux::message('AccountTempBanFailed');
 			}
 		}
 		else {
-			$errorMessage = 'You are unauthorized to place temporary bans on this account.';
+			$errorMessage = Flux::message('AccountTempBanUnauth');
 		}
 	}
 	elseif ($params->get('permban')) {
@@ -80,11 +80,11 @@ if (count($_POST) && $account) {
 				$this->redirect($this->url('account', 'view', array('id' => $account->account_id)));
 			}
 			else {
-				$errorMessage = 'Failed to permanently ban account.';
+				$errorMessage = Flux::message('AccountPermBanFailed');
 			}
 		}
 		else {
-			$errorMessage = 'You are unauthorized to place permanent bans on this account.';
+			$errorMessage = Flux::message('AccountPermBanUnauth');
 		}
 	}
 	elseif ($params->get('unban')) {
@@ -105,7 +105,7 @@ if (count($_POST) && $account) {
 				$sth->execute(array($account->account_id));
 			}
 					
-			$session->setMessageData('Account has been unbanned.');
+			$session->setMessageData(Flux::message('AccountLiftTempBan'));
 			$this->redirect($this->url('account', 'view', array('id' => $account->account_id)));
 		}
 		elseif ($permBanned && $auth->allowedToPermUnbanAccount &&
@@ -115,11 +115,11 @@ if (count($_POST) && $account) {
 				$sth->execute(array($account->account_id));
 			}
 					
-			$session->setMessageData('Account has been unbanned.');
+			$session->setMessageData(Flux::message('AccountLiftPermBan'));
 			$this->redirect($this->url('account', 'view', array('id' => $account->account_id)));
 		}
 		else {
-			$errorMessage = "You are unauthorized to remove this account's ban status.";
+			$errorMessage = Flux::message('AccountLiftBanUnauth');
 		}
 	}
 }
@@ -135,7 +135,7 @@ foreach ($session->getAthenaServerNames() as $serverName) {
 	
 	$sql  = "SELECT ch.*, guild.name AS guild_name, guild.emblem_len AS guild_emblem_len ";
 	$sql .= "FROM {$athena->charMapDatabase}.`char` AS ch ";
-	$sql .= "LEFT OUTER JOIN guild ON guild.guild_id = ch.guild_id ";
+	$sql .= "LEFT OUTER JOIN {$athena->charMapDatabase}.guild ON guild.guild_id = ch.guild_id ";
 	$sql .= "WHERE ch.account_id = ? ORDER BY ch.char_num ASC";
 	$sth  = $server->connection->getStatement($sql);
 	$sth->execute(array($accountID));
@@ -149,43 +149,50 @@ $col  = "storage.*, items.name_japanese, items.type";
 $sql  = "SELECT $col FROM {$server->charMapDatabase}.storage ";
 $sql .= "LEFT JOIN {$server->charMapDatabase}.items ON items.id = storage.nameid ";
 $sql .= "WHERE storage.account_id = ? ";
-$sql .= "ORDER BY storage.nameid ASC, storage.identify DESC, ";
-$sql .= "storage.attribute DESC, storage.refine ASC";
 
-$sth  = $server->connection->getStatement($sql);
-$sth->execute(array($account->account_id));
+if (!$auth->allowedToSeeUnknownItems) {
+	$sql .= 'AND storage.identify > 0 ';
+}
 
-$items = $sth->fetchAll();
-$cards = array();
+if ($account) {
+	$sql .= "ORDER BY storage.nameid ASC, storage.identify DESC, ";
+	$sql .= "storage.attribute DESC, storage.refine ASC";
 
-if ($items) {
-	$cardIDs = array();
-	
-	foreach ($items as $item) {
-		if ($item->card0) {
-			$cardIDs[] = $item->card0;
+	$sth  = $server->connection->getStatement($sql);
+	$sth->execute(array($account->account_id));
+
+	$items = $sth->fetchAll();
+	$cards = array();
+
+	if ($items) {
+		$cardIDs = array();
+
+		foreach ($items as $item) {
+			if ($item->card0) {
+				$cardIDs[] = $item->card0;
+			}
+			if ($item->card1) {
+				$cardIDs[] = $item->card1;
+			}
+			if ($item->card2) {
+				$cardIDs[] = $item->card2;
+			}
+			if ($item->card3) {
+				$cardIDs[] = $item->card3;
+			}
 		}
-		if ($item->card1) {
-			$cardIDs[] = $item->card1;
-		}
-		if ($item->card2) {
-			$cardIDs[] = $item->card2;
-		}
-		if ($item->card3) {
-			$cardIDs[] = $item->card3;
-		}
-	}
-	
-	if ($cardIDs) {
-		$ids = implode(',', array_fill(0, count($cardIDs), '?'));
-		$sql = "SELECT id, name_japanese FROM {$server->charMapDatabase}.items WHERE id IN ($ids)";
-		$sth = $server->connection->getStatement($sql);
-	
-		$sth->execute($cardIDs);
-		$temp = $sth->fetchAll();
-		if ($temp) {
-			foreach ($temp as $card) {
-				$cards[$card->id] = $card->name_japanese;
+
+		if ($cardIDs) {
+			$ids = implode(',', array_fill(0, count($cardIDs), '?'));
+			$sql = "SELECT id, name_japanese FROM {$server->charMapDatabase}.items WHERE id IN ($ids)";
+			$sth = $server->connection->getStatement($sql);
+
+			$sth->execute($cardIDs);
+			$temp = $sth->fetchAll();
+			if ($temp) {
+				foreach ($temp as $card) {
+					$cards[$card->id] = $card->name_japanese;
+				}
 			}
 		}
 	}

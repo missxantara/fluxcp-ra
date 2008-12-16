@@ -1,15 +1,15 @@
 <?php if (!defined('FLUX_ROOT')) exit; ?>
-<h2>Reset Password</h2>
+<h2><?php echo htmlspecialchars(Flux::message('ResetPassTitle')) ?></h2>
 <?php if (!empty($errorMessage)): ?>
 <p class="red"><?php echo htmlspecialchars($errorMessage) ?></p>
 <?php endif ?>
-<p>If you lost your password, you can re-set it by entering the e-mail address you used to register your account.</p>
-<p>An e-mail will then be sent to the specified address with a link allowing you to reset your password, therefore a valid e-mail address is required.</p>
+<p><?php echo htmlspecialchars(Flux::message('ResetPassInfo')) ?></p>
+<p><?php echo htmlspecialchars(Flux::message('ResetPassInfo2')) ?></p>
 <form action="<?php echo $this->urlWithQs ?>" method="post" class="generic-form">
 	<table class="generic-form-table">
 		<?php if (count($serverNames) > 1): ?>
 		<tr>
-			<th><label for="login">Registered Server</label></th>
+			<th><label for="login"><?php echo htmlspecialchars(Flux::message('ResetPassServerLabel')) ?></label></th>
 			<td>
 				<select name="login" id="login"<?php if (count($serverNames) === 1) echo ' disabled="disabled"' ?>>
 				<?php foreach ($serverNames as $serverName): ?>
@@ -17,21 +17,21 @@
 				<?php endforeach ?>
 				</select>
 			</td>
-			<td><p>This is the server the account was registered on.</p></td>
+			<td><p><?php echo htmlspecialchars(Flux::message('ResetPassServerInfo')) ?></p></td>
 		</tr>
 		<?php endif ?>
 		<tr>
-			<th><label for="userid">Account Username</label></th>
+			<th><label for="userid"><?php echo htmlspecialchars(Flux::message('ResetPassAccountLabel')) ?></label></th>
 			<td><input type="text" name="userid" id="userid" /></td>
-			<td><p>This is the account name you registered.</p></td>
+			<td><p><?php echo htmlspecialchars(Flux::message('ResetPassAccountInfo')) ?></p></td>
 		</tr>
 		<tr>
-			<th><label for="email">E-mail Address</label></th>
+			<th><label for="email"><?php echo htmlspecialchars(Flux::message('ResetPassEmailLabel')) ?></label></th>
 			<td><input type="text" name="email" id="email" /></td>
-			<td><p>This is the e-mail address you used during the registration of the above account.</p></td>
+			<td><p><?php echo htmlspecialchars(Flux::message('ResetPassEmailInfo')) ?></p></td>
 		</tr>
 		<tr>
-			<td colspan="2" align="right"><input type="submit" value="Send Reset Password E-mail" /></td>
+			<td colspan="2" align="right"><input type="submit" value="<?php echo htmlspecialchars(Flux::message('ResetPassButton')) ?>" /></td>
 			<td></td>
 		</tr>
 	</table>

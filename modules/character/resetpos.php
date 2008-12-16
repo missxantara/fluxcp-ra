@@ -3,22 +3,19 @@ if (!defined('FLUX_ROOT')) exit;
 
 $this->loginRequired();
 
+$title = 'Reset Position';
+
 $charID = $params->get('id');
 if (!$charID) {
 	$this->deny();
 }
 
-$title = 'Reset Position';
-
-$reset = $server->resetPosition($charID);
-
-if ($reset === -3) {
-	$session->setMessageData(Flux::message('UnknownCharacter'));
-	$this->redirect($this->referer);
+$char = $server->getCharacter($charID);
+if (!$char || ($char->account_id != $session->account->account_id && !$auth->allowedToResetPosition)) {
+	$this->deny();
 }
 
-$char = $server->getCharacter($charID);
-
+$reset = $server->resetPosition($charID);
 if ($reset === -1) {
 	$message = sprintf(Flux::message('CantResetPosWhenOnline'), $char->name);
 }
@@ -33,5 +30,5 @@ else {
 }
 
 $session->setMessageData($message);
-$this->redirect($this->referer);
+$this->redirect($this->url('character', 'view', array('id' => $charID)));
 ?>

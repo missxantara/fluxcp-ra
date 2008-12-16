@@ -3,7 +3,7 @@ if (!defined('FLUX_ROOT')) exit;
 
 $this->loginRequired();
 
-$title = 'Change Password';
+$title = Flux::message('PasswordChangeTitle');
 
 if (count($_POST)) {
 	$currentPassword    = $params->get('currentpass');

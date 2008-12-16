@@ -1,5 +1,5 @@
 <?php if (!defined('FLUX_ROOT')) exit; ?>
-<h2>Modify IP Ban</h2>
+<h2><?php echo htmlspecialchars(Flux::message('IpbanEditHeading')) ?></h2>
 <?php if ($ipban): ?>
 	<?php if (!empty($errorMessage)): ?>
 		<p class="red"><?php echo htmlspecialchars($errorMessage) ?></p>
@@ -8,13 +8,13 @@
 		<input type="hidden" name="modipban" value="1" />
 		<table class="generic-form-table">
 			<tr>
-				<th><label for="list">IP Address</label></th>
+				<th><label for="list"><?php echo htmlspecialchars(Flux::message('IpbanIpAddressLabel')) ?></label></th>
 				<td><input type="text" name="newlist" id="list"
 						value="<?php echo htmlspecialchars(($list=$params->get('newlist')) ? $list : $ipban->list) ?>" /></td>
-				<td><p>You may specify a pattern such as 218.139.*.*</p></td>
+				<td><p><?php echo htmlspecialchars(Flux::message('IpbanIpAddressInfo')) ?></p></td>
 			</tr>
 			<tr>
-				<th><label for="reason">Ban Reason</label></th>
+				<th><label for="reason"><?php echo htmlspecialchars(Flux::message('IpbanReasonLabel')) ?></label></th>
 				<td>
 					<textarea name="reason" id="reason" class="reason">
 						<?php echo htmlspecialchars(($reason=$params->get('reason')) ? $reason : $ipban->reason) ?>
@@ -23,13 +23,13 @@
 				<td></td>
 			</tr>
 			<tr>
-				<th><label>Unban Date</label></th>
+				<th><label><?php echo htmlspecialchars(Flux::message('IpbanUnbanDateLabel')) ?></label></th>
 				<td><?php echo $this->dateTimeField('rtime', ($rtime=$params->get('rtime')) ? $rtime : $ipban->rtime) ?></td>
 				<td></td>
 			</tr>
 			<tr>
 				<td></td>
-				<td colspan="2"><input type="submit" value="Modify IP Ban" /></td>
+				<td colspan="2"><input type="submit" value="<?php echo htmlspecialchars(Flux::message('IpbanEditButton')) ?>" /></td>
 			</tr>
 		</table>
 	</form>

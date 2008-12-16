@@ -89,6 +89,16 @@ label:hover {
 	background-color: #333;
 }
 
+.notice {
+	display: block;
+	padding: 10px;
+	font-weight: normal;
+	font-size: 120%;
+	color: #204a87;
+	background-color: #F0FFFF;
+	border: 1px solid #87CEEB;
+}
+
 .center {
 	text-align: center;
 }
@@ -464,6 +474,25 @@ label:hover {
 
 #submenu {
 	color: #bbb;
+}
+
+#pagemenu {
+	margin-top: 5px;
+	padding: 5px 0;
+	font-size: 8pt;
+	color: #888;
+	border-width: 1px 0;
+	border-style: dotted;
+	border-color: #ddd;
+}
+
+#pagemenu a {
+	color: #777974;
+	text-decoration: underline;
+}
+
+#pagemenu a:hover {
+	color: #729fcf;
 }
 
 #loginbox {
@@ -974,4 +1003,18 @@ textarea {
 .monster-mode li {
 	padding: 1px;
 	border-bottom: 1px dotted #eee;
+}
+
+.equipped td {
+	color: #25292b;
+	background-color: #f1ffff;
+}
+
+.job-classes {
+	border-spacing: 0;
+}
+
+.job-classes td {
+	padding-right: 10px;
+	border-right: 1px solid #eee;
 }

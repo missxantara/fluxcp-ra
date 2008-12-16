@@ -29,20 +29,38 @@ $item = $sth->fetch();
 if ($item) {
 	$isCustom      = preg_match('/item_db2$/', $item->origin_table) ? true : false;
 	
-	$viewID        = $params->get('view')            ? $params->get('view')            : $item->view;
-	$type          = $params->get('type')            ? $params->get('type')            : $item->type;
-	$identifier    = $params->get('name_english')    ? $params->get('name_english')    : $item->name_english;
-	$itemName      = $params->get('name_japanese')   ? $params->get('name_japanese')   : $item->name_japanese;
-	$slots         = $params->get('slots')           ? $params->get('slots')           : $item->slots;
-	$npcBuy        = $params->get('npc_buy')         ? $params->get('npc_buy')         : $item->price_buy;
-	$npcSell       = $params->get('npc_sell')        ? $params->get('npc_sell')        : $item->price_sell;
-	$weight        = $params->get('weight')          ? $params->get('weight')          : $item->weight;
-	$attack        = $params->get('attack')          ? $params->get('attack')          : $item->attack;
-	$defense       = $params->get('defense')         ? $params->get('defense')         : $item->defence;
-	$range         = $params->get('range')           ? $params->get('range')           : $item->range;
-	$weaponLevel   = $params->get('weapon_level')    ? $params->get('weapon_level')    : $item->weapon_level;
-	$equipLevel    = $params->get('equip_level')     ? $params->get('equip_level')     : $item->equip_level;
-	$refineable    = $params->get('refineable')      ? $params->get('refineable')      : $item->refineable;
+	if ($params->get('edititem')) {
+		$viewID        = $params->get('view');
+		$type          = $params->get('type');
+		$identifier    = $params->get('name_english');
+		$itemName      = $params->get('name_japanese');
+		$slots         = $params->get('slots');
+		$npcBuy        = $params->get('npc_buy');
+		$npcSell       = $params->get('npc_sell');
+		$weight        = $params->get('weight');
+		$attack        = $params->get('attack');
+		$defense       = $params->get('defense');
+		$range         = $params->get('range');
+		$weaponLevel   = $params->get('weapon_level');
+		$equipLevel    = $params->get('equip_level');
+		$refineable    = $params->get('refineable');
+	}
+	else {
+		$viewID        = $item->view;
+		$type          = $item->type;
+		$identifier    = $item->name_english;
+		$itemName      = $item->name_japanese;
+		$slots         = $item->slots;
+		$npcBuy        = $item->price_buy;
+		$npcSell       = $item->price_sell;
+		$weight        = $item->weight;
+		$attack        = $item->attack;
+		$defense       = $item->defence;
+		$range         = $item->range;
+		$weaponLevel   = $item->weapon_level;
+		$equipLevel    = $item->equip_level;
+		$refineable    = $item->refineable;
+	}
 	
 	if ($item->equip_locations) {
 		$item->equip_locations = Flux::equipLocationsToArray($item->equip_locations);
@@ -205,10 +223,8 @@ if ($item) {
 				);
 
 				foreach ($vals as $col => $val) {
-					if (!is_null($val)) {
-						$cols[] = $col;
-						$bind[] = $val;
-					}
+					$cols[] = $col;
+					$bind[] = $val;
 				}
 
 				if ($equipLocs) {

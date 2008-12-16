@@ -3,7 +3,7 @@ if (!defined('FLUX_ROOT')) exit;
 
 $this->loginRequired();
 
-$title = 'Transfer Donation Credits';
+$title = Flux::message('TransferTitle');
 
 if (count($_POST)) {
 	if ($session->account->balance) {
@@ -11,25 +11,25 @@ if (count($_POST)) {
 		$charName = trim($params->get('char_name'));
 		
 		if (!$credits || $credits < 1) {
-			$errorMessage = 'You can only transfer credits in amounts greater than 1.';
+			$errorMessage = Flux::message('TransferGreaterThanOne');
 		}
 		elseif (!$charName) {
-			$errorMessage = 'You must input a character name whom will receive the credits.';
+			$errorMessage = Flux::message('TransferEnterCharName');
 		}
 		else {
 			$res = $server->transferCredits($session->account->account_id, $charName, $credits);
 			
 			if ($res === -3) {
-				$errorMessage = "Character '$charName' does not exist. Please make sure you typed it correctly.";
+				$errorMessage = sprintf(Flux::message('TransferNoCharExists'), $charName);
 			}
 			elseif ($res === -2) {
-				$errorMessage = 'You do not have a sufficient balance to make the transfer.';
+				$errorMessage = Flux::message('TransferNoBalance');
 			}
 			elseif ($res !== true) {
-				$errorMessage = 'Unexpected error occurred.';
+				$errorMessage = Flux::message('TransferUnexpectedError');
 			}
 			else {
-				$session->setMessageData('Credits have been transferred!');
+				$session->setMessageData(Flux::message('TransferSuccessful'));
 				$this->redirect();
 			}
 		}

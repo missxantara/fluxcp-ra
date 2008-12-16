@@ -1,7 +1,7 @@
 <?php
 if (!defined('FLUX_ROOT')) exit;
 
-$title = 'Reset Password';
+$title = Flux::message('ResetPassButton');
 
 $account = $params->get('account');
 $code    = $params->get('code');
@@ -54,7 +54,7 @@ if ($loginAthenaGroup->loginServer->config->getUseMD5()) {
 }
 
 if (!$sth->execute(array($_SERVER['REMOTE_ADDR'], $newPassword, $reset->id))) {
-	$session->setMessageData("Failed to re-set password, please try again later.");
+	$session->setMessageData(Flux::message('ResetPwFailed'));
 	$this->redirect();	
 }
 
@@ -62,7 +62,7 @@ $sql = "UPDATE {$loginAthenaGroup->loginDatabase}.login SET user_pass = ? WHERE 
 $sth = $loginAthenaGroup->connection->getStatement($sql);
 
 if (!$sth->execute(array($newPassword, $account))) {
-	$session->setMessageData("Failed to re-set password, please try again later.");
+	$session->setMessageData(Flux::message('ResetPwFailed'));
 	$this->redirect();
 }
 
@@ -71,10 +71,10 @@ $mail = new Flux_Mailer();
 $sent = $mail->send($acc->email, 'Password Has Been Reset', 'newpass', array('AccountUsername' => $acc->userid, 'NewPassword' => $unhashedNewPassword));
 
 if ($sent) {
-	$message = 'Your password has been reset and an e-mail containing your new password has been sent to you.';
+	$message = Flux::message('ResetPwDone');
 }
 else {
-	$message = 'Your password has been reset, but we failed to deliver the e-mail containing your new password.  Please reset again to resolve this issue.';
+	$message = Flux::message('ResetPwDone2');
 }
 
 $session->setMessageData($message);

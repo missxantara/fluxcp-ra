@@ -286,8 +286,10 @@ class Flux_Paginator {
 		$qStringLines = preg_split('/&/', $qString, -1, PREG_SPLIT_NO_EMPTY);
 		
 		foreach ($qStringLines as $qStringVar) {
-			list($qStringKey, $qStringVal) = explode('=', $qStringVar, 2);
-			$qStringVars[$qStringKey] = $qStringVal;
+			if (strpos($qStringVar, '=') !== false) {
+				list($qStringKey, $qStringVal) = explode('=', $qStringVar, 2);
+				$qStringVars[$qStringKey] = $qStringVal;
+			}
 		}
 		
 		$qStringVars[$pageVar] = $pageNum;

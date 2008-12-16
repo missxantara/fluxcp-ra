@@ -147,7 +147,7 @@ if (count($_POST) && $params->get('additem')) {
 			$tempTable  = new Flux_TemporaryTable($server->connection, $tableName, $fromTables);
 			$shopTable  = Flux::config('FluxTables.ItemShopTable');
 			
-			$sth = $server->connection->getStatement("SELECT id, name_japanese, origin_table FROM items WHERE id = ? LIMIT 1");
+			$sth = $server->connection->getStatement("SELECT id, name_japanese, origin_table FROM $tableName WHERE id = ? LIMIT 1");
 			$sth->execute(array($itemID));
 			
 			$item = $sth->fetch();

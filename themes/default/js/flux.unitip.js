@@ -40,8 +40,15 @@ init = function () {
 // next, add the tooltip function to those elements
 unitipize = function (element) {
 	var a = element;
-	altText = (a.alt && a.getAttribute("alt") != '' ) ? true : false;
-	var sTitle = (altText == true) ? a.getAttribute("alt") : a.getAttribute("title");				
+	var id = a.getAttribute('id');
+	
+	if (id != null && id.indexOf('recaptcha_') == 0) {
+		return;
+	}
+	
+	//altText = (a.alt && a.getAttribute("alt") != '' ) ? true : false;
+	//var sTitle = (altText == true) ? a.getAttribute("alt") : a.getAttribute("title");				
+	var sTitle = a.getAttribute('title');
 	if(sTitle) {
 		a.onmouseover = function() {build(a, sTitle);};
 		a.onmouseout = function() {hide(a, sTitle);};

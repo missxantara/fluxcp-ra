@@ -336,6 +336,25 @@ class Flux_Template {
 		
 		include $this->actionPath;
 		
+		$pageMenuFile   = FLUX_ROOT."/modules/{$this->moduleName}/pagemenu/{$this->actionName}.php";
+		$pageMenuItems  = array();
+		
+		// Get the main menu file first (located in the actual module).
+		if (file_exists($pageMenuFile)) {
+			ob_start();
+			$pageMenuItems = include $pageMenuFile;
+			ob_end_clean();
+		}
+		
+		$addonPageMenuFiles = glob(FLUX_ADDON_DIR."/*/modules/{$this->moduleName}/pagemenu/{$this->actionName}.php");
+		if ($addonPageMenuFiles) {
+			foreach ($addonPageMenuFiles as $addonPageMenuFile) {
+				ob_start();
+				$pageMenuItems = array_merge($pageMenuItems, include $addonPageMenuFile);
+				ob_end_clean();
+			}
+		}
+		
 		if (file_exists($this->headerPath)) {
 			include $this->headerPath;
 		}
@@ -854,13 +873,13 @@ class Flux_Template {
 	{
 		switch (strtoupper($gender)) {
 			case 'M':
-				return 'Male';
+				return Flux::message('GenderTypeMale');
 				break;
 			case 'F':
-				return 'Female';
+				return Flux::message('GenderTypeFemale');
 				break;
 			case 'S':
-				return 'Server';
+				return Flux::message('GenderTypeServer');
 				break;
 			default:
 				return false;
@@ -882,11 +901,11 @@ class Flux_Template {
 		
 		switch ($state) {
 			case 0:
-				$text  = 'Normal';
+				$text  = Flux::message('AccountStateNormal');
 				$class = 'state-normal';
 				break;
 			case 5:
-				$text  = 'Permanently Banned';
+				$text  = Flux::message('AccountStatePermBanned');
 				$class = 'state-permanently-banned';
 				break;
 		}
@@ -1036,16 +1055,16 @@ class Flux_Template {
 	{
 		$banType = (int)$banType;
 		if (!$banType) {
-			return 'Unbanned';
+			return Flux::message('BanTypeUnbanned');
 		}
 		elseif ($banType === 2) {
-			return 'Permanently Banned';
+			return Flux::message('BanTypePermBanned');
 		}
 		elseif ($banType === 1) {
-			return 'Temporarily Banned';
+			return Flux::message('BanTypeTempBanned');
 		}
 		else {
-			return 'Unknown';
+			return Flux::message('UnknownLabel');
 		}
 	}
 	

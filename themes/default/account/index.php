@@ -1,93 +1,93 @@
 <?php if (!defined('FLUX_ROOT')) exit; ?>
 <h2>Accounts</h2>
-<p class="toggler"><a href="javascript:toggleSearchForm()">Search...</a></p>
+<p class="toggler"><a href="javascript:toggleSearchForm()"><?php echo htmlspecialchars(Flux::message('SearchLabel')) ?></a></p>
 <form action="<?php echo $this->url ?>" method="get" class="search-form">
 	<?php echo $this->moduleActionFormInputs($params->get('module')) ?>
 	<p>
-		<label for="account_id">Account ID:</label>
+		<label for="account_id"><?php echo htmlspecialchars(Flux::message('AccountIdLabel')) ?>:</label>
 		<input type="text" name="account_id" id="account_id" value="<?php echo htmlspecialchars($params->get('account_id')) ?>" />
 		...
-		<label for="username">Username:</label>
+		<label for="username"><?php echo htmlspecialchars(Flux::message('UsernameLabel')) ?>:</label>
 		<input type="text" name="username" id="username" value="<?php echo htmlspecialchars($params->get('username')) ?>" />
 		<?php if ($searchPassword): ?>
 		...
-		<label for="password">Password:</label>
+		<label for="password"><?php echo htmlspecialchars(Flux::message('PasswordLabel')) ?>:</label>
 		<input type="text" name="password" id="password" value="<?php echo htmlspecialchars($params->get('password')) ?>" />
 		<?php endif ?>
 		...
-		<label for="email">E-mail:</label>
+		<label for="email"><?php echo htmlspecialchars(Flux::message('EmailAddressLabel')) ?>:</label>
 		<input type="text" name="email" id="email" value="<?php echo htmlspecialchars($params->get('email')) ?>" />
 		...
-		<label for="last_ip">Last Used IP:</label>
+		<label for="last_ip"><?php echo htmlspecialchars(Flux::message('LastUsedIpLabel')) ?>:</label>
 		<input type="text" name="last_ip" id="last_ip" value="<?php echo htmlspecialchars($params->get('last_ip')) ?>" />
 		...
-		<label for="gender">Gender:</label>
+		<label for="gender"><?php echo htmlspecialchars(Flux::message('GenderLabel')) ?>:</label>
 		<select name="gender" id="gender">
-			<option value=""<?php if (!in_array($gender=$params->get('gender'), array('M', 'F'))) echo ' selected="selected"' ?>>All</option>
-			<option value="M"<?php if ($gender == 'M') echo ' selected="selected"' ?>>Male</option>
-			<option value="F"<?php if ($gender == 'F') echo ' selected="selected"' ?>>Female</option>
+			<option value=""<?php if (!in_array($gender=$params->get('gender'), array('M', 'F'))) echo ' selected="selected"' ?>><?php echo htmlspecialchars(Flux::message('AllLabel')) ?></option>
+			<option value="M"<?php if ($gender == 'M') echo ' selected="selected"' ?>><?php echo $this->genderText('M') ?></option>
+			<option value="F"<?php if ($gender == 'F') echo ' selected="selected"' ?>><?php echo $this->genderText('F') ?></option>
 		</select>
 	</p>
 	<p>
-		<label for="account_state">Account State:</label>
+		<label for="account_state"><?php echo htmlspecialchars(Flux::message('AccountStateLabel')) ?>:</label>
 		<select name="account_state" id="account_state">
-			<option value=""<?php if (!($account_state=$params->get('account_state'))) echo ' selected="selected"' ?>>All</option>
+			<option value=""<?php if (!($account_state=$params->get('account_state'))) echo ' selected="selected"' ?>><?php echo htmlspecialchars(Flux::message('AllLabel')) ?></option>
 			<option value="normal"<?php if ($account_state == 'normal') echo ' selected="selected"' ?>>Normal</option>
 			<option value="banned"<?php if ($account_state == 'banned') echo ' selected="selected"' ?>>Temporarily Banned</option>
 			<option value="permabanned"<?php if ($account_state == 'permabanned') echo ' selected="selected"' ?>>Permanently Banned</option>
 		</select>
 		...
-		<label for="account_level">Account Level:</label>
+		<label for="account_level"><?php echo htmlspecialchars(Flux::message('AccountLevelLabel')) ?>:</label>
 		<select name="account_level_op">
-			<option value="eq"<?php if (($account_level_op=$params->get('account_level_op')) == 'eq') echo ' selected="selected"' ?>>is equal to</option>
-			<option value="gt"<?php if ($account_level_op == 'gt') echo ' selected="selected"' ?>>is greater than</option>
-			<option value="lt"<?php if ($account_level_op == 'lt') echo ' selected="selected"' ?>>is less than</option>
+			<option value="eq"<?php if (($account_level_op=$params->get('account_level_op')) == 'eq') echo ' selected="selected"' ?>><?php echo htmlspecialchars(Flux::message('IsEqualToLabel')) ?></option>
+			<option value="gt"<?php if ($account_level_op == 'gt') echo ' selected="selected"' ?>><?php echo htmlspecialchars(Flux::message('IsGreaterThanLabel')) ?></option>
+			<option value="lt"<?php if ($account_level_op == 'lt') echo ' selected="selected"' ?>><?php echo htmlspecialchars(Flux::message('IsLessThanLabel')) ?></option>
 		</select>
 		<input type="text" name="account_level" id="account_level" value="<?php echo htmlspecialchars($params->get('account_level')) ?>" />
 		...
-		<label for="balance">Credit Balance:</label>
+		<label for="balance"><?php echo htmlspecialchars(Flux::message('CreditBalanceLabel')) ?>:</label>
 		<select name="balance_op">
-			<option value="eq"<?php if (($balance_op=$params->get('balance_op')) == 'eq') echo ' selected="selected"' ?>>is equal to</option>
-			<option value="gt"<?php if ($balance_op == 'gt') echo ' selected="selected"' ?>>is greater than</option>
-			<option value="lt"<?php if ($balance_op == 'lt') echo ' selected="selected"' ?>>is less than</option>
+			<option value="eq"<?php if (($balance_op=$params->get('balance_op')) == 'eq') echo ' selected="selected"' ?>><?php echo htmlspecialchars(Flux::message('IsEqualToLabel')) ?></option>
+			<option value="gt"<?php if ($balance_op == 'gt') echo ' selected="selected"' ?>><?php echo htmlspecialchars(Flux::message('IsGreaterThanLabel')) ?></option>
+			<option value="lt"<?php if ($balance_op == 'lt') echo ' selected="selected"' ?>><?php echo htmlspecialchars(Flux::message('IsLessThanLabel')) ?></option>
 		</select>
 		<input type="text" name="balance" id="balance" value="<?php echo htmlspecialchars($params->get('balance')) ?>" />
 	</p>
 	<p>
-		<label for="logincount">Login Count:</label>
+		<label for="logincount"><?php echo htmlspecialchars(Flux::message('LoginCountLabel')) ?>:</label>
 		<select name="logincount_op">
-			<option value="eq"<?php if (($logincount_op=$params->get('logincount_op')) == 'eq') echo ' selected="selected"' ?>>is equal to</option>
-			<option value="gt"<?php if ($logincount_op == 'gt') echo ' selected="selected"' ?>>is greater than</option>
-			<option value="lt"<?php if ($logincount_op == 'lt') echo ' selected="selected"' ?>>is less than</option>
+			<option value="eq"<?php if (($logincount_op=$params->get('logincount_op')) == 'eq') echo ' selected="selected"' ?>><?php echo htmlspecialchars(Flux::message('IsEqualToLabel')) ?></option>
+			<option value="gt"<?php if ($logincount_op == 'gt') echo ' selected="selected"' ?>><?php echo htmlspecialchars(Flux::message('IsGreaterThanLabel')) ?></option>
+			<option value="lt"<?php if ($logincount_op == 'lt') echo ' selected="selected"' ?>><?php echo htmlspecialchars(Flux::message('IsLessThanLabel')) ?></option>
 		</select>
 		<input type="text" name="logincount" id="logincount" value="<?php echo htmlspecialchars($params->get('logincount')) ?>" />
 		...
-		<label for="use_last_login_after">Login Between:</label>
+		<label for="use_last_login_after"><?php echo htmlspecialchars(Flux::message('LoginBetweenLabel')) ?>:</label>
 		<input type="checkbox" name="use_last_login_after" id="use_last_login_after"<?php if ($params->get('use_last_login_after')) echo ' checked="checked"' ?> />
 		<?php echo $this->dateField('last_login_after') ?>
 		<label for="use_last_login_before">&mdash;</label>
 		<input type="checkbox" name="use_last_login_before" id="use_last_login_before"<?php if ($params->get('use_last_login_before')) echo ' checked="checked"' ?> />
 		<?php echo $this->dateField('last_login_before') ?>		
 		
-		<input type="submit" value="Search" />
-		<input type="button" value="Reset" onclick="reload()" />
+		<input type="submit" value="<?php echo htmlspecialchars(Flux::message('SearchButton')) ?>" />
+		<input type="button" value="<?php echo htmlspecialchars(Flux::message('ResetButton')) ?>" onclick="reload()" />
 	</p>
 </form>
 <?php if ($accounts): ?>
 <?php echo $paginator->infoText() ?>
 <table class="horizontal-table">
 	<tr>
-		<th><?php echo $paginator->sortableColumn('login.account_id', 'Account ID') ?></th>
-		<th><?php echo $paginator->sortableColumn('login.userid', 'Username') ?></th>
-		<?php if ($showPassword): ?><th><?php echo $paginator->sortableColumn('login.user_pass', 'Password') ?></th><?php endif ?>
-		<th><?php echo $paginator->sortableColumn('login.sex', 'Gender') ?></th>
-		<th><?php echo $paginator->sortableColumn('level', 'Account Level') ?></th>
-		<th><?php echo $paginator->sortableColumn('state', 'Account State') ?></th>
-		<th><?php echo $paginator->sortableColumn('balance', 'Credit Balance') ?></th>
-		<th><?php echo $paginator->sortableColumn('login.email', 'E-mail') ?></th>
-		<th><?php echo $paginator->sortableColumn('logincount', 'Login Count') ?></th>
-		<th><?php echo $paginator->sortableColumn('lastlogin', 'Last Login Date') ?></th>
-		<th><?php echo $paginator->sortableColumn('last_ip', 'Last Used IP') ?></th>
+		<th><?php echo $paginator->sortableColumn('login.account_id', Flux::message('AccountIdLabel')) ?></th>
+		<th><?php echo $paginator->sortableColumn('login.userid', Flux::message('UsernameLabel')) ?></th>
+		<?php if ($showPassword): ?><th><?php echo $paginator->sortableColumn('login.user_pass', Flux::message('PasswordLabel')) ?></th><?php endif ?>
+		<th><?php echo $paginator->sortableColumn('login.sex', Flux::message('GenderLabel')) ?></th>
+		<th><?php echo $paginator->sortableColumn('level', Flux::message('AccountLevelLabel')) ?></th>
+		<th><?php echo $paginator->sortableColumn('state', Flux::message('AccountStateLabel')) ?></th>
+		<th><?php echo $paginator->sortableColumn('balance', Flux::message('CreditBalanceLabel')) ?></th>
+		<th><?php echo $paginator->sortableColumn('login.email', Flux::message('EmailAddressLabel')) ?></th>
+		<th><?php echo $paginator->sortableColumn('logincount', Flux::message('LoginCountLabel')) ?></th>
+		<th><?php echo $paginator->sortableColumn('lastlogin', Flux::message('LastLoginDateLabel')) ?></th>
+		<th><?php echo $paginator->sortableColumn('last_ip', Flux::message('LastUsedIpLabel')) ?></th>
 		<!-- <th><?php echo $paginator->sortableColumn('reg_date', 'Register Date') ?></th> -->
 	</tr>
 	<?php foreach ($accounts as $account): ?>
@@ -105,7 +105,7 @@
 			<?php if ($gender = $this->genderText($account->sex)): ?>
 				<?php echo htmlspecialchars($gender) ?>
 			<?php else: ?>
-				<span class="not-applicable">Unknown</span>
+				<span class="not-applicable"><?php echo htmlspecialchars(Flux::message('UnknownLabel')) ?></span>
 			<?php endif ?>
 		</td>
 		<td><?php echo (int)$account->level ?></td>
@@ -114,11 +114,10 @@
 				<?php echo $state ?>
 			<?php elseif ($account->unban_time): ?>
 				<span class="account-state state-banned">
-					Banned Until
-					<?php echo htmlspecialchars(date(Flux::config('DateTimeFormat'), $account->unban_time)) ?>
+					<?php echo htmlspecialchars(sprintf(Flux::message('AccountStateTempBanned'), date(Flux::config('DateTimeFormat'), $account->unban_time))) ?>
 				</span>
 			<?php else: ?>
-				<span class="account-state state-unknown">Unknown</span>
+				<span class="account-state state-unknown"><?php echo htmlspecialchars(Flux::message('UnknownLabel')) ?></span>
 			<?php endif ?>
 		</td>
 		<td><?php echo number_format((int)$account->balance) ?></td>
@@ -126,13 +125,13 @@
 			<?php if ($account->email): ?>
 				<?php echo htmlspecialchars($account->email) ?>
 			<?php else: ?>
-				<span class="not-applicable">None</span>
+				<span class="not-applicable"><?php echo htmlspecialchars(Flux::message('NoneLabel')) ?></span>
 			<?php endif ?>
 		</td>
 		<td><?php echo number_format((int)$account->logincount) ?></td>
 		<td>
 			<?php if (!$account->lastlogin || $account->lastlogin == '0000-00-00 00:00:00'): ?>
-				<span class="not-applicable">Never</span>
+				<span class="not-applicable"><?php echo htmlspecialchars(Flux::message('NeverLabel')) ?></span>
 			<?php else: ?>
 				<?php echo $this->formatDateTime($account->lastlogin) ?>
 			<?php endif ?>
@@ -141,7 +140,7 @@
 			<?php if ($account->last_ip): ?>
 				<?php echo htmlspecialchars($account->last_ip) ?>
 			<?php else: ?>
-				<span class="not-applicable">None</span>
+				<span class="not-applicable"><?php echo htmlspecialchars(Flux::message('NoneLabel')) ?></span>
 			<?php endif ?>
 		</td>
 		<!-- <td>
@@ -156,5 +155,8 @@
 </table>
 <?php echo $paginator->getHTML() ?>
 <?php else: ?>
-<p>No accounts found. <a href="javascript:history.go(-1)">Go back</a>.</p>
+<p>
+	<?php echo htmlspecialchars(Flux::message('AccountIndexNotFound')) ?>
+	<a href="javascript:history.go(-1)"><?php echo htmlspecialchars(Flux::message('GoBackLabel')) ?></a>
+</p>
 <?php endif ?>
