@@ -437,7 +437,17 @@ return array(
 	
 	// Module: reload
 	// - reload/index
+	'ReloadTitle'             => 'Reload Databases',
+	'ReloadHeading'           => 'Reload Databases',
+	'ReloadInfo'              => 'You may reload the server databases here.',
+	'ReloadInfo2'             => 'Please select the database that you would like to reload from the available actions.',
 	// - reload/mobskill
+	'ReloadMobSkillsTitle'    => 'Reload Mob Skills',
+	'ReloadMobSkillsHeading'  => 'Reload Mob Skills',
+	'ReloadMobSkillsError1'   => '%s is not readable.',
+	'ReloadMobSkillsError2'   => '%s is not readable.',
+	'ReloadMobSkillsError3'   => '%s is not writable.',
+	'ReloadMobSkillsInfo'     => 'Mob skills database has been successfully reloaded! (%s bytes written)',
 	
 	// Module: server
 	// - server/info
