@@ -1,4 +1,4 @@
 <?php if (!defined('FLUX_ROOT')) exit; ?>
-<h2>Terms of Service</h2>
-<p style="font-style: italic">Please read before creating an account!</p>
-<p class="note">FOR CONTROL PANEL ADMINISTRATOR:  You may add your server's ToS in this view file directly.  The location of the view file is <code><?php echo __FILE__ ?></code></p>
+<h2><?php echo htmlspecialchars(Flux::message('TermsHeading')) ?></h2>
+<p style="font-style: italic"><?php echo htmlspecialchars(Flux::message('TermsInfo')) ?></p>
+<p class="note"><?php echo htmlspecialchars(sprintf(Flux::message('TermsInfo2'), __FILE__)) ?></p>

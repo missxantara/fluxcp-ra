@@ -463,6 +463,10 @@ return array(
 	
 	// Module: service
 	// - service/tos
+	'TermsTitle'              => 'Terms of Service',
+	'TermsHeading'            => 'Terms of Service',
+	'TermsInfo'               => 'Please read before creating an account!',
+	'TermsInfo2'              => "FOR CONTROL PANEL ADMINISTRATOR:  You may add your server's ToS in this view file directly.  The location of the view file is: %s",
 	
 	// Module: unauthorized
 	// - unauthorized/index
