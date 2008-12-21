@@ -805,7 +805,7 @@ class Flux_Template {
 	 */
 	public function getPaginator($total, array $options = array())
 	{
-		$paginator = new Flux_Paginator($total, $options);
+		$paginator = new Flux_Paginator($total, $this->url($this->moduleName, $this->actionName, array('_host' => false)), $options);
 		return $paginator;
 	}
 	
