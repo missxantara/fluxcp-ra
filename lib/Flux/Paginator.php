@@ -135,7 +135,7 @@ class Flux_Paginator {
 		$this->pagesToShow    = $options['pagesToShow'];
 		$this->pageVariable   = $options['pageVariable'];
 		$this->pageSeparator  = $options['pageSeparator'];
-		$this->currentPage    = isset($_GET[$this->pageVariable]) && $_GET[$this->pageVariable] ? $_GET[$this->pageVariable] : 1;
+		$this->currentPage    = isset($_GET[$this->pageVariable]) && $_GET[$this->pageVariable] > 0 ? $_GET[$this->pageVariable] : 1;
 		
 		$this->calculatePages();
 	}
@@ -255,11 +255,11 @@ class Flux_Paginator {
 		}
 		
 		if ($hasPrev) {
-			array_unshift($pages, sprintf('<a href="%s" title="Previous Pane (#%d)" class="page-prev">Prev.</a> ', $this->getPageURI($start - 1), $start - 1));
+			array_unshift($pages, sprintf('<a href="%s" title="Previous Pane (p#%d)" class="page-prev">Prev.</a> ', $this->getPageURI($start - 1), $start - 1));
 		}
 		
 		if ($hasNext) {
-			array_push($pages, sprintf(' <a href="%s" title="Next Pane (#%d)" class="page-next">Next</a>', $this->getPageURI($end), $end));
+			array_push($pages, sprintf(' <a href="%s" title="Next Pane (p#%d)" class="page-next">Next</a>', $this->getPageURI($end), $end));
 		}
 		
 		$links  = sprintf('<div class="pages">%s</div>', implode(" {$this->pageSeparator} ", $pages))."\n";
@@ -292,7 +292,7 @@ class Flux_Paginator {
 	 */
 	protected function getPageURI($pageNumber)
 	{
-		$request = preg_replace('/(\?.*)$/', '', $this->requestURI);
+		$request = rtrim($this->requestURI, '?');
 		$qString = $_SERVER['QUERY_STRING'];
 		$pageVar = preg_quote($this->pageVariable);
 		$pageNum = (int)$pageNumber;
