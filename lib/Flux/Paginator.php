@@ -292,7 +292,7 @@ class Flux_Paginator {
 	 */
 	protected function getPageURI($pageNumber)
 	{
-		$request = rtrim($this->requestURI, '?');
+		$request = preg_replace('/(\?.*)$/', '', $this->requestURI);
 		$qString = $_SERVER['QUERY_STRING'];
 		$pageVar = preg_quote($this->pageVariable);
 		$pageNum = (int)$pageNumber;
