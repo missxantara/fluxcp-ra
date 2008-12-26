@@ -80,6 +80,11 @@ label:hover {
 	border: 1px solid #8ac;
 }*/
 
+.module-name {
+	font-weight: bold;
+	font-size: 12pt;
+}
+
 .message {
 	display: block;
 	padding: 10px;
@@ -177,7 +182,7 @@ label:hover {
 	display: block;
 }
 
-.request {
+.request, .fs-path {
 	display: inline-block;
 	padding: 2px;
 	font-family: Monaco, "Lucida Console", "Bitsteam Vera Sans Mono", monospace;

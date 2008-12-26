@@ -321,6 +321,22 @@ return array(
 	// - donate/index
 	// - donate/trusted
 	
+	// Module: errors
+	// - errors/missing_action
+	'MissingActionTitle'      => 'Missing Action',
+	'MissingActionHeading'    => 'Missing Action!',
+	'MissingActionModLabel'   => 'Module:',
+	'MissingActionActLabel'   => 'Action:',
+	'MissingActionReqLabel'   => 'Request URI:',
+	'MissingActionLocLabel'   => 'File system location:',
+	// - errors/missing_view
+	'MissingViewTitle'        => 'Missing View',
+	'MissingViewHeading'      => 'Missing View!',
+	'MissingViewModLabel'     => 'Module:',
+	'MissingViewActLabel'     => 'Action:',
+	'MissingViewReqLabel'     => 'Request URI:',
+	'MissingViewLocLabel'     => 'File system location:',
+	
 	// Module: guild
 	// - guild/export
 	// - guild/index

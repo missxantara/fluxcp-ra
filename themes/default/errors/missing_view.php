@@ -1,5 +1,5 @@
 <?php if (!defined('FLUX_ROOT')) exit; ?>
-<h2>Missing View!</h2>
-<p>Module: <span class="module-name"><?php echo $this->params->get('module') ?></span>, Action: <span class="module-name"><?php echo $this->params->get('action') ?></span></p>
-<p>The view file corresponding to your request <span class="request"><?php echo $_SERVER['REQUEST_URI'] ?></span> was not found!</p>
-<p>It should be in <span class="fs-path"><?php echo $realViewPath ?></span></p>
+<h2><?php echo htmlspecialchars(Flux::message('MissingViewHeading')) ?></h2>
+<p><?php echo htmlspecialchars(Flux::message('MissingViewModLabel')) ?> <span class="module-name"><?php echo $this->params->get('module') ?></span>, <?php echo htmlspecialchars(Flux::message('MissingViewActLabel')) ?> <span class="module-name"><?php echo $this->params->get('action') ?></span></p>
+<p><?php echo htmlspecialchars(Flux::message('MissingViewReqLabel')) ?> <span class="request"><?php echo $_SERVER['REQUEST_URI'] ?></span></p>
+<p><?php echo htmlspecialchars(Flux::message('MissingViewLocLabel')) ?> <span class="fs-path"><?php echo $realActionPath ?></span></p>

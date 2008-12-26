@@ -1,5 +1,5 @@
 <?php if (!defined('FLUX_ROOT')) exit; ?>
-<h2>Missing Action!</h2>
-<p>Module: <span class="module-name"><?php echo $this->params->get('module') ?></span>, Action: <span class="module-name"><?php echo $this->params->get('action') ?></span></p>
-<p>The action file corresponding to your request <span class="request"><?php echo $_SERVER['REQUEST_URI'] ?></span> was not found!</p>
-<p>It should be in <span class="fs-path"><?php echo $realActionPath ?></span></p>
+<h2><?php echo htmlspecialchars(Flux::message('MissingActionHeading')) ?></h2>
+<p><?php echo htmlspecialchars(Flux::message('MissingActionModLabel')) ?> <span class="module-name"><?php echo $this->params->get('module') ?></span>, <?php echo htmlspecialchars(Flux::message('MissingActionActLabel')) ?> <span class="module-name"><?php echo $this->params->get('action') ?></span></p>
+<p><?php echo htmlspecialchars(Flux::message('MissingActionReqLabel')) ?> <span class="request"><?php echo $_SERVER['REQUEST_URI'] ?></span></p>
+<p><?php echo htmlspecialchars(Flux::message('MissingActionLocLabel')) ?> <span class="fs-path"><?php echo $realActionPath ?></span></p>
