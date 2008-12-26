@@ -420,8 +420,10 @@ return array(
 	'MainPageStep1'           => 'Open "%s" in your text editor.',
 	'MainPageStep2'           => 'Edit the file from your editor and save your changes.',
 	'MainPageThanks'          => 'Thanks for using Flux!',
-	
 	// - main/pagenotfound
+	'PageNotFoundTitle'       => '404 Page Not Found',
+	'PageNotFoundHeading'     => 'Page Not Found',
+	'PageNotFoundInfo'        => 'The page you have requested was not found on our server.  Please check the address and make sure it is correct, and try again.',
 	// - main/preprocess
 	'DisallowedDuringWoE'     => 'The page you have requested is not accessible during WoE.',
 	
