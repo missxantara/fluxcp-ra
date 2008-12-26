@@ -1,13 +1,12 @@
 <?php if (!defined('FLUX_ROOT')) exit; ?>
-<h2>War of Emperium Hours</h2>
+<h2><?php echo htmlspecialchars(Flux::message('WoeHeading')) ?></h2>
 <?php if ($woeTimes): ?>
-<p>Below are the WoE hours for <?php echo htmlspecialchars($session->loginAthenaGroup->serverName) ?>.
-These hours are subject to change at anytime, but let's hope not.</p>
-<p>The current server time is: <strong class="important"><?php echo $server->getServerTime('Y-m-d H:i:s (l)') ?></strong>.</p>
+<p><?php echo htmlspecialchars(sprintf(Flux::message('WoeInfo'), $session->loginAthenaGroup->serverName)) ?></p>
+<p><?php echo htmlspecialchars(Flux::message('WoeServerTimeInfo')) ?> <strong class="important"><?php echo $server->getServerTime('Y-m-d H:i:s (l)') ?></strong>.</p>
 <table class="woe-table">
 	<tr>
-		<th>Servers</th>
-		<th colspan="3">War of Emperium Times</th>
+		<th><?php echo htmlspecialchars(Flux::message('WoeServerLabel')) ?></th>
+		<th colspan="3"><?php echo htmlspecialchars(Flux::message('WoeTimesLabel')) ?></th>
 	</tr>
 	<?php foreach ($woeTimes as $serverName => $times): ?>
 	<tr>
@@ -31,5 +30,5 @@ These hours are subject to change at anytime, but let's hope not.</p>
 	<?php endforeach ?>
 </table>
 <?php else: ?>
-<p>There are no scheduled WoE hours.</p>
+<p><?php echo htmlspecialchars(Flux::message('WoeNotScheduledInfo')) ?></p>
 <?php endif ?>

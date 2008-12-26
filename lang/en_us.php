@@ -525,5 +525,12 @@ return array(
 	
 	// Module: woe
 	// - woe/index
+	'WoeTitle'                => 'WoE Hours',
+	'WoeHeading'              => 'War of Emperium Hours',
+	'WoeInfo'                 => "Below are the WoE hours for %s.  These hours are subject to change at anytime, but let's hope not.",
+	'WoeServerTimeInfo'       => 'The current server time is:',
+	'WoeServerLabel'          => 'Servers',
+	'WoeTimesLabel'           => 'War of Emperium Times',
+	'WoeNotScheduledInfo'     => 'There are no scheduled WoE hours.',
 );
 ?>
