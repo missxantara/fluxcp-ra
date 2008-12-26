@@ -414,6 +414,13 @@ return array(
 	
 	// Module: main
 	// - main/index
+	'MainPageHeading'         => 'Flux Control Panel',
+	'MainPageInfo'            => "If you are seeing this page, it's likely that you've successfully installed Flux.",
+	'MainPageInfo2'           => "Would you like to change this page? Well, here's how you can:",
+	'MainPageStep1'           => 'Open "%s" in your text editor.',
+	'MainPageStep2'           => 'Edit the file from your editor and save your changes.',
+	'MainPageThanks'          => 'Thanks for using Flux!',
+	
 	// - main/pagenotfound
 	// - main/preprocess
 	'DisallowedDuringWoE'     => 'The page you have requested is not accessible during WoE.',
