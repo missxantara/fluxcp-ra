@@ -416,6 +416,7 @@ return array(
 	// - main/index
 	// - main/pagenotfound
 	// - main/preprocess
+	'DisallowedDuringWoE'     => 'The page you have requested is not accessible during WoE.',
 	
 	// Module: monster
 	// - monster/index

@@ -83,7 +83,7 @@ $woeDisallowModule = $server->woeDisallow->get($_thisModule);
 $woeDisallowAction = $server->woeDisallow->get("$_thisModule.$_thisAction");
 
 if (!$auth->allowedToViewWoeDisallowed && ($woeDisallowModule || $woeDisallowAction) && $server->isWoe()) {
-	$session->setMessageData('The page you have requested is not accessible during WoE.');
+	$session->setMessageData(Flux::message('DisallowedDuringWoE'));
 	$this->redirect();
 }
 ?>
