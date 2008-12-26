@@ -427,6 +427,19 @@ return array(
 	
 	// Module: mail
 	// - mail/index
+	'MailerTitle'             => 'Form Mailer',
+	'MailerHeading'           => 'Form Mailer',
+	'MailerEnterToAddress'    => 'Please enter a "to" address.',
+	'MailerEnterSubject'      => 'Please enter a subject.',
+	'MailerEnterBodyText'     => 'Please enter some body text.',
+	'MailerEmailHasBeenSent'  => 'Your e-mail has been successfully sent to %s.',
+	'MailerFailedToSend'      => 'The mailer system failed to send the e-mail.  This could be a misconfiguration.',
+	'MailerInfo'              => 'You may use the below mail form to send an e-mail using the control panel.',
+	'MailerFromLabel'         => 'From',
+	'MailerToLabel'           => 'To',
+	'MailerSubjectLabel'      => 'Subject',
+	'MailerBodyLabel'         => 'Body',
+	'MailerBodyInfo'          => 'Body is in Markdown syntax.',
 	
 	// Module: main
 	// - main/index
