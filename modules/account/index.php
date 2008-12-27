@@ -87,7 +87,7 @@ else {
 	
 	if ($accountState) {
 		if ($accountState == 'normal') {
-			$sqlpartial .= 'AND (login.state = 0 AND login.unban_time = 0 AND (created.confirmed = 0 OR created.confirmed IS NULL) AND created.confirm_code IS NULL) ';
+			$sqlpartial .= 'AND (login.state = 0 AND login.unban_time = 0 AND (created.confirmed = 1 OR created.confirmed IS NULL)) ';
 		}
 		elseif ($accountState == 'pending') {
 			$sqlpartial .= 'AND (created.confirmed = 0 AND created.confirm_code IS NOT NULL) ';
