@@ -32,9 +32,10 @@
 		<label for="account_state"><?php echo htmlspecialchars(Flux::message('AccountStateLabel')) ?>:</label>
 		<select name="account_state" id="account_state">
 			<option value=""<?php if (!($account_state=$params->get('account_state'))) echo ' selected="selected"' ?>><?php echo htmlspecialchars(Flux::message('AllLabel')) ?></option>
-			<option value="normal"<?php if ($account_state == 'normal') echo ' selected="selected"' ?>>Normal</option>
-			<option value="banned"<?php if ($account_state == 'banned') echo ' selected="selected"' ?>>Temporarily Banned</option>
-			<option value="permabanned"<?php if ($account_state == 'permabanned') echo ' selected="selected"' ?>>Permanently Banned</option>
+			<option value="normal"<?php if ($account_state == 'normal') echo ' selected="selected"' ?>><?php echo htmlspecialchars(Flux::message('AccountStateNormal')) ?></option>
+			<option value="pending"<?php if ($account_state == 'pending') echo ' selected="selected"' ?>><?php echo htmlspecialchars(Flux::message('AccountStatePending')) ?></option>
+			<option value="banned"<?php if ($account_state == 'banned') echo ' selected="selected"' ?>><?php echo htmlspecialchars(Flux::message('AccountStateTempBanLbl')) ?></option>
+			<option value="permabanned"<?php if ($account_state == 'permabanned') echo ' selected="selected"' ?>><?php echo htmlspecialchars(Flux::message('AccountStatePermBanned')) ?></option>
 		</select>
 		...
 		<label for="account_level"><?php echo htmlspecialchars(Flux::message('AccountLevelLabel')) ?>:</label>
@@ -110,7 +111,11 @@
 		</td>
 		<td><?php echo (int)$account->level ?></td>
 		<td>
-			<?php if (($state = $this->accountStateText($account->state)) && !$account->unban_time): ?>
+			<?php if (!$account->confirmed && $account->confirm_code): ?>
+				<span class="account-state state-pending">
+					<?php echo htmlspecialchars(Flux::message('AccountStatePending')) ?>
+				</span>
+			<?php elseif (($state = $this->accountStateText($account->state)) && !$account->unban_time): ?>
 				<?php echo $state ?>
 			<?php elseif ($account->unban_time): ?>
 				<span class="account-state state-banned">

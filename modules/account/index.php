@@ -18,10 +18,13 @@ $showPassword   = !$useMD5 && $auth->allowedToSeeAccountPassword;
 $bind           = array();
 $creditsTable   = Flux::config('FluxTables.CreditsTable');
 $creditColumns  = 'credits.balance, credits.last_donation_date, credits.last_donation_amount';
-$accountTable    = Flux::config('FluxTables.AccountCreateTable');
-$accountColumns  = 'createlog.reg_date';
+$accountTable   = Flux::config('FluxTables.AccountCreateTable');
+$accountColumns = 'createlog.reg_date';
+$createTable    = Flux::config('FluxTables.AccountCreateTable');
+$createColumns  = 'created.confirmed, created.confirm_code, created.reg_date';
 $sqlpartial     = "LEFT OUTER JOIN {$server->loginDatabase}.{$creditsTable} AS credits ON login.account_id = credits.account_id ";
 $sqlpartial    .= "LEFT OUTER JOIN {$server->loginDatabase}.{$accountTable} AS createlog ON login.account_id = createlog.account_id ";
+$sqlpartial    .= "LEFT OUTER JOIN {$server->loginDatabase}.{$createTable} AS created ON login.account_id = created.account_id ";
 $sqlpartial    .= "WHERE login.sex != 'S' AND login.level >= 0 ";
 
 $accountID = $params->get('account_id');
@@ -86,6 +89,9 @@ else {
 		if ($accountState == 'normal') {
 			$sqlpartial .= 'AND (login.state = 0 AND login.unban_time = 0) ';
 		}
+		elseif ($accountState == 'pending') {
+			$sqlpartial .= 'AND (created.confirmed = 0 AND created.confirm_code IS NOT NULL) ';
+		}
 		elseif ($accountState == 'permabanned') {
 			$sqlpartial .= 'AND (login.state = 5 AND login.unban_time = 0) ';
 		}
@@ -140,7 +146,7 @@ $paginator->setSortableColumns(array(
 	'reg_date'
 ));
 
-$sql  = $paginator->getSQL("SELECT login.*, {$creditColumns}, {$accountColumns} FROM {$server->loginDatabase}.login $sqlpartial");
+$sql  = $paginator->getSQL("SELECT login.*, {$creditColumns}, {$accountColumns}, {$createColumns} FROM {$server->loginDatabase}.login $sqlpartial");
 $sth  = $server->connection->getStatement($sql);
 $sth->execute($bind);
 

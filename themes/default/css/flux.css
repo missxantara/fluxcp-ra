@@ -370,6 +370,10 @@ label:hover {
 	color: #bbb;
 }
 
+.state-pending {
+	color: orange;
+}
+
 .state-banned {
 	color: red;
 }
