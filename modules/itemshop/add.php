@@ -10,6 +10,8 @@ require_once 'Flux/ItemShop.php';
 
 $itemID = $params->get('id');
 
+$category   = null;
+$categories = Flux::config('ShopCategories')->toArray();
 $tableName  = "{$server->charMapDatabase}.items";
 $fromTables = array("{$server->charMapDatabase}.item_db", "{$server->charMapDatabase}.item_db2");
 $tempTable  = new Flux_TemporaryTable($server->connection, $tableName, $fromTables);
@@ -30,6 +32,7 @@ if ($item && Flux::isStackableItemType($item->type)) {
 if ($item && count($_POST)) {
 	$maxCost     = (int)Flux::config('ItemShopMaxCost');
 	$maxQty      = (int)Flux::config('ItemShopMaxQuantity');
+	$category    = $params->get('category');
 	$shop        = new Flux_ItemShop($server);
 	$cost        = (int)$params->get('cost');
 	$quantity    = (int)$params->get('qty');
@@ -56,7 +59,7 @@ if ($item && count($_POST)) {
 		$errorMessage = 'You must input at least some info text.';
 	}
 	else {
-		if ($id=$shop->add($itemID, $cost, $quantity, $info, $useExisting)) {
+		if ($id=$shop->add($itemID, $category, $cost, $quantity, $info, $useExisting)) {
 			$message = 'Item has been successfully added to the shop';
 			if ($image && $image->get('size') && !$shop->uploadShopItemImage($id, $image)) {
 				$message .= ', but the image failed to upload. You can re-attempt by modifying.';

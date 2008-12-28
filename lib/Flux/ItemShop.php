@@ -17,13 +17,13 @@ class Flux_ItemShop {
 	/**
 	 * Add an item to the shop.
 	 */
-	public function add($itemID, $cost, $quantity, $info, $useExisting = 0)
+	public function add($itemID, $categoryID, $cost, $quantity, $info, $useExisting = 0)
 	{
 		$db    = $this->server->charMapDatabase;
 		$table = Flux::config('FluxTables.ItemShopTable');
-		$sql   = "INSERT INTO $db.$table (nameid, quantity, cost, info, use_existing, create_date) VALUES (?, ?, ?, ?, ?, NOW())";
+		$sql   = "INSERT INTO $db.$table (nameid, category, quantity, cost, info, use_existing, create_date) VALUES (?, ?, ?, ?, ?, NOW())";
 		$sth   = $this->server->connection->getStatement($sql);
-		$res   = $sth->execute(array($itemID, $quantity, $cost, $info, $useExisting));
+		$res   = $sth->execute(array($itemID, $categoryID, $quantity, $cost, $info, $useExisting));
 		$sth2  = $this->server->connection->getStatement('SELECT LAST_INSERT_ID() AS insID');
 		$res2  = $sth2->execute();
 		
@@ -38,16 +38,28 @@ class Flux_ItemShop {
 	/**
 	 * Modify item info in the shop.
 	 */
-	public function edit($shopItemID, $cost = null, $quantity = null, $info = null, $useExisting = null)
+	public function edit($shopItemID, $categoryID = null, $cost = null, $quantity = null, $info = null, $useExisting = null)
 	{
+		$catQ = '';
 		$crdQ = '';
 		$qtyQ = '';
 		$infQ = '';
 		$imgQ = '';
 		$bind = array();
 		
+		if (!is_null($categoryID)) {
+			$catQ   = "category = ? ";
+			$bind[] = (int)$categoryID;
+		}
+		
 		if (!is_null($cost)) {
-			$crdQ   = "cost = ? ";
+			if ($catQ) {
+				$crdQ   = ", cost = ? ";
+			}
+			else {
+				$crdQ   = "cost = ? ";
+			}
+			
 			$bind[] = (int)$cost;
 		}
 		
@@ -90,7 +102,7 @@ class Flux_ItemShop {
 		
 		$db    = $this->server->charMapDatabase;
 		$table = Flux::config('FluxTables.ItemShopTable');
-		$sql   = "UPDATE $db.$table SET $crdQ $qtyQ $infQ $imgQ WHERE id = ?";
+		$sql   = "UPDATE $db.$table SET $catQ $crdQ $qtyQ $infQ $imgQ WHERE id = ?";
 		$sth   = $this->server->connection->getStatement($sql);
 		
 		$bind[] = $shopItemID;
@@ -126,7 +138,7 @@ class Flux_ItemShop {
 		$db    = $this->server->charMapDatabase;
 		$temp  = new Flux_TemporaryTable($this->server->connection, "$db.items", array("$db.item_db", "$db.item_db2"));
 		$shop  = Flux::config('FluxTables.ItemShopTable');
-		$col   = "$shop.id AS shop_item_id, $shop.cost AS shop_item_cost, $shop.quantity AS shop_item_qty, $shop.use_existing AS shop_item_use_existing, ";
+		$col   = "$shop.id AS shop_item_id, $shop.category AS shop_item_category, $shop.cost AS shop_item_cost, $shop.quantity AS shop_item_qty, $shop.use_existing AS shop_item_use_existing, ";
 		$col  .= "$shop.nameid AS shop_item_nameid, $shop.info AS shop_item_info, items.name_japanese AS shop_item_name";
 		$sql   = "SELECT $col FROM $db.$shop LEFT OUTER JOIN $db.items ON items.id = $shop.nameid WHERE $shop.id = ?";
 		$sth   = $this->server->connection->getStatement($sql);
@@ -142,17 +154,22 @@ class Flux_ItemShop {
 	/**
 	 *
 	 */
-	public function getItems()
+	public function getItems($categoryID = null)
 	{	
+		$bind  = array();
 		$db    = $this->server->charMapDatabase;
 		$temp  = new Flux_TemporaryTable($this->server->connection, "$db.items", array("$db.item_db", "$db.item_db2"));
 		$shop  = Flux::config('FluxTables.ItemShopTable');
 		$col   = "$shop.id AS shop_item_id, $shop.cost AS shop_item_cost, $shop.quantity AS shop_item_qty, $shop.use_existing AS shop_item_use_existing, ";
 		$col  .= "$shop.nameid AS shop_item_nameid, $shop.info AS shop_item_info, items.name_japanese AS shop_item_name";
 		$sql   = "SELECT $col FROM $db.$shop LEFT OUTER JOIN $db.items ON items.id = $shop.nameid";
+		if (!is_null($categoryID)) {
+			$sql   .= " WHERE $shop.category = ?";
+			$bind[] = $categoryID;
+		}
 		$sth   = $this->server->connection->getStatement($sql);
 		
-		if ($sth->execute()) {
+		if ($sth->execute($bind)) {
 			return $sth->fetchAll();
 		}
 		else {

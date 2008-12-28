@@ -26,6 +26,17 @@ $markdownURL = 'http://daringfireball.net/projects/markdown/syntax';
 		<td><?php echo htmlspecialchars($item->shop_item_name) ?></td>
 	</tr>
 	<tr>
+		<th><label for="category">Category</label></th>
+		<td>
+			<select name="category" id="category">
+				<option value="none"<?php if (is_null($category) || strtolower($category) == 'none') echo ' selected="selected"' ?>><?php echo htmlspecialchars(Flux::message('NoneLabel')) ?></option>
+				<?php foreach ($categories as $categoryID => $cat): ?>
+					<option value="<?php echo (int)$categoryID ?>"<?php if ($category === (string)$categoryID) echo ' selected="selected"' ?>><?php echo htmlspecialchars($cat) ?></option>
+				<?php endforeach ?>
+			</select>
+		</td>
+	</tr>
+	<tr>
 		<th><label for="cost">Credits</label></th>
 		<td><input type="text" class="short" name="cost" id="cost" value="<?php echo htmlspecialchars($cost) ?>" /></td>
 	</tr>

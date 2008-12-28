@@ -127,40 +127,54 @@ return array(
 	
 	'CpResetLogShowPassword'  => false,                  // Show password in CP "password resets" log (also see access.php's SeeCpResetPass).
 	
+	'AdminMenuNewStyle'       => true,                   // Use new-style admin menu;  Applies to 'default' theme.
+	
 	// These are the main menu items that should be displayed by themes.
 	// They route to modules and actions.  Whether they are displayed or
 	// not at any given time depends on the user's account level and/or
 	// their login status.
 	'MenuItems' => array(
-		'Home'          => array('module' => 'main'),
-		'Register'      => array('module' => 'account', 'action' => 'create'),
-		'Login'         => array('module' => 'account', 'action' => 'login'),
-		'Logout'        => array('module' => 'account', 'action' => 'logout'),
-		'History'       => array('module' => 'history'),
-		'My Account'    => array('module' => 'account', 'action' => 'view'),
-		'Purchase'      => array('module' => 'purchase'),
-		'Donate'        => array('module' => 'donate'),
-		'Information'   => array('module' => 'server', 'action' => 'info'),
-		'Server Status' => array('module' => 'server', 'action' => 'status'),
-		'WoE Hours'     => array('module' => 'woe'),
-		"Who's Online"  => array('module' => 'character', 'action' => 'online'),
-		'Map Stats'     => array('module' => 'character', 'action' => 'mapstats'),
-		'eA Logs'       => array('module' => 'logdata'),
-		'CP Logs'       => array('module' => 'cplog'),
-		'IP Ban List'   => array('module' => 'ipban'),
-		'Accounts'      => array('module' => 'account'),
-		'Characters'    => array('module' => 'character'),
-		'Guilds'        => array('module' => 'guild'),
-		'Reload'        => array('module' => 'reload'),
-		//'Castles'       => array('module' => 'castle'),
-		//'Auction'       => array('module' => 'auction'),
-		//'Economy'       => array('module' => 'economy'),
-		'Ranking'       => array('module' => 'ranking', 'action' => 'character'),
-		'Items'         => array('module' => 'item'),
-		'Monsters'      => array('module' => 'monster'),
-		'Send Mail'     => array('module' => 'mail'),
-		'Re-Install'    => array('module' => 'install', 'action' => 'reinstall'),
-		//'Google'        => array('exturl' => 'http://www.google.com')
+		'Main Menu'   => array(
+			'Home'          => array('module' => 'main'),
+			//'Forums'        => array('exturl' => 'http://www.fluxro.com/community'),
+		),
+		'Account'     => array(
+			'Register'      => array('module' => 'account', 'action' => 'create'),
+			'Login'         => array('module' => 'account', 'action' => 'login'),
+			'Logout'        => array('module' => 'account', 'action' => 'logout'),
+			'History'       => array('module' => 'history'),
+			'My Account'    => array('module' => 'account', 'action' => 'view'),
+		),
+		'Donations'   => array(
+			'Purchase'      => array('module' => 'purchase'),
+			'Donate'        => array('module' => 'donate'),
+		),
+		'Information' => array(
+			'Server Info.'  => array('module' => 'server', 'action' => 'info'),
+			'Server Status' => array('module' => 'server', 'action' => 'status'),
+			'WoE Hours'     => array('module' => 'woe'),
+			"Who's Online"  => array('module' => 'character', 'action' => 'online'),
+			'Map Statistics'=> array('module' => 'character', 'action' => 'mapstats'),
+			'Ranking Info.' => array('module' => 'ranking', 'action' => 'character'),
+		),
+		'Database'    => array(
+			'Item Database' => array('module' => 'item'),
+			'Mob Database'  => array('module' => 'monster'),
+		),
+		'Misc. Stuff' => array(
+			'eA Logs'       => array('module' => 'logdata'),
+			'CP Logs'       => array('module' => 'cplog'),
+			'IP Ban List'   => array('module' => 'ipban'),
+			'Accounts'      => array('module' => 'account'),
+			'Characters'    => array('module' => 'character'),
+			'Guilds'        => array('module' => 'guild'),
+			'Reload'        => array('module' => 'reload'),
+			'Send Mail'     => array('module' => 'mail'),
+			'Re-Install'    => array('module' => 'install', 'action' => 'reinstall'),
+			//'Castles'       => array('module' => 'castle'),
+			//'Auction'       => array('module' => 'auction'),
+			//'Economy'       => array('module' => 'economy'),
+		)
 	),
 	
 	// Sub-menu items that are displayed for any action belonging to a
@@ -280,6 +294,9 @@ return array(
 	
 	// eA monster modes mapping.
 	'MonsterModes' => include('monstermode.php'),
+	
+	// Item shop categories.
+	'ShopCategories' => include('shopcategories.php'),
 	
 	// DON'T TOUCH. THIS IS FOR DEVELOPERS.
 	'FluxTables' => array(

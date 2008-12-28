@@ -2,6 +2,11 @@
 	 ** Stylesheet file for default Flux theme. **
 	 *********************************************/
 
+.loginbox-admin-menu {
+	padding-top: 5px;
+	color: #94b4d5;
+}
+
 body {
 	margin: 0 0 20px 0;
 	padding: 0;
@@ -122,20 +127,35 @@ label:hover {
 	padding: 0;
 }
 
-#admin_sidebar td.menuitem {
+#admin_sidebar td.menuitem, #admin_sidebar th.menuitem {
 	display: block;
+	font-size: 10pt;
 	border-width: 0 13px 0 11px;
 	border-style: solid;
 	border-color: #8b8b8b;
 }
 
+#admin_sidebar th.menuitem {
+	background-color: #303030;
+}
+
+#admin_sidebar th.menuitem strong {
+	display: block;
+	margin: 0 12px;
+	padding: 10px 0 2px 0;
+	font-size: 100%;
+	text-align: center;
+	color: #fff;
+	border-bottom: 1px solid #555;
+}
+
 #admin_sidebar td.menuitem a {
 	margin: 0 auto;
 	display: block;
-	padding: 8px 5px;
+	padding: 2px 5px 4px 18px;
 	color: #fff;
 	background-color: #303030;
-	text-align: center;
+	text-align: left;
 	text-shadow: #000 1pt 1pt;
 	text-decoration: none;
 }
@@ -154,20 +174,36 @@ label:hover {
 	background-color: #e6f0fa;
 }
 
-#sidebar td.menuitem {
+#sidebar td.menuitem, #sidebar th.menuitem {
 	display: block;
+	font-size: 10pt;
 	border-width: 0 13px 0 11px;
 	border-style: solid;
 	border-color: #c4d9ee;
 }
 
+
+#sidebar th.menuitem {
+	background-color: #94b4d5;
+}
+
+#sidebar th.menuitem strong {
+	display: block;
+	margin: 0 12px;
+	padding: 10px 0 2px 0;
+	font-size: 100%;
+	text-align: center;
+	color: #fff;
+	border-bottom: 1px solid #c4d9ee;
+}
+
 #sidebar td.menuitem a {
 	margin: 0 auto;
 	display: block;
-	padding: 8px 5px;
+	padding: 2px 5px 4px 18px;
 	color: #fff;
 	background-color: #94b4d5;
-	text-align: center;
+	text-align: left;
 	text-shadow: #708fae 1pt 1pt;
 	text-decoration: none;
 }
@@ -1026,4 +1062,8 @@ textarea {
 .job-classes td {
 	padding-right: 10px;
 	border-right: 1px solid #eee;
+}
+
+.current-shop-category {
+	font-weight: bold;
 }
