@@ -25,7 +25,7 @@ if ($dateBefore) {
 
 if ($ipAddress) {
 	$sqlpartial .= 'AND ip LIKE ? ';
-	$bind[]      = "%$ip%";
+	$bind[]      = "%$ipAddress%";
 }
 
 if ($username) {
