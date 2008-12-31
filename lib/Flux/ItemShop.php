@@ -21,7 +21,7 @@ class Flux_ItemShop {
 	{
 		$db    = $this->server->charMapDatabase;
 		$table = Flux::config('FluxTables.ItemShopTable');
-		$sql   = "INSERT INTO $db.$table (nameid, category, quantity, cost, info, use_existing, create_date) VALUES (?, ?, ?, ?, ?, NOW())";
+		$sql   = "INSERT INTO $db.$table (nameid, category, quantity, cost, info, use_existing, create_date) VALUES (?, ?, ?, ?, ?, ?, NOW())";
 		$sth   = $this->server->connection->getStatement($sql);
 		$res   = $sth->execute(array($itemID, $categoryID, $quantity, $cost, $info, $useExisting));
 		$sth2  = $this->server->connection->getStatement('SELECT LAST_INSERT_ID() AS insID');
