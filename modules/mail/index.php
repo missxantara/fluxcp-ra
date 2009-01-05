@@ -3,7 +3,7 @@ if (!defined('FLUX_ROOT')) exit;
 
 $this->loginRequired();
 
-$title = 'Form Mailer';
+$title = Flux::message('MailerTitle');
 $preview = '';
 
 if (count($_POST)) {
@@ -13,13 +13,13 @@ if (count($_POST)) {
 	$body    = trim($params->get('body'));
 	
 	if (!$to) {
-		$errorMessage = 'Please enter a "to" address.';
+		$errorMessage = Flux::message('MailerEnterToAddress');
 	}
 	elseif (!$subject) {
-		$errorMessage = 'Please enter a subject.';
+		$errorMessage = Flux::message('MailerEnterSubject');
 	}
 	elseif (!$body) {
-		$errorMessage = 'Please enter some body text.';
+		$errorMessage = Flux::message('MailerEnterBodyText');
 	}
 	
 	if (empty($errorMessage)) {
@@ -34,11 +34,11 @@ if (count($_POST)) {
 			$opts = array('_ignoreTemplate' => true, '_useMarkdown' => true);
 			
 			if ($mail->send($to, $subject, $body, $opts)) {
-				$session->setMessageData("Your e-mail has been successfully sent to $to.");
+				$session->setMessageData(sprintf(Flux::message('MailerEmailHasBeenSent'), $to));
 				$this->redirect();
 			}
 			else {
-				$errorMessage = 'The mailer system failed to send the e-mail.  This could be a misconfiguration.';
+				$errorMessage = Flux::message('MailerFailedToSend');
 			}
 		}
 	}

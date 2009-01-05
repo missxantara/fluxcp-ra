@@ -40,7 +40,11 @@
 		</td>
 		<th><?php echo htmlspecialchars(Flux::message('AccountStateLabel')) ?></th>
 		<td>
-			<?php if (($state = $this->accountStateText($account->state)) && !$account->unban_time): ?>
+			<?php if (!$account->confirmed && $account->confirm_code): ?>
+				<span class="account-state state-pending">
+					<?php echo htmlspecialchars(Flux::message('AccountStatePending')) ?>
+				</span>
+			<?php elseif (($state = $this->accountStateText($account->state)) && !$account->unban_time): ?>
 				<?php echo $state ?>
 			<?php elseif ($account->unban_time): ?>
 				<span class="account-state state-banned">

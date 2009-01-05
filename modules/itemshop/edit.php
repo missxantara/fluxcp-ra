@@ -8,10 +8,11 @@ $title = 'Modify Item in the Shop';
 require_once 'Flux/TemporaryTable.php';
 require_once 'Flux/ItemShop.php';
 
-$stackable = false;
-$shopItemID = $params->get('id');
-$shop = new Flux_ItemShop($server);
-$item = $shop->getItem($shopItemID);
+$stackable   = false;
+$shopItemID  = $params->get('id');
+$shop        = new Flux_ItemShop($server);
+$categories  = Flux::config('ShopCategories')->toArray();
+$item        = $shop->getItem($shopItemID);
 
 if ($item) {
 	$tableName  = "{$server->charMapDatabase}.items";
@@ -33,6 +34,7 @@ if ($item) {
 	if (count($_POST)) {
 		$maxCost     = (int)Flux::config('ItemShopMaxCost');
 		$maxQty      = (int)Flux::config('ItemShopMaxQuantity');
+		$category    = $params->get('category');
 		$cost        = (int)$params->get('cost');
 		$quantity    = (int)$params->get('qty');
 		$info        = trim($params->get('info'));
@@ -58,7 +60,7 @@ if ($item) {
 			$errorMessage = 'You must input at least some info text.';
 		}
 		else {
-			if ($shop->edit($shopItemID, $cost, $quantity, $info, $useExisting)) {
+			if ($shop->edit($shopItemID, $category, $cost, $quantity, $info, $useExisting)) {
 				if ($image && $image->get('size') && !$shop->uploadShopItemImage($shopItemID, $image)) {
 					$errorMessage = 'Failed to upload image.';
 				}
@@ -73,6 +75,9 @@ if ($item) {
 		}
 	}
 	
+	if (empty($category)) {
+		$category = $item->shop_item_category;
+	}
 	if (empty($cost)) {
 		$cost = $item->shop_item_cost;
 	}

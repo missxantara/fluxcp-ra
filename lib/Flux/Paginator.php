@@ -84,14 +84,29 @@ class Flux_Paginator {
 	public $currentSortOrder = array();
 	
 	/**
+	 * Original request URI.
+	 *
+	 * @access public
+	 * @var string
+	 */
+	public $requestURI;
+	
+	/**
 	 * Create new paginator instance.
 	 *
 	 * @param int $total Number of record.
+	 * @param string $requestURI Original request URI.
 	 * @param array $options Paginator options.
 	 * @access public
 	 */
-	public function __construct($total, array $options = array())
+	public function __construct($total, $requestURI = null, array $options = array())
 	{
+		if (!$requestURI) {
+			$requestURI = $_SERVER['REQUEST_URI'];
+		}
+		
+		$this->requestURI = $requestURI;
+		
 		$perPage = Flux::config('ResultsPerPage');
 		if (!$perPage) {
 			$perPage = 20;
@@ -120,7 +135,7 @@ class Flux_Paginator {
 		$this->pagesToShow    = $options['pagesToShow'];
 		$this->pageVariable   = $options['pageVariable'];
 		$this->pageSeparator  = $options['pageSeparator'];
-		$this->currentPage    = isset($_GET[$this->pageVariable]) && $_GET[$this->pageVariable] ? $_GET[$this->pageVariable] : 1;
+		$this->currentPage    = isset($_GET[$this->pageVariable]) && $_GET[$this->pageVariable] > 0 ? $_GET[$this->pageVariable] : 1;
 		
 		$this->calculatePages();
 	}
@@ -240,11 +255,11 @@ class Flux_Paginator {
 		}
 		
 		if ($hasPrev) {
-			array_unshift($pages, sprintf('<a href="%s" title="Previous Pane (#%d)" class="page-prev">Prev.</a> ', $this->getPageURI($start - 1), $start - 1));
+			array_unshift($pages, sprintf('<a href="%s" title="Previous Pane (p#%d)" class="page-prev">Prev.</a> ', $this->getPageURI($start - 1), $start - 1));
 		}
 		
 		if ($hasNext) {
-			array_push($pages, sprintf(' <a href="%s" title="Next Pane (#%d)" class="page-next">Next</a>', $this->getPageURI($end), $end));
+			array_push($pages, sprintf(' <a href="%s" title="Next Pane (p#%d)" class="page-next">Next</a>', $this->getPageURI($end), $end));
 		}
 		
 		$links  = sprintf('<div class="pages">%s</div>', implode(" {$this->pageSeparator} ", $pages))."\n";
@@ -277,7 +292,7 @@ class Flux_Paginator {
 	 */
 	protected function getPageURI($pageNumber)
 	{
-		$request = preg_replace('/(\?.*)$/', '', $_SERVER['REQUEST_URI']);
+		$request = preg_replace('/(\?.*)$/', '', $this->requestURI);
 		$qString = $_SERVER['QUERY_STRING'];
 		$pageVar = preg_quote($this->pageVariable);
 		$pageNum = (int)$pageNumber;

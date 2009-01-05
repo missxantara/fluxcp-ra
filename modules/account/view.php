@@ -13,6 +13,8 @@ $tempTable  = new Flux_TemporaryTable($server->connection, $tableName, $fromTabl
 
 $creditsTable  = Flux::config('FluxTables.CreditsTable');
 $creditColumns = 'credits.balance, credits.last_donation_date, credits.last_donation_amount';
+$createTable   = Flux::config('FluxTables.AccountCreateTable');
+$createColumns = 'created.confirmed, created.confirm_code, created.reg_date';
 $isMine        = false;
 $accountID     = $params->get('id');
 $account       = false;
@@ -29,8 +31,9 @@ if (!$isMine) {
 		$this->deny();
 	}
 	
-	$sql  = "SELECT login.*, {$creditColumns} FROM {$server->loginDatabase}.login ";
+	$sql  = "SELECT login.*, {$creditColumns}, {$createColumns} FROM {$server->loginDatabase}.login ";
 	$sql .= "LEFT OUTER JOIN {$server->loginDatabase}.{$creditsTable} AS credits ON login.account_id = credits.account_id ";
+	$sql .= "LEFT OUTER JOIN {$server->loginDatabase}.{$createTable} AS created ON login.account_id = created.account_id ";
 	$sql .= "WHERE login.sex != 'S' AND login.level >= 0 AND login.account_id = ? LIMIT 1";
 	$sth  = $server->connection->getStatement($sql);
 	$sth->execute(array($accountID));

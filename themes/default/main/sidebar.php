@@ -4,10 +4,13 @@ $adminMenuItems = $this->getAdminMenuItems();
 $menuItems = $this->getMenuItems();
 ?>
 
-<?php if (!empty($adminMenuItems)): ?>
+<?php if (!empty($adminMenuItems) && !Flux::config('AdminMenuNewStyle')): ?>
 <table id="admin_sidebar">
 	<tr>
 		<td><img src="<?php echo $this->themePath('img/sidebar_admin_complete_top.gif') ?>" /></td>
+	</tr>
+	<tr>
+		<th class="menuitem"><strong>Admin Menu</strong></td>
 	</tr>
 	<?php foreach ($adminMenuItems as $menuItem): ?>
 	<tr>
@@ -31,7 +34,12 @@ $menuItems = $this->getMenuItems();
 	<tr>
 		<td><img src="<?php echo $this->themePath('img/sidebar_complete_top.gif') ?>" /></td>
 	</tr>
-	<?php foreach ($menuItems as $menuItem): ?>
+	<?php foreach ($menuItems as $menuCategory => $menus): ?>
+	<?php if (!empty($menus)): ?>
+	<tr>
+		<th class="menuitem"><strong><?php echo htmlspecialchars($menuCategory) ?></strong></td>
+	</tr>
+	<?php foreach ($menus as $menuItem):  ?>
 	<tr>
 		<td class="menuitem">
 			<a href="<?php echo $menuItem['url'] ?>"<?php
@@ -41,6 +49,8 @@ $menuItems = $this->getMenuItems();
 			</a>
 		</td>
 	</tr>
+	<?php endforeach ?>
+	<?php endif ?>
 	<?php endforeach ?>
 	<tr>
 		<td><img src="<?php echo $this->themePath('img/sidebar_complete_bottom.gif') ?>" /></td>

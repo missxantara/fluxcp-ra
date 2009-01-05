@@ -3,5 +3,5 @@ if (!defined('FLUX_ROOT')) exit;
 
 $this->loginRequired();
 
-$title = 'Reload Databases';
+$title = Flux::message('ReloadTitle');
 ?>

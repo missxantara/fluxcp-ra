@@ -38,7 +38,9 @@ return array(
 	'LastLoginDateLabel'      => 'Last Login Date',
 	'LastUsedIpLabel'         => 'Last Used IP',
 	'AccountStateNormal'      => 'Normal',
+	'AccountStatePending'     => 'Pending',
 	'AccountStatePermBanned'  => 'Permanently Banned',
+	'AccountStateTempBanLbl'  => 'Temporarily Banned',
 	'AccountStateTempBanned'  => 'Temp. Banned (unban: %s)',
 	'OnlineLabel'             => 'Online',
 	'OfflineLabel'            => 'Offline',
@@ -91,8 +93,8 @@ return array(
 	'GenderChanged'           => 'Your gender has been changed and %d credit(s) have been deducted from your account.',
 	'GenderChangedForFree'    => 'Your gender has been changed.',
 	'GenderChangeHeading'     => 'Change Your Gender',
-	'GenderChangeCost'        => 'Gender changes cost %d credit(s).',
-	'GenderChangeBalance'     => 'Your current balance is %d credit(s).',
+	'GenderChangeCost'        => 'Gender changes cost %s credit(s).',
+	'GenderChangeBalance'     => 'Your current balance is %s credit(s).',
 	'GenderChangeNoFunds'     => 'You do not have enough credits to perform a gender change at this time.',
 	'GenderChangeCharInfo'    => 'You cannot change gender if you have the follow character jobs: %s',
 	'GenderChangeSubHeading'  => 'Please make sure you want to really change!',
@@ -321,6 +323,22 @@ return array(
 	// - donate/index
 	// - donate/trusted
 	
+	// Module: errors
+	// - errors/missing_action
+	'MissingActionTitle'      => 'Missing Action',
+	'MissingActionHeading'    => 'Missing Action!',
+	'MissingActionModLabel'   => 'Module:',
+	'MissingActionActLabel'   => 'Action:',
+	'MissingActionReqLabel'   => 'Request URI:',
+	'MissingActionLocLabel'   => 'File system location:',
+	// - errors/missing_view
+	'MissingViewTitle'        => 'Missing View',
+	'MissingViewHeading'      => 'Missing View!',
+	'MissingViewModLabel'     => 'Module:',
+	'MissingViewActLabel'     => 'Action:',
+	'MissingViewReqLabel'     => 'Request URI:',
+	'MissingViewLocLabel'     => 'File system location:',
+	
 	// Module: guild
 	// - guild/export
 	// - guild/index
@@ -411,11 +429,34 @@ return array(
 	
 	// Module: mail
 	// - mail/index
+	'MailerTitle'             => 'Form Mailer',
+	'MailerHeading'           => 'Form Mailer',
+	'MailerEnterToAddress'    => 'Please enter a "to" address.',
+	'MailerEnterSubject'      => 'Please enter a subject.',
+	'MailerEnterBodyText'     => 'Please enter some body text.',
+	'MailerEmailHasBeenSent'  => 'Your e-mail has been successfully sent to %s.',
+	'MailerFailedToSend'      => 'The mailer system failed to send the e-mail.  This could be a misconfiguration.',
+	'MailerInfo'              => 'You may use the below mail form to send an e-mail using the control panel.',
+	'MailerFromLabel'         => 'From',
+	'MailerToLabel'           => 'To',
+	'MailerSubjectLabel'      => 'Subject',
+	'MailerBodyLabel'         => 'Body',
+	'MailerBodyInfo'          => 'Body is in Markdown syntax.',
 	
 	// Module: main
 	// - main/index
+	'MainPageHeading'         => 'Flux Control Panel',
+	'MainPageInfo'            => "If you are seeing this page, it's likely that you've successfully installed Flux.",
+	'MainPageInfo2'           => "Would you like to change this page? Well, here's how you can:",
+	'MainPageStep1'           => 'Open "%s" in your text editor.',
+	'MainPageStep2'           => 'Edit the file from your editor and save your changes.',
+	'MainPageThanks'          => 'Thanks for using Flux!',
 	// - main/pagenotfound
+	'PageNotFoundTitle'       => '404 Page Not Found',
+	'PageNotFoundHeading'     => 'Page Not Found',
+	'PageNotFoundInfo'        => 'The page you have requested was not found on our server.  Please check the address and make sure it is correct, and try again.',
 	// - main/preprocess
+	'DisallowedDuringWoE'     => 'The page you have requested is not accessible during WoE.',
 	
 	// Module: monster
 	// - monster/index
@@ -437,7 +478,17 @@ return array(
 	
 	// Module: reload
 	// - reload/index
+	'ReloadTitle'             => 'Reload Databases',
+	'ReloadHeading'           => 'Reload Databases',
+	'ReloadInfo'              => 'You may reload the server databases here.',
+	'ReloadInfo2'             => 'Please select the database that you would like to reload from the available actions.',
 	// - reload/mobskill
+	'ReloadMobSkillsTitle'    => 'Reload Mob Skills',
+	'ReloadMobSkillsHeading'  => 'Reload Mob Skills',
+	'ReloadMobSkillsError1'   => '%s is not readable.',
+	'ReloadMobSkillsError2'   => '%s is not readable.',
+	'ReloadMobSkillsError3'   => '%s is not writable.',
+	'ReloadMobSkillsInfo'     => 'Mob skills database has been successfully reloaded! (%s bytes written)',
 	
 	// Module: server
 	// - server/info
@@ -463,6 +514,10 @@ return array(
 	
 	// Module: service
 	// - service/tos
+	'TermsTitle'              => 'Terms of Service',
+	'TermsHeading'            => 'Terms of Service',
+	'TermsInfo'               => 'Please read before creating an account!',
+	'TermsInfo2'              => "FOR CONTROL PANEL ADMINISTRATOR:  You may add your server's ToS in this view file directly.  The location of the view file is: %s",
 	
 	// Module: unauthorized
 	// - unauthorized/index
@@ -472,5 +527,12 @@ return array(
 	
 	// Module: woe
 	// - woe/index
+	'WoeTitle'                => 'WoE Hours',
+	'WoeHeading'              => 'War of Emperium Hours',
+	'WoeInfo'                 => "Below are the WoE hours for %s.  These hours are subject to change at anytime, but let's hope not.",
+	'WoeServerTimeInfo'       => 'The current server time is:',
+	'WoeServerLabel'          => 'Servers',
+	'WoeTimesLabel'           => 'War of Emperium Times',
+	'WoeNotScheduledInfo'     => 'There are no scheduled WoE hours.',
 );
 ?>

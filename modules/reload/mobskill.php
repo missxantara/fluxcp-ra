@@ -1,13 +1,27 @@
 <?php
 if (!defined('FLUX_ROOT')) exit;
 
-$title = 'Reload Mob Skills';
+$title = Flux::message('ReloadMobSkillsTitle');
 
 $mobDB1 = Flux::config('MobSkillDb1');
 $mobDB2 = Flux::config('MobSkillDb2');
 $mobDB  = Flux::config('MobSkillDb');
 
-if (is_readable($mobDB1) && is_readable($mobDB2) && is_writeable($mobDB)) {
+// Check permissions.
+$readable1 = is_readable($mobDB1);
+$readable2 = is_readable($mobDB2);
+$writable  = is_writable($mobDB);
+
+if (!$readable1) {
+	$errorMessage = sprintf(Flux::message('ReloadMobSkillsError1'), $mobDB1);
+}
+else if (!$readable2) {
+	$errorMessage = sprintf(Flux::message('ReloadMobSkillsError2'), $mobDB2);
+}
+else if (!$writable) {
+	$errorMessage = sprintf(Flux::message('ReloadMobSkillsError3'), $mobDB);
+}
+else {
 	$fdb1 = fopen($mobDB1, 'r');
 	$fdb2 = fopen($mobDB2, 'r');
 	$fdb = fopen($mobDB, 'w');
