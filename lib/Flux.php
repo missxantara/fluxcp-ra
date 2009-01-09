@@ -310,6 +310,9 @@ class Flux {
 		if (strlen($baseURI) && $baseURI[0] != '/') {
 			$config->set('BaseURI', "/$baseURI");
 		}
+		elseif (trim($baseURI) === '') {
+			$config->set('BaseURI', '/');
+		}
 		
 		return $config;
 	}
