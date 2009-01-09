@@ -23,7 +23,13 @@ if (count($_POST)) {
 		}
 
 		$sql  = "SELECT account_id, user_pass FROM {$loginAthenaGroup->loginDatabase}.login WHERE ";
-		$sql .= "userid = ? AND email = ? AND state = 0 AND sex IN ('M', 'F') LIMIT 1";
+		if ($loginAthenaGroup->loginServer->config->getNoCase()) {
+			$sql .= 'LOWER(userid) = LOWER(?) ';
+		}
+		else {
+			$sql .= 'BINARY userid = ? ';
+		}
+		$sql .= "AND email = ? AND state = 0 AND sex IN ('M', 'F') LIMIT 1";
 		$sth  = $loginAthenaGroup->connection->getStatement($sql);
 		$sth->execute(array($userid, $email));
 

@@ -67,7 +67,7 @@ class Flux_LoginServer extends Flux_BaseServer {
 	public function isAuth($username, $password)
 	{
 		if ($this->config->get('UseMD5')) {
-			$password = md5($password);
+			$password = Flux::hashPassword($password);
 		}
 		
 		if (trim($username) == '' || trim($password) == '') {
@@ -167,7 +167,7 @@ class Flux_LoginServer extends Flux_BaseServer {
 		}
 		
 		if ($this->config->getUseMD5()) {
-			$password = md5($password);
+			$password = Flux::hashPassword($password);
 		}
 		
 		$sql = "INSERT INTO {$this->loginDatabase}.login (userid, user_pass, email, sex) VALUES (?, ?, ?, ?)";

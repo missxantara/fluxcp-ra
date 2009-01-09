@@ -81,8 +81,8 @@ if ($char) {
 	$sql  = "SELECT fr.char_id, fr.name, fr.class, fr.base_level, fr.job_level, ";
 	$sql .= "guild.guild_id, guild.name AS guild_name, guild.emblem_len AS guild_emblem_len, fr.online ";
 	$sql .= "FROM {$server->charMapDatabase}.`char` AS fr ";
-	$sql .= "LEFT OUTER JOIN guild ON guild.guild_id = fr.guild_id ";
-	$sql .= "LEFT OUTER JOIN friends ON friends.friend_id = fr.char_id ";
+	$sql .= "LEFT OUTER JOIN {$server->charMapDatabase}.guild ON guild.guild_id = fr.guild_id ";
+	$sql .= "LEFT OUTER JOIN {$server->charMapDatabase}.friends ON friends.friend_id = fr.char_id ";
 	$sql .= "WHERE friends.char_id = ? ORDER BY fr.name ASC";
 	$sth  = $server->connection->getStatement($sql);
 	
@@ -93,7 +93,7 @@ if ($char) {
 		$sql  = "SELECT p.char_id, p.name, p.class, p.base_level, p.job_level, ";
 		$sql .= "guild.guild_id, guild.name AS guild_name, p.online ";
 		$sql .= "FROM {$server->charMapDatabase}.`char` AS p ";
-		$sql .= "LEFT OUTER JOIN guild ON guild.guild_id = p.guild_id ";
+		$sql .= "LEFT OUTER JOIN {$server->charMapDatabase}.guild ON guild.guild_id = p.guild_id ";
 		$sql .= "WHERE p.party_id = ? AND p.char_id != ? ORDER BY p.name ASC";
 		$sth  = $server->connection->getStatement($sql);
 		

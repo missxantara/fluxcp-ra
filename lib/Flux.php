@@ -310,6 +310,9 @@ class Flux {
 		if (strlen($baseURI) && $baseURI[0] != '/') {
 			$config->set('BaseURI', "/$baseURI");
 		}
+		elseif (trim($baseURI) === '') {
+			$config->set('BaseURI', '/');
+		}
 		
 		return $config;
 	}
@@ -550,6 +553,19 @@ class Flux {
 		else {
 			return false;
 		}
+	}
+	
+	/**
+	 * Hashes a password for use in comparison with the login.user_pass column.
+	 *
+	 * @param string $password Plain text password.
+	 * @return string Returns hashed password.
+	 * @access public
+	 */
+	public static function hashPassword($password)
+	{
+		// Default hashing schema is MD5.
+		return md5($password);
 	}
 	
 	/**
