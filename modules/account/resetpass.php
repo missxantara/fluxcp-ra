@@ -29,7 +29,7 @@ if (count($_POST)) {
 
 		$row = $sth->fetch();
 		if ($row) {
-			$code = md5(rand() + $row->account_id);
+			$code = Flux::hashPassword(rand() + $row->account_id);
 			$sql  = "INSERT INTO {$loginAthenaGroup->loginDatabase}.$resetPassTable ";
 			$sql .= "(code, account_id, old_password, request_date, request_ip, reset_done) ";
 			$sql .= "VALUES (?, ?, ?, NOW(), ?, 0)";

@@ -20,7 +20,7 @@ if (count($_POST)) {
 		$returnURL = $params->get('return_url');
 		
 		if ($session->loginAthenaGroup->loginServer->config->getUseMD5()) {
-			$password = md5($password);
+			$password = Flux::hashPassword($password);
 		}
 		
 		$sql  = "INSERT INTO {$session->loginAthenaGroup->loginDatabase}.$loginLogTable ";
@@ -49,7 +49,7 @@ if (count($_POST)) {
 				$accountID = $row->account_id;
 				
 				if ($loginAthenaGroup->loginServer->config->getUseMD5()) {
-					$password = md5($password);
+					$password = Flux::hashPassword($password);
 				}
 
 				$sql  = "INSERT INTO {$loginAthenaGroup->loginDatabase}.$loginLogTable ";

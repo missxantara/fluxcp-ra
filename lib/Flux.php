@@ -556,6 +556,19 @@ class Flux {
 	}
 	
 	/**
+	 * Hashes a password for use in comparison with the login.user_pass column.
+	 *
+	 * @param string $password Plain text password.
+	 * @return string Returns hashed password.
+	 * @access public
+	 */
+	public static function hashPassword($password)
+	{
+		// Default hashing schema is MD5.
+		return md5($password);
+	}
+	
+	/**
 	 * Get the job class name from a job ID.
 	 *
 	 * @param int $id
