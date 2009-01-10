@@ -17,7 +17,7 @@ if (!$itemID) {
 }
 
 $col  = "id, view, type, name_english, name_japanese, slots, price_buy, price_sell, weight/10 AS weight, attack, ";
-$col .= "defence, range, weapon_level, equip_level, refineable, equip_locations, equip_upper, ";
+$col .= "defence, `range`, weapon_level, equip_level, refineable, equip_locations, equip_upper, ";
 $col .= "equip_jobs, equip_genders, script, equip_script, unequip_script, origin_table";
 $sql  = "SELECT $col FROM $tableName WHERE id = ? LIMIT 1";
 $sth  = $server->connection->getStatement($sql);
