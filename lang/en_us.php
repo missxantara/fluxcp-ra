@@ -424,6 +424,16 @@ return array(
 	// - itemshop/imagedel
 	
 	// Module: logdata
+	// - logdata/command
+	'CommandLogTitle'         => 'Commands',
+	'CommandLogHeading'       => 'Commands',
+	'CommandLogNotFound'      => 'No commands found.',
+	'CommandLogDateLabel'     => 'Command Date/Time',
+	'CommandLogAccountIdLabel'=> 'Account ID',
+	'CommandLogCharIdLabel'   => 'Character ID',
+	'CommandLogCharNameLabel' => 'Character Name',
+	'CommandLogCommandLabel'  => 'Command',
+	'CommandLogMapLabel'      => 'Map',
 	// - logdata/index
 	// - logdata/login
 	

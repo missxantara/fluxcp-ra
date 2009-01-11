@@ -212,7 +212,7 @@ return array(
 		'logdata' => array(
 			//'char'    => 'Characters',
 			//'inter'   => 'Interactions',
-			//'command' => 'Commands',
+			'command' => 'Commands',
 			//'branch'  => 'Branches',
 			//'chat'    => 'Chats',
 			'login'   => 'Logins',
