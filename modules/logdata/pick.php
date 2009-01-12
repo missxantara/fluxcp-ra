@@ -9,7 +9,7 @@ $sth->execute();
 
 $paginator = $this->getPaginator($sth->fetch()->total);
 $paginator->setSortableColumns(array(
-	'time' => 'desc', 'char_id', 'type', 'nameid', 'amount',
+	'id' => 'desc', 'time', 'char_id', 'type', 'nameid', 'amount',
 	'refine', 'card0', 'card1', 'card2', 'card3', 'map'
 ));
 
