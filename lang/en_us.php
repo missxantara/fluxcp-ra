@@ -425,7 +425,7 @@ return array(
 	
 	// Module: logdata
 	// - logdata/command
-	'CommandLogTitle'         => 'Commands',
+	'CommandLogTitle'         => 'List Commands',
 	'CommandLogHeading'       => 'Commands',
 	'CommandLogNotFound'      => 'No commands found.',
 	'CommandLogDateLabel'     => 'Command Date/Time',
