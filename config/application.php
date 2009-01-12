@@ -218,7 +218,7 @@ return array(
 			'login'   => 'Logins',
 			//'mvp'     => 'MVP',
 			//'npc'     => 'NPC',
-			//'pick'    => 'Item Picks',
+			'pick'    => 'Item Picks',
 			//'zeny'    => 'Zeny'
 		),
 		'cplog' => array(
@@ -297,6 +297,9 @@ return array(
 	
 	// Item shop categories.
 	'ShopCategories' => include('shopcategories.php'),
+	
+	// Item pick types.
+	'PickTypes' => include('picktypes.php'),
 	
 	// DON'T TOUCH. THIS IS FOR DEVELOPERS.
 	'FluxTables' => array(

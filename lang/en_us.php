@@ -436,6 +436,21 @@ return array(
 	'CommandLogMapLabel'      => 'Map',
 	// - logdata/index
 	// - logdata/login
+	// - logdata/pick
+	'PickLogTitle'            => 'List Item Picks',
+	'PickLogHeading'          => 'Item Picks',
+	'PickLogNotFound'         => 'No item picks found.',
+	'PickLogDateLabel'        => 'Date/Time',
+	'PickLogCharacterLabel'   => 'Character',
+	'PickLogTypeLabel'        => 'Type',
+	'PickLogItemLabel'        => 'Item Name',
+	'PickLogAmountLabel'      => 'Amount',
+	'PickLogRefineLabel'      => 'Refinement',
+	'PickLogCard0Label'       => 'Card 1',
+	'PickLogCard1Label'       => 'Card 2',
+	'PickLogCard2Label'       => 'Card 3',
+	'PickLogCard3Label'       => 'Card 4',
+	'PickLogMapLabel'         => 'Map',
 	
 	// Module: mail
 	// - mail/index
