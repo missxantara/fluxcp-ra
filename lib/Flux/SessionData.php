@@ -290,7 +290,7 @@ class Flux_SessionData {
 		$creditColumns = 'credits.balance, credits.last_donation_date, credits.last_donation_amount';
 		
 		$sql  = "SELECT login.*, {$creditColumns} FROM {$loginAthenaGroup->loginDatabase}.login ";
-		$sql .= "LEFT OUTER JOIN {$creditsTable} AS credits ON login.account_id = credits.account_id ";
+		$sql .= "LEFT OUTER JOIN {$loginAthenaGroup->loginDatabase}.{$creditsTable} AS credits ON login.account_id = credits.account_id ";
 		$sql .= "WHERE login.sex != 'S' AND login.level >= 0 AND login.userid = ? LIMIT 1";
 		$smt  = $loginAthenaGroup->connection->getStatement($sql);
 		$res  = $smt->execute(array($username));
