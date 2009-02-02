@@ -50,7 +50,7 @@ return array(
 			'resetpw'    => AccountLevel::UNAUTH,
 			'changemail' => AccountLevel::NORMAL,
 			'confirmemail' => AccountLevel::NORMAL,
-			'prune'        => AccountLevel::NORMAL
+			'prune'        => AccountLevel::ANYONE
 		),
 		'character' => array(
 			'index'    => AccountLevel::LOWGM,
