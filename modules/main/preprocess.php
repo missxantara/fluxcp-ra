@@ -47,6 +47,10 @@ if (Flux::config('AutoUnholdAccount')) {
 	Flux::processHeldCredits();
 }
 
+if (Flux::config('AutoPruneAccounts')) {
+	Flux::pruneUnconfirmedAccounts();
+}
+
 $ppReturn = array(
 	'txn_id'      => $params->get('txn_id'),
 	'txn_type'    => $params->get('txn_type'),
