@@ -720,6 +720,25 @@ class Flux {
 	}
 	
 	/**
+	 *
+	 */
+	public static function pruneUnconfirmedAccounts()
+	{
+		$tbl    = Flux::config('FluxTables.AccountCreateTable');
+		$expire = (int)Flux::config('EmailConfirmExpire');
+		
+		foreach (self::$loginAthenaGroupRegistry as $loginAthenaGroup) {
+			$db   = $loginAthenaGroup->loginDatabase;
+			$sql  = "DELETE $db.login, $db.$tbl FROM $db.login INNER JOIN $db.$tbl ";
+			$sql .= "WHERE login.account_id = $tbl.account_id AND $tbl.confirmed = 0 ";
+			$sql .= "AND $tbl.confirm_code IS NOT NULL AND $tbl.confirm_expire <= NOW()";
+			$sth  = $loginAthenaGroup->connection->getStatement($sql);
+			
+			$sth->execute();
+		}
+	}
+	
+	/**
 	 * Get array of equip_location bits. (bit => loc_name pairs)
 	 * @return array
 	 */

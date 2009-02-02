@@ -49,7 +49,8 @@ return array(
 			'resetpass'  => AccountLevel::UNAUTH,
 			'resetpw'    => AccountLevel::UNAUTH,
 			'changemail' => AccountLevel::NORMAL,
-			'confirmemail' => AccountLevel::NORMAL
+			'confirmemail' => AccountLevel::NORMAL,
+			'prune'        => AccountLevel::NORMAL
 		),
 		'character' => array(
 			'index'    => AccountLevel::LOWGM,
