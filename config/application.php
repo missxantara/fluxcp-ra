@@ -105,7 +105,7 @@ return array(
 	                                                    // Without clean URLs: http://<server>/<baseURI>?module=donate&action=update&password=<InstallerPassword>
 	                                                    // NOTE: This option is HIGHLY inefficient, it's recommended to run a cron job instead.
 	
-	'AutoPruneAccounts'    => true,                    // Enable this to automatically prune expired accounts. Enabling this is a performance
+	'AutoPruneAccounts'    => false,                    // Enable this to automatically prune expired accounts. Enabling this is a performance
 	                                                    // performance killer. See 'AutoUnholdAccount' for running this task as a cron job,
 		                                                // the module is 'account' and the action is 'prune'.
 	                                                    // With clean URLs: http://<server>/<baseURI>/account/prune?password=<InstallerPassword>
