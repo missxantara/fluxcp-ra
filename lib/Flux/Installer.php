@@ -28,7 +28,7 @@ class Flux_Installer {
 	/**
 	 *
 	 */
-	public function getInstance()
+	public static function getInstance()
 	{
 		if (!self::$installer) {
 			self::$installer = new Flux_Installer();

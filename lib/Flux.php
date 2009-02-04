@@ -490,7 +490,7 @@ class Flux {
 	 * @return Flux_LoginAthenaGroup
 	 * @access private
 	 */
-	private function registerServerGroup($serverName, Flux_LoginAthenaGroup $serverGroup)
+	private static function registerServerGroup($serverName, Flux_LoginAthenaGroup $serverGroup)
 	{
 		self::$loginAthenaGroupRegistry[$serverName] = $serverGroup;
 		return $serverGroup;
@@ -505,7 +505,7 @@ class Flux {
 	 * @return Flux_Athena
 	 * @access private
 	 */
-	private function registerAthenaServer($serverName, $athenaServerName, Flux_Athena $athenaServer)
+	private static function registerAthenaServer($serverName, $athenaServerName, Flux_Athena $athenaServer)
 	{
 		if (!array_key_exists($serverName, self::$athenaServerRegistry) || !is_array(self::$athenaServerRegistry[$serverName])) {
 			self::$athenaServerRegistry[$serverName] = array();
