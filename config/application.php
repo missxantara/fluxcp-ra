@@ -80,6 +80,7 @@ return array(
 		//'admin2@localhost',                             // -- This array may be empty if you only use one e-mail
 		//'admin3@localhost'                              // -- because your Business Email is also checked.
 	),
+	'DivorceKeepChild'     => false,                    // Keep child after divorce?
 	'AllowIpBanLogin'      => false,                    // Allow logging into account from banned IP.
 	'AllowTempBanLogin'    => false,                    // Allow logging in of temporarily banned accounts.
 	'AllowPermBanLogin'    => false,                    // Allow logging in of permanently banned accounts.

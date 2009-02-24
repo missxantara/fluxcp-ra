@@ -309,6 +309,18 @@ return array(
 	'ResetPositionSuccessful' => "%s's position has been reset!",
 	'ResetPositionFailed'     => "Failed to reset %s's position.",
 	// - character/view
+	// - character/divorce
+	'DivorceTitle'            => 'Divorce',
+	'DivorceHeading'          => 'Divorce',
+	'DivorceNotMarried'       => '%s is not married.',
+	'DivorceInvalidPartner'   => 'Invalid partner ID.',
+	'DivorceInvalidChild'     => 'Invalid child ID.',
+	'DivorceMustBeOffline'    => 'Both %s and his/her partner must be off-line.',
+	'DivorceMustBeOffline2'   => '%s, his/her partner and their child must be off-line.',
+	'DivorceText1'            => "Are you sure you want to divorce %s and his/her partner?",
+	'DivorceText2'            => 'If %s has a child, the child will also be orphaned.',
+	'DivorceButton'           => 'Yes, do it please.',
+	'DivorceSuccessful'       => '%s has been divorced!',
 	
 	// Module: cplog
 	// - cplog/index.php

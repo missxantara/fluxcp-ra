@@ -60,7 +60,8 @@ return array(
 			'changeslot' => AccountLevel::NORMAL,
 			'resetlook'  => AccountLevel::NORMAL,
 			'resetpos'   => AccountLevel::NORMAL,
-			'mapstats'   => AccountLevel::ANYONE
+			'mapstats'   => AccountLevel::ANYONE,
+			'divorce'    => AccountLevel::NORMAL
 		),
 		'guild'     => array(
 			'emblem'   => AccountLevel::ANYONE,
@@ -169,6 +170,7 @@ return array(
 		'PermUnbanAccount'   => AccountLevel::HIGHGM, // Has ability to remove a permanent ban on an account.
 		'SearchMD5Passwords' => AccountLevel::ADMIN,  // Ability to search MD5'd passwords in list.
 		'ViewCharacter'      => AccountLevel::HIGHGM, // View another person's character details.
+		'DivorceCharacter'   => AccountLevel::LOWGM,  // Divorce another character.
 		'AddShopItem'        => AccountLevel::ADMIN,  // Ability to add an item to the shop.
 		'EditShopItem'       => AccountLevel::ADMIN,  // Ability to modify a shop item's details.
 		'DeleteShopItem'     => AccountLevel::ADMIN,  // Ability to remove an item for sale on the shop.
