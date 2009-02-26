@@ -37,9 +37,14 @@ class Flux_LogFile {
 	public function __construct($filename, $mode = 'a')
 	{
 		$this->filename  = "$filename.php";
-		$isNewFile       = !file_exists($this->filename);	
-		$this->fp        = fopen($this->filename, 'a');
+		$isNewFile       = !file_exists($this->filename);
 		
+		if ($isNewFile) {
+			touch($this->filename);
+			chmod($this->filename, 0777);
+		}
+		
+		$this->fp = fopen($this->filename, 'a');
 		if ($isNewFile) {
 			fputs($this->fp, "<?php exit('Forbidden'); ?>\n");
 		}
