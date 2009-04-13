@@ -37,7 +37,7 @@ $menuItems = $this->getMenuItems();
 	<?php foreach ($menuItems as $menuCategory => $menus): ?>
 	<?php if (!empty($menus)): ?>
 	<tr>
-		<th class="menuitem"><strong><?php echo htmlspecialchars($menuCategory) ?></strong></td>
+		<td class="menuitem"><strong><?php echo htmlspecialchars($menuCategory) ?></strong></td>
 	</tr>
 	<?php foreach ($menus as $menuItem):  ?>
 	<tr>
