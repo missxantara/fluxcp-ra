@@ -106,12 +106,17 @@ class Flux_Installer_Schema {
 			$sth->execute();
 			
 			if ($sth->errorCode()) {
-				list ($sqlstate, $errnum, $errmsg) = $sth->errorInfo();
+				$errorInfo = $sth->errorInfo();
+				if (count($errorInfo) > 1) {
+					list ($sqlstate, $errnum, $errmsg) = $errInfo;
+				} else {
+					$errmsg = implode(', ', $errorInfo);
+				}
 				
-				if ($errnum == 1045) {
+				if (!empty($errnum) && $errnum == 1045) {
 					throw new Flux_Error("Critical MySQL error in Installer/Updater: $errnum: $errmsg");
 				}
-				elseif ($errnum == 1142) {
+				elseif (!empty($errnum) && $errnum == 1142) {
 					// Bail-out.
 					$message = "MySQL error: $errmsg\n\n";
 					throw new Flux_Installer_SchemaPermissionError(
@@ -122,6 +127,8 @@ class Flux_Installer_Schema {
 						$this->charMapServerName,
 						$sql
 					);
+				} else {
+					throw new Flux_Error("Critical MySQL error in Installer/Updater: $errmsg");
 				}
 			}
 			
