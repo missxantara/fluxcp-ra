@@ -108,7 +108,7 @@ class Flux_Installer_Schema {
 			if ($sth->errorCode()) {
 				$errorInfo = $sth->errorInfo();
 				if (count($errorInfo) > 1) {
-					list ($sqlstate, $errnum, $errmsg) = $errInfo;
+					list ($sqlstate, $errnum, $errmsg) = $errorInfo;
 				} else {
 					$errmsg = implode(', ', $errorInfo);
 				}
