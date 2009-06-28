@@ -213,7 +213,7 @@ if ($item) {
 					'price_sell'     => $npcSell,
 					'attack'         => $attack,
 					'defence'        => $defense,
-					'range'          => $range,
+					'`range`'        => $range,
 					'weapon_level'   => $weaponLevel,
 					'equip_level'    => $equipLevel,
 					'script'         => $script,
