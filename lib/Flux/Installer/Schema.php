@@ -127,7 +127,9 @@ class Flux_Installer_Schema {
 						$this->charMapServerName,
 						$sql
 					);
-				} else {
+				}
+				elseif (strcmp($errmsg,'00000') != 0) {
+					// Only quit with an error if its actually an error.
 					throw new Flux_Error("Critical MySQL error in Installer/Updater: $errmsg");
 				}
 			}
