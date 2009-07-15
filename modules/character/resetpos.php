@@ -16,10 +16,10 @@ if (!$char || ($char->account_id != $session->account->account_id && !$auth->all
 }
 
 $reset = $server->resetPosition($charID);
-if ($reset == -1) {
+if ($reset === -1) {
 	$message = sprintf(Flux::message('CantResetPosWhenOnline'), $char->name);
 }
-elseif ($reset == -2) {
+elseif ($reset === -2) {
 	$message = sprintf(Flux::message('CantResetFromCurrentMap'), $char->name);
 }
 elseif ($reset === true) {
