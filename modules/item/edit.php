@@ -76,8 +76,8 @@ if ($item) {
 	$equipUpper    = $params->get('equip_upper')     ? $params->get('equip_upper')     : $item->equip_upper;
 	$equipJobs     = $params->get('equip_jobs')      ? $params->get('equip_jobs')      : $item->equip_jobs;
 	
-	$equipMale     = ($item->equip_genders == 2 || $item->equip_genders == 1) ? true : false;
-	$equipFemale   = ($item->equip_genders == 2 || $item->equip_genders == 0) ? true : false;
+	$equipMale     = $params->get('edititem') ? ($params->get('equip_male') ? true : false) : ($item->equip_genders == 2 || $item->equip_genders == 1 ? true : false);
+	$equipFemale   = $params->get('edititem') ? ($params->get('equip_female') ? true : false) : ($item->equip_genders == 2 || $item->equip_genders == 0 ? true : false);
 	
 	$script        = $params->get('script') ? $params->get('script') : $item->script;
 	$equipScript   = $params->get('equip_script') ? $params->get('equip_script') : $item->equip_script;
