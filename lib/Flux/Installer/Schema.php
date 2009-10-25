@@ -128,8 +128,8 @@ class Flux_Installer_Schema {
 						$sql
 					);
 				}
-				elseif (strcmp($errmsg,'00000') != 0) {
-					// Only quit with an error if its actually an error.
+				elseif (!empty($errmsg) && strcmp($errmsg,'00000') != 0) {
+					// Only quit with an error if there is actually an error.
 					throw new Flux_Error("Critical MySQL error in Installer/Updater: $errmsg");
 				}
 			}
