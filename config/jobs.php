@@ -51,7 +51,7 @@ return array(
 	4021 => 'Gypsy',
 	//4022 => 'Paladin (riding Peco Peco)',
 
-	//4023 => 'Baby',
+	4023 => 'Baby',
 	4024 => 'Baby Swordsman',
 	4025 => 'Baby Mage',
 	4026 => 'Baby Archer',
