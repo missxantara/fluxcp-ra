@@ -110,7 +110,7 @@ if (count($_POST) && $params->get('additem')) {
 	}
 	else {
 		if (empty($errorMessage) && is_array($equipLocs)) {
-			$locs = FLux::getEquipLocationList();
+			$locs = Flux::getEquipLocationList();
 			foreach ($equipLocs as $bit) {
 				if (!array_key_exists($bit, $locs)) {
 					$errorMessage = 'Invalid equip location specified.';
@@ -120,7 +120,7 @@ if (count($_POST) && $params->get('additem')) {
 			}
 		}
 		if (empty($errorMessage) && is_array($equipUpper)) {
-			$upper = FLux::getEquipUpperList();
+			$upper = Flux::getEquipUpperList();
 			foreach ($equipUpper as $bit) {
 				if (!array_key_exists($bit, $upper)) {
 					$errorMessage = 'Invalid equip upper specified.';
