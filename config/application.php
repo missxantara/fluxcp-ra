@@ -80,7 +80,6 @@ return array(
 		//'admin2@localhost',                             // -- This array may be empty if you only use one e-mail
 		//'admin3@localhost'                              // -- because your Business Email is also checked.
 	),
-	'DivorceKeepChild'     => false,                    // Keep child after divorce?
 	'AllowIpBanLogin'      => false,                    // Allow logging into account from banned IP.
 	'AllowTempBanLogin'    => false,                    // Allow logging in of temporarily banned accounts.
 	'AllowPermBanLogin'    => false,                    // Allow logging in of permanently banned accounts.
@@ -105,12 +104,6 @@ return array(
 	                                                    // With clean URLs: http://<server>/<baseURI>/donate/update?password=<InstallerPassword>
 	                                                    // Without clean URLs: http://<server>/<baseURI>?module=donate&action=update&password=<InstallerPassword>
 	                                                    // NOTE: This option is HIGHLY inefficient, it's recommended to run a cron job instead.
-	
-	'AutoPruneAccounts'    => false,                    // Enable this to automatically prune expired accounts. Enabling this is a performance
-	                                                    // performance killer. See 'AutoUnholdAccount' for running this task as a cron job,
-		                                                // the module is 'account' and the action is 'prune'.
-	                                                    // With clean URLs: http://<server>/<baseURI>/account/prune?password=<InstallerPassword>
-	                                                    // Without clean URLs: http://<server>/<baseURI>?module=account&action=prune&password=<InstallerPassword>
 	
 	'ShopImageExtensions'  => array(                    // These are the image extensions allowed for uploading in the item shop.
 		'png', 'jpg', 'gif', 'bmp', 'jpeg'
@@ -219,13 +212,13 @@ return array(
 		'logdata' => array(
 			//'char'    => 'Characters',
 			//'inter'   => 'Interactions',
-			'command' => 'Commands',
+			//'command' => 'Commands',
 			//'branch'  => 'Branches',
 			//'chat'    => 'Chats',
 			'login'   => 'Logins',
 			//'mvp'     => 'MVP',
 			//'npc'     => 'NPC',
-			'pick'    => 'Item Picks',
+			//'pick'    => 'Item Picks',
 			//'zeny'    => 'Zeny'
 		),
 		'cplog' => array(
@@ -293,6 +286,12 @@ return array(
 	// Shouldn't need touching, however modifying loginerrors.php should be relatively safe.
 	'LoginErrors' => include('loginerrors.php'),
 	
+	// eA equip jobs mapping.
+	'EquipJobs' => include('equip_jobs.php'),
+	
+	// eA equip upper mapping.
+	'EquipUpper' => include('equip_upper.php'),
+	
 	// eA monster races mapping.
 	'MonsterRaces' => include('races.php'),
 	
@@ -304,9 +303,6 @@ return array(
 	
 	// Item shop categories.
 	'ShopCategories' => include('shopcategories.php'),
-	
-	// Item pick types.
-	'PickTypes' => include('picktypes.php'),
 	
 	// DON'T TOUCH. THIS IS FOR DEVELOPERS.
 	'FluxTables' => array(
