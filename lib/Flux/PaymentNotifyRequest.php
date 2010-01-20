@@ -14,7 +14,7 @@ class Flux_PaymentNotifyRequest {
 	 * @var Flux_LogFile
 	 */
 	private $ppLogFile;
-	
+
 	/**
 	 * Set to true after the notification has been verified by PayPal.
 	 *
@@ -22,7 +22,7 @@ class Flux_PaymentNotifyRequest {
 	 * @var bool
 	 */
 	private $txnIsValid = false;
-	
+
 	/**
 	 * PayPal server name to use for verification.
 	 *
@@ -30,7 +30,7 @@ class Flux_PaymentNotifyRequest {
 	 * @var string
 	 */
 	public $ppServer;
-	
+
 	/**
 	 * Your currently configured PayPal business email.
 	 *
@@ -38,7 +38,7 @@ class Flux_PaymentNotifyRequest {
 	 * @var string
 	 */
 	public $myBusinessEmail;
-	
+
 	/**
 	 * Your currently configured currency code.
 	 *
@@ -46,7 +46,7 @@ class Flux_PaymentNotifyRequest {
 	 * @var string
 	 */
 	public $myCurrencyCode;
-	
+
 	/**
 	 * PayPal's IPN variables organized into a Flux_Config instance.
 	 *
@@ -54,7 +54,7 @@ class Flux_PaymentNotifyRequest {
 	 * @var Flux_Config
 	 */
 	public $ipnVariables;
-	
+
 	/**
 	 * Transactions log table.
 	 *
@@ -62,7 +62,7 @@ class Flux_PaymentNotifyRequest {
 	 * @var string
 	 */
 	public $txnLogTable;
-	
+
 	/**
 	 * Account credit balance table.
 	 *
@@ -70,7 +70,7 @@ class Flux_PaymentNotifyRequest {
 	 * @var string
 	 */
 	public $creditsTable;
-	
+
 	/**
 	 * Construct new PaymentNotifyRequest instance from specified IPN variables.
 	 *
@@ -102,7 +102,7 @@ class Flux_PaymentNotifyRequest {
 		$func = array($this->ppLogFile, 'puts');
 		return call_user_func_array($func, $args);
 	}
-	
+
 	/**
 	 * Process transaction.
 	 *
@@ -111,10 +111,10 @@ class Flux_PaymentNotifyRequest {
 	public function process()
 	{
 		$this->logPayPal('Received notification from %s (%s)', $_SERVER['REMOTE_ADDR'], gethostbyaddr($_SERVER['REMOTE_ADDR']));
-		
+
 		if ($this->verify()) {
 			$this->logPayPal('Proceeding to validate the authenticity of the transaction...');
-			
+
 			$accountEmails = Flux::config('PayPalReceiverEmails');
 			$accountEmails = array_merge(array($this->myBusinessEmail), $accountEmails->toArray());
 			$receiverEmail = $this->ipnVariables->get('receiver_email');
@@ -123,10 +123,10 @@ class Flux_PaymentNotifyRequest {
 			$payerEmail    = $this->ipnVariables->get('payer_email');
 			$currencyCode  = strtoupper(substr($this->ipnVariables->get('mc_currency'), 0, 3));
 			$trusted       = true;
-			
+
 			// Identify transaction number.
 			$this->logPayPal('Transaction identified as %s.', $transactionID);
-			
+
 			if (!in_array($receiverEmail, $accountEmails)) {
 				$this->logPayPal('Receiver e-mail (%s) is not recognized, unauthorized to continue.', $receiverEmail);
 			}
@@ -136,32 +136,32 @@ class Flux_PaymentNotifyRequest {
 				$customData   = new Flux_Config($customArray);
 				$accountID    = $customData->get('account_id');
 				$serverName   = $customData->get('server_name');
-				
+
 				if ($currencyCode != $this->myCurrencyCode) {
 					$this->logPayPal('Transaction currency not exchangeable, accepting anyways. (recv: %s, expected: %s)',
 						$currencyCode, $this->myCurrencyCode);
-						
+
 					$exchangeableCurrency = false;
 				}
 				else {
 					$exchangeableCurrency = true;
 				}
-				
+
 				// How much was received? (and in what currency?)
 				$this->logPayPal('Received %s (%s).', $this->ipnVariables->get('mc_gross'), $currencyCode);
-				
+
 				// How much will be deposited?
 				$settleAmount   = $this->ipnVariables->get('settle_amount');
 				$settleCurrency = $this->ipnVariables->get('settle_currency');
-				
+
 				if ($settleAmount && $settleCurrency) {
 					$this->logPayPal('Deposited into PayPal account: %s %s.', $settleAmount, $settleCurrency);
 				}
-				
+
 				// Let's see where the donation credits should go to.
 				$this->logPayPal('Game server name: %s, account ID: %s',
 					($serverName ? $serverName : '(absent)'), ($accountID ? $accountID : '(absent)'));
-					
+
 				if (!$accountID || !$serverName) {
 					$this->logPayPal('Account ID and/or game server name absent, cannot exchange for credits.');
 				}
@@ -174,7 +174,7 @@ class Flux_PaymentNotifyRequest {
 
 				if ($paymentStatus == 'Completed') {
 					$this->logPayPal('Payment for txn_id#%s has been completed.', $transactionID);
-					
+
 					if ($servGroup && $exchangeableCurrency) {
 						$sql = "SELECT COUNT(account_id) AS acc_id_count FROM {$servGroup->loginDatabase}.login WHERE sex != 'S' AND level >= 0 AND account_id = ?";
 						$sth = $servGroup->connection->getStatement($sql);
@@ -191,16 +191,16 @@ class Flux_PaymentNotifyRequest {
 
 							$amount  = (float)$this->ipnVariables->get('mc_gross');
 							$minimum = (float)Flux::config('MinDonationAmount');
-							
+
 							if ($amount >= $minimum) {
 								$trustTable = Flux::config('FluxTables.DonationTrustTable');
 								$holdHours  = +(int)Flux::config('HoldUntrustedAccount');
-								
+
 								if ($holdHours) {
 									$sql = "SELECT account_id, email FROM {$servGroup->loginDatabase}.$trustTable WHERE account_id = ? AND email = ? LIMIT 1";
 									$sth = $servGroup->connection->getStatement($sql);
 									$res = $sth->execute(array($accountID, $payerEmail));
-									
+
 									if ($res && $sth->fetch()->account_id) {
 										$this->logPayPal('Account ID and e-mail are trusted.');
 										$trusted = true;
@@ -209,16 +209,16 @@ class Flux_PaymentNotifyRequest {
 										$trusted = false;
 									}
 								}
-								
+
 								$rate    = Flux::config('CreditExchangeRate');
 								$credits = floor($amount / $rate);
-								
+
 								if ($trusted) {
 									$sql = "SELECT * FROM {$servGroup->loginDatabase}.{$this->creditsTable} WHERE account_id = ?";
 									$sth = $servGroup->connection->getStatement($sql);
 									$sth->execute(array($accountID));
 									$acc = $sth->fetch();
-									
+
 									$this->logPayPal('Updating account credit balance from %s to %s', (int)$acc->balance, $acc->balance + $credits);
 									$res = $servGroup->loginServer->depositCredits($accountID, $credits, $amount);
 
@@ -241,22 +241,22 @@ class Flux_PaymentNotifyRequest {
 				}
 				else {
 					$this->logPayPal('Incomplete payment status: %s (exchanging for credits will not take place)', $paymentStatus);
-					
+
 					$banStatuses = Flux::config('BanPaymentStatuses');
-					
+
 					if ($banStatuses instanceOf Flux_Config) {
 						$banStatuses = $banStatuses->toArray();
 					}
 					else {
 						$banStatuses = array();
 					}
-					
+
 					$pymntStatus = strtolower($paymentStatus);
 					$banStatuses = array_map('strtolower', $banStatuses);
-					
+
 					if (in_array($pymntStatus, $banStatuses)) {
 						$this->logPayPal('Auto-ban payment status detected: %s', $paymentStatus);
-						
+
 						if ($servGroup && $serverName && $accountID) {
 							$this->logPayPal('Banning account! (serv: %s, account_id: %s)', $serverName, $accountID);
 							$servGroup->loginServer->permanentlyBan(
@@ -269,7 +269,7 @@ class Flux_PaymentNotifyRequest {
 						}
 					}
 				}
-				
+
 				if (!$servGroup) {
 					foreach (Flux::$loginAthenaGroupRegistry as $servGroup) {
 						$this->logToPayPalTable($servGroup, $accountID, $serverName, $trusted);
@@ -281,26 +281,26 @@ class Flux_PaymentNotifyRequest {
 					}
 					$this->logToPayPalTable($servGroup, $accountID, $serverName, $trusted, $credits);
 				}
-				
+
 				$this->logPayPal('Saving transaction details for %s...', $transactionID);
-				
+
 				if ($logFile=$this->saveDetailsToFile()) {
 					$this->logPayPal('Saved transaction details for %s to: %s', $transactionID, $logFile);
 				}
 				else {
 					$this->logPayPal('Failed to save transaction details for %s to file.', $transactionID);
 				}
-				
+
 				$this->logPayPal('Done processing %s.', $transactionID);
 			}
 		}
 		else {
 			$this->logPayPal('Transaction invalid, aborting.');
 		}
-		
+
 		return false;
 	}
-	
+
 	/**
 	 * Translate the IPN variables into a query string for use in a POST
 	 * request.
@@ -318,7 +318,7 @@ class Flux_PaymentNotifyRequest {
 		$qString = ltrim($qString, '&');
 		return $qString;
 	}
-	
+
 	/**
 	 * Verify IPN variables against PayPal server.
 	 *
@@ -332,10 +332,10 @@ class Flux_PaymentNotifyRequest {
 		$request .= "Content-Type: application/x-www-form-urlencoded\r\n";
 		$request .= 'Content-Length: '.strlen($qString)."\r\n\r\n";
 		$request .= $qString;
-		
+
 		$this->logPayPal('Query string: %s', $qString);
 		$this->logPayPal('Establishing connection to PayPal server at %s:80...', $this->ppServer);
-		
+
 		$fp = @fsockopen($this->ppServer, 80, $errno, $errstr, 20);
 		if (!$fp) {
 			$this->logPayPal("Failed to connect to PayPal server: [%d] %s", $errno, $errstr);
@@ -343,20 +343,20 @@ class Flux_PaymentNotifyRequest {
 		}
 		else {
 			$this->logPayPal('Connected. Sending request back to PayPal...');
-			
+
 			// Send POST request just as PayPal sent it.
 
 			$this->logPayPal('Sent %d bytes of transaction data. Request size: %d bytes.', strlen($qString), fputs($fp, $request));
 			$this->logPayPal('Reading back response from PayPal...');
-			
+
 			// Read until EOF, last line contains VERIFIED or INVALID.
 			while (!feof($fp)) {
 				$line = trim(fgets($fp));
 			}
-			
+
 			// Close connection.
 			fclose($fp);
-			
+
 			// Check verification status of the notify request.
 			if (strtoupper($line) == 'VERIFIED') {
 				$this->logPayPal('Notification verified. (recv: VERIFIED)');
@@ -369,7 +369,7 @@ class Flux_PaymentNotifyRequest {
 			}
 		}
 	}
-	
+
 	/**
 	 * Save the transaction details to disk in the file name format of:
 	 * data/logs/transactions/TXN_TYPE/PAYMENT_STATUS.log
@@ -384,14 +384,14 @@ class Flux_PaymentNotifyRequest {
 			$logDir2 = $logDir1.'/'.$this->ipnVariables->get('txn_type');
 			$logDir3 = $logDir2.'/'.$this->ipnVariables->get('payment_status');
 			$logFile = $logDir3.'/'.$this->ipnVariables->get('txn_id').'.log.php';
-			
+
 			if (!is_dir($logDir2)) {
-				mkdir($logDir2, 0755);
+				mkdir($logDir2, 0600);
 			}
 			if (!is_dir($logDir3)) {
-				mkdir($logDir3, 0755);
+				mkdir($logDir3, 0600);
 			}
-			
+
 			$fp = fopen($logFile, 'w');
 			if ($fp) {
 				foreach ($this->ipnVariables->toArray() as $key => $value) {
@@ -403,7 +403,7 @@ class Flux_PaymentNotifyRequest {
 		}
 		return false;
 	}
-	
+
 	/**
 	 * Log the transaction details into the flux_paypal_transactions table.
 	 *
@@ -421,10 +421,10 @@ class Flux_PaymentNotifyRequest {
 				$sql   = "SELECT hold_until FROM {$servGroup->loginDatabase}.{$this->txnLogTable} ";
 				$sql  .= "WHERE account_id = ? AND payer_email = ? AND hold_until > NOW() AND payment_status = 'Completed' LIMIT 1";
 				$sth   = $sth = $servGroup->connection->getStatement($sql);
-				
+
 				$sth->execute(array($accountID, $email));
 				$row = $sth->fetch();
-				
+
 				if ($row && $row->hold_until) {
 					$holdUntil = $row->hold_until;
 				}
@@ -433,7 +433,7 @@ class Flux_PaymentNotifyRequest {
 					$holdUntil = date('Y-m-d H:i:s', time()+($hours*60*60));
 				}
 			}
-			
+
 			$this->logPayPal('Saving transaction details to PayPal transactions table...');
 			$sql = "
 				INSERT INTO {$servGroup->loginDatabase}.{$this->txnLogTable} (
@@ -512,7 +512,7 @@ class Flux_PaymentNotifyRequest {
 				$var->get('receiver_id'),
 				$holdUntil
 			));
-			
+
 			if ($ret) {
 				if (!trim($serverName)) {
 					$serverName = '(unknown)';

@@ -62,23 +62,23 @@ try {
 	elseif (!extension_loaded('pdo_mysql')) {
 		throw new Flux_Error('The PDO_MYSQL driver for the PDO extension must be installed to use Flux.  Please consult the PHP manual for installation instructions.');
 	}
-	
+
 	// Initialize Flux.
 	Flux::initialize(array(
 		'appConfigFile'      => FLUX_CONFIG_DIR.'/application.php',
 		'serversConfigFile'  => FLUX_CONFIG_DIR.'/servers.php',
 		//'messagesConfigFile' => FLUX_CONFIG_DIR.'/messages.php' // No longer needed (Deprecated)
 	));
-	
+
 	// Set time limit.
 	set_time_limit((int)Flux::config('ScriptTimeLimit'));
-	
+
 	// Set default timezone for entire app.
 	$timezone = Flux::config('DateDefaultTimezone');
 	if ($timezone && !@date_default_timezone_set($timezone)) {
 		throw new Flux_Error("'$timezone' is not a valid timezone.  Consult http://php.net/timezones for a list of valid timezones.");
 	}
-	
+
 	// Create some basic directories.
 	$directories = array(
 		FLUX_DATA_DIR.'/logs/schemas',
@@ -97,7 +97,7 @@ try {
 	foreach (Flux::$loginAthenaGroupRegistry as $serverName => $loginAthenaGroup) {
 		$directories[] = FLUX_DATA_DIR."/logs/schemas/logindb/$serverName";
 		$directories[] = FLUX_DATA_DIR."/logs/schemas/charmapdb/$serverName";
-	
+
 		foreach ($loginAthenaGroup->athenaServers as $athenaServer) {
 			$directories[] = FLUX_DATA_DIR."/logs/schemas/charmapdb/$serverName/{$athenaServer->serverName}";
 		}
@@ -108,26 +108,26 @@ try {
 			mkdir($directory, 0777);
 		}
 	}
-	
+
 	// Installer library.
 	$installer = Flux_Installer::getInstance();
 	if ($hasUpdates=$installer->updateNeeded()) {
 		Flux::config('ThemeName', 'installer');
 	}
-	
+
 	$sessionKey = Flux::config('SessionKey');
 	session_save_path($dir=realpath(FLUX_DATA_DIR.'/sessions'));
 	if (!is_writable($dir)) {
-		throw new Flux_PermissionError("The session storage directory '$dir' is not writable.  Remedy with `chmod 0707 $dir`");
+		throw new Flux_PermissionError("The session storage directory '$dir' is not writable.  Remedy with `chmod 0600 $dir`");
 	}
 	elseif (!is_writable($dir=realpath(FLUX_DATA_DIR.'/logs'))) {
-		throw new Flux_PermissionError("The log storage directory '$dir' is not writable.  Remedy with `chmod 0707 $dir`");
+		throw new Flux_PermissionError("The log storage directory '$dir' is not writable.  Remedy with `chmod 0600 $dir`");
 	}
 	elseif (!is_writable($dir=realpath(FLUX_DATA_DIR.'/itemshop'))) {
-		throw new Flux_PermissionError("The item shop image directory '$dir' is not writable.  Remedy with `chmod 0707 $dir`");
+		throw new Flux_PermissionError("The item shop image directory '$dir' is not writable.  Remedy with `chmod 0600 $dir`");
 	}
 	elseif (!is_writable($dir=realpath(FLUX_DATA_DIR.'/tmp'))) {
-		throw new Flux_PermissionError("The temporary directory '$dir' is not writable.  Remedy with `chmod 0707 $dir`");
+		throw new Flux_PermissionError("The temporary directory '$dir' is not writable.  Remedy with `chmod 0600 $dir`");
 	}
 	elseif (ini_get('session.use_trans_sid')) {
 		throw new Flux_Error("The 'session.use_trans_sid' php.ini configuration must be turned off for Flux to work.");
@@ -138,25 +138,25 @@ try {
 		ini_set('session.name', $sessionKey);
 		session_start();
 	}
-	
+
 	if (empty($_SESSION[$sessionKey]) || !is_array($_SESSION[$sessionKey])) {
 		$_SESSION[$sessionKey] = array();
 	}
-	
+
 	// Initialize session data.
 	Flux::$sessionData = new Flux_SessionData($_SESSION[$sessionKey], $hasUpdates);
-	
+
 	// Initialize authorization component.
 	$accessConfig = Flux::parseConfigFile(FLUX_CONFIG_DIR.'/access.php');
-		
+
 	// Merge with add-on configs.
 	foreach (Flux::$addons as $addon) {
 		$accessConfig->merge($addon->accessConfig);
 	}
-	
+
 	$accessConfig->set('unauthorized.index', AccountLevel::ANYONE);
 	$authComponent = Flux_Authorization::getInstance($accessConfig, Flux::$sessionData);
-	
+
 	if (!Flux::config('DebugMode')) {
 		ini_set('display_errors', 0);
 	}
@@ -179,14 +179,14 @@ catch (Exception $e) {
 		require_once 'Flux/LogFile.php';
 		$today = date('Ymd');
 		$eLog  = new Flux_LogFile("$exceptionDir/$today.log");
-		
+
 		// Log exception.
 		$eLog->puts('(%s) Exception %s: %s', get_class($e), get_class($e), $e->getMessage());
 		foreach (explode("\n", $e->getTraceAsString()) as $traceLine) {
 			$eLog->puts('(%s) **TRACE** %s', get_class($e), $traceLine);
 		}
 	}
-	
+
 	require_once FLUX_CONFIG_DIR.'/error.php';
 	define('__ERROR__', 1);
 	include $errorFile;
