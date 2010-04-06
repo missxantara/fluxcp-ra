@@ -40,7 +40,15 @@ if (count($_POST)) {
 		if ($username && $password && $e->getCode() != Flux_LoginError::INVALID_SERVER) {
 			$loginAthenaGroup = Flux::getServerGroupByName($server);
 
-			$sql = "SELECT account_id FROM {$loginAthenaGroup->loginDatabase}.login WHERE userid = ? LIMIT 1";
+			$sql = "SELECT account_id FROM {$loginAthenaGroup->loginDatabase}.login WHERE ";
+			
+			if (!$loginAthenaGroup->loginServer->config->getNoCase()) {
+				$sql .= "CAST(userid AS BINARY) ";
+			} else {
+				$sql .= "userid ";
+			}
+			
+			$sql .= "= ? LIMIT 1";
 			$sth = $loginAthenaGroup->connection->getStatement($sql);
 			$sth->execute(array($username));
 			$row = $sth->fetch();
