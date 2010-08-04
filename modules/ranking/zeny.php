@@ -36,7 +36,7 @@ if (Flux::config('HideTempBannedZenyRank')) {
 $sql .= "AND login.level < ? ";
 
 if ($days=Flux::config('ZenyRankingThreshold')) {
-	$sql    .= 'AND (UNIX_TIMESTAMP() - UNIX_TIMESTAMP(login.lastlogin)) <= ? ';
+	$sql    .= 'AND TIMESTAMPDIFF(DAY, login.lastlogin, NOW()) <= ? ';
 	$bind[]  = $days * 24 * 60 * 60;
 }
 
