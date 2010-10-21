@@ -167,9 +167,9 @@
 </table>
 
 <h3>Monster Skills for “<?php echo htmlspecialchars($monster->iro_name) ?>”</h3>
-<?php if (!filesize($skillDB)): ?>
+<?php if (!file_exists($skillDB) || !filesize($skillDB)): ?>
 <p><strong>Mob skill database needs to be reloaded!</strong></p>
-<?php elseif (empty($skillDB)): ?>
+<?php elseif (empty($mobSkills)): ?>
 <p>No skills found for <?php echo htmlspecialchars($monster->iro_name) ?>.</p>
 <?php else: ?>
 <table class="vertical-table">
