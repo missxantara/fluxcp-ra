@@ -38,7 +38,6 @@ if (ini_get('magic_quotes_gpc')) {
 }
 
 set_include_path(FLUX_LIB_DIR.PATH_SEPARATOR.get_include_path());
-//ini_set('session.save_path', 'data/sessions');
 
 // Default account levels.
 require_once FLUX_CONFIG_DIR.'/levels.php';
@@ -116,11 +115,7 @@ try {
 	}
 
 	$sessionKey = Flux::config('SessionKey');
-	session_save_path($dir=realpath(FLUX_DATA_DIR.'/sessions'));
-	if (!is_writable($dir)) {
-		throw new Flux_PermissionError("The session storage directory '$dir' is not writable.  Remedy with `chmod 0600 $dir`");
-	}
-	elseif (!is_writable($dir=realpath(FLUX_DATA_DIR.'/logs'))) {
+	if (!is_writable($dir=realpath(FLUX_DATA_DIR.'/logs'))) {
 		throw new Flux_PermissionError("The log storage directory '$dir' is not writable.  Remedy with `chmod 0600 $dir`");
 	}
 	elseif (!is_writable($dir=realpath(FLUX_DATA_DIR.'/itemshop'))) {
