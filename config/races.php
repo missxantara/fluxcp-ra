@@ -12,6 +12,7 @@ return array(
 	 8 => 'Angel',
 	 9 => 'Dragon',
 	10 => 'Boss',
-	11 => 'Non-Boss'
+	11 => 'Non-Boss',
+	12 => 'Non-Demi-Human'
 )
 ?>
