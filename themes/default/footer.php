@@ -19,7 +19,7 @@
 				<td id="copyright">
 					<p>
 						<strong>Powered by Flux Control Panel (<?php echo htmlspecialchars(Flux::VERSION) ?><?php echo Flux::SVNVERSION ? '.'.Flux::SVNVERSION : '' ?>)</strong>
-						&mdash; Copyright &copy; 2008-2010 Matthew Harris and Nikunj Mehta.
+						&mdash; Copyright &copy; 2008-2011 Matthew Harris and Nikunj Mehta.
 					</p>
 				</td>
 				<td></td>
