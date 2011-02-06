@@ -130,6 +130,9 @@ return array(
 	'HideTempBannedZenyRank'  => false,                  // Hide temporarily banned characters from ranking.
 	'HidePermBannedZenyRank'  => true,                   // Hide permanently banned characters from ranking.
 	
+	'HideTempBannedStats'     => false,                  // Hide temporarily banned accounts from statistics.
+	'HidePermBannedStats'     => true,                   // Hide permanently banned accounts from statistics.
+	
 	'CpLoginLogShowPassword'  => false,                  // Show password in CP login log (also see access.php's SeeCpLoginLogPass).
 	
 	'CpResetLogShowPassword'  => false,                  // Show password in CP "password resets" log (also see access.php's SeeCpResetPass).

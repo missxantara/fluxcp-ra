@@ -12,13 +12,35 @@ $info  = array(
 );
 
 // Accounts.
-$sql = "SELECT COUNT(account_id) AS total FROM {$server->loginDatabase}.login";
+$sql = "SELECT COUNT(account_id) AS total FROM {$server->loginDatabase}.login ";
+if (Flux::config('HideTempBannedStats')) {
+	$sql .= "WHERE unban_time <= UNIX_TIMESTAMP()";
+}
+if (Flux::config('HidePermBannedStats')) {
+	if (Flux::config('HideTempBannedStats')) {
+		$sql .= " AND state != 5";
+	} else {
+		$sql .= "WHERE state != 5";
+	}
+}
 $sth = $server->connection->getStatement($sql);
 $sth->execute();
 $info['accounts'] += $sth->fetch()->total;
 
 // Characters.
-$sql = "SELECT COUNT(char_id) AS total FROM {$server->charMapDatabase}.`char`";
+$sql = "SELECT COUNT(`char`.char_id) AS total FROM {$server->charMapDatabase}.`char` ";
+if (Flux::config('HideTempBannedStats')) {
+	$sql .= "LEFT JOIN {$server->loginDatabase}.login ON login.account_id = `char`.account_id ";
+	$sql .= "WHERE login.unban_time <= UNIX_TIMESTAMP()";
+}
+if (Flux::config('HidePermBannedStats')) {
+	if (Flux::config('HideTempBannedStats')) {
+		$sql .= " AND login.state != 5";
+	} else {
+		$sql .= "LEFT JOIN {$server->loginDatabase}.login ON login.account_id = `char`.account_id ";
+		$sql .= "WHERE login.state != 5";
+	}
+}
 $sth = $server->connection->getStatement($sql);
 $sth->execute();
 $info['characters'] += $sth->fetch()->total;
@@ -36,10 +58,16 @@ $sth->execute();
 $info['parties'] += $sth->fetch()->total;
 
 // Zeny.
-$sql = "SELECT SUM(zeny) AS total FROM {$server->charMapDatabase}.`char` ";
+$sql = "SELECT SUM(`char`.zeny) AS total FROM {$server->charMapDatabase}.`char` ";
 if ($hideLevel=Flux::config('InfoHideZenyLevel')) {
 	$sql .= "LEFT JOIN {$server->loginDatabase}.login ON login.account_id = `char`.account_id ";
 	$sql .= "WHERE login.level < ?";
+	if (Flux::config('HideTempBannedStats')) {
+		$sql .= " AND unban_time <= UNIX_TIMESTAMP()";
+	}
+	if (Flux::config('HidePermBannedStats')) {
+		$sql .= " AND state != 5";
+	}
 	$bind = array($hideLevel);
 }
 $sth = $server->connection->getStatement($sql);
@@ -47,7 +75,19 @@ $sth->execute($hideLevel ? $bind : array());
 $info['zeny'] += $sth->fetch()->total;
 
 // Job classes.
-$sql = "SELECT class, COUNT(class) AS total FROM {$server->charMapDatabase}.`char` GROUP BY class";
+$sql = "SELECT `char`.class, COUNT(`char`.class) AS total FROM {$server->charMapDatabase}.`char` GROUP BY `char`.class";
+if (Flux::config('HideTempBannedStats')) {
+	$sql .= "LEFT JOIN {$server->loginDatabase}.login ON login.account_id = `char`.account_id ";
+	$sql .= "WHERE login.unban_time <= UNIX_TIMESTAMP()";
+}
+if (Flux::config('HidePermBannedStats')) {
+	if (Flux::config('HideTempBannedStats')) {
+		$sql .= " AND login.state != 5";
+	} else {
+		$sql .= "LEFT JOIN {$server->loginDatabase}.login ON login.account_id = `char`.account_id ";
+		$sql .= "WHERE login.state != 5";
+	}
+}
 $sth = $server->connection->getStatement($sql);
 $sth->execute();
 
