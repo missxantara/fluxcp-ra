@@ -133,6 +133,8 @@ return array(
 	'HideTempBannedStats'     => false,                  // Hide temporarily banned accounts from statistics.
 	'HidePermBannedStats'     => true,                   // Hide permanently banned accounts from statistics.
 	
+	'SortJobsByAmount'        => false,                  // Sort job class information on statistics page by descending quantity (false = Sort by Job ID).
+	
 	'CpLoginLogShowPassword'  => false,                  // Show password in CP login log (also see access.php's SeeCpLoginLogPass).
 	
 	'CpResetLogShowPassword'  => false,                  // Show password in CP "password resets" log (also see access.php's SeeCpResetPass).

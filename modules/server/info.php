@@ -100,5 +100,7 @@ if ($classes) {
 	}
 }
 
-arsort($info['classes']);
+if (Flux::config('SortJobsByAmount')) {
+	arsort($info['classes']);
+}
 ?>
