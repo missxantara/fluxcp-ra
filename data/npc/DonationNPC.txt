@@ -72,33 +72,31 @@ map,x,y,d	script	FluxCP Rewards	987,{
 						mes "Thank you for your patronage ma'am.";
 					mes "Please enjoy your stay on our server, "+$servername$+".";
 					if ($showcredits) callfunc "F_FluxCredits";
-					close;
 				} else {
 					mes "My records indicate that there are no rewards awaiting to be redeemed.";
 					mes "My deepest apologies for the misunderstanding.";
 					if ($showcredits) callfunc "F_FluxCredits";
-					close;
 				}
 			} else {
 				mes "I'm terribly sorry, but you cannot hold more than "+$maxinventorysize+" items in your inventory.";
 				mes "Please come again with less items.";
 				if ($showcredits) callfunc "F_FluxCredits";
-				close;
 			}
-			close;
+		break;
 		case 2:
 			mes $npcname$;
 			mes "I am here to allow for the redemption of rewards for donations to our server, "+$servername$;
 			mes "Donations may be made to the server via the control panel.";
 			if ($showcredits) callfunc "F_FluxCredits";
-			close;
+		break;
 		case 3:
 			mes $npcname$;
 			mes "Very well then.";
 			mes "Good day to you.";
 			if ($showcredits) callfunc "F_FluxCredits";
-			close;
+		break;
 	}
+	close;
 }
 
 // Credit Displaying Function
@@ -107,6 +105,6 @@ map,x,y,d	script	FluxCP Rewards	987,{
 function	script	F_FluxCredits	{
 	mes "-----------------------------------";
 	mes "Powered by Flux Control Panel.";
-	mes "Copyright © 2008 Matthew Harris and Nikunj Mehta.";
+	mes "Copyright © 2008-2011 Matthew Harris and Nikunj Mehta.";
 	close;
 }
