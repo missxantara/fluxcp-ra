@@ -62,14 +62,25 @@ $sql = "SELECT SUM(`char`.zeny) AS total FROM {$server->charMapDatabase}.`char` 
 if ($hideLevel=Flux::config('InfoHideZenyLevel')) {
 	$sql .= "LEFT JOIN {$server->loginDatabase}.login ON login.account_id = `char`.account_id ";
 	$sql .= "WHERE login.level < ?";
-	if (Flux::config('HideTempBannedStats')) {
-		$sql .= " AND unban_time <= UNIX_TIMESTAMP()";
-	}
-	if (Flux::config('HidePermBannedStats')) {
-		$sql .= " AND state != 5";
-	}
 	$bind = array($hideLevel);
 }
+if (Flux::config('HideTempBannedStats')) {
+	if ($hideLevel) {
+		$sql .= " AND unban_time <= UNIX_TIMESTAMP()";
+	} else {
+		$sql .= "LEFT JOIN {$server->loginDatabase}.login ON login.account_id = `char`.account_id ";
+		$sql .= "WHERE unban_time <= UNIX_TIMESTAMP()";
+	}
+}
+if (Flux::config('HidePermBannedStats')) {
+	if ($hideLevel || Flux::config('HideTempBannedStats')) {
+		$sql .= " AND state != 5";
+	} else {
+		$sql .= "LEFT JOIN {$server->loginDatabase}.login ON login.account_id = `char`.account_id ";
+		$sql .= "WHERE state != 5";
+	}
+}
+
 $sth = $server->connection->getStatement($sql);
 $sth->execute($hideLevel ? $bind : array());
 $info['zeny'] += $sth->fetch()->total;
