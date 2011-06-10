@@ -142,10 +142,10 @@ try {
 		if (in_array($rangeOp, $opValues) && trim($range) != '') {
 			$op = $opMapping[$rangeOp];
 			if ($op == '=' && $range === '0') {
-				$sqlpartial .= "AND (range IS NULL OR range = 0) ";
+				$sqlpartial .= "AND (`range` IS NULL OR range = 0) ";
 			}
 			else {
-				$sqlpartial .= "AND range $op ? ";
+				$sqlpartial .= "AND `range` $op ? ";
 				$bind[]      = $range;
 			}
 		}
