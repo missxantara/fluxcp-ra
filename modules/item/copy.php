@@ -50,7 +50,7 @@ if ($item && count($_POST) && $params->get('copyitem')) {
 				$item->view, $item->script, $item->equip_script, $item->unequip_script
 			);
 			
-			$col  = "id,name_english,name_japanese,type,price_buy,price_sell,weight,attack,defence,range,slots,equip_jobs,";
+			$col  = "id,name_english,name_japanese,type,price_buy,price_sell,weight,attack,defence,`range`,slots,equip_jobs,";
 			$col .= "equip_upper,equip_genders,equip_locations,weapon_level,equip_level,refineable,view,script,equip_script,unequip_script";
 			$sql  = "INSERT INTO {$server->charMapDatabase}.item_db2 ($col) VALUES (".implode(',', array_fill(0, count($bind), '?')).")";
 			$sth  = $server->connection->getStatement($sql);
