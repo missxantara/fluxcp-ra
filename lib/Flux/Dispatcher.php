@@ -100,7 +100,17 @@ class Flux_Dispatcher {
 		$params  = new Flux_Config($paramsArr);
 		$baseURI = Flux::config('BaseURI');
 		
-		if (Flux::config('UseCleanUrls')) {
+		if ($params->get('module')) {
+			$safetyArr  = array('..', '/', '\\');
+			$moduleName = str_replace($safetyArr, '', $params->get('module'));
+			if ($params->get('action')) {
+				$actionName = str_replace($safetyArr, '', $params->get('action'));
+			}
+			else {
+				$actionName = $defaultAction;
+			}
+		}
+		elseif (Flux::config('UseCleanUrls')) {
 			$baseURI    = preg_replace('&/+&', '/', rtrim($baseURI, '/')).'/';
 			$requestURI = preg_replace('&/+&', '/', rtrim($_SERVER['REQUEST_URI'], '/')).'/';
 			$requestURI = preg_replace('&\?.*?$&', '', $requestURI);
@@ -111,16 +121,6 @@ class Flux_Dispatcher {
 		elseif (!$params->get('module') && !$params->get('action')) {
 			$moduleName = $defaultModule;
 			$actionName = $defaultAction;
-		}
-		elseif ($params->get('module')) {
-			$safetyArr  = array('..', '/', '\\');
-			$moduleName = str_replace($safetyArr, '', $params->get('module'));
-			if ($params->get('action')) {
-				$actionName = str_replace($safetyArr, '', $params->get('action'));
-			}
-			else {
-				$actionName = $defaultAction;
-			}
 		}
 		
 		// Authorization handling.
