@@ -62,7 +62,7 @@ else {
 	}
 	
 	if ($charClass) {
-		$className = preg_quote($charClass);
+		$className = preg_quote($charClass, '/');
 		$classIDs  = preg_grep("/.*?$className.*?/i", Flux::config('JobClasses')->toArray());
 		
 		if (count($classIDs)) {
