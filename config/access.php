@@ -200,8 +200,8 @@ return array(
 		'SeeAccountID'       => AccountLevel::LOWGM,  // Level required to see Account ID on account view and character view pages.
 		'SeeUnknownItems'    => AccountLevel::LOWGM,  // Level required to see unidentified items as identified.
 		
-		'EditHigherPower'    => 5000,
-		'BanHigherPower'     => 5000
+		'EditHigherPower'    => AccountLevel::NOONE,
+		'BanHigherPower'     => AccountLevel::NOONE
 	)
 );
 ?>
