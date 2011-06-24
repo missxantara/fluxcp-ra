@@ -62,8 +62,7 @@ try {
 					$sqlpartial .= 'AND type IS NULL ';
 				}
 			} else {
-					
-				$typeName   = preg_quote($itemType);
+				$typeName   = preg_quote($itemType, '/');
 				$itemTypes  = preg_grep("/.*?$typeName.*?/i", Flux::config('ItemTypes')->toArray());
 				
 				if (count($itemTypes)) {
