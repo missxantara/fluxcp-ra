@@ -52,7 +52,7 @@ try {
 			$bind[]      = $itemName;
 		}
 
-		if ($itemType) {
+		if ($itemType && $itemType !== '-1') {
 			if(is_numeric($itemType) && (floatval($itemType) == intval($itemType))) {
 				$itemTypes = Flux::config('ItemTypes')->toArray();
 				if ($itemType < count($itemTypes) && $itemTypes[$itemType]) {

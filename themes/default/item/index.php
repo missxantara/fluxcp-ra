@@ -12,8 +12,9 @@
 		...
 		<label for="type">Type:</label>
 		<select name="type">
+			<option value="-1"<?php if (($type=$params->get('type')) === -1) echo ' selected="selected"' ?>>Any</option>
 			<?php foreach (Flux::config('ItemTypes')->toArray() as $typeId => $typeName): ?>
-				<option value="<?php echo $typeId ?>"<?php if (($type=$params->get('type')) == $typeId) echo ' selected="selected"' ?>><?php echo "$typeName ($typeId)" ?></option>
+				<option value="<?php echo $typeId ?>"<?php if (($type=$params->get('type')) === $typeId) echo ' selected="selected"' ?>><?php echo "$typeName ($typeId)" ?></option>
 			<?php endforeach ?>
 		</select>
 		...
