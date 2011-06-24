@@ -11,7 +11,11 @@
 		<input type="text" name="name" id="name" value="<?php echo htmlspecialchars($params->get('name')) ?>" />
 		...
 		<label for="type">Type:</label>
-		<input type="text" name="type" id="type" value="<?php echo htmlspecialchars($params->get('type')) ?>" />
+		<select name="type">
+			<?php foreach (Flux::config('ItemTypes')->toArray() as $typeId => $typeName): ?>
+				<option value="<?php echo $typeId ?>"<?php if (($type=$params->get('type')) == $typeId) echo ' selected="selected"' ?>><?php echo "$typeName ($typeId)" ?></option>
+			<?php endforeach ?>
+		</select>
 		...
 		<label for="npc_buy">NPC Buy:</label>
 		<select name="npc_buy_op">
