@@ -11,6 +11,7 @@ return array(
 	'A' => 'Admin',
 	'R' => 'Storage',
 	'G' => 'Guild Storage',
-	'E' => 'Mailed'
+	'E' => 'Mailed',
+	'B' => 'Buy Store'
 );
 ?>
