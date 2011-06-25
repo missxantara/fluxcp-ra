@@ -44,6 +44,7 @@ if ($item) {
 		$weaponLevel   = $params->get('weapon_level');
 		$equipLevel    = $params->get('equip_level');
 		$refineable    = $params->get('refineable');
+		$equipLoc      = $params->get('equip_locations');
 	}
 	else {
 		$viewID        = $item->view;
@@ -60,10 +61,7 @@ if ($item) {
 		$weaponLevel   = $item->weapon_level;
 		$equipLevel    = $item->equip_level;
 		$refineable    = $item->refineable;
-	}
-	
-	if ($item->equip_locations) {
-		$item->equip_locations = Flux::equipLocationsToArray($item->equip_locations);
+		$equipLoc      = $item->equip_locations;
 	}
 	if ($item->equip_upper) {
 		$item->equip_upper = Flux::equipUpperToArray($item->equip_upper);
@@ -72,7 +70,6 @@ if ($item) {
 		$item->equip_jobs = Flux::equipJobsToArray($item->equip_jobs);
 	}
 	
-	$equipLocs     = $params->get('equip_locations') ? $params->get('equip_locations') : $item->equip_locations;
 	$equipUpper    = $params->get('equip_upper')     ? $params->get('equip_upper')     : $item->equip_upper;
 	$equipJobs     = $params->get('equip_jobs')      ? $params->get('equip_jobs')      : $item->equip_jobs;
 	
@@ -173,16 +170,6 @@ if ($item) {
 			$errorMessage = 'Equip level must be a number.';
 		}
 		else {
-			if (empty($errorMessage) && is_array($equipLocs)) {
-				$locs = Flux::getEquipLocationList();
-				foreach ($equipLocs as $bit) {
-					if (!array_key_exists($bit, $locs)) {
-						$errorMessage = 'Invalid equip location specified.';
-						$equipLocs = null;
-						break;
-					}
-				}
-			}
 			if (empty($errorMessage) && is_array($equipUpper)) {
 				$upper = Flux::getEquipUpperList();
 				foreach ($equipUpper as $bit) {
@@ -204,8 +191,8 @@ if ($item) {
 				}
 			}
 			if (empty($errorMessage)) {
-				$cols = array('id', 'name_english', 'name_japanese', 'type', 'weight');
-				$bind = array($itemID, $identifier, $itemName, $type, $weight*10);
+				$cols = array('id', 'name_english', 'name_japanese', 'type', 'weight', 'equip_locations');
+				$bind = array($itemID, $identifier, $itemName, $type, $weight*10, $equipLoc);
 				$vals = array(
 					'view'           => $viewID,
 					'slots'          => $slots,
@@ -225,15 +212,6 @@ if ($item) {
 				foreach ($vals as $col => $val) {
 					$cols[] = $col;
 					$bind[] = $val;
-				}
-
-				if ($equipLocs) {
-					$bits = 0;
-					foreach ($equipLocs as $bit) {
-						$bits |= $bit;
-					}
-					$cols[] = 'equip_locations';
-					$bind[] = $bits;
 				}
 
 				if ($equipUpper) {

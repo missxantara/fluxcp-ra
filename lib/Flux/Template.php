@@ -989,6 +989,18 @@ class Flux_Template {
 	}
 	
 	/**
+	 * Get the equip location combination name from an equip location combination.
+	 *
+	 * @param int $id
+	 * @return mixed Equip location combination or false.
+	 * @access public
+	 */
+	public function equipLocationCombinationText($id)
+	{
+		return Flux::getEquipLocationCombination($id);
+	}
+	
+	/**
 	 *
 	 *
 	 */

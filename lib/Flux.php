@@ -647,6 +647,26 @@ class Flux {
 	}
 	
 	/**
+	 * Get the equip location combination name from an equip location combination type.
+	 *
+	 * @param int $id
+	 * @return mixed Equip Location Combination or false.
+	 * @access public
+	 */
+	public static function getEquipLocationCombination($id)
+	{
+		$key   = "EquipLocationCombinations.$id";
+		$combination = self::config($key);
+		
+		if ($combination) {
+			return $combination;
+		}
+		else {
+			return false;
+		}
+	}
+	
+	/**
 	 * Process donations that have been put on hold.
 	 */
 	public static function processHeldCredits()
@@ -746,7 +766,7 @@ class Flux {
 	{
 		$equiplocations = Flux::config('EquipLocations')->toArray();
 		return $equiplocations;
-	}	
+	}
 	
 	/**
 	 * Get array of equip_upper bits. (bit => upper_name pairs)

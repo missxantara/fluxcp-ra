@@ -71,17 +71,13 @@
 		<tr>
 			<th><label for="equip_locations">Equip Locations</label></th>
 			<td colspan="3">
-				<select class="multi-select" name="equip_locations[]" id="equip_locations" size="5" multiple="multiple">
-				<?php foreach (Flux::getEquipLocationList() as $bit => $location): ?>
-					<option value="<?php echo htmlspecialchars($bit) ?>"<?php if ($equipLocs && in_array($bit, $equipLocs)) echo ' selected="selected"' ?>>
-						<?php echo htmlspecialchars($location) ?>
+				<select name="equip_locations" id="equip_locations">
+				<?php foreach (Flux::config('EquipLocationCombinations')->toArray() as $locId => $locName): ?>
+					<option value="<?php echo htmlspecialchars($locId) ?>"<?php if ($locId == $equipLoc) echo ' selected="selected"' ?>>
+						<?php echo htmlspecialchars($locName) ?>
 					</option>
 				<?php endforeach ?>
 				</select>
-				<p class="action">
-					<span class="anchor" onclick="$('#equip_locations option').attr('selected','selected')">Select All</span> |
-					<span class="anchor" onclick="$('#equip_locations option').attr('selected', false)">Select None</span>
-				</p>
 			</td>
 		</tr>
 		<tr>

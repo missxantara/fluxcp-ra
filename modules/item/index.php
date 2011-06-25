@@ -28,6 +28,7 @@ try {
 		$opValues     = array_keys($opMapping);
 		$itemName     = $params->get('name');
 		$itemType     = $params->get('type');
+		$equipLoc     = $params->get('equip_loc');
 		$npcBuy       = $params->get('npc_buy');
 		$npcBuyOp     = $params->get('npc_buy_op');
 		$npcSell      = $params->get('npc_sell');
@@ -66,7 +67,7 @@ try {
 				$itemTypes  = preg_grep("/.*?$typeName.*?/i", Flux::config('ItemTypes')->toArray());
 				
 				if (count($itemTypes)) {
-					$itemTypes    = array_keys($itemTypes);
+					$itemTypes   = array_keys($itemTypes);
 					$sqlpartial .= "AND (";
 					$partial     = '';
 					
@@ -79,6 +80,41 @@ try {
 					$sqlpartial .= "$partial) ";
 				} else {
 					$sqlpartial .= 'AND type IS NULL ';
+				}
+			}
+		}
+
+		if ($equipLoc !== false && $equipLoc !== '-1') {
+			if(is_numeric($equipLoc) && (floatval($equipLoc) == intval($equipLoc))) {
+				$equipLocationCombinations = Flux::config('EquipLocationCombinations')->toArray();
+				if (array_key_exists($equipLoc, $equipLocationCombinations) && $equipLocationCombinations[$equipLoc]) {
+					if ($equipLoc === '0') {
+						$sqlpartial .= "AND (equip_locations = 0 OR equip_locations IS NULL) ";
+					} else {
+						$sqlpartial .= "AND equip_locations = ? ";
+						$bind[]      = $equipLoc;
+					}
+				}
+			} else {
+				$combinationName = preg_quote($equipLoc, '/');
+				$equipLocationCombinations = preg_grep("/.*?$combinationName.*?/i", Flux::config('EquipLocationCombinations')->toArray());
+				
+				if (count($equipLocationCombinations)) {
+					$equipLocationCombinations = array_keys($equipLocationCombinations);
+					$sqlpartial .= "AND (";
+					$partial     = '';
+					
+					foreach ($equipLocationCombinations as $id) {
+						if ($id === 0) {
+							$partial .= "(equip_locations = 0 OR equip_locations IS NULL) OR ";
+						} else {
+							$partial .= "equip_locations = ? OR ";
+							$bind[]   = $id;
+						}
+					}
+					
+					$partial     = preg_replace('/\s*OR\s*$/', '', $partial);
+					$sqlpartial .= "$partial) ";
 				}
 			}
 		}
@@ -194,11 +230,11 @@ try {
 	
 	$paginator = $this->getPaginator($sth->fetch()->total);
 	$paginator->setSortableColumns(array(
-		'item_id' => 'asc', 'name', 'type', 'price_buy', 'price_sell', 'weight', 'attack', 'defense',
+		'item_id' => 'asc', 'name', 'type', 'equip_locations', 'price_buy', 'price_sell', 'weight', 'attack', 'defense',
 		'range', 'slots', 'refineable', 'cost', 'origin_table'
 	));
 	
-	$col  = "origin_table, items.id AS item_id, name_japanese AS name, type, price_buy, weight/10 AS weight, attack,  ";
+	$col  = "origin_table, items.id AS item_id, name_japanese AS name, type, equip_locations, price_buy, weight/10 AS weight, attack,  ";
 	$col .= "defence AS defense, `range`, slots, refineable, cost, $shopTable.id AS shop_item_id, ";
 	$col .= "IFNULL(price_sell, FLOOR(price_buy/2)) AS price_sell";
 	

@@ -294,6 +294,10 @@ return array(
 	// Shouldn't touch this either.
 	'ItemTypes' => include('itemtypes.php'),
 	
+	// Common Equip Location Combinations with their corresponding names.
+	// Shouldn't touch this unless you've added custom combinations.
+	'EquipLocationCombinations' => include('equip_location_combinations.php'),
+	
 	// Error Code -> Error Type mapping.
 	// Shouldn't need touching, however modifying loginerrors.php should be relatively safe.
 	'LoginErrors' => include('loginerrors.php'),
