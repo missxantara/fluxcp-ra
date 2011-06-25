@@ -234,7 +234,8 @@ try {
 		'range', 'slots', 'refineable', 'cost', 'origin_table'
 	));
 	
-	$col  = "origin_table, items.id AS item_id, name_japanese AS name, type, equip_locations, price_buy, weight/10 AS weight, attack,  ";
+	$col  = "origin_table, items.id AS item_id, name_japanese AS name, type, "
+	$col .= "IFNULL(equip_locations, 0) AS equip_locations, price_buy, weight/10 AS weight, attack,  ";
 	$col .= "defence AS defense, `range`, slots, refineable, cost, $shopTable.id AS shop_item_id, ";
 	$col .= "IFNULL(price_sell, FLOOR(price_buy/2)) AS price_sell";
 	
