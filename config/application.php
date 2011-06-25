@@ -302,7 +302,7 @@ return array(
 	'EquipJobs' => include('equip_jobs.php'),
 	
 	// eA equip locations mapping.
-	'EquipLocations' => include ('equip_locations.php'),
+	'EquipLocations' => include('equip_locations.php'),
 	
 	// eA equip upper mapping.
 	'EquipUpper' => include('equip_upper.php'),
