@@ -357,13 +357,23 @@
 		<tr<?php if ($item->equip) echo ' class="equipped"' ?>>
 			<td align="right"><?php echo $this->linkToItem($item->nameid, $item->nameid) ?></td>
 			<?php if ($icon): ?>
-			<td><img src="<?php echo htmlspecialchars($icon) ?>" /></td>
+				<td><img src="<?php echo htmlspecialchars($icon) ?>" /></td>
 			<?php endif ?>
 			<td<?php if (!$icon) echo ' colspan="2"' ?>>
+				<?php if ($item->char_name): ?>
+					<?php if ($auth->actionAllowed('character', 'view') && ($isMine || (!$isMine && $auth->allowedToViewCharacter))): ?>
+						<?php echo $this->linkToCharacter($item->char_id, $item->char_name, $session->serverName) . "'s" ?>
+					<?php else: ?>
+						<?php echo htmlspecialchars($item->char_name . "'s") ?>
+					<?php endif ?>
+				<?php endif ?>
 				<?php if ($item->name_japanese): ?>
 					<span class="item_name"><?php echo htmlspecialchars($item->name_japanese) ?></span>
 				<?php else: ?>
 					<span class="not-applicable">Unknown Item</span>
+				<?php endif ?>
+				<?php if ($item->slots): ?>
+					<?php echo htmlspecialchars(' [' . $item->slots . ']') ?>
 				<?php endif ?>
 			</td>
 			<td><?php echo number_format($item->amount) ?></td>
@@ -383,7 +393,7 @@
 				<?php endif ?>
 			</td>
 			<td>
-				<?php if($item->card0 && ($item->type == 4 || $item->type == 5)): ?>
+				<?php if($item->card0 && ($item->type == 4 || $item->type == 5) && $item->card0 != 254 && $item->card0 != 255 && $item->card0 != -256): ?>
 					<?php if (!empty($cards[$item->card0])): ?>
 						<?php echo $this->linkToItem($item->card0, $cards[$item->card0]) ?>
 					<?php else: ?>
@@ -394,7 +404,7 @@
 				<?php endif ?>
 			</td>
 			<td>
-				<?php if($item->card1 && ($item->type == 4 || $item->type == 5)): ?>
+				<?php if($item->card1 && ($item->type == 4 || $item->type == 5) && $item->card0 != 255 && $item->card0 != -256): ?>
 					<?php if (!empty($cards[$item->card1])): ?>
 						<?php echo $this->linkToItem($item->card1, $cards[$item->card1]) ?>
 					<?php else: ?>
@@ -405,7 +415,7 @@
 				<?php endif ?>
 			</td>
 			<td>
-				<?php if($item->card2 && ($item->type == 4 || $item->type == 5)): ?>
+				<?php if($item->card2 && ($item->type == 4 || $item->type == 5) && $item->card0 != 254 && $item->card0 != 255 && $item->card0 != -256): ?>
 					<?php if (!empty($cards[$item->card2])): ?>
 						<?php echo $this->linkToItem($item->card2, $cards[$item->card2]) ?>
 					<?php else: ?>
@@ -416,7 +426,7 @@
 				<?php endif ?>
 			</td>
 			<td>
-				<?php if($item->card3 && ($item->type == 4 || $item->type == 5)): ?>
+				<?php if($item->card3 && ($item->type == 4 || $item->type == 5) && $item->card0 != 254 && $item->card0 != 255 && $item->card0 != -256): ?>
 					<?php if (!empty($cards[$item->card3])): ?>
 						<?php echo $this->linkToItem($item->card3, $cards[$item->card3]) ?>
 					<?php else: ?>
@@ -458,10 +468,20 @@
 			<td><img src="<?php echo htmlspecialchars($icon) ?>" /></td>
 			<?php endif ?>
 			<td<?php if (!$icon) echo ' colspan="2"' ?>>
+				<?php if ($cart_item->char_name): ?>
+					<?php if ($auth->actionAllowed('character', 'view') && ($isMine || (!$isMine && $auth->allowedToViewCharacter))): ?>
+						<?php echo $this->linkToCharacter($cart_item->char_id, $cart_item->char_name, $session->serverName) . "'s" ?>
+					<?php else: ?>
+						<?php echo htmlspecialchars($cart_item->char_name . "'s") ?>
+					<?php endif ?>
+				<?php endif ?>
 				<?php if ($cart_item->name_japanese): ?>
 					<span class="item_name"><?php echo htmlspecialchars($cart_item->name_japanese) ?></span>
 				<?php else: ?>
 					<span class="not-applicable">Unknown Item</span>
+				<?php endif ?>
+				<?php if ($cart_item->slots): ?>
+					<?php echo htmlspecialchars(' [' . $cart_item->slots . ']') ?>
 				<?php endif ?>
 			</td>
 			<td><?php echo number_format($cart_item->amount) ?></td>
@@ -481,7 +501,7 @@
 				<?php endif ?>
 			</td>
 			<td>
-				<?php if($cart_item->card0 && ($cart_item->type == 4 || $cart_item->type == 5)): ?>
+				<?php if($cart_item->card0 && ($cart_item->type == 4 || $cart_item->type == 5) && $cart_item->card0 != 254 && $cart_item->card0 != 255 && $cart_item->card0 != -256): ?>
 					<?php if (!empty($cart_cards[$cart_item->card0])): ?>
 						<?php echo $this->linkToItem($cart_item->card0, $cart_cards[$cart_item->card0]) ?>
 					<?php else: ?>
@@ -492,7 +512,7 @@
 				<?php endif ?>
 			</td>
 			<td>
-				<?php if($cart_item->card1 && ($cart_item->type == 4 || $cart_item->type == 5)): ?>
+				<?php if($cart_item->card1 && ($cart_item->type == 4 || $cart_item->type == 5) && $cart_item->card0 != 255 && $cart_item->card0 != -256): ?>
 					<?php if (!empty($cart_cards[$cart_item->card1])): ?>
 						<?php echo $this->linkToItem($cart_item->card1, $cart_cards[$cart_item->card1]) ?>
 					<?php else: ?>
@@ -503,7 +523,7 @@
 				<?php endif ?>
 			</td>
 			<td>
-				<?php if($cart_item->card2 && ($cart_item->type == 4 || $cart_item->type == 5)): ?>
+				<?php if($cart_item->card2 && ($cart_item->type == 4 || $cart_item->type == 5) && $cart_item->card0 != 254 && $cart_item->card0 != 255 && $cart_item->card0 != -256): ?>
 					<?php if (!empty($cart_cards[$cart_item->card2])): ?>
 						<?php echo $this->linkToItem($cart_item->card2, $cart_cards[$cart_item->card2]) ?>
 					<?php else: ?>
@@ -514,7 +534,7 @@
 				<?php endif ?>
 			</td>
 			<td>
-				<?php if($cart_item->card3 && ($cart_item->type == 4 || $cart_item->type == 5)): ?>
+				<?php if($cart_item->card3 && ($cart_item->type == 4 || $cart_item->type == 5) && $cart_item->card0 != 254 && $cart_item->card0 != 255 && $cart_item->card0 != -256): ?>
 					<?php if (!empty($cart_cards[$cart_item->card3])): ?>
 						<?php echo $this->linkToItem($cart_item->card3, $cart_cards[$cart_item->card3]) ?>
 					<?php else: ?>

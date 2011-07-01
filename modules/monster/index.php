@@ -27,6 +27,7 @@ try {
 		$monsterName    = $params->get('name');
 		$cardID         = $params->get('card_id');
 		$mvp            = strtolower($params->get('mvp'));
+		$custom         = $params->get('custom');
 		
 		if ($monsterName) {
 			$sqlpartial .= "AND ((kName LIKE ? OR kName = ?) OR (iName LIKE ? OR iName = ?)) ";
@@ -47,6 +48,15 @@ try {
 		elseif ($mvp == 'no') {
 			$sqlpartial .= 'AND MEXP = 0 ';
 		}
+		
+		if ($custom) {
+			if ($custom == 'yes') {
+				$sqlpartial .= "AND origin_table LIKE '%mob_db2' ";
+			}
+			elseif ($custom == 'no') {
+				$sqlpartial .= "AND origin_table LIKE '%mob_db' ";
+			}
+		}
 	}
 	
 	// Get total count and feed back to the paginator.
@@ -55,7 +65,7 @@ try {
 	
 	$paginator = $this->getPaginator($sth->fetch()->total);
 	$paginator->setSortableColumns(array(
-		'monster_id' => 'asc', 'kro_name', 'iro_name', 'level', 'hp', 'exp', 'jexp', 'dropcard_id'
+		'monster_id' => 'asc', 'kro_name', 'iro_name', 'level', 'hp', 'exp', 'jexp', 'dropcard_id', 'origin_table'
 	));
 	
 	$col  = "origin_table, monsters.ID AS monster_id, kName AS kro_name, iName AS iro_name, ";

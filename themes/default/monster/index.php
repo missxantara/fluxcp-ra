@@ -19,6 +19,13 @@
 			<option value="yes"<?php if ($mvpParam == 'yes') echo ' selected="selected"' ?>>Yes</option>
 			<option value="no"<?php if ($mvpParam == 'no') echo ' selected="selected"' ?>>No</option>
 		</select>
+		...
+		<label for="custom">Custom:</label>
+		<select name="custom" id="custom">
+			<option value=""<?php if (!($custom=$params->get('custom'))) echo ' selected="selected"' ?>>All</option>
+			<option value="yes"<?php if ($custom == 'yes') echo ' selected="selected"' ?>>Yes</option>
+			<option value="no"<?php if ($custom == 'no') echo ' selected="selected"' ?>>No</option>
+		</select>
 		
 		<input type="submit" value="Search" />
 		<input type="button" value="Reset" onclick="reload()" />
@@ -36,6 +43,7 @@
 		<th><?php echo $paginator->sortableColumn('exp', 'Base EXP') ?></th>
 		<th><?php echo $paginator->sortableColumn('jexp', 'Job EXP') ?></th>
 		<th><?php echo $paginator->sortableColumn('dropcard_id', 'Card ID') ?></th>
+		<th><?php echo $paginator->sortableColumn('origin_table', 'Custom') ?></th>
 	</tr>
 	<?php foreach ($monsters as $monster): ?>
 	<tr>
@@ -68,6 +76,13 @@
 		<?php else: ?>
 			<td><span class="not-applicable">None</span></td>
 		<?php endif ?>
+		<td>
+			<?php if (preg_match('/mob_db2$/', $monster->origin_table)): ?>
+				Yes
+			<?php else: ?>
+				No
+			<?php endif ?>
+		</td>
 	</tr>
 	<?php endforeach ?>
 </table>

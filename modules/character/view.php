@@ -109,10 +109,15 @@ if ($char) {
 		$partyMembers = array();
 	}
 	
-	$col  = "inventory.*, items.name_japanese, items.type";
+	$col  = "inventory.*, items.name_japanese, items.type, items.slots, c.char_id, c.name AS char_name";
 	
 	$sql  = "SELECT $col FROM {$server->charMapDatabase}.inventory ";
 	$sql .= "LEFT JOIN {$server->charMapDatabase}.items ON items.id = inventory.nameid ";
+	$sql .= "LEFT JOIN {$server->charMapDatabase}.`char` AS c ";
+	$sql .= "ON c.char_id = IF(inventory.card0 IN (254, 255), ";
+	$sql .= "IF(inventory.card0 = 255 && inventory.card2 < 0, ";
+	$sql .= "inventory.card2 + 65536, inventory.card2) ";
+	$sql .= "| (inventory.card3 << 16), NULL) ";
 	$sql .= "WHERE inventory.char_id = ? ";
 	
 	if (!$auth->allowedToSeeUnknownItems) {
@@ -161,10 +166,15 @@ if ($char) {
 		}
 	}
 	
-	$col  = "cart_inventory.*, items.name_japanese, items.type";
+	$col  = "cart_inventory.*, items.name_japanese, items.type, items.slots, c.char_id, c.name AS char_name";
 	
 	$sql  = "SELECT $col FROM {$server->charMapDatabase}.cart_inventory ";
 	$sql .= "LEFT JOIN {$server->charMapDatabase}.items ON items.id = cart_inventory.nameid ";
+	$sql .= "LEFT JOIN {$server->charMapDatabase}.`char` AS c ";
+	$sql .= "ON c.char_id = IF(cart_inventory.card0 IN (254, 255), ";
+	$sql .= "IF(cart_inventory.card0 = 255 && cart_inventory.card2 < 0, ";
+	$sql .= "cart_inventory.card2 + 65536, cart_inventory.card2) ";
+	$sql .= "| (cart_inventory.card3 << 16), NULL) ";
 	$sql .= "WHERE cart_inventory.char_id = ? ";
 	
 	if (!$auth->allowedToSeeUnknownItems) {

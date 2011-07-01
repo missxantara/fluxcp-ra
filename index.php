@@ -130,8 +130,9 @@ try {
 	else {
 		$sessionExpireDuration = Flux::config('SessionCookieExpire') * 60 * 60;
 		session_set_cookie_params($sessionExpireDuration, Flux::config('BaseURI'));
+		ini_set('session.gc_maxlifetime', $sessionExpireDuration);
 		ini_set('session.name', $sessionKey);
-		session_start();
+		@session_start();
 	}
 
 	if (empty($_SESSION[$sessionKey]) || !is_array($_SESSION[$sessionKey])) {

@@ -48,13 +48,19 @@ if ($guild) {
 }
 
 $col  = "ch.account_id, ch.char_id, ch.name, ch.class, ch.base_level, ch.job_level, ";
+$col .= "IF (ch.online = 1, 'Online Now!', IF(DATE_FORMAT(acc.lastlogin, '%Y-%m-%d') = DATE_FORMAT(NOW(), '%Y-%m-%d'), 'Today', ";
+$col .= "IF (DATE_FORMAT(acc.lastlogin, '%Y-%m-%d') = DATE_FORMAT(DATE_SUB(NOW(), INTERVAL 1 DAY), '%Y-%m-%d'), 'Yesterday', ";
+$col .= "IF (DATE_FORMAT(acc.lastlogin, '%Y-%m-%d') > DATE_FORMAT(DATE_SUB(NOW(), INTERVAL 1 WEEK), '%Y-%m-%d'), 'Several Days Ago', ";
+$col .= "IF (DATE_FORMAT(acc.lastlogin, '%Y-%m-%d') > DATE_FORMAT(DATE_SUB(NOW(), INTERVAL 2 WEEK), '%Y-%m-%d'), 'A Week Ago', ";
+$col .= "CONCAT(PERIOD_DIFF(DATE_FORMAT(NOW(), '%Y%m'), DATE_FORMAT(acc.lastlogin, '%Y%m')) * 4, ' Weeks Ago')))))) AS lastlogin, ";
 $col .= "roster.exp AS devotion, roster.position, ";
 $col .= "pos.name AS position_name, pos.mode, pos.exp_mode";
 
 $sql  = "SELECT $col FROM {$server->charMapDatabase}.`char` AS ch ";
+$sql .= "LEFT JOIN {$server->loginDatabase}.login AS acc ON acc.account_id = ch.account_id ";
 $sql .= "LEFT JOIN {$server->charMapDatabase}.guild_member AS roster ON (roster.guild_id = ch.guild_id AND roster.char_id = ch.char_id) ";
 $sql .= "LEFT JOIN {$server->charMapDatabase}.guild_position AS pos ON (pos.guild_id = ch.guild_id AND pos.position = roster.position) ";
-$sql .= "WHERE ch.guild_id = ? ORDER BY position ASC, devotion DESC";
+$sql .= "WHERE ch.guild_id = ? ORDER BY roster.position ASC, acc.lastlogin DESC";
 
 $sth  = $server->connection->getStatement($sql);
 $sth->execute(array($guildID));
@@ -82,10 +88,15 @@ $sth->execute(array($guildID));
 
 $expulsions = $sth->fetchAll();
 
-$col  = "guild_storage.*, items.name_japanese, items.type";
+$col  = "guild_storage.*, items.name_japanese, items.type, items.slots, c.char_id, c.name AS char_name";
 
 $sql  = "SELECT $col FROM {$server->charMapDatabase}.guild_storage ";
 $sql .= "LEFT JOIN {$server->charMapDatabase}.items ON items.id = guild_storage.nameid ";
+$sql .= "LEFT JOIN {$server->charMapDatabase}.`char` AS c ";
+$sql .= "ON c.char_id = IF(guild_storage.card0 IN (254, 255), ";
+$sql .= "IF(guild_storage.card0 = 255 && guild_storage.card2 < 0, ";
+$sql .= "guild_storage.card2 + 65536, guild_storage.card2) ";
+$sql .= "| (guild_storage.card3 << 16), NULL) ";
 $sql .= "WHERE guild_storage.guild_id = ? ";
 
 if (!$auth->allowedToSeeUnknownItems) {

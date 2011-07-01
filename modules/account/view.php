@@ -147,10 +147,15 @@ foreach ($session->getAthenaServerNames() as $serverName) {
 	$characters[$athena->serverName] = $chars;
 }
 
-$col  = "storage.*, items.name_japanese, items.type";
+$col  = "storage.*, items.name_japanese, items.type, items.slots, c.char_id, c.name AS char_name";
 
 $sql  = "SELECT $col FROM {$server->charMapDatabase}.storage ";
 $sql .= "LEFT JOIN {$server->charMapDatabase}.items ON items.id = storage.nameid ";
+$sql .= "LEFT JOIN {$server->charMapDatabase}.`char` AS c ";
+$sql .= "ON c.char_id = IF(storage.card0 IN (254, 255), ";
+$sql .= "IF(storage.card0 = 255 && storage.card2 < 0, ";
+$sql .= "storage.card2 + 65536, storage.card2) ";
+$sql .= "| (storage.card3 << 16), NULL) ";
 $sql .= "WHERE storage.account_id = ? ";
 
 if (!$auth->allowedToSeeUnknownItems) {

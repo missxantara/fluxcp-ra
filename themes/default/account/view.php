@@ -263,10 +263,20 @@
 			<td><img src="<?php echo htmlspecialchars($icon) ?>" /></td>
 			<?php endif ?>
 			<td<?php if (!$icon) echo ' colspan="2"' ?>>
+				<?php if ($item->char_name): ?>
+					<?php if ($auth->actionAllowed('character', 'view') && ($isMine || (!$isMine && $auth->allowedToViewCharacter))): ?>
+						<?php echo $this->linkToCharacter($item->char_id, $item->char_name, $session->serverName) . "'s" ?>
+					<?php else: ?>
+						<?php echo htmlspecialchars($item->char_name . "'s") ?>
+					<?php endif ?>
+				<?php endif ?>
 				<?php if ($item->name_japanese): ?>
 					<span class="item_name"><?php echo htmlspecialchars($item->name_japanese) ?></span>
 				<?php else: ?>
 					<span class="not-applicable"><?php echo htmlspecialchars(Flux::message('UnknownLabel')) ?></span>
+				<?php endif ?>
+				<?php if ($item->slots): ?>
+					<?php echo htmlspecialchars(' [' . $item->slots . ']') ?>
 				<?php endif ?>
 			</td>
 			<td><?php echo number_format($item->amount) ?></td>
@@ -286,7 +296,7 @@
 				<?php endif ?>
 			</td>
 			<td>
-				<?php if($item->card0 && ($item->type == 4 || $item->type == 5)): ?>
+				<?php if($item->card0 && ($item->type == 4 || $item->type == 5) && $item->card0 != 254 && $item->card0 != 255 && $item->card0 != -256): ?>
 					<?php if (!empty($cards[$item->card0])): ?>
 						<?php if ($auth->actionAllowed('item', 'view')): ?>
 							<?php echo $this->linkToItem($item->card0, $cards[$item->card0]) ?>
@@ -305,7 +315,7 @@
 				<?php endif ?>
 			</td>
 			<td>
-				<?php if($item->card1 && ($item->type == 4 || $item->type == 5)): ?>
+				<?php if($item->card1 && ($item->type == 4 || $item->type == 5) && $item->card0 != 255 && $item->card0 != -256): ?>
 					<?php if (!empty($cards[$item->card1])): ?>
 						<?php if ($auth->actionAllowed('item', 'view')): ?>
 							<?php echo $this->linkToItem($item->card1, $cards[$item->card1]) ?>
@@ -324,7 +334,7 @@
 				<?php endif ?>
 			</td>
 			<td>
-				<?php if($item->card2 && ($item->type == 4 || $item->type == 5)): ?>
+				<?php if($item->card2 && ($item->type == 4 || $item->type == 5) && $item->card0 != 254 && $item->card0 != 255 && $item->card0 != -256): ?>
 					<?php if (!empty($cards[$item->card0])): ?>
 						<?php if ($auth->actionAllowed('item', 'view')): ?>
 							<?php echo $this->linkToItem($item->card2, $cards[$item->card2]) ?>
@@ -343,7 +353,7 @@
 				<?php endif ?>
 			</td>
 			<td>
-				<?php if($item->card3 && ($item->type == 4 || $item->type == 5)): ?>
+				<?php if($item->card3 && ($item->type == 4 || $item->type == 5) && $item->card0 != 254 && $item->card0 != 255 && $item->card0 != -256): ?>
 					<?php if (!empty($cards[$item->card0])): ?>
 						<?php if ($auth->actionAllowed('item', 'view')): ?>
 							<?php echo $this->linkToItem($item->card3, $cards[$item->card3]) ?>
