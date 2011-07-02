@@ -26,6 +26,7 @@ return array(
 	'PagesToShow'          => 10,                       // The number of page numbers to display at once.
 	'PageJumpMinimumPages' => 1,                        // Minimum number of required pages before page jump box is shown. (0 to always show!)
 	'ShowPageJump'         => true,                     // Whether or not to show the "Page Jump" box.
+	'SingleMatchRedirect'  => true,                     // Whether or not to redirect to view action from index page if only one match is returned (and action is allowed).
 	'MinUsernameLength'    => 4,                        // Minimum username length.
 	'MaxUsernameLength'    => 23,                       // Maximum username length.
 	'MinPasswordLength'    => 8,                        // Minimum password length.

@@ -151,9 +151,10 @@ $sth  = $server->connection->getStatement($sql);
 $sth->execute($bind);
 
 $accounts   = $sth->fetchAll();
+
 $authorized = $auth->actionAllowed('account', 'view') && $auth->allowedToViewAccount;
 
-if ($accounts && count($accounts) === 1 && $authorized) {
+if ($accounts && count($accounts) === 1 && $authorized && Flux::config('SingleMatchRedirect')) {
 	$this->redirect($this->url('account', 'view', array('id' => $accounts[0]->account_id)));
 }
 ?>

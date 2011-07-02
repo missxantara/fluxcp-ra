@@ -94,7 +94,7 @@ $sth->execute($bind);
 $guilds     = $sth->fetchAll();
 $authorized = $auth->actionAllowed('guild', 'view') && $auth->allowedToViewGuild;
 
-if ($guilds && count($guilds) === 1 && $authorized) {
+if ($guilds && count($guilds) === 1 && $authorized && Flux::config('SingleMatchRedirect')) {
 	$this->redirect($this->url('guild', 'view', array('id' => $guilds[0]->guild_id)));
 }
 

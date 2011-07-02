@@ -181,7 +181,7 @@ $sth->execute($bind);
 $characters = $sth->fetchAll();
 $authorized = $auth->actionAllowed('character', 'view') && $auth->allowedToViewCharacter;
 
-if ($characters && count($characters) === 1 && $authorized) {
+if ($characters && count($characters) === 1 && $authorized && Flux::config('SingleMatchRedirect')) {
 	$this->redirect($this->url('character', 'view', array('id' => $characters[0]->char_id)));
 }
 ?>
