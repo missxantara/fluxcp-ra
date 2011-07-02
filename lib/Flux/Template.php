@@ -839,6 +839,25 @@ class Flux_Template {
 	}
 	
 	/**
+	 * Link to an account search.
+	 *
+	 * @param array $params
+	 * @param string $text
+	 * @return mixed
+	 * @access public
+	 */
+	public function linkToAccountSearch($params, $text)
+	{
+		if (is_array($params) && count($params)) {
+			$url = $this->url('account', 'index', $params);
+			return sprintf('<a href="%s" class="link-to-account-search">%s</a>', $url, htmlentities($text));
+		}
+		else {
+			return false;
+		}
+	}
+	
+	/**
 	 * Link to a character view page.
 	 *
 	 * @param int $charID
