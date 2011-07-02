@@ -21,7 +21,7 @@
 		<th><?php echo htmlspecialchars(Flux::message('EmailAddressLabel')) ?></th>
 		<td>
 			<?php if ($account->email): ?>
-				?php if ($auth->actionAllowed('account', 'index')): ?>
+				<?php if ($auth->actionAllowed('account', 'index')): ?>
 					<?php echo $this->linkToAccountSearch(array('email' => $account->email), $account->email) ?>
 				<?php else: ?>
 					<?php echo $account->email ?>
