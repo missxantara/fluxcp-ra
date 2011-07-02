@@ -76,6 +76,12 @@ try {
 	
 	$sth->execute($bind);
 	$monsters = $sth->fetchAll();
+	
+	$authorized = $auth->actionAllowed('monster', 'view');
+	
+	if ($monsters && count($monsters) === 1 && $authorized && Flux::config('SingleMatchRedirectMobs')) {
+		$this->redirect($this->url('monster', 'view', array('id' => $monsters[0]->monster_id)));
+	}
 }
 catch (Exception $e) {
 	if (isset($tempTable) && $tempTable) {

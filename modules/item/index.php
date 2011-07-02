@@ -244,6 +244,12 @@ try {
 	
 	$sth->execute($bind);
 	$items = $sth->fetchAll();
+	
+	$authorized = $auth->actionAllowed('item', 'view');
+	
+	if ($items && count($items) === 1 && $authorized && Flux::config('SingleMatchRedirectItem')) {
+		$this->redirect($this->url('item', 'view', array('id' => $items[0]->item_id)));
+	}
 }
 catch (Exception $e) {
 	if (isset($tempTable) && $tempTable) {
