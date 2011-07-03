@@ -13,7 +13,9 @@ $tempTable  = new Flux_TemporaryTable($server->connection, $tableName, $fromTabl
 
 $guildID = $params->get('id');
 
-$col  = "guild.*, `char`.name AS guild_master";
+$col  = "guild.guild_id, guild.name, guild.char_id, guild.master, guild.guild_lv, guild.connect_member, guild.max_member, "
+$col .= "guild.average_lv, guild.exp, guild.next_exp, guild.skill_point, REPLACE(guild.mes1, '|00', ''), REPLACE(guild.mes2, '|00', ''), ";
+$col .= "guild.emblem_len, guild.emblem_id, guild.emblem_data, `char`.name AS guild_master";
 
 $sql  = "SELECT $col FROM {$server->charMapDatabase}.guild LEFT JOIN {$server->charMapDatabase}.`char` ON `char`.char_id = guild.char_id ";
 $sql .= "WHERE guild.guild_id = ?";
@@ -78,7 +80,7 @@ if (!$isMine && !$auth->allowedToViewGuild) {
 	$this->deny();
 }
 
-$col  = "account_id, name, mes";
+$col  = "account_id, name, REPLACE(mes, '|00', '')";
 
 $sql  = "SELECT $col FROM {$server->charMapDatabase}.guild_expulsion ";
 $sql .= "WHERE guild_id = ? ORDER BY name ASC";
