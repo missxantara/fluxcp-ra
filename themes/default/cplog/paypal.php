@@ -98,7 +98,13 @@
 		<td><?php echo $this->formatDateTime($txn->process_date) ?></td>
 		<td><?php echo $this->formatDateTime($txn->payment_date) ?></td>
 		<td><?php echo $txn->payment_status ?></td>
-		<td><?php echo htmlspecialchars($txn->payer_email) ?></td>
+		<td>
+			<?php if ($auth->actionAllowed('account', 'index')): ?>
+				<?php echo $this->linkToAccountSearch(array('email' => $txn->payer_email), $txn->payer_email) ?>
+			<?php else: ?>
+				<?php echo htmlspecialchars($txn->payer_email) ?>
+			<?php endif ?>
+		</td>
 		<td><?php echo $txn->mc_gross ?> <?php echo $txn->mc_currency ?></td>
 		<td><?php echo number_format((int)$txn->credits) ?></td>
 		<!--<td><?php echo htmlspecialchars($txn->server_name) ?></td>-->

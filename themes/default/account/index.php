@@ -128,7 +128,7 @@
 		<td><?php echo number_format((int)$account->balance) ?></td>
 		<td>
 			<?php if ($account->email): ?>
-				<?php echo htmlspecialchars($account->email) ?>
+				<?php echo $this->linkToAccountSearch(array('email' => $account->email), $account->email) ?>
 			<?php else: ?>
 				<span class="not-applicable"><?php echo htmlspecialchars(Flux::message('NoneLabel')) ?></span>
 			<?php endif ?>
@@ -143,7 +143,7 @@
 		</td>
 		<td>
 			<?php if ($account->last_ip): ?>
-				<?php echo htmlspecialchars($account->last_ip) ?>
+				<?php echo $this->linkToAccountSearch(array('last_ip' => $account->last_ip), $account->last_ip) ?>
 			<?php else: ?>
 				<span class="not-applicable"><?php echo htmlspecialchars(Flux::message('NoneLabel')) ?></span>
 			<?php endif ?>

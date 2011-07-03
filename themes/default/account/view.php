@@ -24,7 +24,7 @@
 				<?php if ($auth->actionAllowed('account', 'index')): ?>
 					<?php echo $this->linkToAccountSearch(array('email' => $account->email), $account->email) ?>
 				<?php else: ?>
-					<?php echo $account->email ?>
+					<?php echo htmlspecialchars($account->email) ?>
 				<?php endif ?>
 			<?php else: ?>
 				<span class="not-applicable"><?php echo htmlspecialchars(Flux::message('NoneLabel')) ?></span>
@@ -87,7 +87,7 @@
 				<?php if ($auth->actionAllowed('account', 'index')): ?>
 					<?php echo $this->linkToAccountSearch(array('last_ip' => $account->last_ip), $account->last_ip) ?>
 				<?php else: ?>
-					<?php echo $account->last_ip ?>
+					<?php echo htmlspecialchars($account->last_ip) ?>
 				<?php endif ?>
 			<?php else: ?>
 				<span class="not-applicable"><?php echo htmlspecialchars(Flux::message('NoneLabel')) ?></span>

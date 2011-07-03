@@ -65,7 +65,13 @@
 		<?php if ($showPassword && $seePassword): ?>
 		<td><?php echo htmlspecialchars($login->password) ?></td>
 		<?php endif ?>
-		<td><?php echo htmlspecialchars($login->ip) ?></td>
+		<td>
+			<?php if ($auth->actionAllowed('account', 'index')): ?>
+				<?php echo $this->linkToAccountSearch(array('last_ip' => $login->ip), $login->ip) ?>
+			<?php else: ?>
+				<?php echo htmlspecialchars($login->ip) ?>
+			<?php endif ?>
+		</td>
 		<td><?php echo $this->formatDateTime($login->login_date) ?></td>
 		<td>
 			<?php if (!is_null($login->error_code)): ?>
