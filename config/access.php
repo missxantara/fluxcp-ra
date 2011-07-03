@@ -70,7 +70,7 @@ return array(
 			'view'     => AccountLevel::ADMIN
 		),
 		'castle'    => array(
-			'index'    => AccountLevel::LOWGM
+			'index'    => AccountLevel::ANYONE
 		),
 		'economy'   => array(
 			'index'    => AccountLevel::NORMAL

@@ -168,6 +168,7 @@ return array(
 			'Server Info.'  => array('module' => 'server', 'action' => 'info'),
 			'Server Status' => array('module' => 'server', 'action' => 'status'),
 			'WoE Hours'     => array('module' => 'woe'),
+			'Castles'       => array('module' => 'castle'),
 			"Who's Online"  => array('module' => 'character', 'action' => 'online'),
 			'Map Statistics'=> array('module' => 'character', 'action' => 'mapstats'),
 			'Ranking Info.' => array('module' => 'ranking', 'action' => 'character'),
@@ -186,7 +187,6 @@ return array(
 			'Reload'        => array('module' => 'reload'),
 			'Send Mail'     => array('module' => 'mail'),
 			'Re-Install'    => array('module' => 'install', 'action' => 'reinstall'),
-			//'Castles'       => array('module' => 'castle'),
 			//'Auction'       => array('module' => 'auction'),
 			//'Economy'       => array('module' => 'economy'),
 		)
@@ -328,6 +328,9 @@ return array(
 	
 	// Item pick types.
 	'PickTypes' => include('picktypes.php'),
+	
+	// Castle names.
+	'CastleNames' => include('castlenames.php'),
 	
 	// DON'T TOUCH. THIS IS FOR DEVELOPERS.
 	'FluxTables' => array(
