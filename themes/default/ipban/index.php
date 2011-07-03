@@ -20,7 +20,13 @@
 			<td align="center">
 				<input type="checkbox" class="unban-cb" name="unban_list[]" value="<?php echo htmlspecialchars($list->list) ?>" />
 			</td>
-			<td><?php echo htmlspecialchars($list->list) ?></td>
+			<td>
+			<?php if ($auth->actionAllowed('account', 'index')): ?>
+				<?php echo $this->linkToAccountSearch(array('last_ip' => $list->list), $list->list) ?>
+			<?php else: ?>
+				<?php echo htmlspecialchars($list->list) ?>
+			<?php endif ?>
+			</td>
 			<td><?php echo $this->formatDateTime($list->btime) ?></td>
 			<td>
 				<?php if ($list->reason): ?>
