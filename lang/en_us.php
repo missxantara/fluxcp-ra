@@ -195,6 +195,7 @@ return array(
 	'ResetPassTitle'          => 'Reset Password',
 	'ResetPassEnterAccount'   => 'Please enter your account username.',
 	'ResetPassEnterEmail'     => 'Please enter your e-mail address.',
+	'ResetPassDisallowed'     => 'Password recovery cannot be used for this account.',
 	'ResetPassFailed'         => 'Failed to send reset password e-mail.',
 	'ResetPassEmailSent'      => 'An e-mail has been sent with details on how to reset your password.',
 	'ResetPassTitle'          => 'Reset Password',

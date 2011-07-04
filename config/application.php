@@ -118,6 +118,8 @@ return array(
 	'ShopImageExtensions'  => array(                    // These are the image extensions allowed for uploading in the item shop.
 		'png', 'jpg', 'gif', 'bmp', 'jpeg'
 	),
+	'NoResetPassLevel'    => AccountLevel::HELPER,      // Level of account to prevent password reset using control panel.
+	
 	'CharRankingLimit'    => 20,                        //
 	'GuildRankingLimit'   => 20,                        //
 	'ZenyRankingLimit'    => 20,                        //
