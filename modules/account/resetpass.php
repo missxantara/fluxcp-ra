@@ -56,7 +56,7 @@ if (count($_POST)) {
 			}
 		}
 
-		if (empty($errorMessage)) {
+		if (!empty($errorMessage)) {
 			if (empty($sent)) {
 				$errorMessage = Flux::message('ResetPassFailed');
 			}
