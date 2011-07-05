@@ -220,11 +220,15 @@
 			<td><img src="<?php echo htmlspecialchars($icon) ?>" /></td>
 			<?php endif ?>
 			<td<?php if (!$icon) echo ' colspan="2"' ?>>
-				<?php if ($item->char_name): ?>
-					<?php if ($auth->actionAllowed('character', 'view') && ($isMine || (!$isMine && $auth->allowedToViewCharacter))): ?>
-						<?php echo $this->linkToCharacter($item->char_id, $item->char_name, $session->serverName) . "'s" ?>
+				<?php if ($item->card0 == 254 || $item->card0 == 255): ?>
+					<?php if ($item->char_name): ?>
+						<?php if ($auth->actionAllowed('character', 'view') && ($isMine || (!$isMine && $auth->allowedToViewCharacter))): ?>
+							<?php echo $this->linkToCharacter($item->char_id, $item->char_name, $session->serverName) . "'s" ?>
+						<?php else: ?>
+							<?php echo htmlspecialchars($item->char_name . "'s") ?>
+						<?php endif ?>
 					<?php else: ?>
-						<?php echo htmlspecialchars($item->char_name . "'s") ?>
+						<span class="not-applicable"><?php echo htmlspecialchars(Flux::message('UnknownLabel')) ?></span>'s
 					<?php endif ?>
 				<?php endif ?>
 				<?php if ($item->name_japanese): ?>
