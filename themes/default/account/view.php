@@ -207,7 +207,7 @@
 				<td><img src="<?php echo $this->emblem($char->guild_id) ?>" /></td>
 				<?php endif ?>
 				<td<?php if (!$char->guild_emblem_len) echo ' colspan="2"' ?>>
-					<?php if ($auth->actionAllowed('guild', 'view') && $auth->allowedToViewGuild): ?>
+					<?php if ($auth->actionAllowed('guild', 'view')): ?>
 						<?php echo $this->linkToGuild($char->guild_id, $char->guild_name) ?>
 					<?php else: ?>
 						<?php echo htmlspecialchars($char->guild_name) ?>
