@@ -102,7 +102,7 @@
 				<input type="hidden" name="tempban" value="1" />
 				<label><?php echo htmlspecialchars(Flux::message('AccountBanReasonLabel')) ?><br /><textarea name="reason" class="block reason"></textarea></label>
 				<label><?php echo htmlspecialchars(Flux::message('AccountBanUntilLabel')) ?></label>
-				<?php echo $this->dateTimeField('tempban'); ?>
+				<?php echo $this->dateTimeField('tempban', date('H:i:s')); ?>
 				<input type="submit" value="<?php echo htmlspecialchars(Flux::message('AccountTempBanButton')) ?>"
 					onclick="return confirm('<?php echo $banconfirm=htmlspecialchars(str_replace("'", "\\'", Flux::message('AccountBanConfirm'))) ?>')" />
 			</form>
