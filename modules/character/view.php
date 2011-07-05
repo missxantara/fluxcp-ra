@@ -115,8 +115,7 @@ if ($char) {
 	$sql .= "LEFT JOIN {$server->charMapDatabase}.items ON items.id = inventory.nameid ";
 	$sql .= "LEFT JOIN {$server->charMapDatabase}.`char` AS c ";
 	$sql .= "ON c.char_id = IF(inventory.card0 IN (254, 255), ";
-	$sql .= "IF(inventory.card0 = 255 && inventory.card2 < 0, ";
-	$sql .= "inventory.card2 + 65536, inventory.card2) ";
+	$sql .= "IF(inventory.card2 < 0, inventory.card2 + 65536, inventory.card2) ";
 	$sql .= "| (inventory.card3 << 16), NULL) ";
 	$sql .= "WHERE inventory.char_id = ? ";
 	
@@ -172,8 +171,7 @@ if ($char) {
 	$sql .= "LEFT JOIN {$server->charMapDatabase}.items ON items.id = cart_inventory.nameid ";
 	$sql .= "LEFT JOIN {$server->charMapDatabase}.`char` AS c ";
 	$sql .= "ON c.char_id = IF(cart_inventory.card0 IN (254, 255), ";
-	$sql .= "IF(cart_inventory.card0 = 255 && cart_inventory.card2 < 0, ";
-	$sql .= "cart_inventory.card2 + 65536, cart_inventory.card2) ";
+	$sql .= "IF(cart_inventory.card2 < 0, cart_inventory.card2 + 65536, cart_inventory.card2) ";
 	$sql .= "| (cart_inventory.card3 << 16), NULL) ";
 	$sql .= "WHERE cart_inventory.char_id = ? ";
 	

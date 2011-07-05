@@ -153,8 +153,7 @@ $sql  = "SELECT $col FROM {$server->charMapDatabase}.storage ";
 $sql .= "LEFT JOIN {$server->charMapDatabase}.items ON items.id = storage.nameid ";
 $sql .= "LEFT JOIN {$server->charMapDatabase}.`char` AS c ";
 $sql .= "ON c.char_id = IF(storage.card0 IN (254, 255), ";
-$sql .= "IF(storage.card0 = 255 && storage.card2 < 0, ";
-$sql .= "storage.card2 + 65536, storage.card2) ";
+$sql .= "IF(storage.card2 < 0, storage.card2 + 65536, storage.card2) ";
 $sql .= "| (storage.card3 << 16), NULL) ";
 $sql .= "WHERE storage.account_id = ? ";
 
