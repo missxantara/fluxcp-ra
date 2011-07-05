@@ -65,7 +65,7 @@ return array(
 		),
 		'guild'     => array(
 			'emblem'   => AccountLevel::ANYONE,
-			'index'    => AccountLevel::LOWGM,
+			'index'    => AccountLevel::NORMAL,
 			'export'   => AccountLevel::ADMIN,
 			'view'     => AccountLevel::ADMIN
 		),

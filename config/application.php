@@ -83,6 +83,7 @@ return array(
 		//'admin2@localhost',                             // -- This array may be empty if you only use one e-mail
 		//'admin3@localhost'                              // -- because your Business Email is also checked.
 	),
+	'GStorageLeaderOnly'   => false,                    // Only allow guild leader to view guild storage rather than all members?
 	'DivorceKeepChild'     => false,                    // Keep child after divorce?
 	'AllowIpBanLogin'      => false,                    // Allow logging into account from banned IP.
 	'AllowTempBanLogin'    => false,                    // Allow logging in of temporarily banned accounts.

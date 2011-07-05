@@ -195,116 +195,118 @@
 <?php else: ?>
 	<p>There are no member expulsions for this guild.</p>
 <?php endif ?>
-<h3>Guild Storage Items of “<?php echo htmlspecialchars($guild->name) ?>”</h3>
-<?php if ($items): ?>
-	<p><?php echo htmlspecialchars($guild->name) ?> has <?php echo count($items) ?> guild storage item(s).</p>
-	<table class="vertical-table">
-		<tr>
-			<th>Item ID</th>
-			<th colspan="2">Name</th>
-			<th>Amount</th>
-			<th>Identified</th>
-			<th>Refine Level</th>
-			<th>Broken</th>
-			<th>Card0</th>
-			<th>Card1</th>
-			<th>Card2</th>
-			<th>Card3</th>
-			</th>
-		</tr>
-		<?php foreach ($items AS $item): ?>
-		<?php $icon = $this->iconImage($item->nameid) ?>
-		<tr>
-			<td align="right"><?php echo $this->linkToItem($item->nameid, $item->nameid) ?></td>
-			<?php if ($icon): ?>
-			<td><img src="<?php echo htmlspecialchars($icon) ?>" /></td>
-			<?php endif ?>
-			<td<?php if (!$icon) echo ' colspan="2"' ?>>
-				<?php if ($item->card0 == 254 || $item->card0 == 255): ?>
-					<?php if ($item->char_name): ?>
-						<?php if ($auth->actionAllowed('character', 'view') && ($isMine || (!$isMine && $auth->allowedToViewCharacter))): ?>
-							<?php echo $this->linkToCharacter($item->char_id, $item->char_name, $session->serverName) . "'s" ?>
+<?php if (!Flux::config('GStorageLeaderOnly') || $amOwner || $auth->allowedToViewGuild): ?>
+	<h3>Guild Storage Items of “<?php echo htmlspecialchars($guild->name) ?>”</h3>
+	<?php if ($items): ?>
+		<p><?php echo htmlspecialchars($guild->name) ?> has <?php echo count($items) ?> guild storage item(s).</p>
+		<table class="vertical-table">
+			<tr>
+				<th>Item ID</th>
+				<th colspan="2">Name</th>
+				<th>Amount</th>
+				<th>Identified</th>
+				<th>Refine Level</th>
+				<th>Broken</th>
+				<th>Card0</th>
+				<th>Card1</th>
+				<th>Card2</th>
+				<th>Card3</th>
+				</th>
+			</tr>
+			<?php foreach ($items AS $item): ?>
+			<?php $icon = $this->iconImage($item->nameid) ?>
+			<tr>
+				<td align="right"><?php echo $this->linkToItem($item->nameid, $item->nameid) ?></td>
+				<?php if ($icon): ?>
+				<td><img src="<?php echo htmlspecialchars($icon) ?>" /></td>
+				<?php endif ?>
+				<td<?php if (!$icon) echo ' colspan="2"' ?>>
+					<?php if ($item->card0 == 254 || $item->card0 == 255): ?>
+						<?php if ($item->char_name): ?>
+							<?php if ($auth->actionAllowed('character', 'view') && ($isMine || (!$isMine && $auth->allowedToViewCharacter))): ?>
+								<?php echo $this->linkToCharacter($item->char_id, $item->char_name, $session->serverName) . "'s" ?>
+							<?php else: ?>
+								<?php echo htmlspecialchars($item->char_name . "'s") ?>
+							<?php endif ?>
 						<?php else: ?>
-							<?php echo htmlspecialchars($item->char_name . "'s") ?>
+							<span class="not-applicable"><?php echo htmlspecialchars(Flux::message('UnknownLabel')) ?></span>'s
+						<?php endif ?>
+					<?php endif ?>
+					<?php if ($item->name_japanese): ?>
+						<span class="item_name"><?php echo htmlspecialchars($item->name_japanese) ?></span>
+					<?php else: ?>
+						<span class="not-applicable">Unknown Item</span>
+					<?php endif ?>
+					<?php if ($item->slots): ?>
+						<?php echo htmlspecialchars(' [' . $item->slots . ']') ?>
+					<?php endif ?>
+				</td>
+				<td><?php echo number_format($item->amount) ?></td>
+				<td>
+					<?php if ($item->identify): ?>
+						<span class="identified yes">Yes</span>
+					<?php else: ?>
+						<span class="identified no">No</span>
+					<?php endif ?>
+				</td>
+				<td><?php echo htmlspecialchars($item->refine) ?></td>
+				<td>
+					<?php if ($item->attribute): ?>
+						<span class="broken yes">Yes</span>
+					<?php else: ?>
+						<span class="broken no">No</span>
+					<?php endif ?>
+				</td>
+				<td>
+					<?php if($item->card0 && ($item->type == 4 || $item->type == 5) && $item->card0 != 254 && $item->card0 != 255 && $item->card0 != -256): ?>
+						<?php if (!empty($cards[$item->card0])): ?>
+							<?php echo $this->linkToItem($item->card0, $cards[$item->card0]) ?>
+						<?php else: ?>
+							<?php echo $this->linkToItem($item->card0, $item->card0) ?>
 						<?php endif ?>
 					<?php else: ?>
-						<span class="not-applicable"><?php echo htmlspecialchars(Flux::message('UnknownLabel')) ?></span>'s
+						<span class="not-applicable">None</span>
 					<?php endif ?>
-				<?php endif ?>
-				<?php if ($item->name_japanese): ?>
-					<span class="item_name"><?php echo htmlspecialchars($item->name_japanese) ?></span>
-				<?php else: ?>
-					<span class="not-applicable">Unknown Item</span>
-				<?php endif ?>
-				<?php if ($item->slots): ?>
-					<?php echo htmlspecialchars(' [' . $item->slots . ']') ?>
-				<?php endif ?>
-			</td>
-			<td><?php echo number_format($item->amount) ?></td>
-			<td>
-				<?php if ($item->identify): ?>
-					<span class="identified yes">Yes</span>
-				<?php else: ?>
-					<span class="identified no">No</span>
-				<?php endif ?>
-			</td>
-			<td><?php echo htmlspecialchars($item->refine) ?></td>
-			<td>
-				<?php if ($item->attribute): ?>
-					<span class="broken yes">Yes</span>
-				<?php else: ?>
-					<span class="broken no">No</span>
-				<?php endif ?>
-			</td>
-			<td>
-				<?php if($item->card0 && ($item->type == 4 || $item->type == 5) && $item->card0 != 254 && $item->card0 != 255 && $item->card0 != -256): ?>
-					<?php if (!empty($cards[$item->card0])): ?>
-						<?php echo $this->linkToItem($item->card0, $cards[$item->card0]) ?>
+				</td>
+				<td>
+					<?php if($item->card1 && ($item->type == 4 || $item->type == 5) && $item->card0 != 255 && $item->card0 != -256): ?>
+						<?php if (!empty($cards[$item->card1])): ?>
+							<?php echo $this->linkToItem($item->card1, $cards[$item->card1]) ?>
+						<?php else: ?>
+							<?php echo $this->linkToItem($item->card1, $item->card1) ?>
+						<?php endif ?>
 					<?php else: ?>
-						<?php echo $this->linkToItem($item->card0, $item->card0) ?>
+						<span class="not-applicable">None</span>
 					<?php endif ?>
-				<?php else: ?>
-					<span class="not-applicable">None</span>
-				<?php endif ?>
-			</td>
-			<td>
-				<?php if($item->card1 && ($item->type == 4 || $item->type == 5) && $item->card0 != 255 && $item->card0 != -256): ?>
-					<?php if (!empty($cards[$item->card1])): ?>
-						<?php echo $this->linkToItem($item->card1, $cards[$item->card1]) ?>
+				</td>
+				<td>
+					<?php if($item->card2 && ($item->type == 4 || $item->type == 5) && $item->card0 != 254 && $item->card0 != 255 && $item->card0 != -256): ?>
+						<?php if (!empty($cards[$item->card2])): ?>
+							<?php echo $this->linkToItem($item->card2, $cards[$item->card2]) ?>
+						<?php else: ?>
+							<?php echo $this->linkToItem($item->card2, $item->card2) ?>
+						<?php endif ?>
 					<?php else: ?>
-						<?php echo $this->linkToItem($item->card1, $item->card1) ?>
+						<span class="not-applicable">None</span>
 					<?php endif ?>
-				<?php else: ?>
-					<span class="not-applicable">None</span>
-				<?php endif ?>
-			</td>
-			<td>
-				<?php if($item->card2 && ($item->type == 4 || $item->type == 5) && $item->card0 != 254 && $item->card0 != 255 && $item->card0 != -256): ?>
-					<?php if (!empty($cards[$item->card2])): ?>
-						<?php echo $this->linkToItem($item->card2, $cards[$item->card2]) ?>
+				</td>
+				<td>
+					<?php if($item->card3 && ($item->type == 4 || $item->type == 5) && $item->card0 != 254 && $item->card0 != 255 && $item->card0 != -256): ?>
+						<?php if (!empty($cards[$item->card3])): ?>
+							<?php echo $this->linkToItem($item->card3, $cards[$item->card3]) ?>
+						<?php else: ?>
+							<?php echo $this->linkToItem($item->card3, $item->card3) ?>
+						<?php endif ?>
 					<?php else: ?>
-						<?php echo $this->linkToItem($item->card2, $item->card2) ?>
+						<span class="not-applicable">None</span>
 					<?php endif ?>
-				<?php else: ?>
-					<span class="not-applicable">None</span>
-				<?php endif ?>
-			</td>
-			<td>
-				<?php if($item->card3 && ($item->type == 4 || $item->type == 5) && $item->card0 != 254 && $item->card0 != 255 && $item->card0 != -256): ?>
-					<?php if (!empty($cards[$item->card3])): ?>
-						<?php echo $this->linkToItem($item->card3, $cards[$item->card3]) ?>
-					<?php else: ?>
-						<?php echo $this->linkToItem($item->card3, $item->card3) ?>
-					<?php endif ?>
-				<?php else: ?>
-					<span class="not-applicable">None</span>
-				<?php endif ?>
-			</td>
-		</tr>
-		<?php endforeach ?>
-	</table>
-<?php else: ?>
-	<p>There are no guild storage items for this guild.</p>
+				</td>
+			</tr>
+			<?php endforeach ?>
+		</table>
+	<?php else: ?>
+		<p>There are no guild storage items for this guild.</p>
+	<?php endif ?>
 <?php endif ?>
 <?php else: ?>
 <p>No such guild was found. <a href="javascript:history.go(-1)">Go back</a>.</p>
