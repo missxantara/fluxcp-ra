@@ -13,19 +13,14 @@ if (count($_POST) && $params->get('setamount')) {
 	
 	if (!$amount || $amount < $minimum) {
 		$errorMessage = sprintf('Donation amount must be greater than or equal to %s %s!',
-			$this->formatDollar($minimum), Flux::config('DonationCurrency'));
+			$this->formatCurrency($minimum), Flux::config('DonationCurrency'));
 	}
 	else {
-		//$session->setDonationAmountData($amount);
-		//$session->setMessageData('Donation amount has been set!');
 		$donationAmount = $amount;
-		//$this->redirect($this->url);
 	}
 }
 
 if (!$params->get('setamount') && $params->get('resetamount')) {
-	//$session->setDonationAmountData(null);
-	//$session->setMessageData('Donation amount has been reset to zero.');
 	$this->redirect($this->url);
 }
 ?>

@@ -599,12 +599,12 @@ class Flux_Template {
 	}
 	
 	/**
-	 * Format money strings (note: name soon to be changed).
+	 * Format currency strings.
 	 *
 	 * @param float $number Amount
 	 * @return string Formatted amount
 	 */
-	public function formatDollar($number)
+	public function formatCurrency($number)
 	{
 		$number = (float)$number;
 		$amount = number_format(

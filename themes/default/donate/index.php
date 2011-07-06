@@ -32,12 +32,12 @@
 		<table class="generic-form-table">
 			<tr>
 				<th><label>Current Credit Exchange Rate:</label></th>
-				<td><p><?php echo $this->formatDollar($dollarAmount) ?> <?php echo htmlspecialchars($currency) ?>
+				<td><p><?php echo $this->formatCurrency($dollarAmount) ?> <?php echo htmlspecialchars($currency) ?>
 				= <?php echo number_format($creditAmount) ?> credit(s).</p></td>
 			</tr>
 			<tr>
 				<th><label>Minimum Donation Amount:</label></th>
-				<td><p><?php echo $this->formatDollar(Flux::config('MinDonationAmount')) ?> <?php echo htmlspecialchars($currency) ?></p></td>
+				<td><p><?php echo $this->formatCurrency(Flux::config('MinDonationAmount')) ?> <?php echo htmlspecialchars($currency) ?></p></td>
 			</tr>
 		</table>
 	</div>
@@ -68,7 +68,7 @@
 		
 	<p class="donation-amount-text">Amount:
 		<span class="donation-amount">
-		<?php echo $this->formatDollar($donationAmount) ?>
+		<?php echo $this->formatCurrency($donationAmount) ?>
 		<?php echo htmlspecialchars(Flux::config('DonationCurrency')) ?>
 		</span>
 	</p>
