@@ -183,7 +183,7 @@ class Flux_Paginator {
 			
 			// Check again just in case we're working with the default here.
 			if (!is_null($value) && in_array( ($value=strtoupper($value)), $sortValues ) && $value != 'NONE') {
-				$this->currentSortOrder[$columnName] = $value;
+				$this->currentSortOrder[str_replace("`", "", $columnName)] = $value;
 				
 				if (!$orderBy) {
 					$sql .= ' ORDER BY';
