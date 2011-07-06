@@ -231,7 +231,7 @@ try {
 	$paginator = $this->getPaginator($sth->fetch()->total);
 	$paginator->setSortableColumns(array(
 		'item_id' => 'asc', 'name', 'type', 'equip_locations', 'price_buy', 'price_sell', 'weight', 'attack', 'defense',
-		'`range`', 'slots', 'refineable', 'cost', 'origin_table'
+		'range', 'slots', 'refineable', 'cost', 'origin_table'
 	));
 	
 	$col  = "origin_table, items.id AS item_id, name_japanese AS name, type, ";
