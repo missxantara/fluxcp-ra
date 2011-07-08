@@ -13,5 +13,6 @@ class Flux_RegisterError extends Flux_Error {
 	const INVALID_GENDER         = 8;
 	const INVALID_SERVER         = 9;
 	const INVALID_SECURITY_CODE  = 10;
+	const INVALID_USERNAME       = 11;
 }
 ?>

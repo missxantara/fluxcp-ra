@@ -128,6 +128,7 @@ return array(
 	'AccountGenderLabel'      => 'Gender',
 	'AccountSecurityLabel'    => 'Security Code',
 	'AccountCreateButton'     => 'Create My Account',
+	'AccountInvalidChars'     => "A username can only contain these characters: '%s'",
 	'InvalidLoginServer'      => 'Invalid login server selected, please try again with a valid server.',
 	'InvalidLoginCredentials' => 'Invalid login credentials, please verify that you typed the correct info and try again.',
 	'UnexpectedLoginError'    => 'Unexpected error occurred, please try again or report to an admin.',

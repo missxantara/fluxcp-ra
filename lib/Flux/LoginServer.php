@@ -99,7 +99,10 @@ class Flux_LoginServer extends Flux_BaseServer {
 	 */
 	public function register($username, $password, $confirmPassword, $email, $gender, $securityCode)
 	{
-		if (strlen($username) < Flux::config('MinUsernameLength')) {
+		if (preg_match('/[^' . Flux::config('UsernameAllowedChars') . ']')) {
+			throw new Flux_RegisterError('Invalid character(s) used in username', Flux_RegisterError::INVALID_USERNAME);
+		}
+		elseif (strlen($username) < Flux::config('MinUsernameLength')) {
 			throw new Flux_RegisterError('Username is too short', Flux_RegisterError::USERNAME_TOO_SHORT);
 		}
 		elseif (strlen($username) > Flux::config('MaxUsernameLength')) {

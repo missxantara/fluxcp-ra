@@ -114,6 +114,9 @@ if (count($_POST)) {
 			case Flux_RegisterError::INVALID_SECURITY_CODE:
 				$errorMessage = Flux::message('InvalidSecurityCode');
 				break;
+			case Flux_RegisterError::INVALID_USERNAME:
+				$errorMessage = sprintf(Flux::message('AccountInvalidChars'), Flux::config('UsernameAllowedChars'));
+				break;
 			default:
 				$errorMessage = Flux::message('CriticalRegisterError');
 				break;

@@ -29,6 +29,9 @@ return array(
 	'SingleMatchRedirect'  => true,                     // Whether or not to redirect to view action from index page if only one match is returned (and action is allowed).
 	'SingleMatchRedirectItem' => false,                 // Same as above, for item module.
 	'SingleMatchRedirectMobs' => false,                 // Same as above, for monster module.
+	'UsernameAllowedChars' => 'a-zA-Z0-9_',             // PCRE Format Pattern. default: 'a-zA-Z0-9_' (alphanumeric and underscore)
+                                                        // WARNING: This string isn't escaped so be careful which chars you use!
+                                                        // PCRE Pattern Ref: http://php.net/manual/en/pcre.pattern.php
 	'MinUsernameLength'    => 4,                        // Minimum username length.
 	'MaxUsernameLength'    => 23,                       // Maximum username length.
 	'MinPasswordLength'    => 8,                        // Minimum password length.
