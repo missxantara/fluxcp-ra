@@ -188,7 +188,13 @@
 				<?php endif ?>
 			</td>
 			<td><?php echo htmlspecialchars($expulsion->name) ?></td>
-			<td><?php echo htmlspecialchars($expulsion->mes) ?></td>
+			<td>
+			<?php if($expulsion->mes): ?>
+				<?php echo htmlspecialchars($expulsion->mes) ?>
+			<?php else: ?>
+				<span class="not-applicable">None</span>
+			<?php endif ?>
+			</td>
 		</tr>
 		<?php endforeach ?>
 	</table>
