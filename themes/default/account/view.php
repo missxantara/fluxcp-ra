@@ -271,6 +271,12 @@
 			<td><img src="<?php echo htmlspecialchars($icon) ?>" /></td>
 			<?php endif ?>
 			<td<?php if (!$icon) echo ' colspan="2"' ?>>
+				<?php if ($item->card0 == 255 && intval($item->card1/1280) > 0): ?>
+					<?php for ($i = 0; $i < intval($item->card1/1280); $i++): ?>
+						Very
+					<?php endfor ?>
+					Strong
+				<?php endif ?>
 				<?php if ($item->card0 == 254 || $item->card0 == 255): ?>
 					<?php if ($item->char_name): ?>
 						<?php if ($auth->actionAllowed('character', 'view') && ($isMine || (!$isMine && $auth->allowedToViewCharacter))): ?>

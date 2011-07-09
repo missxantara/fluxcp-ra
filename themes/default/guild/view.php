@@ -205,7 +205,7 @@
 				<th colspan="2">Name</th>
 				<th>Amount</th>
 				<th>Identified</th>
-				<th>Refine Level</th>
+				<th>Refine</th>
 				<th>Broken</th>
 				<th>Card0</th>
 				<th>Card1</th>
@@ -221,6 +221,12 @@
 				<td><img src="<?php echo htmlspecialchars($icon) ?>" /></td>
 				<?php endif ?>
 				<td<?php if (!$icon) echo ' colspan="2"' ?>>
+					<?php if ($item->card0 == 255 && intval($item->card1/1280) > 0): ?>
+						<?php for ($i = 0; $i < intval($item->card1/1280); $i++): ?>
+							Very
+						<?php endfor ?>
+						Strong
+					<?php endif ?>
 					<?php if ($item->card0 == 254 || $item->card0 == 255): ?>
 						<?php if ($item->char_name): ?>
 							<?php if ($auth->actionAllowed('character', 'view') && ($isMine || (!$isMine && $auth->allowedToViewCharacter))): ?>
