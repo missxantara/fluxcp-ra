@@ -199,7 +199,7 @@
 	<h3>Guild Storage Items of “<?php echo htmlspecialchars($guild->name) ?>”</h3>
 	<?php if (Flux::config('GStorageLeaderOnly')): ?>
 		<p>Note: Guild Storage Items are only visible to you, the guild leader.</p>
-	<?php>
+	<?php endif ?>
 	<?php if ($items): ?>
 		<p><?php echo htmlspecialchars($guild->name) ?> has <?php echo count($items) ?> guild storage item(s).</p>
 		<table class="vertical-table">
