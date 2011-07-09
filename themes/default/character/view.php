@@ -377,6 +377,9 @@
 						<span class="not-applicable"><?php echo htmlspecialchars(Flux::message('UnknownLabel')) ?></span>'s
 					<?php endif ?>
 				<?php endif ?>
+				<?php if ($item->card0 == 255 && array_key_exists($item->card1%1280, $itemAttributes)): ?>
+					<?php echo htmlspecialchars($itemAttributes[$item->card1%1280]) ?>
+				<?php endif ?>
 				<?php if ($item->name_japanese): ?>
 					<span class="item_name"><?php echo htmlspecialchars($item->name_japanese) ?></span>
 				<?php else: ?>
@@ -494,6 +497,9 @@
 					<?php else: ?>
 						<span class="not-applicable"><?php echo htmlspecialchars(Flux::message('UnknownLabel')) ?></span>'s
 					<?php endif ?>
+				<?php endif ?>
+				<?php if ($item->card0 == 255 && array_key_exists($item->card1%1280, $itemAttributes)): ?>
+					<?php echo htmlspecialchars($itemAttributes[$item->card1%1280]) ?>
 				<?php endif ?>
 				<?php if ($cart_item->name_japanese): ?>
 					<span class="item_name"><?php echo htmlspecialchars($cart_item->name_japanese) ?></span>

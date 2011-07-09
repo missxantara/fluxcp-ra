@@ -203,5 +203,7 @@ if ($account) {
 			}
 		}
 	}
+	
+	$itemAttributes = Flux::config('Attributes')->toArray();
 }
 ?>

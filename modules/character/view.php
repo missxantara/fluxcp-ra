@@ -220,5 +220,7 @@ if ($char) {
 			}
 		}
 	}
+	
+	$itemAttributes = Flux::config('Attributes')->toArray();
 }
 ?>

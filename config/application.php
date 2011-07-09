@@ -326,6 +326,9 @@ return array(
 	// eA elements mapping.
 	'Elements' => include('elements.php'),
 	
+	// eA attributes mapping.
+	'Attributes' => include('attributes.php'),
+	
 	// eA monster modes mapping.
 	'MonsterModes' => include('monstermode.php'),
 	
