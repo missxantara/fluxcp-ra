@@ -344,7 +344,6 @@
 			<th colspan="2">Name</th>
 			<th>Amount</th>
 			<th>Identified</th>
-			<th>Refine</th>
 			<th>Broken</th>
 			<th>Card0</th>
 			<th>Card1</th>
@@ -360,6 +359,9 @@
 				<td><img src="<?php echo htmlspecialchars($icon) ?>" /></td>
 			<?php endif ?>
 			<td<?php if (!$icon) echo ' colspan="2"' ?>>
+				<?php if ($item->refine > 0): ?>
+					+<?php echo htmlspecialchars($item->refine) ?>
+				<?php endif ?>
 				<?php if ($item->card0 == 255 && intval($item->card1/1280) > 0): ?>
 					<?php for ($i = 0; $i < intval($item->card1/1280); $i++): ?>
 						Very
@@ -397,7 +399,6 @@
 					<span class="identified no">No</span>
 				<?php endif ?>
 			</td>
-			<td><?php echo htmlspecialchars($item->refine) ?></td>
 			<td>
 				<?php if ($item->attribute): ?>
 					<span class="broken yes">Yes</span>
@@ -465,7 +466,6 @@
 			<th colspan="2">Name</th>
 			<th>Amount</th>
 			<th>Identified</th>
-			<th>Refine</th>
 			<th>Broken</th>
 			<th>Card0</th>
 			<th>Card1</th>
@@ -481,6 +481,9 @@
 			<td><img src="<?php echo htmlspecialchars($icon) ?>" /></td>
 			<?php endif ?>
 			<td<?php if (!$icon) echo ' colspan="2"' ?>>
+				<?php if ($cart_item->refine > 0): ?>
+					+<?php echo htmlspecialchars($cart_item->refine) ?>
+				<?php endif ?>
 				<?php if ($cart_item->card0 == 255 && intval($cart_item->card1/1280) > 0): ?>
 					<?php for ($i = 0; $i < intval($cart_item->card1/1280); $i++): ?>
 						Very
@@ -518,7 +521,6 @@
 					<span class="identified no">No</span>
 				<?php endif ?>
 			</td>
-			<td><?php echo htmlspecialchars($cart_item->refine) ?></td>
 			<td>
 				<?php if ($cart_item->attribute): ?>
 					<span class="broken yes">Yes</span>

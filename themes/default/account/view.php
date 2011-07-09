@@ -249,7 +249,6 @@
 			<th colspan="2"><?php echo htmlspecialchars(Flux::message('ItemNameLabel')) ?></th>
 			<th><?php echo htmlspecialchars(Flux::message('ItemAmountLabel')) ?></th>
 			<th><?php echo htmlspecialchars(Flux::message('ItemIdentifyLabel')) ?></th>
-			<th><?php echo htmlspecialchars(Flux::message('ItemRefineLabel')) ?></th>
 			<th><?php echo htmlspecialchars(Flux::message('ItemBrokenLabel')) ?></th>
 			<th><?php echo htmlspecialchars(Flux::message('ItemCard0Label')) ?></th>
 			<th><?php echo htmlspecialchars(Flux::message('ItemCard1Label')) ?></th>
@@ -271,6 +270,9 @@
 			<td><img src="<?php echo htmlspecialchars($icon) ?>" /></td>
 			<?php endif ?>
 			<td<?php if (!$icon) echo ' colspan="2"' ?>>
+				<?php if ($item->refine > 0): ?>
+					+<?php echo htmlspecialchars($item->refine) ?>
+				<?php endif ?>
 				<?php if ($item->card0 == 255 && intval($item->card1/1280) > 0): ?>
 					<?php for ($i = 0; $i < intval($item->card1/1280); $i++): ?>
 						Very
@@ -308,7 +310,6 @@
 					<span class="identified no"><?php echo htmlspecialchars(Flux::message('NoLabel')) ?></span>
 				<?php endif ?>
 			</td>
-			<td><?php echo htmlspecialchars($item->refine) ?></td>
 			<td>
 				<?php if ($item->attribute): ?>
 					<span class="broken yes"><?php echo htmlspecialchars(Flux::message('YesLabel')) ?></span>
