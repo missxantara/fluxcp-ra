@@ -393,7 +393,14 @@ return array(
 	'HistoryPassChangeChangeDate' => 'Change Date',
 	'HistoryPassChangeChangeIp'   => 'Change IP',
 	'HistoryNoPassChanges'        => 'No password changes found.',
-	
+	// -history/passreset
+	'HistoryPassResetTitle'       => 'Password Resets',
+	'HistoryPassResetHeading'     => 'Password Resets',
+	'HistoryPassResetRequestDate' => 'Request Date/Time',
+	'HistoryPassResetRequestIp'   => 'Request IP',
+	'HistoryPassResetResetDate'   => 'Reset Date',
+	'HistoryPassResetResetIp'     => 'Reset IP',
+	'HistoryNoPassResets'         => 'No password reset attempts found.',
 	
 	// Module: ipban
 	// - ipban/add

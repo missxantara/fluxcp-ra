@@ -155,7 +155,8 @@ return array(
 			'cplogin'     => AccountLevel::NORMAL,
 			'gamelogin'   => AccountLevel::NORMAL,
 			'emailchange' => AccountLevel::NORMAL,
-			'passchange'  => AccountLevel::NORMAL
+			'passchange'  => AccountLevel::NORMAL,
+			'passreset'   => AccountLevel::NORMAL
 		)
 	),
 	// General feature permissions, handled by the modules themselves.

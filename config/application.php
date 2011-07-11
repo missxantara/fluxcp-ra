@@ -208,7 +208,7 @@ return array(
 			'cplogin'    => 'CP Logins',
 			'emailchange'=> 'E-Mail Changes',
 			'passchange' => 'Password Changes',
-			//'passreset'  => 'Password Resets'   // not implemented
+			'passreset'  => 'Password Resets'
 		),
 		'account' => array(
 			'index'      => 'List Accounts',
