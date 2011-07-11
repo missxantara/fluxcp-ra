@@ -391,7 +391,7 @@ return array(
 	'HistoryPassChangeTitle'      => 'Password Changes',
 	'HistoryPassChangeHeading'    => 'Password Changes',
 	'HistoryPassChangeChangeDate' => 'Change Date',
-	'HistoryPassChangeIp'         => 'Change IP',
+	'HistoryPassChangeChangeIp'   => 'Change IP',
 	'HistoryNoPassChanges'        => 'No password changes found.',
 	
 	
