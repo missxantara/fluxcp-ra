@@ -12,7 +12,13 @@
 	<?php foreach ($logins as $login): ?>
 	<tr>
 		<td><?php echo $this->formatDateTime($login->time) ?></td>
-		<td><?php echo htmlspecialchars($login->ip) ?></td>
+		<td>
+		<?php if ($auth->actionAllowed('account', 'index')): ?>
+			<?php echo $this->linkToAccountSearch(array('last_ip' => $login->ip), $login->ip) ?>
+		<?php else: ?>
+			<?php echo htmlspecialchars($login->ip) ?>
+		<?php endif ?>
+		</td>
 		<td><?php echo $login->rcode ?></td>
 		<td><?php echo htmlspecialchars($login->log) ?></td>
 	</tr>

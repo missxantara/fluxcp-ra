@@ -14,9 +14,27 @@
 	<?php foreach ($changes as $change): ?>
 	<tr>
 		<td><?php echo $this->formatDateTime($change->request_date) ?></td>
-		<td><?php echo htmlspecialchars($change->request_ip) ?></td>
-		<td><?php echo htmlspecialchars($change->old_email) ?></td>
-		<td><?php echo htmlspecialchars($change->new_email) ?></td>
+		<td>
+		<?php if ($auth->actionAllowed('account', 'index')): ?>
+			<?php echo $this->linkToAccountSearch(array('last_ip' => $change->request_ip), $change->request_ip) ?>
+		<?php else: ?>
+			<?php echo htmlspecialchars($change->request_ip) ?>
+		<?php endif ?>
+		</td>
+		<td>
+		<?php if ($auth->actionAllowed('account', 'index')): ?>
+			<?php echo $this->linkToAccountSearch(array('email' => $change->old_email), $change->old_email) ?>
+		<?php else: ?>
+			<?php echo htmlspecialchars($change->old_email) ?>
+		<?php endif ?>
+		</td>
+		<td>
+		<?php if ($auth->actionAllowed('account', 'index')): ?>
+			<?php echo $this->linkToAccountSearch(array('email' => $change->new_email), $change->new_email) ?>
+		<?php else: ?>
+			<?php echo htmlspecialchars($change->new_email) ?>
+		<?php endif ?>
+		</td>
 		<td>
 			<?php if ($change->change_date): ?>
 				<?php echo htmlspecialchars($change->change_date) ?>
@@ -26,7 +44,11 @@
 		</td>
 		<td>
 			<?php if ($change->change_ip): ?>
-				<?php echo htmlspecialchars($change->change_ip) ?>
+				<?php if ($auth->actionAllowed('account', 'index')): ?>
+					<?php echo $this->linkToAccountSearch(array('last_ip' => $change->change_ip), $change->change_ip) ?>
+				<?php else: ?>
+					<?php echo htmlspecialchars($change->change_ip) ?>
+				<?php endif ?>
 			<?php else: ?>
 				<span class="not-applicable"><?php echo htmlspecialchars(Flux::message('NoneLabel')) ?></span>
 			<?php endif ?>
