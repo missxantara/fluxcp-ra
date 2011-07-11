@@ -148,6 +148,8 @@ return array(
 	
 	'CpResetLogShowPassword'  => false,                  // Show password in CP "password resets" log (also see access.php's SeeCpResetPass).
 	
+	'CpChangeLogShowPassword' => false,                  // Show password in CP "password changes" log (also see access.php's SeeCpChangePass).
+	
 	'AdminMenuNewStyle'       => true,                   // Use new-style admin menu;  Applies to 'default' theme.
 	
 	// These are the main menu items that should be displayed by themes.
@@ -246,7 +248,7 @@ return array(
 			'paypal' => 'PayPal Transactions',
 			'login'  => 'Logins',
 			'resetpass'  => 'Password Resets',
-			//'changepass' => 'Password Changes',
+			'changepass' => 'Password Changes',
 			//'changemail' => 'E-mail Changes'
 		),
 		'reload' => array(

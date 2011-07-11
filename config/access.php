@@ -163,12 +163,12 @@ return array(
 		'ViewAccountBanLog'  => AccountLevel::HIGHGM, // View another person's account ban log.
 		'DeleteAccount'      => AccountLevel::ADMIN,  // (not yet implemented)
 		'DeleteCharacter'    => AccountLevel::ADMIN,  // (not yet implemented)
-		'SeeAccountPassword' => AccountLevel::ADMIN,  // If not using MD5, view another person's password in list.
+		'SeeAccountPassword' => AccountLevel::NOONE,  // If not using MD5, view another person's password in list.
 		'TempBanAccount'     => AccountLevel::LOWGM,  // Has ability to temporarily ban an account.
 		'TempUnbanAccount'   => AccountLevel::LOWGM,  // Has ability to remove a temporary ban on an account.
 		'PermBanAccount'     => AccountLevel::HIGHGM, // Has ability to permanently ban an account.
 		'PermUnbanAccount'   => AccountLevel::HIGHGM, // Has ability to remove a permanent ban on an account.
-		'SearchMD5Passwords' => AccountLevel::ADMIN,  // Ability to search MD5'd passwords in list.
+		'SearchMD5Passwords' => AccountLevel::NOONE,  // Ability to search MD5'd passwords in list.
 		'ViewCharacter'      => AccountLevel::HIGHGM, // View another person's character details.
 		'DivorceCharacter'   => AccountLevel::LOWGM,  // Divorce another character.
 		'AddShopItem'        => AccountLevel::ADMIN,  // Ability to add an item to the shop.
@@ -193,10 +193,12 @@ return array(
 		'ResetLook'          => AccountLevel::LOWGM,  // Level required to reset another character's look.
 		'ResetPosition'      => AccountLevel::LOWGM,  // Level required to reset another character's position.
 		'ViewWoeDisallowed'  => AccountLevel::LOWGM,  // Level required to bypass WoE-disabled page security check.
-		'SeeCpLoginLogPass'  => AccountLevel::ADMIN,  // Level required to see password in CP login log (also requires CpLoginLogShowPassword in application.php)
-		'SearchCpLoginLogPw' => AccountLevel::ADMIN,  // Level required to search through passwords in the CP login log.
-		'SeeCpResetPass'     => AccountLevel::ADMIN,  // Level required to see passwords in CP log's "password resets" page.
-		'SearchCpResetPass'  => AccountLevel::ADMIN,  // Level required to search passwords in CP log's "password resets" page.
+		'SeeCpLoginLogPass'  => AccountLevel::NOONE,  // Level required to see password in CP login log (also requires CpLoginLogShowPassword in application.php)
+		'SearchCpLoginLogPw' => AccountLevel::NOONE,  // Level required to search through passwords in the CP login log.
+		'SeeCpResetPass'     => AccountLevel::NOONE,  // Level required to see passwords in CP log's "password resets" page.
+		'SearchCpResetPass'  => AccountLevel::NOONE,  // Level required to search passwords in CP log's "password resets" page.
+		'SeeCpChangePass'    => AccountLevel::NOONE,  // Level required to see passwords in CP log's "password changes" page.
+		'SearchCpChangePass' => AccountLevel::NOONE,  // Level required to search passwords in CP log's "password changes" page.
 		'SeeAccountID'       => AccountLevel::LOWGM,  // Level required to see Account ID on account view and character view pages.
 		'SeeUnknownItems'    => AccountLevel::LOWGM,  // Level required to see unidentified items as identified.
 		
