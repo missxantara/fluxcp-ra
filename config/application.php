@@ -249,7 +249,7 @@ return array(
 			'login'  => 'Logins',
 			'resetpass'  => 'Password Resets',
 			'changepass' => 'Password Changes',
-			//'changemail' => 'E-mail Changes'
+			'changemail' => 'E-mail Changes'
 		),
 		'reload' => array(
 			'mobskill' => 'Mob Skills'
