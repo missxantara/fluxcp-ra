@@ -207,7 +207,7 @@ return array(
 			'gamelogin'  => 'Game Logins',
 			'cplogin'    => 'CP Logins',
 			'emailchange'=> 'E-Mail Changes',
-			//'passchange' => 'Password Changes', // not implemented
+			'passchange' => 'Password Changes',
 			//'passreset'  => 'Password Resets'   // not implemented
 		),
 		'account' => array(

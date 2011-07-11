@@ -387,6 +387,13 @@ return array(
 	'HistoryIndexHeading'     => 'My Account History',
 	'HistoryIndexInfo'        => 'Here you can view past account activity of your account.',
 	'HistoryIndexInfo2'       => 'Please select an action from the menu.',
+	// - history/passchange
+	'HistoryPassChangeTitle'      => 'Password Changes',
+	'HistoryPassChangeHeading'    => 'Password Changes',
+	'HistoryPassChangeChangeDate' => 'Change Date',
+	'HistoryPassChangeIp'         => 'Change IP',
+	'HistoryNoPassChanges'        => 'No password changes found.',
+	
 	
 	// Module: ipban
 	// - ipban/add
