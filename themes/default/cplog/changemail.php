@@ -72,8 +72,20 @@
 				<span class="not-applicable">Unknown</span>
 			<?php endif ?>
 		</td>
-		<td><?php echo htmlspecialchars($change->old_email) ?></td>
-		<td><?php echo htmlspecialchars($change->new_email) ?></td>
+		<td>
+		<?php if ($auth->actionAllowed('account', 'index')): ?>
+			<?php echo $this->linkToAccountSearch(array('email' => $change->old_email), $change->old_email) ?>
+		<?php else: ?>
+			<?php echo htmlspecialchars($change->old_email) ?>
+		<?php endif ?>
+		</td>
+		<td>
+		<?php if ($auth->actionAllowed('account', 'index')): ?>
+			<?php echo $this->linkToAccountSearch(array('email' => $change->new_email), $change->new_email) ?>
+		<?php else: ?>
+			<?php echo htmlspecialchars($change->new_email) ?>
+		<?php endif ?>
+		</td>
 		<td><?php echo $this->formatDateTime($change->request_date) ?></td>
 		<td>
 			<?php if ($auth->actionAllowed('account', 'index')): ?>
