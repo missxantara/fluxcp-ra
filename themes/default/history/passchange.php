@@ -9,20 +9,8 @@
 	</tr>
 	<?php foreach ($changes as $change): ?>
 	<tr>
-		<td>
-			<?php if ($change->change_date): ?>
-				<?php echo htmlspecialchars($change->change_date) ?>
-			<?php else: ?>
-				<span class="not-applicable"><?php echo htmlspecialchars(Flux::message('NeverLabel')) ?></span>
-			<?php endif ?>
-		</td>
-		<td>
-			<?php if ($change->change_ip): ?>
-				<?php echo htmlspecialchars($change->change_ip) ?>
-			<?php else: ?>
-				<span class="not-applicable"><?php echo htmlspecialchars(Flux::message('NoneLabel')) ?></span>
-			<?php endif ?>
-		</td>
+		<td><?php echo htmlspecialchars($change->change_date) ?></td>
+		<td><?php echo htmlspecialchars($change->change_ip) ?></td>
 	</tr>
 	<?php endforeach ?>
 </table>
