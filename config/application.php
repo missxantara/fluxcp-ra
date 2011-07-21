@@ -127,17 +127,22 @@ return array(
 	'CharRankingLimit'    => 20,                        //
 	'GuildRankingLimit'   => 20,                        //
 	'ZenyRankingLimit'    => 20,                        //
+	'DeathRankingLimit'   => 20,                        //
 	'RankingHideLevel'    => AccountLevel::LOWGM,       //
 	'InfoHideZenyLevel'   => AccountLevel::LOWGM,       // Level of account to hide zeny from in server information page.
 	
 	'CharRankingThreshold' => 0,                         // Number of days the character must have logged in within to be listed in character ranking. (0 = disabled)
 	'ZenyRankingThreshold' => 0,                         // Number of days the character must have logged in within to be listed in zeny ranking. (0 = disabled)
+	'DeathRankingThreshold' => 0,                        // Number of days the character must have logged in within to be listed in death ranking. (0 = disabled)
 	
 	'HideTempBannedCharRank'  => false,                  // Hide temporarily banned characters from ranking.
 	'HidePermBannedCharRank'  => true,                   // Hide permanently banned characters from ranking.
 	
 	'HideTempBannedZenyRank'  => false,                  // Hide temporarily banned characters from ranking.
 	'HidePermBannedZenyRank'  => true,                   // Hide permanently banned characters from ranking.
+	
+	'HideTempBannedDeathRank' => false,                  // Hide temporarily banned characters from ranking.
+	'HidePermBannedDeathRank' => true,                   // Hide permanently banned characters from ranking.
 	
 	'HideTempBannedStats'     => false,                  // Hide temporarily banned accounts from statistics.
 	'HidePermBannedStats'     => true,                   // Hide permanently banned accounts from statistics.
@@ -273,7 +278,8 @@ return array(
 		'ranking' => array(
 			'character' => 'Character Ranking',
 			'guild'     => 'Guild Ranking',
-			'zeny'      => 'Zeny Ranking'
+			'zeny'      => 'Zeny Ranking',
+			'death'     => 'Death Ranking'
 		),
 		'item' => array(
 			'index' => 'List Items',

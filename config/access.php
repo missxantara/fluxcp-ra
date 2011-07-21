@@ -81,7 +81,8 @@ return array(
 		'ranking'   => array(
 			'character' => AccountLevel::ANYONE,
 			'guild'     => AccountLevel::ANYONE,
-			'zeny'      => AccountLevel::ANYONE
+			'zeny'      => AccountLevel::ANYONE,
+			'death'     => AccountLevel::ANYONE
 		),
 		'item'      => array(
 			'index'    => AccountLevel::ANYONE,
