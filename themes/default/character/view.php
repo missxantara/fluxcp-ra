@@ -358,7 +358,7 @@
 			<?php if ($icon): ?>
 				<td><img src="<?php echo htmlspecialchars($icon) ?>" /></td>
 			<?php endif ?>
-			<td<?php if (!$icon) echo ' colspan="2"' ?>>
+			<td<?php if (!$icon) echo ' colspan="2"' ?><?php if ($item->cardsOver) echo ' class="overslotted' . $item->cardsOver . '"'; else echo ' class="normalslotted"' ?>>
 				<?php if ($item->refine > 0): ?>
 					+<?php echo htmlspecialchars($item->refine) ?>
 				<?php endif ?>
@@ -480,7 +480,7 @@
 			<?php if ($icon): ?>
 			<td><img src="<?php echo htmlspecialchars($icon) ?>" /></td>
 			<?php endif ?>
-			<td<?php if (!$icon) echo ' colspan="2"' ?>>
+			<td<?php if (!$icon) echo ' colspan="2"' ?><?php if ($item->cardsOver) echo ' class="overslotted' . $item->cardsOver . '"'; else echo ' class="normalslotted"' ?>>
 				<?php if ($cart_item->refine > 0): ?>
 					+<?php echo htmlspecialchars($cart_item->refine) ?>
 				<?php endif ?>

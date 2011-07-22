@@ -175,17 +175,27 @@ if ($account) {
 		$cardIDs = array();
 
 		foreach ($items as $item) {
+			$item->cardsOver = -$item->slots;
+			
 			if ($item->card0) {
 				$cardIDs[] = $item->card0;
+				$item->cardsOver++;
 			}
 			if ($item->card1) {
 				$cardIDs[] = $item->card1;
+				$item->cardsOver++;
 			}
 			if ($item->card2) {
 				$cardIDs[] = $item->card2;
+				$item->cardsOver++;
 			}
 			if ($item->card3) {
 				$cardIDs[] = $item->card3;
+				$item->cardsOver++;
+			}
+			
+			if ($item->card0 == 254 || $item->card0 == 255 || $item->card0 == -256 || $item->cardsOver < 0) {
+				$item->cardsOver = 0;
 			}
 		}
 
