@@ -263,10 +263,6 @@ class Flux_SessionData {
 			throw new Flux_LoginError('IP address is banned', Flux_LoginError::IPBANNED);
 		}
 		
-		if (!$loginAthenaGroup->isAuth($username, $password)) {
-			throw new Flux_LoginError('Invalid login', Flux_LoginError::INVALID_LOGIN);
-		}
-		
 		if ($securityCode !== false && Flux::config('UseLoginCaptcha')) {
 			if (strtolower($securityCode) != strtolower($this->securityCode)) {
 				throw new Flux_LoginError('Invalid security code', Flux_LoginError::INVALID_SECURITY_CODE);
@@ -284,6 +280,10 @@ class Flux_SessionData {
 					throw new Flux_LoginError('Invalid security code', Flux_LoginError::INVALID_SECURITY_CODE);
 				}
 			}
+		}
+		
+		if (!$loginAthenaGroup->isAuth($username, $password)) {
+			throw new Flux_LoginError('Invalid login', Flux_LoginError::INVALID_LOGIN);
 		}
 		
 		$creditsTable  = Flux::config('FluxTables.CreditsTable');
