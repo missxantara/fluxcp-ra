@@ -357,7 +357,7 @@
 			</td>
 			<td>
 				<?php if($item->card2 && ($item->type == 4 || $item->type == 5) && $item->card0 != 254 && $item->card0 != 255 && $item->card0 != -256): ?>
-					<?php if (!empty($cards[$item->card0])): ?>
+					<?php if (!empty($cards[$item->card2])): ?>
 						<?php if ($auth->actionAllowed('item', 'view')): ?>
 							<?php echo $this->linkToItem($item->card2, $cards[$item->card2]) ?>
 						<?php else: ?>
@@ -376,7 +376,7 @@
 			</td>
 			<td>
 				<?php if($item->card3 && ($item->type == 4 || $item->type == 5) && $item->card0 != 254 && $item->card0 != 255 && $item->card0 != -256): ?>
-					<?php if (!empty($cards[$item->card0])): ?>
+					<?php if (!empty($cards[$item->card3])): ?>
 						<?php if ($auth->actionAllowed('item', 'view')): ?>
 							<?php echo $this->linkToItem($item->card3, $cards[$item->card3]) ?>
 						<?php else: ?>
