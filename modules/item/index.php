@@ -54,13 +54,27 @@ try {
 		}
 
 		if ($itemType && $itemType !== '-1') {
-			if(is_numeric($itemType) && (floatval($itemType) == intval($itemType))) {
+			if (count($itemTypeSplit = explode('-', $itemType)) == 2) {
+				$itemType = $itemTypeSplit[0];
+				$itemType2 = $itemTypeSplit[1];
+			}
+			if (is_numeric($itemType) && (floatval($itemType) == intval($itemType))) {
 				$itemTypes = Flux::config('ItemTypes')->toArray();
 				if (array_key_exists($itemType, $itemTypes) && $itemTypes[$itemType]) {
 					$sqlpartial .= "AND type = ? ";
 					$bind[]      = $itemType;
 				} else {
 					$sqlpartial .= 'AND type IS NULL ';
+				}
+				
+				if (is_numeric($itemType2) && (floatval($itemType2) == intval($itemType2))) {
+					$itemTypes2 = Flux::config('ItemTypes2')->toArray();
+					if (array_key_exists($itemType, $itemTypes2) && array_key_exists($itemType2, $itemTypes2[$itemType]) && $itemTypes2[$itemType][$itemType2]) {
+						$sqlpartial .= "AND view = ? ";
+						$bind[]      = $itemType2;
+					} else {
+						$sqlpartial .= 'AND view IS NULL ';
+					}
 				}
 			} else {
 				$typeName   = preg_quote($itemType, '/');
@@ -237,7 +251,7 @@ try {
 	$col  = "origin_table, items.id AS item_id, name_japanese AS name, type, ";
 	$col .= "IFNULL(equip_locations, 0) AS equip_locations, price_buy, weight/10 AS weight, attack, ";
 	$col .= "defence AS defense, `range`, slots, refineable, cost, $shopTable.id AS shop_item_id, ";
-	$col .= "IFNULL(price_sell, FLOOR(price_buy/2)) AS price_sell";
+	$col .= "IFNULL(price_sell, FLOOR(price_buy/2)) AS price_sell, view";
 	
 	$sql  = $paginator->getSQL("SELECT $col FROM $tableName $sqlpartial GROUP BY items.id");
 	$sth  = $server->connection->getStatement($sql);

@@ -630,13 +630,26 @@ class Flux {
 	 * Get the item type name from an item type.
 	 *
 	 * @param int $id
+	 * @param int $id2
 	 * @return mixed Item Type or false.
 	 * @access public
 	 */
-	public static function getItemType($id)
+	public static function getItemType($id, $id2)
 	{
-		$key   = "ItemTypes.$id";
+		$key  = "ItemTypes.$id";
 		$type = self::config($key);
+		
+		if ($id2) {
+			$key = "ItemTypes2.$id.$id2";
+			$type2 = self::config($key);
+			
+			if ($type && $type2) {
+				$type .= ' - ' . $type2;
+			}
+			else if ($type2) {
+				$type = $type2;
+			}
+		}
 		
 		if ($type) {
 			return $type;

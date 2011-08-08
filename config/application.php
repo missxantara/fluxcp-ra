@@ -311,6 +311,10 @@ return array(
 	// Shouldn't touch this either.
 	'ItemTypes' => include('itemtypes.php'),
 	
+	// Specil Item Types with their corresponding names (For Weapons & Ammo by default).
+	// Shouldn't touch this either.
+	'ItemTypes2' => include('itemtypes2.php'),
+	
 	// Common Equip Location Combinations with their corresponding names.
 	// Shouldn't touch this unless you've added custom combinations.
 	'EquipLocationCombinations' => include('equip_location_combinations.php'),

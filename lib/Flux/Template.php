@@ -999,12 +999,13 @@ class Flux_Template {
 	 * Get the item type name from an item type.
 	 *
 	 * @param int $id
+	 * @param int $id2
 	 * @return mixed Item type or false.
 	 * @access public
 	 */
-	public function itemTypeText($id)
+	public function itemTypeText($id, $id2 = null)
 	{
-		return Flux::getItemType($id);
+		return Flux::getItemType($id, $id2);
 	}
 	
 	/**

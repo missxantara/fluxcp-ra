@@ -19,6 +19,14 @@
 				<option value="<?php echo $typeId ?>"<?php if (($type=$params->get('type')) === strval($typeId)) echo ' selected="selected"' ?>>
 					<?php echo htmlspecialchars($typeName) ?>
 				</option>
+				<?php $itemTypes2 = Flux::config('ItemTypes2')->toArray() ?>
+				<?php if (array_key_exists($typeId, $itemTypes2)): ?>
+					<?php foreach ($itemTypes2[$typeId] as $typeId2 => $typeName2): ?>
+					<option value="<?php echo $typeId ?>-<?php echo $typeId2 ?>"<?php if (($type=$params->get('type')) === ($typeId . '-' . $typeId2)) echo ' selected="selected"' ?>>
+						<?php echo htmlspecialchars($typeName . ' - ' . $typeName2) ?>
+					</option>
+					<?php endforeach ?>
+				<?php endif ?>
 			<?php endforeach ?>
 		</select>
 		...
@@ -153,7 +161,7 @@
 			<td colspan="2"><?php echo htmlspecialchars($item->name) ?></td>
 		<?php endif ?>
 		<td>
-			<?php if ($type=$this->itemTypeText($item->type)): ?>
+			<?php if ($type=$this->itemTypeText($item->type, $item->view)): ?>
 				<?php echo htmlspecialchars($type) ?>
 			<?php else: ?>
 				<span class="not-applicable">Unknown<?php echo " (".$item->type.")" ?></span>
