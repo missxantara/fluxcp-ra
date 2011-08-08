@@ -45,7 +45,7 @@
 		<th>Name</th>
 		<td><?php echo htmlspecialchars($item->name) ?></td>
 		<th>Type</th>
-		<td><?php echo $this->itemTypeText($item->type) ?></td>
+		<td><?php echo $this->itemTypeText($item->type, $item->view) ?></td>
 	</tr>
 	<tr>
 		<th>NPC Buy</th>
