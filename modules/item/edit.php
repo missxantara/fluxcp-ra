@@ -45,6 +45,11 @@ if ($item) {
 		$equipLevel    = $params->get('equip_level');
 		$refineable    = $params->get('refineable');
 		$equipLoc      = $params->get('equip_locations');
+		
+		if (count($typeSplit = explode('-', $type)) == 2) {
+			$type      = $typeSplit[0];
+			$viewID    = $typeSplit[1];
+		}
 	}
 	else {
 		$viewID        = $item->view;
