@@ -80,11 +80,6 @@ if ($item) {
 	$equipScript   = $params->get('equip_script') ? $params->get('equip_script') : $item->equip_script;
 	$unequipScript = $params->get('unequip_script') ? $params->get('unequip_script') : $item->unequip_script;
 
-	// Equip locations.
-	if ($equipLocs instanceOf Flux_Config) {
-		$equipLocs = $equipLocs->toArray();
-	}
-
 	// Equip upper.
 	if ($equipUpper instanceOf Flux_Config) {
 		$equipUpper = $equipUpper->toArray();
@@ -95,9 +90,6 @@ if ($item) {
 		$equipJobs = $equipJobs->toArray();
 	}
 	
-	if (!is_array($equipLocs)) {
-		$equipLocs = array();
-	}
 	if (!is_array($equipUpper)) {
 		$equipUpper = array();
 	}
