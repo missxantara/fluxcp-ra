@@ -199,9 +199,10 @@ class Flux_PaymentNotifyRequest {
 								if ($holdHours) {
 									$sql = "SELECT account_id, email FROM {$servGroup->loginDatabase}.$trustTable WHERE account_id = ? AND email = ? LIMIT 1";
 									$sth = $servGroup->connection->getStatement($sql);
-									$res = $sth->execute(array($accountID, $payerEmail));
+									$sth->execute(array($accountID, $payerEmail));
+									$res = $sth->fetch();
 
-									if ($res && $sth->fetch()->account_id) {
+									if ($res && $res->account_id) {
 										$this->logPayPal('Account ID and e-mail are trusted.');
 										$trusted = true;
 									}
