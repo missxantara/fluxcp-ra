@@ -67,7 +67,7 @@ try {
 					$sqlpartial .= 'AND type IS NULL ';
 				}
 				
-				if (is_numeric($itemType2) && (floatval($itemType2) == intval($itemType2))) {
+				if ($itemType2 && is_numeric($itemType2) && (floatval($itemType2) == intval($itemType2))) {
 					$itemTypes2 = Flux::config('ItemTypes2')->toArray();
 					if (array_key_exists($itemType, $itemTypes2) && array_key_exists($itemType2, $itemTypes2[$itemType]) && $itemTypes2[$itemType][$itemType2]) {
 						$sqlpartial .= "AND view = ? ";
