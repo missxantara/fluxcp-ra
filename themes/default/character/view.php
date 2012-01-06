@@ -349,7 +349,6 @@
 			<th>Card1</th>
 			<th>Card2</th>
 			<th>Card3</th>
-			</th>
 		</tr>
 		<?php foreach ($items AS $item): ?>
 		<?php $icon = $this->iconImage($item->nameid) ?>
