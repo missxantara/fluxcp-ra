@@ -97,43 +97,49 @@ try {
 		$directories[] = FLUX_DATA_DIR."/logs/schemas/logindb/$serverName";
 		$directories[] = FLUX_DATA_DIR."/logs/schemas/charmapdb/$serverName";
 
-		foreach ($loginAthenaGroup->athenaServers as $athenaServer) {
+		foreach ($loginAthenaGroup->athenaServers as $athenaServer)
 			$directories[] = FLUX_DATA_DIR."/logs/schemas/charmapdb/$serverName/{$athenaServer->serverName}";
-		}
 	}
 
 	foreach ($directories as $directory) {
+		$directory = realpath($directory);
 		if (is_writable(dirname($directory)) && !is_dir($directory)) {
-			mkdir($directory, 0777);
+			if (Flux::config('RequireOwnership'))
+				mkdir($directory, 0700);
+			else
+				mkdir($directory, 0777);
 		}
 	}
+	
+	$uid = posix_getuid();
+	$directories = array(
+		FLUX_DATA_DIR.'/logs'     => 'log storage',
+		FLUX_DATA_DIR.'/itemshop' => 'item shop image',
+		FLUX_DATA_DIR.'/tmp'      => 'temporary'
+	);
+	
+	foreach ($directories as $directory => $directoryFunction) {
+		$directory = realpath($directory);
+		if (!is_writable($directory))
+			throw new Flux_PermissionError("The $directoryFunction directory '$directory' is not writable.  Remedy with `chmod 0600 $directory`");
+		if (fileowner($directory) != $uid)
+			throw new Flux_PermissionError("The $directoryFunction directory '$directory' is not owned by the executing user.  Remedy with `chown -R ".posix_geteuid().":".posix_geteuid()." $directory`");
+	}
+	
+	if (ini_get('session.use_trans_sid'))
+		throw new Flux_Error("The 'session.use_trans_sid' php.ini configuration must be turned off for Flux to work.");
 
 	// Installer library.
 	$installer = Flux_Installer::getInstance();
-	if ($hasUpdates=$installer->updateNeeded()) {
+	if ($hasUpdates=$installer->updateNeeded())
 		Flux::config('ThemeName', 'installer');
-	}
 
 	$sessionKey = Flux::config('SessionKey');
-	if (!is_writable($dir=realpath(FLUX_DATA_DIR.'/logs'))) {
-		throw new Flux_PermissionError("The log storage directory '$dir' is not writable.  Remedy with `chmod 0600 $dir`");
-	}
-	elseif (!is_writable($dir=realpath(FLUX_DATA_DIR.'/itemshop'))) {
-		throw new Flux_PermissionError("The item shop image directory '$dir' is not writable.  Remedy with `chmod 0600 $dir`");
-	}
-	elseif (!is_writable($dir=realpath(FLUX_DATA_DIR.'/tmp'))) {
-		throw new Flux_PermissionError("The temporary directory '$dir' is not writable.  Remedy with `chmod 0600 $dir`");
-	}
-	elseif (ini_get('session.use_trans_sid')) {
-		throw new Flux_Error("The 'session.use_trans_sid' php.ini configuration must be turned off for Flux to work.");
-	}
-	else {
-		$sessionExpireDuration = Flux::config('SessionCookieExpire') * 60 * 60;
-		session_set_cookie_params($sessionExpireDuration, Flux::config('BaseURI'));
-		ini_set('session.gc_maxlifetime', $sessionExpireDuration);
-		ini_set('session.name', $sessionKey);
-		@session_start();
-	}
+	$sessionExpireDuration = Flux::config('SessionCookieExpire') * 60 * 60;
+	session_set_cookie_params($sessionExpireDuration, Flux::config('BaseURI'));
+	ini_set('session.gc_maxlifetime', $sessionExpireDuration);
+	ini_set('session.name', $sessionKey);
+	@session_start();
 
 	if (empty($_SESSION[$sessionKey]) || !is_array($_SESSION[$sessionKey])) {
 		$_SESSION[$sessionKey] = array();
