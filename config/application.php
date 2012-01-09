@@ -78,7 +78,7 @@ return array(
 	'MinDonationAmount'    => 2.0,                      // Minimum donation amount. (NOTE: Actual donations made that are less than this account won't be exchanged)
 	'DonationCurrency'     => 'USD',                    // Preferred donation currency. Only donations made in this currency will be processed for credit deposits.
 	'MoneyDecimalPlaces'   => 2,                        // (Visual) Number of decimal places to display in amount.
-	'MoneyThousandsSymbol' => ',',                      // (Visual) Thousanths place separator (a period in European currencies).
+	'MoneyThousandsSymbol' => ',',                      // (Visual) Thousandths place separator (a period in European currencies).
 	'MoneyDecimalSymbol'   => '.',                      // (Visual) Decimal separator (a comma in European currencies).
 	'AcceptDonations'      => true,                     // Whether or not to accept donations.
 	'PayPalIpnUrl'         => 'www.sandbox.paypal.com', // The URL for PayPal's IPN responses (www.paypal.com for live and www.sandbox.paypal.com for testing)

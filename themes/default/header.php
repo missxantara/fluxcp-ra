@@ -51,6 +51,20 @@
 						$(this).css('cursor', 'normal');
 					}
 				);
+				$('.money-input').keyup(function() {
+					var creditValue = parseInt($(this).val() / <?php echo Flux::config('CreditExchangeRate') ?>, 10);
+					if (isNaN(creditValue))
+						$('.credit-input').val('?');
+					else
+						$('.credit-input').val(creditValue);
+				}).keyup();
+				$('.credit-input').keyup(function() {
+					var moneyValue = parseFloat($(this).val() * <?php echo Flux::config('CreditExchangeRate') ?>);
+					if (isNaN(moneyValue))
+						$('.money-input').val('?');
+					else
+						$('.money-input').val(moneyValue);
+				}).keyup();
 				
 				// In: js/flux.datefields.js
 				processDateFields();

@@ -49,9 +49,17 @@
 		<p class="enter-donation-amount">
 			<label>
 				Enter an amount you would like to donate:
-				<input type="text" name="amount" value="<?php echo htmlspecialchars($params->get('amount')) ?>"
+				<input class="money-input" type="text" name="amount"
+					value="<?php echo htmlspecialchars($params->get('amount')) ?>"
 					size="<?php echo (strlen((string)+Flux::config('CreditExchangeRate')) * 2) + 2 ?>" />
 				<?php echo htmlspecialchars(Flux::config('DonationCurrency')) ?>
+			</label>
+			or
+			<label>
+				<input class="credit-input" type="text" name="credit-amount"
+					value="<?php echo htmlspecialchars(intval($params->get('amount') / Flux::config('CreditExchangeRate'))) ?>"
+					size="<?php echo (strlen((string)+Flux::config('CreditExchangeRate')) * 2) + 2 ?>" />
+				Credits
 			</label>
 		</p>
 		<input type="submit" value="Confirm Donation Amount" class="submit_button" />
