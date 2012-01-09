@@ -23,7 +23,8 @@
 	?>
 	
 	<?php if ($hoursHeld): ?>
-		<p>To prevent fraudulent payments, our server currently locks the crediting process for <?php echo number_format($hoursHeld) ?> hours
+		<p>To prevent fraudulent payments, our server currently locks the crediting process for
+			<span class="hold-hours"><?php echo number_format($hoursHeld) ?> hours</span>
 			after the donation has been made to ensure legitimate gameplay and a healthy PayPal reputation.</p>
 		<p>This hold is applied only once for the associated PayPal e-mail and RO account.</p>
 	<?php endif ?>

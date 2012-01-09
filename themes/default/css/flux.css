@@ -1086,3 +1086,8 @@ textarea {
 .overslotted4 {
 	color: #9932cc;
 }
+
+.hold-hours {
+	color: #ffba00;
+	font-style: italic;
+}

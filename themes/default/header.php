@@ -63,7 +63,7 @@
 					if (isNaN(moneyValue))
 						$('.money-input').val('?');
 					else
-						$('.money-input').val(moneyValue);
+						$('.money-input').val(moneyValue.toFixed(2));
 				}).keyup();
 				
 				// In: js/flux.datefields.js
