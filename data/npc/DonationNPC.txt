@@ -1,110 +1,88 @@
-map,x,y,d	script	FluxCP Rewards	987,{
-	// NPC Settings - SET THESE BEFORE LOADING THE SCRIPT!
-	set $servername$,"FluxRO";
-	set $npcname$,"[Item Redeemer]"; // NPC Name to display during chat. Default: "[Item Redeemer]"
-	set $redeemtable$,"cp_redeemlog"; // Default: "cp_redeemlog"
-	set $showcredits,1; // Display Credits to FluxCP Creators? 0 = Disable. 1 = Enable. Default: 1
-	// End NPC Settings.
+map,x,y,d	script	Donor Rewards Redeemer	987,{
+	// ----------------- NPC Settings -----------------
+	// --- SET THESE BEFORE LOADING THE SCRIPT! ---
+	
+	// Server Name
+	set .serverName$,"FluxRO";
+	
+	// NPC Name to display during chat.
+	// Default: "[Donor Rewards Redeemer]"
+	set .npcName$,"[Donor Rewards Redeemer]";
+	
+	// DO NOT CHANGE THIS!
+	// Default: "cp_redeemlog"
+	set .redeemTable$,"cp_redeemlog";
+	
+	// Display Credits to FluxCP Creators?
+	// Help promote our product if its useful.
+	// 0 = Disable. 1 = Enable.
+	// Default: 1
+	set .showCredits,1;
+	
+	// Max number of unique items to redeem at a time.
+	// DO NOT RAISE THIS VALUE ABOVE 128 WITHOUT
+	// MAKING THE NECESSARY SCRIPT ENGINE MODS
+	// FOR SCRIPT ARRAY SIZING! DANGEROUS!
+	// Default: 128
+	set .numRedemptionsSimul,128; 
+	// --------------- End NPC Settings ---------------
 
-	// Server Settings
-	// DON'T CHANGE THIS UNLESS YOU KNOW WHAT YOU'RE DOING AND HAVE MADE THE APPROPRIATE SOURCE MODS!
-	set $maxinventorysize,100; // Max amount of unique items able to be held in inventory.
-	set $maxquantity,30000; // Max amount of an item able to be held in inventory.
-	// End Server Settings.
-
-	// Begin NPC
-	mes $npcname$;
-	if (Sex)
-		mes "Well hello there good sir!";
-	else
-		mes "Well hello there young madam!";
+	// ----------------- Begin Script -----------------
+	mes .npcName$;
+	mes "Well hello there " + (Sex ? "good sir!" : "young madam!");
 	mes "How may I be of assistance to you on this fine day?";
 	next;
-	switch(select("I wish to redeem items:Who might you be?:I am merely perusing the area")) {
+	prompt("I wish to redeem items:Who might you be?:I am merely perusing the area");
+	mes .npcName$;
+	switch(@menu) {
 		case 1:
-			mes $npcname$;
-			deletearray @inventorylist_id;
-			deletearray @inventorylist_amount;
-			set @inventorylist_count,0;
-			getinventorylist;
-			if (@inventorylist_count < $maxinventorysize) {
-				query_sql "SELECT `id`, `nameid`, `quantity`  FROM `"+escape_sql($redeemtable$)+"` WHERE `account_id` = '"+escape_sql(getcharid(3))+"' AND `redeemed` = '0' LIMIT 128",.@id,.@nameid,.@quantity;
-				mes "Items Pending Redemption: "+getarraysize(.@id);
-				if (getarraysize(.@id) > 0) {
-					for( set .@loop, 0; .@loop < getarraysize(.@id); set .@loop,.@loop+1) {
-						deletearray @inventorylist_id;
-						deletearray @inventorylist_amount;
-						set @inventorylist_count,0;
-						getinventorylist;
-						if (@inventorylist_count < $maxinventorysize) {
-							for( set .@loop_inner,0; .@loop_inner < @inventorylist_count; set .@loop_inner,.@loop_inner+1) {
-								deletearray @inventorylist_id;
-								deletearray @inventorylist_amount;
-								set @inventorylist_count,0;
-								getinventorylist;
-								if (@inventorylist_id[.@loop_inner] == .@nameid[.@loop]) {
-									if (@inventorylist_amount[.@loop_inner]+.@quantity[.@loop] > $maxquantity) {
-										mes "I'm terribly sorry, but you cannot hold more than "+$maxquantity+" of "+getitemname(.@nameid[.@loop])+" at a time!";
-										mes "Please come back when you carry less of this item.";
-										if ($showcredits) callfunc "F_FluxCredits";
-										close;
-									} else if (checkweight(.@nameid[.@loop],.@quantity[.@loop]) == 0) {
-										mes "I'm terribly sorry, but you are carrying too much to accept your rewards.";
-										mes "Please come again with less weight.";
-										if ($showcredits) callfunc "F_FluxCredits";
-										close;
-									}
-								}
-							}
-							query_sql "UPDATE `"+escape_sql($redeemtable$)+"` SET `char_id` = '"+escape_sql(getcharid(0))+"', `redeemed` = '1', `redemption_date` = NOW() WHERE `id` = '"+escape_sql(.@id[.@loop])+"'";
-							getitem .@nameid[.@loop],.@quantity[.@loop];
-							mes .@quantity[.@loop]+"x "+getitemname(.@nameid[.@loop]);
-						} else {
-							mes "I'm terribly sorry, but you cannot hold more than "+$maxinventorysize+" items in your inventory.";
-							mes "Please come again with less items.";
-							if ($showcredits) callfunc "F_FluxCredits";
-							close;
-						}
+			query_sql "SELECT `id`, `nameid`, `quantity` FROM `" + escape_sql(.redeemTable$) + "` WHERE `account_id` = " + getcharid(3) + " AND `redeemed` = 0 LIMIT " + .numRedemptionsSimul,.@id,.@nameid,.@quantity;
+			if (getarraysize(.@id) > 0) {
+				mes "Items Pending Redemption: " + getarraysize(.@id);
+				for (set .@i,0; .@i < getarraysize(.@id); set .@i,.@i+1)
+					if (checkweight(.@nameid[.@i],.@quantity[.@i]) == 0) {
+						mes "I'm terribly sorry, but you are carrying too much to accept " + (.@i ? "any more of " : " ") + "your rewards at this time.";
+						mes "Please come back with fewer items.";
+					} else {
+						query_sql "UPDATE `" + escape_sql(.redeemTable$) + "` SET `char_id` = " + getcharid(0) + ", `redeemed` = 1, `redemption_date` = NOW() WHERE `id` = " + .@id[.@i];
+						getitem .@nameid[.@i],.@quantity[.@i];
+						mes .@quantity[.@i] + "x " + getitemname(.@nameid[.@i]);
 					}
-					if (Sex)
-						mes "Thank you for your patronage fine sir.";
-					else
-						mes "Thank you for your patronage ma'am.";
-					mes "Please enjoy your stay on our server, "+$servername$+".";
-					if ($showcredits) callfunc "F_FluxCredits";
-				} else {
-					mes "My records indicate that there are no rewards awaiting to be redeemed.";
-					mes "My deepest apologies for the misunderstanding.";
-					if ($showcredits) callfunc "F_FluxCredits";
+				if (.@i == getarraysize(.@id)) {
+					mes "Thank you for your patronage " + (Sex ? "fine sir." : "ma'am.");
+					mes "Please enjoy your stay on " + .serverName$ + "!";
 				}
+				if (.showCredits)
+					callfunc "F_FluxCredits";
 			} else {
-				mes "I'm terribly sorry, but you cannot hold more than "+$maxinventorysize+" items in your inventory.";
-				mes "Please come again with less items.";
-				if ($showcredits) callfunc "F_FluxCredits";
+				mes "My records indicate that there are no rewards awaiting to be redeemed.";
+				mes "My deepest apologies for the misunderstanding.";
 			}
 		break;
 		case 2:
-			mes $npcname$;
-			mes "I am here to allow for the redemption of rewards for donations to our server, "+$servername$;
+			mes "I am here to allow for the redemption of rewards for donations to " + .serverName$ + ".";
 			mes "Donations may be made to the server via the control panel.";
-			if ($showcredits) callfunc "F_FluxCredits";
 		break;
-		case 3:
-			mes $npcname$;
+		default:
 			mes "Very well then.";
 			mes "Good day to you.";
-			if ($showcredits) callfunc "F_FluxCredits";
 		break;
 	}
 	close;
+	// ------------------ End Script ------------------
 }
 
-// Credit Displaying Function
-// Please do not modify or delete this function or its contents.
-// To disable the credits from being shown, please set $showcredits to 0 in the NPC Settings at the top of this file.
+// ------------ Credits to FluxCP Creators ------------
+// - Please do not modify or delete this function or  -
+// - its contents. To disable the credits from being  -
+// - shown, set .showCredits to 0 in the NPC Settings -
+// - at the top of this file.                         -
+// ----------------------------------------------------
+
 function	script	F_FluxCredits	{
 	mes "-----------------------------------";
 	mes "Powered by Flux Control Panel.";
-	mes "Copyright © 2008-2011 Matthew Harris and Nikunj Mehta.";
-	close;
+	mes "Copyright © 2008-2012 Matthew Harris and Nikunj Mehta.";
+	mes "http://fluxcp.googlecode.com/";
+	return;
 }
