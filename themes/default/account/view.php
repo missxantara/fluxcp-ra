@@ -94,6 +94,7 @@
 			<?php endif ?>
 		</td>
 	</tr>
+	<?php $banconfirm=htmlspecialchars(str_replace("'", "\\'", Flux::message('AccountBanConfirm'))) ?>
 	<?php if ($showTempBan): ?>
 	<tr>
 		<th><?php echo htmlspecialchars(Flux::message('AccountViewTempBanLabel')) ?></th>
@@ -104,7 +105,7 @@
 				<label><?php echo htmlspecialchars(Flux::message('AccountBanUntilLabel')) ?></label>
 				<?php echo $this->dateTimeField('tempban', date('H:i:s')); ?>
 				<input type="submit" value="<?php echo htmlspecialchars(Flux::message('AccountTempBanButton')) ?>"
-					onclick="return confirm('<?php echo $banconfirm=htmlspecialchars(str_replace("'", "\\'", Flux::message('AccountBanConfirm'))) ?>')" />
+					onclick="return confirm('<?php echo $banconfirm ?>')" />
 			</form>
 		</td>
 	</tr>
