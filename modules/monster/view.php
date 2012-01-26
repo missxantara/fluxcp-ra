@@ -118,7 +118,7 @@ if ($monster) {
 	if (file_exists($skillDB)) {
 		$fp = fopen($skillDB, 'r');
 		while ($row=fgetcsv($fp)) {
-			if ($row[0] == $monster->monster_id) {
+			if ($row[0] == $monster->monster_id && count($row) >= 19) {
 				list ($mobName, $mobSkill) = explode('@', $row[1], 2);
 				$mobSkills[] = array(
 					'monster_id'  => $row[0],
@@ -138,7 +138,8 @@ if ($monster) {
 					'val3'        => $row[14],
 					'val4'        => $row[15],
 					'val5'        => $row[16],
-					'emotion'     => $row[17]
+					'emotion'     => $row[17],
+					'chat'        => $row[18]
 				);
 			}
 		}
