@@ -102,7 +102,6 @@ try {
 	}
 
 	foreach ($directories as $directory) {
-		$directory = realpath($directory);
 		if (is_writable(dirname($directory)) && !is_dir($directory)) {
 			if (Flux::config('RequireOwnership'))
 				mkdir($directory, 0700);
