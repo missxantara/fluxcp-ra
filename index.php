@@ -110,7 +110,9 @@ try {
 		}
 	}
 	
-	$uid = posix_getuid();
+	if (Flux::config('RequireOwnership') && function_exists('posix_getuid'))
+		$uid = posix_getuid();
+	
 	$directories = array(
 		FLUX_DATA_DIR.'/logs'     => 'log storage',
 		FLUX_DATA_DIR.'/itemshop' => 'item shop image',
@@ -121,7 +123,7 @@ try {
 		$directory = realpath($directory);
 		if (!is_writable($directory))
 			throw new Flux_PermissionError("The $directoryFunction directory '$directory' is not writable.  Remedy with `chmod 0600 $directory`");
-		if (fileowner($directory) != $uid)
+		if (Flux::config('RequireOwnership') && function_exists('posix_getuid') && fileowner($directory) != $uid)
 			throw new Flux_PermissionError("The $directoryFunction directory '$directory' is not owned by the executing user.  Remedy with `chown -R ".posix_geteuid().":".posix_geteuid()." $directory`");
 	}
 	
