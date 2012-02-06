@@ -551,7 +551,7 @@ class Flux_Template {
 				if (array_key_exists('_https', $params)) {
 					$_https = $params['_https'];
 				}
-				elseif (!empty($_SERVER['HTTPS'])) {
+				elseif (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== "off") {
 					$_https = true;
 				}
 				else {
@@ -790,7 +790,7 @@ class Flux_Template {
 	 */
 	public function entireUrl($withRequest = true)
 	{
-		$proto    = empty($_SERVER['HTTPS']) ? 'http://' : 'https://';
+		$proto    = empty($_SERVER['HTTPS']) || $_SERVER['HTTPS'] === "off" ? 'http://' : 'https://';
 		$hostname = $_SERVER['HTTP_HOST'];
 		$request  = $_SERVER['REQUEST_URI'];
 		
