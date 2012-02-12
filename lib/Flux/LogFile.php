@@ -25,7 +25,7 @@ class Flux_LogFile {
 	 * @access public
 	 * @var string
 	 */
-	public $dateFormat = '[Y-m-d h:i:s] ';
+	public $dateFormat = '[Y-m-d H:i:s] ';
 
 	/**
 	 * Create new LogFile instance.
