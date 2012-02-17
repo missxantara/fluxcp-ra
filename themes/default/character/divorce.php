@@ -8,6 +8,7 @@
 				<p>
 				<?php echo htmlspecialchars(sprintf(Flux::message('DivorceText1'), $char->name)) ?>
 				<?php if (!Flux::config('DivorceKeepChild')) echo htmlspecialchars(sprintf(Flux::message('DivorceText2'), $char->name)) ?>
+				<?php if (!Flux::config('DivorceKeepRings')) echo htmlspecialchars(Flux::message('DivorceText3')) ?>
 				</p>
 			</td>
 		</tr>

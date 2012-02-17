@@ -321,6 +321,7 @@ return array(
 	'DivorceMustBeOffline2'   => '%s, his/her partner and their child must be off-line.',
 	'DivorceText1'            => "Are you sure you want to divorce %s and his/her partner?",
 	'DivorceText2'            => 'If %s has a child, the child will also be orphaned.',
+	'DivorceText3'            => 'Wedding rings will also be deleted.',
 	'DivorceButton'           => 'Yes, do it please.',
 	'DivorceSuccessful'       => '%s has been divorced!',
 	

@@ -31,7 +31,7 @@ else {
 			$session->setMessageData(Flux::message('IpbanUnbanned'));
 		}
 		else {
-			$session->setMessageData(Flux::message('IpbanUnbanFailed', $numFailed));
+			$session->setMessageData(sprintf(Flux::message('IpbanUnbanFailed'), $numFailed));
 		}
 	}
 }
