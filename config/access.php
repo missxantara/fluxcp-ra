@@ -115,12 +115,13 @@ return array(
 			'zeny'    => AccountLevel::ADMIN
 		),
 		'cplog'     => array(
-			'index'   => AccountLevel::ADMIN,
-			'paypal'  => AccountLevel::ADMIN,
-			'login'   => AccountLevel::ADMIN,
+			'index'      => AccountLevel::ADMIN,
+			'paypal'     => AccountLevel::ADMIN,
+			'login'      => AccountLevel::ADMIN,
 			'resetpass'  => AccountLevel::ADMIN,
 			'changepass' => AccountLevel::ADMIN,
-			'changemail' => AccountLevel::ADMIN
+			'changemail' => AccountLevel::ADMIN,
+			'ipban'      => AccountLevel::ADMIN
 		),
 		'ipban'     => array(
 			'index'    => AccountLevel::ADMIN,

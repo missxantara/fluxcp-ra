@@ -253,11 +253,12 @@ return array(
 			//'zeny'    => 'Zeny'
 		),
 		'cplog' => array(
-			'paypal' => 'PayPal Transactions',
-			'login'  => 'Logins',
+			'paypal'     => 'PayPal Transactions',
+			'login'      => 'Logins',
 			'resetpass'  => 'Password Resets',
 			'changepass' => 'Password Changes',
-			'changemail' => 'E-mail Changes'
+			'changemail' => 'E-mail Changes',
+			'ipban'      => 'IP Bans'
 		),
 		'reload' => array(
 			'mobskill' => 'Mob Skills'
