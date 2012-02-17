@@ -59,7 +59,7 @@ $paginator->setSortableColumns(array(
 ));
 
 $sql  = "SELECT i.ip_address, i.banned_by, i.ban_type, i.ban_until, i.ban_date, l.userid FROM {$server->loginDatabase}.$ipBanTable i ";
-$sql .= "LEFT JOIN login l ON l.account_id = i.banned_by $sqlpartial";
+$sql .= "LEFT JOIN {$server->loginDatabase}.login l ON l.account_id = i.banned_by $sqlpartial";
 $sql  = $paginator->getSQL($sql);
 $sth  = $server->connection->getStatement($sql);
 $sth->execute($bind);
