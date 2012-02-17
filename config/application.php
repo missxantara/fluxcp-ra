@@ -90,6 +90,7 @@ return array(
 	),
 	'GStorageLeaderOnly'   => false,                    // Only allow guild leader to view guild storage rather than all members?
 	'DivorceKeepChild'     => false,                    // Keep child after divorce?
+	'DivorceKeepRings'     => false,                    // Keep wedding rings after divorce?
 	'AllowIpBanLogin'      => false,                    // Allow logging into account from banned IP.
 	'AllowTempBanLogin'    => false,                    // Allow logging in of temporarily banned accounts.
 	'AllowPermBanLogin'    => false,                    // Allow logging in of permanently banned accounts.

@@ -23,7 +23,7 @@ if (!$char->partner_id) {
 $partner = $server->getCharacter($char->partner_id);
 if (!$partner) {
 	$session->setMessageData(Flux::message('DivorceInvalidPartner'));
-		$this->redirect($this->referer);
+	$this->redirect($this->referer);
 }
 
 $child = false;
@@ -50,6 +50,15 @@ if (count($_POST) && $params->get('divorce')) {
 		$sql = "UPDATE {$server->charMapDatabase}.`char` SET father = 0, mother = 0 WHERE char_id = ?";
 		$sth = $server->connection->getStatement($sql);
 		$sth->execute(array($char->child));
+	}
+	
+	if (!Flux::config('DivorceKeepRings')) {
+		$sql  = "DELETE FROM {$server->charMapDatabase}.inventory ";
+		$sql .= "WHERE char_id IN (?, ?) AND nameid IN (2634, 2635) AND card0 = 255 AND (";
+		$sql .= "(card2 = IF(? & 0xFFFF > 32767, (? & 0xFFFF) - 65536, ? & 0xFFFF) AND card3 = (? & 0xFFFF0000) >> 16) ";
+		$sql .= "OR (card2 = IF(? & 0xFFFF > 32767, (? & 0xFFFF) - 65536, ? & 0xFFFF) AND card3 = (? & 0xFFFF0000) >> 16))";
+		$sth  = $server->connection->getStatement($sql);
+		$sth->execute(array($charID, $char->partner_id, $charID, $charID, $charID, $charID, $char->partner_id, $char->partner_id, $char->partner_id, $char->partner_id));
 	}
 	
 	$session->setMessageData(sprintf(Flux::message('DivorceSuccessful'), $char->name));
