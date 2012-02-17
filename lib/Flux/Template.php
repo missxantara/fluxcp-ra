@@ -791,7 +791,7 @@ class Flux_Template {
 	public function entireUrl($withRequest = true)
 	{
 		$proto    = empty($_SERVER['HTTPS']) || $_SERVER['HTTPS'] === "off" ? 'http://' : 'https://';
-		$hostname = $_SERVER['HTTP_HOST'];
+		$hostname = empty($_SERVER['HTTP_HOST']) ? $_SERVER['SERVER_NAME'] : $_SERVER['HTTP_HOST'];
 		$request  = $_SERVER['REQUEST_URI'];
 		
 		if ($withRequest) {
