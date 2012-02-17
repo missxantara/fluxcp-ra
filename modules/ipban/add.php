@@ -20,7 +20,7 @@ if (count($_POST)) {
 	elseif (!preg_match('/^([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5]|\*)\.([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5]|\*)\.([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5]|\*)$/', $list, $m)) {
 		$errorMessage = Flux::message('IpbanInvalidPattern');
 	}
-	elseif (preg_match('/' . Flux::config('IpWhitelistPattern') . '/', $list) {
+	elseif (preg_match('/' . Flux::config('IpWhitelistPattern') . '/', $list)) {
 		$errorMessage = Flux::message('IpbanWhitelistedPattern');
 	}
 	elseif (!$reason) {

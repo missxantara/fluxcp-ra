@@ -4,7 +4,7 @@ if (!defined('FLUX_ROOT')) exit;
 $title = 'List Account Ban History';
 
 $banTable    = Flux::config('FluxTables.AccountBanTable');
-$sqlpartial .= "LEFT JOIN {$server->loginDatabase}.login AS l1 ON l1.account_id = a.account_id ";
+$sqlpartial  = "LEFT JOIN {$server->loginDatabase}.login AS l1 ON l1.account_id = a.account_id ";
 $sqlpartial .= "LEFT JOIN {$server->loginDatabase}.login AS l2 ON l2.account_id = a.banned_by ";
 $sqlpartial .= "WHERE 1=1 ";
 $sqlpartial .= "AND a.banned_by IS NOT NULL ";
