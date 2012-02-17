@@ -121,6 +121,7 @@ return array(
 			'resetpass'  => AccountLevel::ADMIN,
 			'changepass' => AccountLevel::ADMIN,
 			'changemail' => AccountLevel::ADMIN,
+			'ban'        => AccountLevel::ADMIN,
 			'ipban'      => AccountLevel::ADMIN
 		),
 		'ipban'     => array(

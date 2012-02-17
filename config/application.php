@@ -258,6 +258,7 @@ return array(
 			'resetpass'  => 'Password Resets',
 			'changepass' => 'Password Changes',
 			'changemail' => 'E-mail Changes',
+			'ban'        => 'Account Bans',
 			'ipban'      => 'IP Bans'
 		),
 		'reload' => array(
