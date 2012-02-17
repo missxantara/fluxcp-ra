@@ -68,10 +68,13 @@
 				?></textarea>
 			</td>
 		</tr>
+		<tr>
+			<td></td>
+			<td class="button-action">
+				<input type="submit" value="<?php echo htmlspecialchars(Flux::message('IpbanUnbanButton')) ?>" />
+			</td>
+		</tr>
 	</table>
-	<p class="button-action">
-		<input type="submit" value="<?php echo htmlspecialchars(Flux::message('IpbanUnbanButton')) ?>" />
-	</p>
 	<?php endif ?>
 </form>
 <?php echo $paginator->getHTML() ?>
