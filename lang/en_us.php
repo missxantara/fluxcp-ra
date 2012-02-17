@@ -408,6 +408,7 @@ return array(
 	'IpbanAddTitle'           => 'Add IP Ban',
 	'IpbanEnterIpPattern'     => 'Please input an IP address or pattern.',
 	'IpbanInvalidPattern'     => 'Invalid IP address or pattern.',
+	'IpbanWhitelistedPattern' => 'This pattern is whitelisted and cannot be blocked.',
 	'IpbanEnterReason'        => 'Please enter a reason for the IP ban.',
 	'IpbanSelectUnbanDate'    => 'Unban date is required.',
 	'IpbanFutureDate'         => 'Unban date must be specified to a future date.',
