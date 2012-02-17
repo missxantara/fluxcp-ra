@@ -23,14 +23,15 @@ if (count($_POST)) {
 		$this->deny();
 	}
 	
-	$list   = trim($params->get('newlist'));
-	$reason = trim($params->get('reason'));
-	$rtime  = trim($params->get('rtime_date'));
+	$list       = trim($params->get('newlist'));
+	$reason     = trim($params->get('reason'));
+	$rtime      = trim($params->get('rtime_date'));
+	$editReason = trim($params->get('edit_reason'));
 	
 	if (!$list) {
 		$errorMessage = Flux::message('IpbanEnterIpPattern');
 	}
-	elseif (!preg_match('/^(\d{1,3})\.(\d{1,3}|\*)\.(\d{1,3}|\*)\.(\d{1,3}|\*)$/', $list, $m)) {
+	elseif (!preg_match('/^([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5]|\*)\.([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5]|\*)\.([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5]|\*)$/', $list, $m)) {
 		$errorMessage = Flux::message('IpbanInvalidPattern');
 	}
 	elseif (!$reason) {
@@ -38,6 +39,9 @@ if (count($_POST)) {
 	}
 	elseif (!$rtime) {
 		$errorMessage = Flux::message('IpbanSelectUnbanDate');
+	}
+	elseif (!$editReason) {
+		$errorMessage = Flux::message('IpbanEnterEditReason');
 	}
 	elseif (strtotime($rtime) <= time()) {
 		$errorMessage = Flux::message('IpbanFutureDate');
@@ -55,19 +59,17 @@ if (count($_POST)) {
 			$sth  = $server->connection->getStatement($sql);
 
 			$sth->execute($listArr);
-			$ipban = $sth->fetch();
+			$ipban2 = $sth->fetch();
 			
-			if ($ipban && $ipban->list) {
-				$errorMessage = sprintf(Flux::message('IpbanAlreadyBanned'), $ipban->list);
+			if ($ipban2 && $ipban2->list) {
+				$errorMessage = sprintf(Flux::message('IpbanAlreadyBanned'), $ipban2->list);
 			}
 		}
 		
 		if (empty($errorMessage)) {
-			$sql  = "UPDATE {$server->loginDatabase}.ipbanlist SET ";
-			$sql .= "list = ?, reason = ?, rtime = ? WHERE list = ?";
-			$sth  = $server->connection->getStatement($sql);
-			
-			if ($sth->execute(array($list, $reason, $rtime, $banID))) {
+			if ($server->loginServer->removeIpBan($session->account->account_id, $editReason, $ipban->list)
+				&& $server->loginServer->addIpBan($session->account->account_id, $reason, $rtime, $list)
+			) {
 				$session->setMessageData(sprintf(Flux::message('IpbanPatternBanned'), $list));
 				$this->redirect($this->url('ipban'));
 			}

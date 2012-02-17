@@ -421,8 +421,10 @@ return array(
 	'IpbanAddButton'          => 'Add IP Ban',
 	// - ipban/edit
 	'IpbanEditTitle'          => 'Modify IP Ban',
+	'IpbanEnterEditReason'    => 'Please enter a reason for the IP ban modification.',
 	'IpbanEditFailed'         => 'Failed to modify IP ban.',
 	'IpbanEditHeading'        => 'Modify IP Ban',
+	'IpbanEditReasonLabel'    => 'Edit Reason',
 	'IpbanEditButton'         => 'Modify IP Ban',
 	// - ipban/index
 	'IpbanListTitle'          => 'IP Ban List',
@@ -432,11 +434,23 @@ return array(
 	'IpbanBanReasonLabel'     => 'Ban Reason',
 	'IpbanBanExpireLabel'     => 'Ban Expiration Date',
 	'IpbanModifyLink'         => 'Modify',
+	'IpbanRemoveLink'         => 'Remove',
 	'IpbanUnbanButton'        => 'Unban Selected',
 	'IpbanListNoBans'         => 'There are currently no IP bans.',
+	// - ipban/remove
+	'IpbanRemoveTitle'        => 'Remove IP Ban',
+	'IpbanEnterRemoveReason'  => 'Please enter a reason for the IP ban removal.',
+	'IpbanNotBanned'          => 'No matching IP (%s) is currently banned.',
+	'IpbanPatternUnbanned'    => "The IP address/pattern '%s' has been unbanned.",
+	'IpbanRemoveFailed'       => 'Failed to remove IP ban.',
+	'IpbanRemoveHeading'      => 'Remove IP Ban',
+	'IpbanRemoveReasonLabel'  => 'Unban Reason',
+	'IpbanRemoveButton'       => 'Remove IP Ban',
 	// - ipban/unban
 	'IpbanNothingToUnban'     => 'Nothing to unban.',
+	'IpbanEnterUnbanReason'   => 'Please enter a reason for lifting the IP ban(s).',
 	'IpbanUnbanned'           => 'Lifted selected IP ban(s)!',
+	'IpbanUnbanFailed'        => 'Failed to lift %d of the specified IP unban(s)!',
 	
 	// Module: item
 	// - item/add

@@ -126,7 +126,8 @@ return array(
 			'index'    => AccountLevel::ADMIN,
 			'add'      => AccountLevel::ADMIN,
 			'unban'    => AccountLevel::ADMIN,
-			'edit'     => AccountLevel::ADMIN
+			'edit'     => AccountLevel::ADMIN,
+			'remove'   => AccountLevel::ADMIN
 		),
 		'service'   => array(
 			'tos'      => AccountLevel::ANYONE
@@ -189,6 +190,7 @@ return array(
 		'SeeHiddenMapStats'  => AccountLevel::HELPER, // Ability to see hidden map statistics.
 		'ChangeSlot'         => AccountLevel::LOWGM,  // Level required to change another character's slot.
 		'ModifyIpBan'        => AccountLevel::ADMIN,  // Level required to modify an existing IP ban.
+		'RemoveIpBan'        => AccountLevel::ADMIN,  // Level required to remove an existing IP ban.
 		'HideFromZenyRank'   => AccountLevel::NORMAL, // Ability to set "Hide from zeny ranking" pref.
 		'SeeItemDbScripts'   => AccountLevel::ANYONE, // Ability to see item_db scripts in view page.
 		'SeeItemDb2Scripts'  => AccountLevel::ADMIN,  // Ability to see item_db2 scripts in view page.

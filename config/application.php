@@ -364,6 +364,7 @@ return array(
 		'RedemptionTable'     => 'cp_redeemlog',
 		'AccountCreateTable'  => 'cp_createlog',
 		'AccountBanTable'     => 'cp_banlog',
+		'IpBanTable'          => 'cp_ipbanlog',
 		'DonationTrustTable'  => 'cp_trusted',
 		'AccountPrefsTable'   => 'cp_loginprefs',
 		'CharacterPrefsTable' => 'cp_charprefs',

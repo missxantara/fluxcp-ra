@@ -28,6 +28,15 @@
 				<td></td>
 			</tr>
 			<tr>
+				<th><label for="edit_reason"><?php echo htmlspecialchars(Flux::message('IpbanEditReasonLabel')) ?></label></th>
+				<td>
+					<textarea name="edit_reason" id="edit_reason" class="edit_reason"><?php
+						echo htmlspecialchars(($editReason=$params->get('edit_reason')) ? $editReason : '')
+					?></textarea>
+				</td>
+				<td></td>
+			</tr>
+			<tr>
 				<td></td>
 				<td colspan="2"><input type="submit" value="<?php echo htmlspecialchars(Flux::message('IpbanEditButton')) ?>" /></td>
 			</tr>
