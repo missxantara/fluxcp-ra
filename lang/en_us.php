@@ -468,11 +468,12 @@ return array(
 	// - itemshop/imagedel
 	
 	// Module: logdata
+	// - logdata/chat
 	// - logdata/command
 	'CommandLogTitle'         => 'List Commands',
 	'CommandLogHeading'       => 'Commands',
 	'CommandLogNotFound'      => 'No commands found.',
-	'CommandLogDateLabel'     => 'Command Date/Time',
+	'CommandLogDateLabel'     => 'Date/Time',
 	'CommandLogAccountIdLabel'=> 'Account ID',
 	'CommandLogCharIdLabel'   => 'Character ID',
 	'CommandLogCharNameLabel' => 'Character Name',

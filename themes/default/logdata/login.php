@@ -32,7 +32,7 @@
 <?php echo $paginator->infoText() ?>
 <table class="horizontal-table">
 	<tr>
-		<th><?php echo $paginator->sortableColumn('time', 'Date and Time') ?></th>
+		<th><?php echo $paginator->sortableColumn('time', 'Date/Time') ?></th>
 		<th><?php echo $paginator->sortableColumn('ip', 'IP Address') ?></th>
 		<th><?php echo $paginator->sortableColumn('user', 'Username') ?></th>
 		<th><?php echo $paginator->sortableColumn('log', 'Log Message') ?></th>
@@ -62,5 +62,8 @@
 </table>
 <?php echo $paginator->getHTML() ?>
 <?php else: ?>
-<p>No logs were found. <a href="javascript:history.go(-1)">Go back</a>.</p>
+<p>
+	No logins found.
+	<a href="javascript:history.go(-1)">Go back</a>.
+</p>
 <?php endif ?>

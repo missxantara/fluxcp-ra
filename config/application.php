@@ -248,7 +248,7 @@ return array(
 			//'inter'   => 'Interactions',
 			'command' => 'Commands',
 			//'branch'  => 'Branches',
-			//'chat'    => 'Chats',
+			'chat'    => 'Chat Messages',
 			'login'   => 'Logins',
 			//'mvp'     => 'MVP',
 			//'npc'     => 'NPC',
