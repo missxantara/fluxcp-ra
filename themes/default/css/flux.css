@@ -359,11 +359,6 @@ label:hover {
 	background-color: #eee;
 }
 
-.vertical-table th {
-	padding: 5px 10px;
-	background-color: #eee;
-}
-
 .vertical-table td {
 	padding: 5px 12px;
 	background-color: #fff;
