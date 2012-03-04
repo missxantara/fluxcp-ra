@@ -58,7 +58,7 @@ $paginator->setSortableColumns(array(
 	'ip', 'banned_by', 'ban_type', 'ban_date' => 'desc', 'ban_until'
 ));
 
-$sql  = "SELECT i.ip_address, i.banned_by, i.ban_type, i.ban_until, i.ban_date, a.ban_reason, ";
+$sql  = "SELECT i.ip_address, i.banned_by, i.ban_type, i.ban_until, i.ban_date, i.ban_reason, ";
 $sql .= "l.userid FROM {$server->loginDatabase}.$ipBanTable AS i ";
 $sql .= "LEFT JOIN {$server->loginDatabase}.login AS l ON l.account_id = i.banned_by $sqlpartial";
 $sql  = $paginator->getSQL($sql);
