@@ -43,6 +43,7 @@
 		<?php endforeach ?>
 		<?php --$i ?>
 		<?php while (($i++) % $x): ?>
+			<th>&nbsp;</th>
 			<td>&nbsp;</td>
 		<?php endwhile ?>
 		</tr>
