@@ -46,7 +46,7 @@
 		<th>Guild Notice 1</th>
 		<td colspan="6">
 			<?php if (trim($guild->mes1)): ?>
-				<?php echo htmlspecialchars($guild->mes1) ?>
+				<?php echo htmlentities($guild->mes1) ?>
 			<?php else: ?>
 				<span class="not-applicable">None</span>
 			<?php endif ?>
@@ -56,7 +56,7 @@
 		<th>Guild Notice 2</th>
 		<td colspan="6">
 			<?php if (trim($guild->mes2)): ?>
-				<?php echo htmlspecialchars($guild->mes2) ?></td>
+				<?php echo htmlentities($guild->mes2) ?></td>
 			<?php else: ?>
 				<span class="not-applicable">None</span>
 			<?php endif ?>
@@ -147,7 +147,7 @@
 			<td><?php echo htmlspecialchars($member->job_level) ?></td>
 			<td><?php echo number_format($member->devotion) ?></td>
 			<td><?php echo htmlspecialchars($member->position) ?></td>
-			<td><?php echo htmlspecialchars($member->position_name) ?></td>
+			<td><?php echo htmlentities($member->position_name) ?></td>
 			<td>
 				<?php if ($member->mode == 17): ?>
 					<?php echo htmlspecialchars("Invite/Expel") ?>
@@ -190,7 +190,7 @@
 			<td><?php echo htmlspecialchars($expulsion->name) ?></td>
 			<td>
 			<?php if($expulsion->mes): ?>
-				<?php echo htmlspecialchars($expulsion->mes) ?>
+				<?php echo htmlentities($expulsion->mes) ?>
 			<?php else: ?>
 				<span class="not-applicable">None</span>
 			<?php endif ?>
