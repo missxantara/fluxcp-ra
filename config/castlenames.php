@@ -1,4 +1,6 @@
 <?php
+// Commenting out a castle's entry will remove it from the castles page
+// and exclude it from being a factor in the guild ranking.
 return array(
 	// iRO Names
 	 0 => 'Neuschwanstein',

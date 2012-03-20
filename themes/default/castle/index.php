@@ -11,13 +11,7 @@
 	<?php foreach ($castles as $castle): ?>
 		<tr>
 			<td align="right"><?php echo htmlspecialchars($castle->castle_id) ?></td>
-			<td>
-				<?php if (array_key_exists($castle->castle_id, $castleNames) && $castleNames[$castle->castle_id]): ?>
-					<?php echo htmlspecialchars($castleNames[$castle->castle_id]) ?>
-				<?php else: ?>
-					<span class="not-applicable">Unknown<?php echo " (".$castle->castle_id.")" ?></span>
-				<?php endif ?>
-			</td>
+			<td><?php echo htmlspecialchars($castleNames[$castle->castle_id]) ?></td>
 			<?php if ($castle->guild_name): ?>
 				<?php if ($castle->emblem_len): ?>
 					<td width="24"><img src="<?php echo $this->emblem($castle->guild_id) ?>" /></td>
