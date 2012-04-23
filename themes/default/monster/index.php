@@ -40,6 +40,8 @@
 		<th><?php echo $paginator->sortableColumn('iro_name', 'iRO Name') ?></th>
 		<th><?php echo $paginator->sortableColumn('level', 'Level') ?></th>
 		<th><?php echo $paginator->sortableColumn('hp', 'HP') ?></th>
+		<th><?php echo $paginator->sortableColumn('race', 'Race') ?></th>
+		<th>Element</th>
 		<th><?php echo $paginator->sortableColumn('exp', 'Base EXP') ?></th>
 		<th><?php echo $paginator->sortableColumn('jexp', 'Job EXP') ?></th>
 		<th><?php echo $paginator->sortableColumn('dropcard_id', 'Card ID') ?></th>
@@ -63,6 +65,14 @@
 		<td><?php echo htmlspecialchars($monster->iro_name) ?></td>
 		<td><?php echo number_format($monster->level) ?></td>
 		<td><?php echo number_format($monster->hp) ?></td>
+		<td>
+			<?php if ($race=Flux::monsterRaceName($monster->race)): ?>
+				<?php echo htmlspecialchars($race) ?>
+			<?php else: ?>
+				<span class="not-applicable">Unknown</span>
+			<?php endif ?>
+		</td>
+		<td><?php echo Flux::elementName($monster->element_type) ?> (Level <?php echo floor($monster->element_level) ?>)</td>
 		<td><?php echo number_format($monster->exp * $server->baseExpRates) ?></td>
 		<td><?php echo number_format($monster->jexp * $server->jobExpRates) ?></td>
 		<?php if ($monster->dropcard_id): ?>
