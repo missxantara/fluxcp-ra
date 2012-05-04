@@ -6,7 +6,7 @@ $this->loginRequired();
 $title = Flux::message('GenderChangeTitle');
 
 $cost    = +(int)Flux::config('ChargeGenderChange');
-$badJobs = Flux::config('GenderLinkedJobClasses');
+$badJobs = Flux::config('GenderLinkedJobClasses')->toArray();
 
 if ($cost && $session->account->balance < $cost) {
 	$hasNecessaryFunds = false;
