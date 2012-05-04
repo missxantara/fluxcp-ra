@@ -12,7 +12,7 @@
 
 <?php if ($hasNecessaryFunds): ?>
 <?php if (empty($errorMessage)): ?>
-<p><strong><?php echo htmlspecialchars(Flux::message('NoteLabel')) ?>:</strong> <?php printf(Flux::message('GenderChangeCharInfo'), '<em>'.implode(', ', $badJobs).'</em>') ?>.</p>
+<p><strong><?php echo htmlspecialchars(Flux::message('NoteLabel')) ?>:</strong> <?php printf(Flux::message('GenderChangeCharInfo'), '<em>'.implode(', ', array_values($badJobs)).'</em>') ?>.</p>
 <h3><?php echo htmlspecialchars(Flux::message('GenderChangeSubHeading')) ?></h3>
 <?php else: ?>
 <p class="red"><?php echo htmlspecialchars($errorMessage) ?></p>

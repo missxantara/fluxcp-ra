@@ -309,7 +309,10 @@ return array(
 	// There isn't normally a need to modify this file, unless it's been
 	// modified in an update. (In English: DON'T TOUCH THIS.)
 	'JobClasses'    => include('jobs.php'),
-	'JobClassIndex' => array_flip(include('jobs.php')),
+	
+	// Gender-linked Job class IDs and their corresponding names.
+	// Should be left alone unless new gender-specific job classes are introduced.
+	'GenderLinkedJobClasses' => include('jobs_gender_linked.php'),
 	
 	// Homunculus class IDs and their corresponding names.
 	// Best not to mess with this either.
