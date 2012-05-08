@@ -7,6 +7,8 @@
 </p>
 <?php if (!$hasNecessaryFunds): ?>
 <p><?php echo htmlspecialchars(Flux::message('GenderChangeNoFunds')) ?></p>
+<?php elseif ($auth->allowedToAvoidSexChangeCost): ?>
+<p><?php echo htmlspecialchars(Flux::message('GenderChangeNoCost')) ?></p>
 <?php endif ?>
 <?php endif ?>
 

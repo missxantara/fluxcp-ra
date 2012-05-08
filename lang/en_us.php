@@ -96,6 +96,7 @@ return array(
 	'GenderChangeCost'        => 'Gender changes cost %s credit(s).',
 	'GenderChangeBalance'     => 'Your current balance is %s credit(s).',
 	'GenderChangeNoFunds'     => 'You do not have enough credits to perform a gender change at this time.',
+	'GenderChangeNoCost'      => 'For you, gender changes are free.',
 	'GenderChangeCharInfo'    => 'You cannot change gender if you have the follow character jobs: %s',
 	'GenderChangeSubHeading'  => 'Please make sure you want to really change!',
 	'GenderChangeFormText'    => 'Would you like to change your gender to %s?',

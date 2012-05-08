@@ -8,7 +8,7 @@ $title = Flux::message('GenderChangeTitle');
 $cost    = +(int)Flux::config('ChargeGenderChange');
 $badJobs = Flux::config('GenderLinkedJobClasses')->toArray();
 
-if ($cost && $session->account->balance < $cost) {
+if ($cost && $session->account->balance < $cost && !$auth->allowedToAvoidSexChangeCost) {
 	$hasNecessaryFunds = false;
 }
 else {
@@ -42,7 +42,7 @@ if (count($_POST)) {
 		$changeTimes = (int)$session->loginServer->getPref($session->account->account_id, 'NumberOfGenderChanges');
 		$session->loginServer->setPref($session->account->account_id, 'NumberOfGenderChanges', $changeTimes + 1);
 
-		if ($cost) {
+		if ($cost && !$auth->allowedToAvoidSexChangeCost) {
 			$session->loginServer->depositCredits($session->account->account_id, -$cost);
 			$session->setMessageData(sprintf(Flux::message('GenderChanged'), $cost));
 		}

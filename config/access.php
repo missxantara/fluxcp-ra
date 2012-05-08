@@ -208,6 +208,7 @@ return array(
 		'SearchCpChangePass' => AccountLevel::NOONE,  // Level required to search passwords in CP log's "password changes" page.
 		'SeeAccountID'       => AccountLevel::LOWGM,  // Level required to see Account ID on account view and character view pages.
 		'SeeUnknownItems'    => AccountLevel::LOWGM,  // Level required to see unidentified items as identified.
+		'AvoidSexChangeCost' => AccountLevel::LOWGM,  // Avoid paying cost (if any) for sex changes.
 		
 		'EditHigherPower'    => AccountLevel::NOONE,
 		'BanHigherPower'     => AccountLevel::NOONE
