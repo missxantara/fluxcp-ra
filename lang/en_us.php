@@ -60,6 +60,7 @@ return array(
 	'EmailChangeTitle'        => 'Change E-mail',
 	'EnterEmailAddress'       => 'Please enter an e-mail address.',
 	'EmailCannotBeSame'       => 'Your new e-mail cannot be the same as your current.',
+	'EmailInvalid'            => 'Invalid e-mail address.',
 	'EmailAlreadyRegistered'  => "The e-mail address you've entered is already registered to another account.",
 	'EmailChangeSent'         => 'An e-mail has been sent to your new address with a link that will confirm the change.',
 	'EmailAddressChanged'     => 'Your e-mail address has been changed!',
