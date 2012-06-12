@@ -8,11 +8,16 @@ class Flux_RegisterError extends Flux_Error {
 	const PASSWORD_TOO_SHORT     = 3;
 	const PASSWORD_TOO_LONG      = 4;
 	const PASSWORD_MISMATCH      = 5;
-	const EMAIL_ADDRESS_IN_USE   = 6;
-	const INVALID_EMAIL_ADDRESS  = 7;
-	const INVALID_GENDER         = 8;
-	const INVALID_SERVER         = 9;
-	const INVALID_SECURITY_CODE  = 10;
-	const INVALID_USERNAME       = 11;
+	const PASSWORD_NEED_UPPER    = 6;
+	const PASSWORD_NEED_LOWER    = 7;
+	const PASSWORD_NEED_NUMBER   = 8;
+	const PASSWORD_NEED_SYMBOL   = 9;
+	const EMAIL_ADDRESS_IN_USE   = 10;
+	const INVALID_EMAIL_ADDRESS  = 11;
+	const INVALID_GENDER         = 12;
+	const INVALID_SERVER         = 13;
+	const INVALID_SECURITY_CODE  = 14;
+	const INVALID_USERNAME       = 15;
+	const INVALID_PASSWORD       = 16;
 }
 ?>
