@@ -108,6 +108,9 @@ class Flux_LoginServer extends Flux_BaseServer {
 		elseif (strlen($username) > Flux::config('MaxUsernameLength')) {
 			throw new Flux_RegisterError('Username is too long', Flux_RegisterError::USERNAME_TOO_LONG);
 		}
+		elseif (!Flux::config('AllowUserInPassword') && stripos($password, $username) !== false) {
+			throw new Flux_RegisterError('Password contains username', Flux_RegisterError::PASSWORD_HAS_USERNAME);
+		}
 		elseif (!ctype_graph($password)) {
 			throw new Flux_RegisterError('Invalid character(s) used in password', Flux_RegisterError::INVALID_PASSWORD);
 		}

@@ -77,6 +77,7 @@ return array(
 	'NeedNewPassword'         => 'Please enter your new password.',
 	'OldPasswordInvalid'      => "The password you provided doesn't match the one we have on record.",
 	'ConfirmNewPassword'      => 'Please confirm your new password.',
+	'PasswordContainsUser'    => 'Your new password cannot contain your username.',
 	'NewPasswordInvalid'      => 'Your new password contains invalid characters.',
 	'NewPasswordSameAsOld'    => 'New password cannot be the same as your current password.',
 	'NewPasswordNeedUpper'    => sprintf('Your new password must contain at least %d uppercase letter(s).', Flux::config('PasswordMinUpper')),

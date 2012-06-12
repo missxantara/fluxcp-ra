@@ -16,6 +16,9 @@ if (count($_POST)) {
 	elseif (!$newPassword) {
 		$errorMessage = Flux::message('NeedNewPassword');
 	}
+	elseif (!Flux::config('AllowUserInPassword') && stripos($newPassword, $session->account->userid) !== false) {
+		$errorMessage = Flux::message('PasswordContainsUser');
+	}
 	elseif (!ctype_graph($newPassword)) {
 		$errorMessage = Flux::message('NewPasswordInvalid');
 	}
