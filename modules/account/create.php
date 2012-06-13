@@ -91,10 +91,10 @@ if (count($_POST)) {
 				$errorMessage = Flux::message('UsernameTooLong');
 				break;
 			case Flux_RegisterError::PASSWORD_TOO_SHORT:
-				$errorMessage = Flux::message('PasswordTooShort');
+				$errorMessage = sprintf(Flux::message('PasswordTooShort'), Flux::config('MinPasswordLength'), Flux::config('MaxPasswordLength'));
 				break;
 			case Flux_RegisterError::PASSWORD_TOO_LONG:
-				$errorMessage = Flux::message('PasswordTooLong');
+				$errorMessage = sprintf(Flux::message('PasswordTooLong'), Flux::config('MinPasswordLength'), Flux::config('MaxPasswordLength'));
 				break;
 			case Flux_RegisterError::PASSWORD_MISMATCH:
 				$errorMessage = Flux::message('PasswordsDoNotMatch');

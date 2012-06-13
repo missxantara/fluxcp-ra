@@ -9,6 +9,12 @@ if (count($_POST)) {
 	$currentPassword    = $params->get('currentpass');
 	$newPassword        = $params->get('newpass');
 	$confirmNewPassword = $params->get('confirmnewpass');
+	$useGMPassSecurity  = $session->account->level < Flux::config('EnableGMPassSecurity');
+	$passwordMinLength  = $useGMPassSecurity ? Flux::config('GMMinPasswordLength') : Flux::config('MinPasswordLength');
+	$passwordMinUpper   = $useGMPassSecurity ? Flux::config('GMPasswordMinUpper') : Flux::config('PasswordMinUpper');
+	$passwordMinLower   = $useGMPassSecurity ? Flux::config('GMPasswordMinLower') : Flux::config('PasswordMinLower');
+	$passwordMinNumber  = $useGMPassSecurity ? Flux::config('GMPasswordMinNumber') : Flux::config('PasswordMinNumber');
+	$passwordMinSymbol  = $useGMPassSecurity ? Flux::config('GMPasswordMinSymbol') : Flux::config('PasswordMinSymbol');
 	
 	if (!$currentPassword) {
 		$errorMessage = Flux::message('NeedCurrentPassword');
@@ -22,11 +28,11 @@ if (count($_POST)) {
 	elseif (!ctype_graph($newPassword)) {
 		$errorMessage = Flux::message('NewPasswordInvalid');
 	}
-	elseif (strlen($newPassword) < Flux::config('MinPasswordLength')) {
-		$errorMessage = Flux::message('PasswordTooShort');
+	elseif (strlen($newPassword) < $passwordMinLength) {
+		$errorMessage = sprintf(Flux::message('PasswordTooShort'), $passwordMinLength, Flux::config('MaxPasswordLength'));
 	}
 	elseif (strlen($newPassword) > Flux::config('MaxPasswordLength')) {
-		$errorMessage = Flux::message('PasswordTooLong');
+		$errorMessage = sprintf(Flux::message('PasswordTooLong'), $passwordMinLength, Flux::config('MaxPasswordLength'));
 	}
 	elseif (!$confirmNewPassword) {
 		$errorMessage = Flux::message('ConfirmNewPassword');
@@ -37,17 +43,17 @@ if (count($_POST)) {
 	elseif ($newPassword == $currentPassword) {
 		$errorMessage = Flux::message('NewPasswordSameAsOld');
 	}
-	elseif (Flux::config('PasswordMinUpper') > 0 && preg_match_all('/[A-Z]/', $password, $matches) < Flux::config('PasswordMinUpper')) {
-		$errorMessage = Flux::message('NewPasswordNeedUpper');
+	elseif (Flux::config('PasswordMinUpper') > 0 && preg_match_all('/[A-Z]/', $password, $matches) < $passwordMinUpper) {
+		$errorMessage = sprintf(Flux::message('NewPasswordNeedUpper'), $passwordMinUpper);
 	}
-	elseif (Flux::config('PasswordMinLower') > 0 && preg_match_all('/[a-z]/', $password, $matches) < Flux::config('PasswordMinLower')) {
-		$errorMessage = Flux::message('NewPasswordNeedLower');
+	elseif (Flux::config('PasswordMinLower') > 0 && preg_match_all('/[a-z]/', $password, $matches) < $passwordMinLower) {
+		$errorMessage = sprintf(Flux::message('NewPasswordNeedLower'), $passwordMinLower);
 	}
-	elseif (Flux::config('PasswordMinNumber') > 0 && preg_match_all('/[0-9]/', $password, $matches) < Flux::config('PasswordMinNumber')) {
-		$errorMessage = Flux::message('NewPasswordNeedNumber');
+	elseif (Flux::config('PasswordMinNumber') > 0 && preg_match_all('/[0-9]/', $password, $matches) < $passwordMinNumber) {
+		$errorMessage = sprintf(Flux::message('NewPasswordNeedNumber'), $passwordMinNumber);
 	}
-	elseif (Flux::config('PasswordMinSymbol') > 0 && preg_match_all('/[^A-Za-z0-9]/', $password, $matches) < Flux::config('PasswordMinSymbol')) {
-		$errorMessage = Flux::message('NewPasswordNeedSymbol');
+	elseif (Flux::config('PasswordMinSymbol') > 0 && preg_match_all('/[^A-Za-z0-9]/', $password, $matches) < $passwordMinSymbol) {
+		$errorMessage = sprintf(Flux::message('NewPasswordNeedSymbol'), $passwordMinSymbol);
 	}
 	else {
 		$sql = "SELECT user_pass AS currentPassword FROM {$server->loginDatabase}.login WHERE account_id = ?";
