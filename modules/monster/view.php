@@ -16,11 +16,11 @@ $itemDB     = "{$server->charMapDatabase}.items";
 $fromTables = array("{$server->charMapDatabase}.item_db", "{$server->charMapDatabase}.item_db2");
 $tempItems  = new Flux_TemporaryTable($server->connection, $itemDB, $fromTables);
 
-$col  = 'ID as monster_id, Sprite AS sprite, kName AS kro_name, iName AS iro_name, LV AS level, HP AS hp, ';
+$col  = 'origin_table, ID as monster_id, Sprite AS sprite, kName AS kro_name, iName AS iro_name, LV AS level, HP AS hp, ';
 $col .= 'EXP AS base_exp, JEXP as job_exp, Range1 AS range1, Range2 AS range2, Range3 AS range3, ';
 $col .= 'DEF AS defense, MDEF AS magic_defense, ATK1 AS attack1, ATK2 AS attack2, DEF AS defense, MDEF AS magic_defense, ';
 $col .= 'STR AS strength, AGI AS agility, VIT AS vitality, `INT` AS intelligence, DEX AS dexterity, LUK AS luck, ';
-$col .= 'Scale AS scale, Race AS race, (Element%10) AS element_type, (Element/20) AS element_level, Mode AS mode, ';
+$col .= 'Scale AS size, Race AS race, (Element%10) AS element_type, (Element/20) AS element_level, Mode AS mode, ';
 $col .= 'Speed AS speed, aDelay AS attack_delay, aMotion AS attack_motion, dMotion AS delay_motion, ';
 $col .= 'MEXP AS mvp_exp, ExpPer AS mvp_exp_chance, ';
 

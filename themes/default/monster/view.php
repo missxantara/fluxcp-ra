@@ -68,12 +68,34 @@
 	<tr>
 		<th>kRO Name</th>
 		<td><?php echo htmlspecialchars($monster->kro_name) ?></td>
-		<th>HP</th>
-		<td><?php echo number_format($monster->hp) ?></td>
+		<th>Custom</th>
+		<td>
+			<?php if (preg_match('/mob_db2$/', $monster->origin_table)): ?>
+				Yes
+			<?php else: ?>
+				No
+			<?php endif ?>
+		</td>
 	</tr>
 	<tr>
 		<th>iRO Name</th>
 		<td><?php echo htmlspecialchars($monster->iro_name) ?></td>
+		<th>HP</th>
+		<td><?php echo number_format($monster->hp) ?></td>
+	</tr>
+	<tr>
+		<th>Size</th>
+		<td>
+			<?php if ($monster->size == 0): ?>
+				Small
+			<?php elseif ($monster->size == 1): ?>
+				Medium
+			<?php elseif ($monster->size == 2): ?>
+				Large
+			<?php else: ?>
+				<span class="not-applicable">Unknown</span>
+			<?php endif ?>
+		</td>
 		<th>SP</th>
 		<td><?php echo number_format($monster->sp) ?></td>
 	</tr>
