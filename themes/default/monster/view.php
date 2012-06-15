@@ -86,12 +86,8 @@
 	<tr>
 		<th>Size</th>
 		<td>
-			<?php if ($monster->size == 0): ?>
-				Small
-			<?php elseif ($monster->size == 1): ?>
-				Medium
-			<?php elseif ($monster->size == 2): ?>
-				Large
+			<?php if ($size=Flux::monsterSizeName($monster->size)): ?>
+				<?php echo htmlspecialchars($size) ?>
 			<?php else: ?>
 				<span class="not-applicable">Unknown</span>
 			<?php endif ?>

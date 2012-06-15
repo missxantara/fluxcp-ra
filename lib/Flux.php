@@ -907,5 +907,14 @@ class Flux {
 		$race = Flux::config("MonsterRaces.$race");
 		return $race;
 	}
+	
+	/**
+	 *
+	 */
+	public static function monsterSizeName($size)
+	{
+		$size = Flux::config("MonsterSizes.$size");
+		return $size;
+	}
 }
 ?>

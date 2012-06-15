@@ -354,6 +354,9 @@ return array(
 	// eA equip upper mapping.
 	'EquipUpper' => include('equip_upper.php'),
 	
+	// eA monster sizes mapping.
+	'MonsterSizes' => include('sizes.php'),
+	
 	// eA monster races mapping.
 	'MonsterRaces' => include('races.php'),
 	

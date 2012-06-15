@@ -40,6 +40,7 @@
 		<th><?php echo $paginator->sortableColumn('iro_name', 'iRO Name') ?></th>
 		<th><?php echo $paginator->sortableColumn('level', 'Level') ?></th>
 		<th><?php echo $paginator->sortableColumn('hp', 'HP') ?></th>
+		<th><?php echo $paginator->sortableColumn('size', 'Size') ?></th>
 		<th><?php echo $paginator->sortableColumn('race', 'Race') ?></th>
 		<th>Element</th>
 		<th><?php echo $paginator->sortableColumn('exp', 'Base EXP') ?></th>
@@ -65,6 +66,20 @@
 		<td><?php echo htmlspecialchars($monster->iro_name) ?></td>
 		<td><?php echo number_format($monster->level) ?></td>
 		<td><?php echo number_format($monster->hp) ?></td>
+		<td>
+			<?php if ($size=Flux::monsterSizeName($monster->size)): ?>
+				<?php echo htmlspecialchars($size) ?>
+			<?php else: ?>
+				<span class="not-applicable">Unknown</span>
+			<?php endif ?>
+		</td>
+		<td>
+			<?php if ($race=Flux::monsterRaceName($monster->race)): ?>
+				<?php echo htmlspecialchars($race) ?>
+			<?php else: ?>
+				<span class="not-applicable">Unknown</span>
+			<?php endif ?>
+		</td>
 		<td>
 			<?php if ($race=Flux::monsterRaceName($monster->race)): ?>
 				<?php echo htmlspecialchars($race) ?>

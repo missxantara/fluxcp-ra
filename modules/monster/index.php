@@ -65,12 +65,12 @@ try {
 	
 	$paginator = $this->getPaginator($sth->fetch()->total);
 	$paginator->setSortableColumns(array(
-		'monster_id' => 'asc', 'kro_name', 'iro_name', 'level', 'hp', 'race', 'exp', 'jexp', 'dropcard_id', 'origin_table'
+		'monster_id' => 'asc', 'kro_name', 'iro_name', 'level', 'hp', 'size', 'race', 'exp', 'jexp', 'dropcard_id', 'origin_table'
 	));
 	
 	$col  = "origin_table, monsters.ID AS monster_id, kName AS kro_name, iName AS iro_name, ";
-	$col .= "LV AS level, HP AS hp, Race AS race, (Element%10) AS element_type, (Element/20) AS element_level, EXP AS exp, JEXP AS jexp, ";
-	$col .= "DropCardid AS dropcard_id, mexp AS mvp_exp";
+	$col .= "LV AS level, HP AS hp, Scale as size, Race AS race, (Element%10) AS element_type, (Element/20) AS element_level, ";
+	$col .= "EXP AS exp, JEXP AS jexp, DropCardid AS dropcard_id, mexp AS mvp_exp";
 	
 	$sql  = $paginator->getSQL("SELECT $col FROM $tableName $sqlpartial");
 	$sth  = $server->connection->getStatement($sql);
