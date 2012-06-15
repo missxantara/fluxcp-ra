@@ -831,7 +831,7 @@ class Flux_Template {
 	{
 		if ($accountID) {
 			$url = $this->url('account', 'view', array('id' => $accountID));
-			return sprintf('<a href="%s" class="link-to-account">%s</a>', $url, htmlentities($text));
+			return sprintf('<a href="%s" class="link-to-account">%s</a>', $url, htmlspecialchars($text));
 		}
 		else {
 			return false;
@@ -850,7 +850,7 @@ class Flux_Template {
 	{
 		if (is_array($params) && count($params)) {
 			$url = $this->url('account', 'index', $params);
-			return sprintf('<a href="%s" class="link-to-account-search">%s</a>', $url, htmlentities($text));
+			return sprintf('<a href="%s" class="link-to-account-search">%s</a>', $url, htmlspecialchars($text));
 		}
 		else {
 			return false;
@@ -874,7 +874,7 @@ class Flux_Template {
 			}
 			
 			$url = $this->url('character', 'view', $params);
-			return sprintf('<a href="%s" class="link-to-character">%s</a>', $url, htmlentities($text));
+			return sprintf('<a href="%s" class="link-to-character">%s</a>', $url, htmlspecialchars($text));
 		}
 		else {
 			return false;
@@ -1064,7 +1064,7 @@ class Flux_Template {
 			}
 			
 			$url = $this->url('item', 'view', $params);
-			return sprintf('<a href="%s" class="link-to-item">%s</a>', $url, htmlentities($text));
+			return sprintf('<a href="%s" class="link-to-item">%s</a>', $url, htmlspecialchars($text));
 		}
 		else {
 			return false;
@@ -1150,7 +1150,7 @@ class Flux_Template {
 			}
 			
 			$url = $this->url('monster', 'view', $params);
-			return sprintf('<a href="%s" class="link-to-monster">%s</a>', $url, htmlentities($text));
+			return sprintf('<a href="%s" class="link-to-monster">%s</a>', $url, htmlspecialchars($text));
 		}
 		else {
 			return false;
@@ -1209,7 +1209,7 @@ class Flux_Template {
 			}
 			
 			$url = $this->url('guild', 'view', $params);
-			return sprintf('<a href="%s" class="link-to-guild">%s</a>', $url, htmlentities($text));
+			return sprintf('<a href="%s" class="link-to-guild">%s</a>', $url, htmlspecialchars($text));
 		}
 		else {
 			return false;
