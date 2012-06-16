@@ -90,6 +90,9 @@ if (count($_POST)) {
 			case Flux_RegisterError::USERNAME_TOO_LONG:
 				$errorMessage = Flux::message('UsernameTooLong');
 				break;
+			case Flux_RegisterError::USERNAME_IN_PASSWORD:
+				$errorMessage = Flux::message ('PasswordContainsUser');
+				break;
 			case Flux_RegisterError::PASSWORD_TOO_SHORT:
 				$errorMessage = sprintf(Flux::message('PasswordTooShort'), Flux::config('MinPasswordLength'), Flux::config('MaxPasswordLength'));
 				break;
@@ -98,6 +101,18 @@ if (count($_POST)) {
 				break;
 			case Flux_RegisterError::PASSWORD_MISMATCH:
 				$errorMessage = Flux::message('PasswordsDoNotMatch');
+				break;
+			case Flux_RegisterError::PASSWORD_NEED_UPPER:
+				$errorMessage = Flux::message ('PasswordNeedUpper');
+				break;
+			case Flux_RegisterError::PASSWORD_NEED_LOWER:
+				$errorMessage = Flux::message ('PasswordNeedLower');
+				break;
+			case Flux_RegisterError::PASSWORD_NEED_NUMBER:
+				$errorMessage = Flux::message ('PasswordNeedNumber');
+				break;
+			case Flux_RegisterError::PASSWORD_NEED_SYMBOL:
+				$errorMessage = Flux::message ('PasswordNeedSymbol');
 				break;
 			case Flux_RegisterError::EMAIL_ADDRESS_IN_USE:
 				$errorMessage = Flux::message('EmailAddressInUse');
@@ -116,6 +131,9 @@ if (count($_POST)) {
 				break;
 			case Flux_RegisterError::INVALID_USERNAME:
 				$errorMessage = sprintf(Flux::message('AccountInvalidChars'), Flux::config('UsernameAllowedChars'));
+				break;
+			case Flux_RegisterError::INVALID_PASSWORD:
+				$errorMessage = Flux::message ('InvalidPassword');
 				break;
 			default:
 				$errorMessage = Flux::message('CriticalRegisterError');

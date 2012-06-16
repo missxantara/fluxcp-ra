@@ -4,6 +4,22 @@
 <?php if (Flux::config('RequireEmailConfirm')): ?>
 <p><strong>Note:</strong> You will need to provide a working e-mail address to confirm your account before you can log-in.</p>
 <?php endif ?>
+<p><strong>Note:</strong> <?php echo sprintf("Your password must be between %d and %d characters.", Flux::config('MinPasswordLength'), Flux::config('MaxPasswordLength')) ?></p>
+<?php if (Flux::config('PasswordMinUpper') > 0): ?>
+<p><strong>Note:</strong> <?php echo Flux::message ('PasswordNeedsUpper') ?></p>
+<?php endif ?>
+<?php if (Flux::config('PasswordMinLower') > 0): ?>
+<p><strong>Note:</strong> <?php echo Flux::message ('PasswordNeedsLower') ?></p>
+<?php endif ?>
+<?php if (Flux::config('PasswordMinNumber') > 0): ?>
+<p><strong>Note:</strong> <?php echo Flux::message ('PasswordNeedsNumber') ?></p>
+<?php endif ?>
+<?php if (Flux::config('PasswordMinSymbol') > 0): ?>
+<p><strong>Note:</strong> <?php echo Flux::message ('PasswordNeedsSymbol') ?></p>
+<?php endif ?>
+<?php if (!Flux::config('AllowUserInPassword')): ?>
+<p><strong>Note:</strong> <?php echo Flux::message ('PasswordContainsUser') ?></p>
+<?php endif ?>
 <?php if (isset($errorMessage)): ?>
 <p class="red" style="font-weight: bold"><?php echo htmlspecialchars($errorMessage) ?></p>
 <?php endif ?>
