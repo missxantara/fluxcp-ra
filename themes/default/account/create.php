@@ -6,19 +6,19 @@
 <?php endif ?>
 <p><strong>Note:</strong> <?php echo sprintf("Your password must be between %d and %d characters.", Flux::config('MinPasswordLength'), Flux::config('MaxPasswordLength')) ?></p>
 <?php if (Flux::config('PasswordMinUpper') > 0): ?>
-<p><strong>Note:</strong> <?php echo Flux::message ('PasswordNeedsUpper') ?></p>
+<p><strong>Note:</strong> <?php echo Flux::message('PasswordNeedUpper') ?></p>
 <?php endif ?>
 <?php if (Flux::config('PasswordMinLower') > 0): ?>
-<p><strong>Note:</strong> <?php echo Flux::message ('PasswordNeedsLower') ?></p>
+<p><strong>Note:</strong> <?php echo Flux::message('PasswordNeedLower') ?></p>
 <?php endif ?>
 <?php if (Flux::config('PasswordMinNumber') > 0): ?>
-<p><strong>Note:</strong> <?php echo Flux::message ('PasswordNeedsNumber') ?></p>
+<p><strong>Note:</strong> <?php echo Flux::message('PasswordNeedNumber') ?></p>
 <?php endif ?>
 <?php if (Flux::config('PasswordMinSymbol') > 0): ?>
-<p><strong>Note:</strong> <?php echo Flux::message ('PasswordNeedsSymbol') ?></p>
+<p><strong>Note:</strong> <?php echo Flux::message('PasswordNeedSymbol') ?></p>
 <?php endif ?>
 <?php if (!Flux::config('AllowUserInPassword')): ?>
-<p><strong>Note:</strong> <?php echo Flux::message ('PasswordContainsUser') ?></p>
+<p><strong>Note:</strong> <?php echo Flux::message('PasswordContainsUser') ?></p>
 <?php endif ?>
 <?php if (isset($errorMessage)): ?>
 <p class="red" style="font-weight: bold"><?php echo htmlspecialchars($errorMessage) ?></p>
