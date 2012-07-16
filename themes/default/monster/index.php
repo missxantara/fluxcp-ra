@@ -80,7 +80,7 @@
 				<span class="not-applicable">Unknown</span>
 			<?php endif ?>
 		</td>
-		<td><?php echo Flux::elementName($monster->element_type) ?> (Level <?php echo floor($monster->element_level) ?>)</td>
+		<td><?php echo Flux::elementName($monster->element_type) ?> (Lv <?php echo floor($monster->element_level) ?>)</td>
 		<td><?php echo number_format($monster->exp * $server->baseExpRates) ?></td>
 		<td><?php echo number_format($monster->jexp * $server->jobExpRates) ?></td>
 		<?php if ($monster->dropcard_id): ?>

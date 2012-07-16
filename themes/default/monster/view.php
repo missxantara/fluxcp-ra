@@ -109,7 +109,7 @@
 	</tr>
 	<tr>
 		<th>Element</th>
-		<td><?php echo Flux::elementName($monster->element_type) ?> (Level <?php echo floor($monster->element_level) ?>)</td>
+		<td><?php echo Flux::elementName($monster->element_type) ?> (Lv <?php echo floor($monster->element_level) ?>)</td>
 		<th>Speed</th>
 		<td><?php echo number_format($monster->speed) ?></td>
 	</tr>
