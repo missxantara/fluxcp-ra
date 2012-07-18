@@ -25,6 +25,9 @@ try {
 		$opMapping      = array('eq' => '=', 'gt' => '>', 'lt' => '<');
 		$opValues       = array_keys($opMapping);
 		$monsterName    = $params->get('name');
+		$size           = $params->get('size');
+		$race           = $params->get('race');
+		$element        = $params->get('element');
 		$cardID         = $params->get('card_id');
 		$mvp            = strtolower($params->get('mvp'));
 		$custom         = $params->get('custom');
@@ -35,6 +38,100 @@ try {
 			$bind[]      = $monsterName;
 			$bind[]      = "%$monsterName%";
 			$bind[]      = $monsterName;
+		}
+
+		if ($size !== false && $size !== '-1') {
+			if(is_numeric($size) && (floatval($size) == intval($size))) {
+				$sizes = Flux::config('MonsterSizes')->toArray();
+				if (array_key_exists($size, $sizes) && $sizes[$size]) {
+					$sqlpartial .= "AND Scale = ? ";
+					$bind[]      = $size;
+				}
+			} else {
+				$sizeName = preg_quote($size, '/');
+				$sizes = preg_grep("/.*?$sizeName.*?/i", Flux::config('MonsterSizes')->toArray());
+				
+				if (count($sizes)) {
+					$sizes = array_keys($sizes);
+					$sqlpartial .= "AND (";
+					$partial     = '';
+					
+					foreach ($sizes as $id) {
+						$partial .= "Scale = ? OR ";
+						$bind[]   = $id;
+					}
+					
+					$partial     = preg_replace('/\s*OR\s*$/', '', $partial);
+					$sqlpartial .= "$partial) ";
+				}
+			}
+		}
+
+		if ($race !== false && $race !== '-1') {
+			if(is_numeric($race) && (floatval($race) == intval($race))) {
+				$races = Flux::config('MonsterRaces')->toArray();
+				if (array_key_exists($race, $races) && $races[$race]) {
+					$sqlpartial .= "AND Race = ? ";
+					$bind[]      = $race;
+				}
+			} else {
+				$raceName = preg_quote($race, '/');
+				$races = preg_grep("/.*?$raceName.*?/i", Flux::config('MonsterRaces')->toArray());
+				
+				if (count($races)) {
+					$races = array_keys($races);
+					$sqlpartial .= "AND (";
+					$partial     = '';
+					
+					foreach ($races as $id) {
+						$partial .= "Race = ? OR ";
+						$bind[]   = $id;
+					}
+					
+					$partial     = preg_replace('/\s*OR\s*$/', '', $partial);
+					$sqlpartial .= "$partial) ";
+				}
+			}
+		}
+
+		if ($element && $element !== '-1') {
+			if (count($elementSplit = explode('-', $element)) == 2) {
+				$element = $elementSplit[0];
+				$elementLevel = $elementSplit[1];
+			}
+			if (is_numeric($element) && (floatval($element) == intval($element))) {
+				$elements = Flux::config('Elements')->toArray();
+				if (array_key_exists($element, $elements) && $elements[$element]) {
+					$sqlpartial .= "AND Element%10 = ? ";
+					$bind[]      = $element;
+				} else {
+					$sqlpartial .= 'AND Element IS NULL ';
+				}
+				
+				if (count($elementSplit) == 2 && is_numeric($elementLevel) && (floatval($elementLevel) == intval($elementLevel))) {
+					$sqlpartial .= "AND CAST(Element/20 AS UNSIGNED) = ? ";
+					$bind[]      = $elementLevel;
+				}
+			} else {
+				$elementName = preg_quote($element, '/');
+				$elements    = preg_grep("/.*?$elementName.*?/i", Flux::config('Elements')->toArray());
+				
+				if (count($elements)) {
+					$elements    = array_keys($elements);
+					$sqlpartial .= "AND (";
+					$partial     = '';
+					
+					foreach ($elements as $id) {
+						$partial .= "Element%10 = ? OR ";
+						$bind[]   = $id;
+					}
+					
+					$partial     = preg_replace('/\s*OR\s*$/', '', $partial);
+					$sqlpartial .= "$partial) ";
+				} else {
+					$sqlpartial .= 'AND Element IS NULL ';
+				}
+			}
 		}
 		
 		if ($cardID) {

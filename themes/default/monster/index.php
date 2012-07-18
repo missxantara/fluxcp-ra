@@ -10,15 +10,58 @@
 		<label for="name">Name:</label>
 		<input type="text" name="name" id="name" value="<?php echo htmlspecialchars($params->get('name')) ?>" />
 		...
-		<label for="card_id">Card ID:</label>
-		<input type="text" name="card_id" id="card_id" value="<?php echo htmlspecialchars($params->get('card_id')) ?>" />
-		...
 		<label for="mvp">MVP:</label>
 		<select name="mvp" id="mvp">
 			<option value="all"<?php if (!($mvpParam=strtolower($params->get('mvp'))) || $mvpParam == 'all') echo ' selected="selected"' ?>>All</option>
 			<option value="yes"<?php if ($mvpParam == 'yes') echo ' selected="selected"' ?>>Yes</option>
 			<option value="no"<?php if ($mvpParam == 'no') echo ' selected="selected"' ?>>No</option>
 		</select>
+	</p>
+	<p>
+		<label for="size">Size:</label>
+		<select name="size">
+			<option value="-1"<?php if (($size=$params->get('size')) === '-1') echo ' selected="selected"' ?>>
+				Any
+			</option>
+			<?php foreach (Flux::config('MonsterSizes')->toArray() as $sizeId => $sizeName): ?>
+				<option value="<?php echo $sizeId ?>"<?php if (($size=$params->get('size')) === strval($sizeId)) echo ' selected="selected"' ?>>
+					<?php echo htmlspecialchars($sizeName) ?>
+				</option>
+			<?php endforeach ?>
+		</select>
+		...
+		<label for="race">Race:</label>
+		<select name="race">
+			<option value="-1"<?php if (($race=$params->get('race')) === '-1') echo ' selected="selected"' ?>>
+				Any
+			</option>
+			<?php foreach (Flux::config('MonsterRaces')->toArray() as $raceId => $raceName): ?>
+				<option value="<?php echo $raceId ?>"<?php if (($race=$params->get('race')) === strval($raceId)) echo ' selected="selected"' ?>>
+					<?php echo htmlspecialchars($raceName) ?>
+				</option>
+			<?php endforeach ?>
+		</select>
+		...
+		<label for="element">Element:</label>
+		<select name="element">
+			<option value="-1"<?php if (($element=$params->get('element')) === '-1') echo ' selected="selected"' ?>>
+				Any
+			</option>
+			<?php foreach (Flux::config('Elements')->toArray() as $elementId => $elementName): ?>
+				<option value="<?php echo $elementId ?>"<?php if (($element=$params->get('element')) === strval($elementId)) echo ' selected="selected"' ?>>
+					<?php echo htmlspecialchars($elementName) ?>
+				</option>
+				<?php for ($elementLevel = 1; $elementLevel <= 4; $elementLevel++): ?>
+					<option value="<?php echo $elementId ?>-<?php echo $elementLevel ?>"<?php if (($element=$params->get('element')) === ($elementId . '-' . $elementLevel)) echo ' selected="selected"' ?>>
+						<?php echo htmlspecialchars($elementName . " (Lv $elementLevel)") ?>
+					</option>
+				<?php endfor ?>
+			<?php endforeach ?>
+		</select>
+	</p>
+	<p>
+		<label for="card_id">Card ID:</label>
+		<input type="text" name="card_id" id="card_id" value="<?php echo htmlspecialchars($params->get('card_id')) ?>" />
 		...
 		<label for="custom">Custom:</label>
 		<select name="custom" id="custom">
