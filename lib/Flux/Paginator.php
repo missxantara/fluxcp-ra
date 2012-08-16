@@ -166,12 +166,12 @@ class Flux_Paginator {
 			if (strpos($column, '.') !== false) {
 				list ($table, $column) = explode('.', $column, 2);
 				$param = "{$table}_{$column}_order";
-				$columnName = "{$table}.{$column}";
+				$columnName = "`{$table}`.`{$column}`";
 			}
 			else {
 				$table = false;
 				$param = "{$column}_order";
-				$columnName = $column;
+				$columnName = "`$column`";
 			}
 			
 			$sortValues = array('ASC', 'DESC', 'NONE');
@@ -183,7 +183,7 @@ class Flux_Paginator {
 			
 			// Check again just in case we're working with the default here.
 			if (!is_null($value) && in_array( ($value=strtoupper($value)), $sortValues ) && $value != 'NONE') {
-				$this->currentSortOrder[$columnName] = $value;
+				$this->currentSortOrder[str_replace("`", "", $columnName)] = $value;
 				
 				if (!$orderBy) {
 					$sql .= ' ORDER BY';
@@ -192,8 +192,6 @@ class Flux_Paginator {
 				
 				if ($value == 'ASC') {
 					$sql .= " (CASE WHEN $columnName IS NULL THEN 1 ELSE 0 END) ASC, $columnName ASC,";
-					//ORDER BY CASE WHEN myColumn IS NULL THEN 1 ELSE 0 END ASC, myColumn ASC
-					//$sql .= " ch.$columnName ASC,";
 				}
 				else {
 					$sql .= " $columnName $value,";

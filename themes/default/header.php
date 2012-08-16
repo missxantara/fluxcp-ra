@@ -20,8 +20,7 @@
 		<script src="<?php echo $this->themePath('js/ie7.js') ?>" type="text/javascript"></script>
 		<script type="text/javascript" src="<?php echo $this->themePath('js/flux.unitpngfix.js') ?>"></script>
 		<![endif]-->
-		<script type="text/javascript" src="<?php echo $this->themePath('js/jquery-1.2.6.min.js') ?>"></script>
-		<!--<script type="text/javascript" src="<?php echo $this->themePath('js/jquery.dropshadow.js') ?>"></script>-->
+		<script type="text/javascript" src="<?php echo $this->themePath('js/jquery-1.7.2.min.js') ?>"></script>
 		<script type="text/javascript" src="<?php echo $this->themePath('js/flux.datefields.js') ?>"></script>
 		<script type="text/javascript" src="<?php echo $this->themePath('js/flux.unitip.js') ?>"></script>
 		<script type="text/javascript">
@@ -51,6 +50,20 @@
 						$(this).css('cursor', 'normal');
 					}
 				);
+				$('.money-input').keyup(function() {
+					var creditValue = parseInt($(this).val() / <?php echo Flux::config('CreditExchangeRate') ?>, 10);
+					if (isNaN(creditValue))
+						$('.credit-input').val('?');
+					else
+						$('.credit-input').val(creditValue);
+				}).keyup();
+				$('.credit-input').keyup(function() {
+					var moneyValue = parseFloat($(this).val() * <?php echo Flux::config('CreditExchangeRate') ?>);
+					if (isNaN(moneyValue))
+						$('.money-input').val('?');
+					else
+						$('.money-input').val(moneyValue.toFixed(2));
+				}).keyup();
 				
 				// In: js/flux.datefields.js
 				processDateFields();

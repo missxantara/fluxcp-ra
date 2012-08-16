@@ -10,7 +10,7 @@ $mobDB  = Flux::config('MobSkillDb');
 // Check permissions.
 $readable1 = is_readable($mobDB1);
 $readable2 = is_readable($mobDB2);
-$writable  = is_writable($mobDB);
+$writable  = !file_exists($mobDB) || is_writable($mobDB);
 
 if (!$readable1) {
 	$errorMessage = sprintf(Flux::message('ReloadMobSkillsError1'), $mobDB1);
@@ -25,6 +25,11 @@ else {
 	$fdb1 = fopen($mobDB1, 'r');
 	$fdb2 = fopen($mobDB2, 'r');
 	$fdb = fopen($mobDB, 'w');
+	
+	if (!$fdb) {
+		$errorMessage = sprintf(Flux::message('ReloadMobSkillsError3'), $mobDB);
+		break;
+	}
 
 	$write1 = array();
 	while($text1 = fgets($fdb1)) {

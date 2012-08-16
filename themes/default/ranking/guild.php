@@ -10,6 +10,7 @@
 			<th>Rank</th>
 			<th colspan="2">Guild Name</th>
 			<th>Guild Level</th>
+			<th>Castles Owned</th>
 			<th>Members</th>
 			<th>Average Level</th>
 			<th>Experience</th>
@@ -29,6 +30,7 @@
 				<?php endif ?>
 			</strong></td>
 			<td><?php echo number_format($guilds[$i]->guild_lv) ?></td>
+			<td><?php echo number_format($guilds[$i]->castles) ?></td>
 			<td><?php echo number_format($guilds[$i]->members) ?></td>
 			<td><?php echo number_format($guilds[$i]->average_lv) ?></td>
 			<td><?php echo number_format($guilds[$i]->exp) ?></td>

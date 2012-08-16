@@ -6,7 +6,7 @@
 <?php if (!empty($errorMessage)): ?>
 <p class="red"><?php echo htmlspecialchars($errorMessage) ?></p>
 <?php endif ?>
-<form action="<?php echo $this->urlWithQs ?>" method="post">
+<form action="<?php echo $this->urlWithQs ?>" method="post" name="edit_item_form">
 	<input type="hidden" name="edititem" value="1" />
 	<table class="vertical-table">
 		<tr>
@@ -20,11 +20,21 @@
 			<td><input type="text" name="name_english" id="name_english" value="<?php echo htmlspecialchars($identifier) ?>" /></td>
 			<th><label for="type">Type</label></th>
 			<td>
-				<select name="type" id="type">
+				<select name="type" id="type" onchange="if (this.options[this.selectedIndex].value.indexOf('-') != -1) document.edit_item_form.view.value=this.options[this.selectedIndex].value.substring(this.options[this.selectedIndex].value.indexOf('-')+1)">
 				<?php foreach (Flux::config('ItemTypes')->toArray() as $nameid => $typeName): ?>
-					<option value="<?php echo htmlspecialchars($nameid) ?>"<?php if ($nameid == $type) echo ' selected="selected"' ?>>
-						<?php echo htmlspecialchars($typeName) ?>
-					</option>
+					<?php $itemTypes2 = Flux::config('ItemTypes2')->toArray() ?>
+					<?php if (!array_key_exists($nameid, $itemTypes2)): ?>
+						<option value="<?php echo htmlspecialchars($nameid) ?>"<?php if ($nameid == $type) echo ' selected="selected"' ?>>
+							<?php echo htmlspecialchars($typeName) ?>
+						</option>
+					<?php endif ?>
+					<?php if (array_key_exists($nameid, $itemTypes2)): ?>
+						<?php foreach ($itemTypes2[$nameid] as $typeId2 => $typeName2): ?>
+						<option value="<?php echo $nameid ?>-<?php echo $typeId2 ?>"<?php if ($nameid == $type && $viewID == $typeId2) echo ' selected="selected"' ?>>
+							<?php echo htmlspecialchars($typeName . ' - ' . $typeName2) ?>
+						</option>
+						<?php endforeach ?>
+					<?php endif ?>
 				<?php endforeach ?>
 				</select>
 			</td>
@@ -71,17 +81,13 @@
 		<tr>
 			<th><label for="equip_locations">Equip Locations</label></th>
 			<td colspan="3">
-				<select class="multi-select" name="equip_locations[]" id="equip_locations" size="5" multiple="multiple">
-				<?php foreach (Flux::getEquipLocationList() as $bit => $location): ?>
-					<option value="<?php echo htmlspecialchars($bit) ?>"<?php if ($equipLocs && in_array($bit, $equipLocs)) echo ' selected="selected"' ?>>
-						<?php echo htmlspecialchars($location) ?>
+				<select name="equip_locations" id="equip_locations">
+				<?php foreach (Flux::config('EquipLocationCombinations')->toArray() as $locId => $locName): ?>
+					<option value="<?php echo htmlspecialchars($locId) ?>"<?php if ($locId == $equipLoc) echo ' selected="selected"' ?>>
+						<?php echo htmlspecialchars($locName) ?>
 					</option>
 				<?php endforeach ?>
 				</select>
-				<p class="action">
-					<span class="anchor" onclick="$('#equip_locations option').attr('selected','selected')">Select All</span> |
-					<span class="anchor" onclick="$('#equip_locations option').attr('selected', false)">Select None</span>
-				</p>
 			</td>
 		</tr>
 		<tr>

@@ -17,8 +17,11 @@ if (count($_POST)) {
 	if (!$list) {
 		$errorMessage = Flux::message('IpbanEnterIpPattern');
 	}
-	elseif (!preg_match('/^(\d{1,3})\.(\d{1,3}|\*)\.(\d{1,3}|\*)\.(\d{1,3}|\*)$/', $list, $m)) {
+	elseif (!preg_match('/^([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5]|\*)\.([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5]|\*)\.([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5]|\*)$/', $list, $m)) {
 		$errorMessage = Flux::message('IpbanInvalidPattern');
+	}
+	elseif (preg_match('/' . Flux::config('IpWhitelistPattern') . '/', $list)) {
+		$errorMessage = Flux::message('IpbanWhitelistedPattern');
 	}
 	elseif (!$reason) {
 		$errorMessage = Flux::message('IpbanEnterReason');
@@ -46,18 +49,12 @@ if (count($_POST)) {
 		if ($ipban && $ipban->list) {
 			$errorMessage = sprintf(Flux::message('IpbanAlreadyBanned'), $ipban->list);
 		}
+		else if ($server->loginServer->addIpBan($session->account->account_id, $reason, $rtime, $list)) {
+			$session->setMessageData(sprintf(Flux::message('IpbanPatternBanned'), $list));
+			$this->redirect($this->url('ipban'));
+		}
 		else {
-			$sql  = "INSERT INTO {$server->loginDatabase}.ipbanlist (list, reason, rtime, btime) ";
-			$sql .= "VALUES (?, ?, ?, NOW())";
-			$sth  = $server->connection->getStatement($sql);
-			
-			if ($sth->execute(array($list, $reason, $rtime))) {
-				$session->setMessageData(sprintf(Flux::message('IpbanPatternBanned'), $list));
-				$this->redirect($this->url('ipban'));
-			}
-			else {
-				$errorMessage = Flux::message('IpbanAddFailed');
-			}
+			$errorMessage = Flux::message('IpbanAddFailed');
 		}
 	}
 }

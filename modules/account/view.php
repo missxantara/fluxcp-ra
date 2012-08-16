@@ -147,10 +147,14 @@ foreach ($session->getAthenaServerNames() as $serverName) {
 	$characters[$athena->serverName] = $chars;
 }
 
-$col  = "storage.*, items.name_japanese, items.type";
+$col  = "storage.*, items.name_japanese, items.type, items.slots, c.char_id, c.name AS char_name";
 
 $sql  = "SELECT $col FROM {$server->charMapDatabase}.storage ";
 $sql .= "LEFT JOIN {$server->charMapDatabase}.items ON items.id = storage.nameid ";
+$sql .= "LEFT JOIN {$server->charMapDatabase}.`char` AS c ";
+$sql .= "ON c.char_id = IF(storage.card0 IN (254, 255), ";
+$sql .= "IF(storage.card2 < 0, storage.card2 + 65536, storage.card2) ";
+$sql .= "| (storage.card3 << 16), NULL) ";
 $sql .= "WHERE storage.account_id = ? ";
 
 if (!$auth->allowedToSeeUnknownItems) {
@@ -171,17 +175,27 @@ if ($account) {
 		$cardIDs = array();
 
 		foreach ($items as $item) {
+			$item->cardsOver = -$item->slots;
+			
 			if ($item->card0) {
 				$cardIDs[] = $item->card0;
+				$item->cardsOver++;
 			}
 			if ($item->card1) {
 				$cardIDs[] = $item->card1;
+				$item->cardsOver++;
 			}
 			if ($item->card2) {
 				$cardIDs[] = $item->card2;
+				$item->cardsOver++;
 			}
 			if ($item->card3) {
 				$cardIDs[] = $item->card3;
+				$item->cardsOver++;
+			}
+			
+			if ($item->card0 == 254 || $item->card0 == 255 || $item->card0 == -256 || $item->cardsOver < 0) {
+				$item->cardsOver = 0;
 			}
 		}
 
@@ -199,5 +213,7 @@ if ($account) {
 			}
 		}
 	}
+	
+	$itemAttributes = Flux::config('Attributes')->toArray();
 }
 ?>

@@ -23,7 +23,8 @@
 	?>
 	
 	<?php if ($hoursHeld): ?>
-		<p>To prevent fraudulent payments, our server currently locks the crediting process for <?php echo number_format($hoursHeld) ?> hours
+		<p>To prevent fraudulent payments, our server currently locks the crediting process for
+			<span class="hold-hours"><?php echo number_format($hoursHeld) ?> hours</span>
 			after the donation has been made to ensure legitimate gameplay and a healthy PayPal reputation.</p>
 		<p>This hold is applied only once for the associated PayPal e-mail and RO account.</p>
 	<?php endif ?>
@@ -32,12 +33,12 @@
 		<table class="generic-form-table">
 			<tr>
 				<th><label>Current Credit Exchange Rate:</label></th>
-				<td><p><?php echo $this->formatDollar($dollarAmount) ?> <?php echo htmlspecialchars($currency) ?>
+				<td><p><?php echo $this->formatCurrency($dollarAmount) ?> <?php echo htmlspecialchars($currency) ?>
 				= <?php echo number_format($creditAmount) ?> credit(s).</p></td>
 			</tr>
 			<tr>
 				<th><label>Minimum Donation Amount:</label></th>
-				<td><p><?php echo $this->formatDollar(Flux::config('MinDonationAmount')) ?> <?php echo htmlspecialchars($currency) ?></p></td>
+				<td><p><?php echo $this->formatCurrency(Flux::config('MinDonationAmount')) ?> <?php echo htmlspecialchars($currency) ?></p></td>
 			</tr>
 		</table>
 	</div>
@@ -49,9 +50,17 @@
 		<p class="enter-donation-amount">
 			<label>
 				Enter an amount you would like to donate:
-				<input type="text" name="amount" value="<?php echo htmlspecialchars($params->get('amount')) ?>"
+				<input class="money-input" type="text" name="amount"
+					value="<?php echo htmlspecialchars($params->get('amount')) ?>"
 					size="<?php echo (strlen((string)+Flux::config('CreditExchangeRate')) * 2) + 2 ?>" />
 				<?php echo htmlspecialchars(Flux::config('DonationCurrency')) ?>
+			</label>
+			or
+			<label>
+				<input class="credit-input" type="text" name="credit-amount"
+					value="<?php echo htmlspecialchars(intval($params->get('amount') / Flux::config('CreditExchangeRate'))) ?>"
+					size="<?php echo (strlen((string)+Flux::config('CreditExchangeRate')) * 2) + 2 ?>" />
+				Credits
 			</label>
 		</p>
 		<input type="submit" value="Confirm Donation Amount" class="submit_button" />
@@ -68,7 +77,7 @@
 		
 	<p class="donation-amount-text">Amount:
 		<span class="donation-amount">
-		<?php echo $this->formatDollar($donationAmount) ?>
+		<?php echo $this->formatCurrency($donationAmount) ?>
 		<?php echo htmlspecialchars(Flux::config('DonationCurrency')) ?>
 		</span>
 	</p>

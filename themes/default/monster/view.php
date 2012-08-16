@@ -68,12 +68,30 @@
 	<tr>
 		<th>kRO Name</th>
 		<td><?php echo htmlspecialchars($monster->kro_name) ?></td>
-		<th>HP</th>
-		<td><?php echo number_format($monster->hp) ?></td>
+		<th>Custom</th>
+		<td>
+			<?php if (preg_match('/mob_db2$/', $monster->origin_table)): ?>
+				Yes
+			<?php else: ?>
+				No
+			<?php endif ?>
+		</td>
 	</tr>
 	<tr>
 		<th>iRO Name</th>
 		<td><?php echo htmlspecialchars($monster->iro_name) ?></td>
+		<th>HP</th>
+		<td><?php echo number_format($monster->hp) ?></td>
+	</tr>
+	<tr>
+		<th>Size</th>
+		<td>
+			<?php if ($size=Flux::monsterSizeName($monster->size)): ?>
+				<?php echo htmlspecialchars($size) ?>
+			<?php else: ?>
+				<span class="not-applicable">Unknown</span>
+			<?php endif ?>
+		</td>
 		<th>SP</th>
 		<td><?php echo number_format($monster->sp) ?></td>
 	</tr>
@@ -91,7 +109,7 @@
 	</tr>
 	<tr>
 		<th>Element</th>
-		<td><?php echo Flux::elementName($monster->element_type) ?> (Level <?php echo floor($monster->element_level) ?>)</td>
+		<td><?php echo Flux::elementName($monster->element_type) ?> (Lv <?php echo floor($monster->element_level) ?>)</td>
 		<th>Speed</th>
 		<td><?php echo number_format($monster->speed) ?></td>
 	</tr>
@@ -167,9 +185,9 @@
 </table>
 
 <h3>Monster Skills for “<?php echo htmlspecialchars($monster->iro_name) ?>”</h3>
-<?php if (!filesize($skillDB)): ?>
+<?php if (!file_exists($skillDB) || !filesize($skillDB)): ?>
 <p><strong>Mob skill database needs to be reloaded!</strong></p>
-<?php elseif (empty($skillDB)): ?>
+<?php elseif (empty($mobSkills)): ?>
 <p>No skills found for <?php echo htmlspecialchars($monster->iro_name) ?>.</p>
 <?php else: ?>
 <table class="vertical-table">

@@ -99,11 +99,20 @@ class Flux_LoginServer extends Flux_BaseServer {
 	 */
 	public function register($username, $password, $confirmPassword, $email, $gender, $securityCode)
 	{
-		if (strlen($username) < Flux::config('MinUsernameLength')) {
+		if (preg_match('/^[^' . Flux::config('UsernameAllowedChars') . ']$/', $username)) {
+			throw new Flux_RegisterError('Invalid character(s) used in username', Flux_RegisterError::INVALID_USERNAME);
+		}
+		elseif (strlen($username) < Flux::config('MinUsernameLength')) {
 			throw new Flux_RegisterError('Username is too short', Flux_RegisterError::USERNAME_TOO_SHORT);
 		}
 		elseif (strlen($username) > Flux::config('MaxUsernameLength')) {
 			throw new Flux_RegisterError('Username is too long', Flux_RegisterError::USERNAME_TOO_LONG);
+		}
+		elseif (!Flux::config('AllowUserInPassword') && stripos($password, $username) !== false) {
+			throw new Flux_RegisterError('Password contains username', Flux_RegisterError::PASSWORD_HAS_USERNAME);
+		}
+		elseif (!ctype_graph($password)) {
+			throw new Flux_RegisterError('Invalid character(s) used in password', Flux_RegisterError::INVALID_PASSWORD);
 		}
 		elseif (strlen($password) < Flux::config('MinPasswordLength')) {
 			throw new Flux_RegisterError('Password is too short', Flux_RegisterError::PASSWORD_TOO_SHORT);
@@ -114,7 +123,19 @@ class Flux_LoginServer extends Flux_BaseServer {
 		elseif ($password !== $confirmPassword) {
 			throw new Flux_RegisterError('Passwords do not match', Flux_RegisterError::PASSWORD_MISMATCH);
 		}
-		elseif (!preg_match('/(.+?)@(.+?)/', $email)) {
+		elseif (Flux::config('PasswordMinUpper') > 0 && preg_match_all('/[A-Z]/', $password, $matches) < Flux::config('PasswordMinUpper')) {
+			throw new Flux_RegisterError('Passwords must contain at least ' + intval(Flux::config('PasswordMinUpper')) + ' uppercase letter(s)', Flux_RegisterError::PASSWORD_NEED_UPPER);
+		}
+		elseif (Flux::config('PasswordMinLower') > 0 && preg_match_all('/[a-z]/', $password, $matches) < Flux::config('PasswordMinLower')) {
+			throw new Flux_RegisterError('Passwords must contain at least ' + intval(Flux::config('PasswordMinLower')) + ' lowercase letter(s)', Flux_RegisterError::PASSWORD_NEED_LOWER);
+		}
+		elseif (Flux::config('PasswordMinNumber') > 0 && preg_match_all('/[0-9]/', $password, $matches) < Flux::config('PasswordMinNumber')) {
+			throw new Flux_RegisterError('Passwords must contain at least ' + intval(Flux::config('PasswordMinNumber')) + ' number(s)', Flux_RegisterError::PASSWORD_NEED_NUMBER);
+		}
+		elseif (Flux::config('PasswordMinSymbol') > 0 && preg_match_all('/[^A-Za-z0-9]/', $password, $matches) < Flux::config('PasswordMinSymbol')) {
+			throw new Flux_RegisterError('Passwords must contain at least ' + intval(Flux::config('PasswordMinSymbol')) + ' symbol(s)', Flux_RegisterError::PASSWORD_NEED_SYMBOL);
+		}
+		elseif (!preg_match('/^(.+?)@(.+?)$/', $email)) {
 			throw new Flux_RegisterError('Invalid e-mail address', Flux_RegisterError::INVALID_EMAIL_ADDRESS);
 		}
 		elseif (!in_array(strtoupper($gender), array('M', 'F'))) {
@@ -170,9 +191,9 @@ class Flux_LoginServer extends Flux_BaseServer {
 			$password = Flux::hashPassword($password);
 		}
 		
-		$sql = "INSERT INTO {$this->loginDatabase}.login (userid, user_pass, email, sex) VALUES (?, ?, ?, ?)";
+		$sql = "INSERT INTO {$this->loginDatabase}.login (userid, user_pass, email, sex, level) VALUES (?, ?, ?, ?, ?)";
 		$sth = $this->connection->getStatement($sql);
-		$res = $sth->execute(array($username, $password, $email, $gender));
+		$res = $sth->execute(array($username, $password, $email, $gender, (int)$this->config->getLevel()));
 		
 		if ($res) {
 			$idsth = $this->connection->getStatement("SELECT LAST_INSERT_ID() AS account_id");
@@ -205,12 +226,16 @@ class Flux_LoginServer extends Flux_BaseServer {
 			$sql  = "INSERT INTO {$this->loginDatabase}.$table (account_id, banned_by, ban_type, ban_until, ban_date, ban_reason) ";
 			$sql .= "VALUES (?, ?, 1, ?, NOW(), ?)";
 			$sth  = $this->connection->getStatement($sql);
-			$res  = $sth->execute(array($accountID, $bannedBy, $until, $banReason));
 			
-			$ts   = strtotime($until);
-			$sql  = "UPDATE {$this->loginDatabase}.login SET state = 0, unban_time = '$ts' WHERE account_id = ?";
-			$sth  = $this->connection->getStatement($sql);
-			return $sth->execute(array($accountID));
+			if ($sth->execute(array($accountID, $bannedBy, $until, $banReason))) {
+				$ts   = strtotime($until);
+				$sql  = "UPDATE {$this->loginDatabase}.login SET state = 0, unban_time = '$ts' WHERE account_id = ?";
+				$sth  = $this->connection->getStatement($sql);
+				return $sth->execute(array($accountID));
+			}
+			else {
+				return false;
+			}
 		}
 		else {
 			return false;
@@ -229,9 +254,8 @@ class Flux_LoginServer extends Flux_BaseServer {
 			$sql  = "INSERT INTO {$this->loginDatabase}.$table (account_id, banned_by, ban_type, ban_until, ban_date, ban_reason) ";
 			$sql .= "VALUES (?, ?, 2, '0000-00-00 00:00:00', NOW(), ?)";
 			$sth  = $this->connection->getStatement($sql);
-			$res  = $sth->execute(array($accountID, $bannedBy, $banReason));
 			
-			if ($res) {
+			if ($sth->execute(array($accountID, $bannedBy, $banReason))) {
 				$sql  = "UPDATE {$this->loginDatabase}.login SET state = 5, unban_time = 0 WHERE account_id = ?";
 				$sth  = $this->connection->getStatement($sql);
 				return $sth->execute(array($accountID));
@@ -250,32 +274,25 @@ class Flux_LoginServer extends Flux_BaseServer {
 	 */
 	public function unban($unbannedBy, $unbanReason, $accountID)
 	{
-		//$info = $this->getBanInfo($accountID);
 		$table = Flux::config('FluxTables.AccountBanTable');
 		$createTable = Flux::config('FluxTables.AccountCreateTable');
 		
-		//if (!$info || !$info->ban_type) {
-			$sql  = "INSERT INTO {$this->loginDatabase}.$table (account_id, banned_by, ban_type, ban_until, ban_date, ban_reason) ";
-			$sql .= "VALUES (?, ?, 0, '0000-00-00 00:00:00', NOW(), ?)";
+		$sql  = "INSERT INTO {$this->loginDatabase}.$table (account_id, banned_by, ban_type, ban_until, ban_date, ban_reason) ";
+		$sql .= "VALUES (?, ?, 0, '0000-00-00 00:00:00', NOW(), ?)";
+		$sth  = $this->connection->getStatement($sql);
+		
+		if ($sth->execute(array($accountID, $unbannedBy, $unbanReason))) {
+			$sql  = "UPDATE {$this->loginDatabase}.$createTable SET confirmed = 1, confirm_expire = NULL WHERE account_id = ?";
 			$sth  = $this->connection->getStatement($sql);
-			$res  = $sth->execute(array($accountID, $unbannedBy, $unbanReason));
+			$sth->execute(array($accountID));
 			
-			if ($res) {
-				$sql  = "UPDATE {$this->loginDatabase}.$createTable SET confirmed = 1, confirm_expire = NULL WHERE account_id = ?";
-				$sth  = $this->connection->getStatement($sql);
-				$sth->execute(array($accountID));
-				
-				$sql  = "UPDATE {$this->loginDatabase}.login SET state = 0, unban_time = 0 WHERE account_id = ?";
-				$sth  = $this->connection->getStatement($sql);
-				return $sth->execute(array($accountID));
-			}
-			else {
-				return false;
-			}
-		//}
-		//else {
-			//return false;
-		//}
+			$sql  = "UPDATE {$this->loginDatabase}.login SET state = 0, unban_time = 0 WHERE account_id = ?";
+			$sth  = $this->connection->getStatement($sql);
+			return $sth->execute(array($accountID));
+		}
+		else {
+			return false;
+		}
 	}
 	
 	/**
@@ -295,6 +312,49 @@ class Flux_LoginServer extends Flux_BaseServer {
 		if ($res) {
 			$ban = $sth->fetchAll();
 			return $ban;
+		}
+		else {
+			return false;
+		}
+	}
+	
+	/**
+	 *
+	 */
+	public function addIpBan($bannedBy, $banReason, $unbanTime, $ipAddress)
+	{
+		$table = Flux::config('FluxTables.IpBanTable');
+		
+		$sql  = "INSERT INTO {$this->loginDatabase}.$table (ip_address, banned_by, ban_type, ban_until, ban_date, ban_reason) ";
+		$sql .= "VALUES (?, ?, 1, ?, NOW(), ?)";
+		$sth  = $this->connection->getStatement($sql);
+		
+		if ($sth->execute(array($ipAddress, $bannedBy, $unbanTime, $banReason))) {
+			$sql  = "INSERT INTO {$this->loginDatabase}.ipbanlist (list, reason, rtime, btime) ";
+			$sql .= "VALUES (?, ?, ?, NOW())";
+			$sth  = $this->connection->getStatement($sql);
+			return $sth->execute(array($ipAddress, $banReason, $unbanTime));
+		}
+		else {
+			return false;
+		}
+	}
+	
+	/**
+	 *
+	 */
+	public function removeIpBan($unbannedBy, $unbanReason, $ipAddress)
+	{
+		$table = Flux::config('FluxTables.IpBanTable');
+		
+		$sql  = "INSERT INTO {$this->loginDatabase}.$table (ip_address, banned_by, ban_type, ban_until, ban_date, ban_reason) ";
+		$sql .= "VALUES (?, ?, 0, '0000-00-00 00:00:00', NOW(), ?)";
+		$sth  = $this->connection->getStatement($sql);
+		
+		if ($sth->execute(array($ipAddress, $unbannedBy, $unbanReason))) {
+			$sql  = "DELETE FROM {$this->loginDatabase}.ipbanlist WHERE list = ?";
+			$sth  = $this->connection->getStatement($sql);
+			return $sth->execute(array($ipAddress));
 		}
 		else {
 			return false;

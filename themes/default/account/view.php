@@ -21,7 +21,11 @@
 		<th><?php echo htmlspecialchars(Flux::message('EmailAddressLabel')) ?></th>
 		<td>
 			<?php if ($account->email): ?>
-				<?php echo htmlspecialchars($account->email) ?>
+				<?php if ($auth->actionAllowed('account', 'index')): ?>
+					<?php echo $this->linkToAccountSearch(array('email' => $account->email), $account->email) ?>
+				<?php else: ?>
+					<?php echo htmlspecialchars($account->email) ?>
+				<?php endif ?>
 			<?php else: ?>
 				<span class="not-applicable"><?php echo htmlspecialchars(Flux::message('NoneLabel')) ?></span>
 			<?php endif ?>
@@ -80,12 +84,17 @@
 		<th><?php echo htmlspecialchars(Flux::message('LastUsedIpLabel')) ?></th>
 		<td colspan="3">
 			<?php if ($account->last_ip): ?>
-				<?php echo $account->last_ip ?>
+				<?php if ($auth->actionAllowed('account', 'index')): ?>
+					<?php echo $this->linkToAccountSearch(array('last_ip' => $account->last_ip), $account->last_ip) ?>
+				<?php else: ?>
+					<?php echo htmlspecialchars($account->last_ip) ?>
+				<?php endif ?>
 			<?php else: ?>
 				<span class="not-applicable"><?php echo htmlspecialchars(Flux::message('NoneLabel')) ?></span>
 			<?php endif ?>
 		</td>
 	</tr>
+	<?php $banconfirm=htmlspecialchars(str_replace("'", "\\'", Flux::message('AccountBanConfirm'))) ?>
 	<?php if ($showTempBan): ?>
 	<tr>
 		<th><?php echo htmlspecialchars(Flux::message('AccountViewTempBanLabel')) ?></th>
@@ -94,9 +103,9 @@
 				<input type="hidden" name="tempban" value="1" />
 				<label><?php echo htmlspecialchars(Flux::message('AccountBanReasonLabel')) ?><br /><textarea name="reason" class="block reason"></textarea></label>
 				<label><?php echo htmlspecialchars(Flux::message('AccountBanUntilLabel')) ?></label>
-				<?php echo $this->dateTimeField('tempban'); ?>
+				<?php echo $this->dateTimeField('tempban', date('H:i:s')); ?>
 				<input type="submit" value="<?php echo htmlspecialchars(Flux::message('AccountTempBanButton')) ?>"
-					onclick="return confirm('<?php echo $banconfirm=htmlspecialchars(str_replace("'", "\\'", Flux::message('AccountBanConfirm'))) ?>')" />
+					onclick="return confirm('<?php echo $banconfirm ?>')" />
 			</form>
 		</td>
 	</tr>
@@ -199,7 +208,7 @@
 				<td><img src="<?php echo $this->emblem($char->guild_id) ?>" /></td>
 				<?php endif ?>
 				<td<?php if (!$char->guild_emblem_len) echo ' colspan="2"' ?>>
-					<?php if ($auth->actionAllowed('guild', 'view') && $auth->allowedToViewGuild): ?>
+					<?php if ($auth->actionAllowed('guild', 'view')): ?>
 						<?php echo $this->linkToGuild($char->guild_id, $char->guild_name) ?>
 					<?php else: ?>
 						<?php echo htmlspecialchars($char->guild_name) ?>
@@ -241,7 +250,6 @@
 			<th colspan="2"><?php echo htmlspecialchars(Flux::message('ItemNameLabel')) ?></th>
 			<th><?php echo htmlspecialchars(Flux::message('ItemAmountLabel')) ?></th>
 			<th><?php echo htmlspecialchars(Flux::message('ItemIdentifyLabel')) ?></th>
-			<th><?php echo htmlspecialchars(Flux::message('ItemRefineLabel')) ?></th>
 			<th><?php echo htmlspecialchars(Flux::message('ItemBrokenLabel')) ?></th>
 			<th><?php echo htmlspecialchars(Flux::message('ItemCard0Label')) ?></th>
 			<th><?php echo htmlspecialchars(Flux::message('ItemCard1Label')) ?></th>
@@ -262,11 +270,37 @@
 			<?php if ($icon): ?>
 			<td><img src="<?php echo htmlspecialchars($icon) ?>" /></td>
 			<?php endif ?>
-			<td<?php if (!$icon) echo ' colspan="2"' ?>>
+			<td<?php if (!$icon) echo ' colspan="2"' ?><?php if ($item->cardsOver) echo ' class="overslotted' . $item->cardsOver . '"'; else echo ' class="normalslotted"' ?>>
+				<?php if ($item->refine > 0): ?>
+					+<?php echo htmlspecialchars($item->refine) ?>
+				<?php endif ?>
+				<?php if ($item->card0 == 255 && intval($item->card1/1280) > 0): ?>
+					<?php for ($i = 0; $i < intval($item->card1/1280); $i++): ?>
+						Very
+					<?php endfor ?>
+					Strong
+				<?php endif ?>
+				<?php if ($item->card0 == 254 || $item->card0 == 255): ?>
+					<?php if ($item->char_name): ?>
+						<?php if ($auth->actionAllowed('character', 'view') && ($isMine || (!$isMine && $auth->allowedToViewCharacter))): ?>
+							<?php echo $this->linkToCharacter($item->char_id, $item->char_name, $session->serverName) . "'s" ?>
+						<?php else: ?>
+							<?php echo htmlspecialchars($item->char_name . "'s") ?>
+						<?php endif ?>
+					<?php else: ?>
+						<span class="not-applicable"><?php echo htmlspecialchars(Flux::message('UnknownLabel')) ?></span>'s
+					<?php endif ?>
+				<?php endif ?>
+				<?php if ($item->card0 == 255 && array_key_exists($item->card1%1280, $itemAttributes)): ?>
+					<?php echo htmlspecialchars($itemAttributes[$item->card1%1280]) ?>
+				<?php endif ?>
 				<?php if ($item->name_japanese): ?>
 					<span class="item_name"><?php echo htmlspecialchars($item->name_japanese) ?></span>
 				<?php else: ?>
 					<span class="not-applicable"><?php echo htmlspecialchars(Flux::message('UnknownLabel')) ?></span>
+				<?php endif ?>
+				<?php if ($item->slots): ?>
+					<?php echo htmlspecialchars(' [' . $item->slots . ']') ?>
 				<?php endif ?>
 			</td>
 			<td><?php echo number_format($item->amount) ?></td>
@@ -277,7 +311,6 @@
 					<span class="identified no"><?php echo htmlspecialchars(Flux::message('NoLabel')) ?></span>
 				<?php endif ?>
 			</td>
-			<td><?php echo htmlspecialchars($item->refine) ?></td>
 			<td>
 				<?php if ($item->attribute): ?>
 					<span class="broken yes"><?php echo htmlspecialchars(Flux::message('YesLabel')) ?></span>
@@ -286,7 +319,7 @@
 				<?php endif ?>
 			</td>
 			<td>
-				<?php if($item->card0 && ($item->type == 4 || $item->type == 5)): ?>
+				<?php if($item->card0 && ($item->type == 4 || $item->type == 5) && $item->card0 != 254 && $item->card0 != 255 && $item->card0 != -256): ?>
 					<?php if (!empty($cards[$item->card0])): ?>
 						<?php if ($auth->actionAllowed('item', 'view')): ?>
 							<?php echo $this->linkToItem($item->card0, $cards[$item->card0]) ?>
@@ -305,7 +338,7 @@
 				<?php endif ?>
 			</td>
 			<td>
-				<?php if($item->card1 && ($item->type == 4 || $item->type == 5)): ?>
+				<?php if($item->card1 && ($item->type == 4 || $item->type == 5) && $item->card0 != 255 && $item->card0 != -256): ?>
 					<?php if (!empty($cards[$item->card1])): ?>
 						<?php if ($auth->actionAllowed('item', 'view')): ?>
 							<?php echo $this->linkToItem($item->card1, $cards[$item->card1]) ?>
@@ -324,8 +357,8 @@
 				<?php endif ?>
 			</td>
 			<td>
-				<?php if($item->card2 && ($item->type == 4 || $item->type == 5)): ?>
-					<?php if (!empty($cards[$item->card0])): ?>
+				<?php if($item->card2 && ($item->type == 4 || $item->type == 5) && $item->card0 != 254 && $item->card0 != 255 && $item->card0 != -256): ?>
+					<?php if (!empty($cards[$item->card2])): ?>
 						<?php if ($auth->actionAllowed('item', 'view')): ?>
 							<?php echo $this->linkToItem($item->card2, $cards[$item->card2]) ?>
 						<?php else: ?>
@@ -343,8 +376,8 @@
 				<?php endif ?>
 			</td>
 			<td>
-				<?php if($item->card3 && ($item->type == 4 || $item->type == 5)): ?>
-					<?php if (!empty($cards[$item->card0])): ?>
+				<?php if($item->card3 && ($item->type == 4 || $item->type == 5) && $item->card0 != 254 && $item->card0 != 255 && $item->card0 != -256): ?>
+					<?php if (!empty($cards[$item->card3])): ?>
 						<?php if ($auth->actionAllowed('item', 'view')): ?>
 							<?php echo $this->linkToItem($item->card3, $cards[$item->card3]) ?>
 						<?php else: ?>

@@ -32,7 +32,7 @@
 <?php echo $paginator->infoText() ?>
 <table class="horizontal-table">
 	<tr>
-		<th><?php echo $paginator->sortableColumn('time', 'Date and Time') ?></th>
+		<th><?php echo $paginator->sortableColumn('time', 'Date/Time') ?></th>
 		<th><?php echo $paginator->sortableColumn('ip', 'IP Address') ?></th>
 		<th><?php echo $paginator->sortableColumn('user', 'Username') ?></th>
 		<th><?php echo $paginator->sortableColumn('log', 'Log Message') ?></th>
@@ -41,7 +41,13 @@
 	<?php foreach ($logins as $login): ?>
 	<tr>
 		<td align="right"><?php echo htmlspecialchars($this->formatDateTime($login->time)) ?></td>
-		<td><?php echo htmlspecialchars($login->ip) ?></td>
+		<td>
+			<?php if ($auth->actionAllowed('account', 'index')): ?>
+				<?php echo $this->linkToAccountSearch(array('last_ip' => $login->ip), $login->ip) ?>
+			<?php else: ?>
+				<?php echo htmlspecialchars($login->ip) ?>
+			<?php endif ?>
+		</td>
 		<td>
 			<?php if ($login->account_id && $auth->actionAllowed('account', 'view') && $auth->allowedToViewAccount): ?>
 				<?php echo $this->linkToAccount($login->account_id, $login->user) ?>
@@ -56,5 +62,8 @@
 </table>
 <?php echo $paginator->getHTML() ?>
 <?php else: ?>
-<p>No logs were found. <a href="javascript:history.go(-1)">Go back</a>.</p>
+<p>
+	No logins found.
+	<a href="javascript:history.go(-1)">Go back</a>.
+</p>
 <?php endif ?>

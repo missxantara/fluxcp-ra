@@ -359,11 +359,6 @@ label:hover {
 	background-color: #eee;
 }
 
-.vertical-table th {
-	padding: 5px 10px;
-	background-color: #eee;
-}
-
 .vertical-table td {
 	padding: 5px 12px;
 	background-color: #fff;
@@ -1051,7 +1046,6 @@ textarea {
 }
 
 .equipped td {
-	color: #25292b;
 	background-color: #f1ffff;
 }
 
@@ -1066,4 +1060,29 @@ textarea {
 
 .current-shop-category {
 	font-weight: bold;
+}
+
+.normalslotted .equipped {
+	color: #25292b;
+}
+
+.overslotted1 {
+	color: #32cd32;
+}
+
+.overslotted2 {
+	color: #00bfff;
+}
+
+.overslotted3 {
+	color: #ffa500;
+}
+
+.overslotted4 {
+	color: #9932cc;
+}
+
+.hold-hours {
+	color: #ffba00;
+	font-style: italic;
 }

@@ -20,10 +20,10 @@ if ($reset === -1) {
 	$message = sprintf(Flux::message('CantResetLookWhenOnline'), $char->name);
 }
 elseif ($reset === true) {
-	$message = sprintf(FLux::message('ResetLookSuccessful'), $char->name);
+	$message = sprintf(Flux::message('ResetLookSuccessful'), $char->name);
 }
 else {
-	$message = sprintf(FLux::message('ResetLookFailed'), $char->name);
+	$message = sprintf(Flux::message('ResetLookFailed'), $char->name);
 }
 
 $session->setMessageData($message);

@@ -490,7 +490,7 @@ class Flux {
 	 * @return Flux_LoginAthenaGroup
 	 * @access private
 	 */
-	private function registerServerGroup($serverName, Flux_LoginAthenaGroup $serverGroup)
+	private static function registerServerGroup($serverName, Flux_LoginAthenaGroup $serverGroup)
 	{
 		self::$loginAthenaGroupRegistry[$serverName] = $serverGroup;
 		return $serverGroup;
@@ -505,7 +505,7 @@ class Flux {
 	 * @return Flux_Athena
 	 * @access private
 	 */
-	private function registerAthenaServer($serverName, $athenaServerName, Flux_Athena $athenaServer)
+	private static function registerAthenaServer($serverName, $athenaServerName, Flux_Athena $athenaServer)
 	{
 		if (!array_key_exists($serverName, self::$athenaServerRegistry) || !is_array(self::$athenaServerRegistry[$serverName])) {
 			self::$athenaServerRegistry[$serverName] = array();
@@ -630,16 +630,49 @@ class Flux {
 	 * Get the item type name from an item type.
 	 *
 	 * @param int $id
+	 * @param int $id2
 	 * @return mixed Item Type or false.
 	 * @access public
 	 */
-	public static function getItemType($id)
+	public static function getItemType($id, $id2)
 	{
-		$key   = "ItemTypes.$id";
+		$key  = "ItemTypes.$id";
 		$type = self::config($key);
+		
+		if ($id2) {
+			$key = "ItemTypes2.$id.$id2";
+			$type2 = self::config($key);
+			
+			if ($type && $type2) {
+				$type .= ' - ' . $type2;
+			}
+			else if ($type2) {
+				$type = $type2;
+			}
+		}
 		
 		if ($type) {
 			return $type;
+		}
+		else {
+			return false;
+		}
+	}
+	
+	/**
+	 * Get the equip location combination name from an equip location combination type.
+	 *
+	 * @param int $id
+	 * @return mixed Equip Location Combination or false.
+	 * @access public
+	 */
+	public static function getEquipLocationCombination($id)
+	{
+		$key   = "EquipLocationCombinations.$id";
+		$combination = self::config($key);
+		
+		if ($combination) {
+			return $combination;
 		}
 		else {
 			return false;
@@ -720,24 +753,33 @@ class Flux {
 	}
 	
 	/**
+	 *
+	 */
+	public static function pruneUnconfirmedAccounts()
+	{
+		$tbl    = Flux::config('FluxTables.AccountCreateTable');
+		$expire = (int)Flux::config('EmailConfirmExpire');
+		
+		foreach (self::$loginAthenaGroupRegistry as $loginAthenaGroup) {
+			$db   = $loginAthenaGroup->loginDatabase;
+			$sql  = "DELETE $db.login, $db.$tbl FROM $db.login INNER JOIN $db.$tbl ";
+			$sql .= "WHERE login.account_id = $tbl.account_id AND $tbl.confirmed = 0 ";
+			$sql .= "AND $tbl.confirm_code IS NOT NULL AND $tbl.confirm_expire <= NOW()";
+			$sth  = $loginAthenaGroup->connection->getStatement($sql);
+			
+			$sth->execute();
+		}
+	}
+	
+	/**
 	 * Get array of equip_location bits. (bit => loc_name pairs)
 	 * @return array
 	 */
 	public static function getEquipLocationList()
 	{
-		return array(
-			256 => 'Upper Headgear',
-			512 => 'Middle Headgear',
-			  1 => 'Lower Headgear',
-			 16 => 'Armor',
-			  2 => 'Weapon',
-			 32 => 'Shield',
-			  4 => 'Garment',
-			 64 => 'Footgear',
-			  8 => 'Accessory 1',
-			128 => 'Accessory 2'
-		);
-	}	
+		$equiplocations = Flux::config('EquipLocations')->toArray();
+		return $equiplocations;
+	}
 	
 	/**
 	 * Get array of equip_upper bits. (bit => upper_name pairs)
@@ -745,11 +787,8 @@ class Flux {
 	 */
 	public static function getEquipUpperList()
 	{
-		return array(
-			1 => 'Normal',
-			2 => 'Upper',
-			4 => 'Baby'
-		);
+		$equipupper = Flux::config('EquipUpper')->toArray();
+		return $equipupper;
 	}
 	
 	/**
@@ -757,34 +796,8 @@ class Flux {
 	 */
 	public static function getEquipJobsList()
 	{
-		return array(
-			pow(2,  0) => 'Novice',
-			pow(2,  1) => 'Swordman',
-			pow(2,  2) => 'Mage',
-			pow(2,  3) => 'Archer',
-			pow(2,  4) => 'Acolyte',
-			pow(2,  5) => 'Merchant',
-			pow(2,  6) => 'Thief',
-			pow(2,  7) => 'Knight',
-			pow(2,  8) => 'Priest',
-			pow(2,  9) => 'Wizard',
-			pow(2, 10) => 'Blacksmith',
-			pow(2, 11) => 'Hunter',
-			pow(2, 12) => 'Assassin',
-			pow(2, 13) => 'Unused',
-			pow(2, 14) => 'Crusader',
-			pow(2, 15) => 'Monk',
-			pow(2, 16) => 'Sage',
-			pow(2, 17) => 'Rogue',
-			pow(2, 18) => 'Alchemist',
-			pow(2, 19) => 'Bard/Dancer',
-			pow(2, 20) => 'Unused',
-			pow(2, 21) => 'Taekwon',
-			pow(2, 22) => 'Star Gladiator',
-			pow(2, 23) => 'Soul Linker',
-			pow(2, 24) => 'Gunslinger',
-			pow(2, 25) => 'Ninja'
-		);
+		$equipjobs = Flux::config('EquipJobs')->toArray();
+		return $equipjobs;
 	}
 	
 	/**
@@ -893,6 +906,15 @@ class Flux {
 	{
 		$race = Flux::config("MonsterRaces.$race");
 		return $race;
+	}
+	
+	/**
+	 *
+	 */
+	public static function monsterSizeName($size)
+	{
+		$size = Flux::config("MonsterSizes.$size");
+		return $size;
 	}
 }
 ?>

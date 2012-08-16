@@ -93,7 +93,7 @@ else {
 			$sqlpartial .= 'AND (created.confirmed = 0 AND created.confirm_code IS NOT NULL) ';
 		}
 		elseif ($accountState == 'permabanned') {
-			$sqlpartial .= 'AND (login.state = 5 AND login.unban_time = 0) ';
+			$sqlpartial .= 'AND (login.state = 5 AND login.unban_time = 0 AND (created.confirmed = 1 OR created.confirm_code IS NULL)) ';
 		}
 		elseif ($accountState == 'banned') {
 			$sqlpartial .= 'AND login.unban_time > 0 ';
@@ -151,9 +151,10 @@ $sth  = $server->connection->getStatement($sql);
 $sth->execute($bind);
 
 $accounts   = $sth->fetchAll();
+
 $authorized = $auth->actionAllowed('account', 'view') && $auth->allowedToViewAccount;
 
-if ($accounts && count($accounts) === 1 && $authorized) {
+if ($accounts && count($accounts) === 1 && $authorized && Flux::config('SingleMatchRedirect')) {
 	$this->redirect($this->url('account', 'view', array('id' => $accounts[0]->account_id)));
 }
 ?>

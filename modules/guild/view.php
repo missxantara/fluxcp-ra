@@ -13,7 +13,9 @@ $tempTable  = new Flux_TemporaryTable($server->connection, $tableName, $fromTabl
 
 $guildID = $params->get('id');
 
-$col  = "guild.*, `char`.name AS guild_master";
+$col  = "guild.guild_id, guild.name, guild.char_id, guild.master, guild.guild_lv, guild.connect_member, guild.max_member, ";
+$col .= "guild.average_lv, guild.exp, guild.next_exp, guild.skill_point, REPLACE(guild.mes1, '|00', '') AS mes1, REPLACE(guild.mes2, '|00', '') AS mes2, ";
+$col .= "guild.emblem_len, guild.emblem_id, guild.emblem_data, `char`.name AS guild_master";
 
 $sql  = "SELECT $col FROM {$server->charMapDatabase}.guild LEFT JOIN {$server->charMapDatabase}.`char` ON `char`.char_id = guild.char_id ";
 $sql .= "WHERE guild.guild_id = ?";
@@ -48,23 +50,34 @@ if ($guild) {
 }
 
 $col  = "ch.account_id, ch.char_id, ch.name, ch.class, ch.base_level, ch.job_level, ";
+$col .= "IF(ch.online = 1, 'Online Now!', ";
+$col .= "CASE DATE_FORMAT(acc.lastlogin, '%Y-%m-%d') ";
+$col .= "WHEN DATE_FORMAT(NOW(), '%Y-%m-%d') THEN 'Today' ";
+$col .= "WHEN DATE_FORMAT(DATE_SUB(NOW(), INTERVAL 1 DAY), '%Y-%m-%d') THEN 'Yesterday' ";
+$col .= "ELSE CONCAT(DATEDIFF(NOW(), acc.lastlogin), ' Days Ago') ";
+$col .= "END) AS lastlogin, ";
 $col .= "roster.exp AS devotion, roster.position, ";
 $col .= "pos.name AS position_name, pos.mode, pos.exp_mode";
 
 $sql  = "SELECT $col FROM {$server->charMapDatabase}.`char` AS ch ";
+$sql .= "LEFT JOIN {$server->loginDatabase}.login AS acc ON acc.account_id = ch.account_id ";
 $sql .= "LEFT JOIN {$server->charMapDatabase}.guild_member AS roster ON (roster.guild_id = ch.guild_id AND roster.char_id = ch.char_id) ";
 $sql .= "LEFT JOIN {$server->charMapDatabase}.guild_position AS pos ON (pos.guild_id = ch.guild_id AND pos.position = roster.position) ";
-$sql .= "WHERE ch.guild_id = ? ORDER BY position ASC, devotion DESC";
+$sql .= "WHERE ch.guild_id = ? ORDER BY roster.position ASC, acc.lastlogin DESC";
 
 $sth  = $server->connection->getStatement($sql);
 $sth->execute(array($guildID));
 
 $members = $sth->fetchAll();
 
-$isMine = false;
+$isMine  = false;
+$amOwner = false;
 foreach ($members as $member) {
 	if ($guild && $member->account_id == $session->account->account_id) {
 		$isMine = true;
+		if ($member->position == 0) {
+			$amOwner = true;
+		}
 	}
 }
 
@@ -72,7 +85,7 @@ if (!$isMine && !$auth->allowedToViewGuild) {
 	$this->deny();
 }
 
-$col  = "account_id, name, mes";
+$col  = "account_id, name, REPLACE(mes, '|00', '') AS mes";
 
 $sql  = "SELECT $col FROM {$server->charMapDatabase}.guild_expulsion ";
 $sql .= "WHERE guild_id = ? ORDER BY name ASC";
@@ -82,55 +95,73 @@ $sth->execute(array($guildID));
 
 $expulsions = $sth->fetchAll();
 
-$col  = "guild_storage.*, items.name_japanese, items.type";
+if (!Flux::config('GStorageLeaderOnly') || $amOwner || $auth->allowedToViewGuild) {
+	$col  = "guild_storage.*, items.name_japanese, items.type, items.slots, c.char_id, c.name AS char_name";
 
-$sql  = "SELECT $col FROM {$server->charMapDatabase}.guild_storage ";
-$sql .= "LEFT JOIN {$server->charMapDatabase}.items ON items.id = guild_storage.nameid ";
-$sql .= "WHERE guild_storage.guild_id = ? ";
+	$sql  = "SELECT $col FROM {$server->charMapDatabase}.guild_storage ";
+	$sql .= "LEFT JOIN {$server->charMapDatabase}.items ON items.id = guild_storage.nameid ";
+	$sql .= "LEFT JOIN {$server->charMapDatabase}.`char` AS c ";
+	$sql .= "ON c.char_id = IF(guild_storage.card0 IN (254, 255), ";
+	$sql .= "IF(guild_storage.card2 < 0, guild_storage.card2 + 65536, guild_storage.card2) ";
+	$sql .= "| (guild_storage.card3 << 16), NULL) ";
+	$sql .= "WHERE guild_storage.guild_id = ? ";
 
-if (!$auth->allowedToSeeUnknownItems) {
-	$sql .= 'AND guild_storage.identify > 0 ';
-}
-
-$sql .= "ORDER BY guild_storage.nameid ASC, guild_storage.identify DESC, ";
-$sql .= "guild_storage.attribute ASC, guild_storage.refine ASC";
-
-$sth  = $server->connection->getStatement($sql);
-$sth->execute(array($guildID));
-
-$items = $sth->fetchAll();
-$cards = array();
-
-if ($items) {
-	$cardIDs = array();
-
-	foreach ($items as $item) {
-		if ($item->card0) {
-			$cardIDs[] = $item->card0;
-		}
-		if ($item->card1) {
-			$cardIDs[] = $item->card1;
-		}
-		if ($item->card2) {
-			$cardIDs[] = $item->card2;
-		}
-		if ($item->card3) {
-			$cardIDs[] = $item->card3;
-		}
+	if (!$auth->allowedToSeeUnknownItems) {
+		$sql .= 'AND guild_storage.identify > 0 ';
 	}
-	
-	if ($cardIDs) {
-		$ids = implode(',', array_fill(0, count($cardIDs), '?'));
-		$sql = "SELECT id, name_japanese FROM {$server->charMapDatabase}.items WHERE id IN ($ids)";
-		$sth = $server->connection->getStatement($sql);
 
-		$sth->execute($cardIDs);
-		$temp = $sth->fetchAll();
-		if ($temp) {
-			foreach ($temp as $card) {
-				$cards[$card->id] = $card->name_japanese;
+	$sql .= "ORDER BY guild_storage.nameid ASC, guild_storage.identify DESC, ";
+	$sql .= "guild_storage.attribute ASC, guild_storage.refine ASC";
+
+	$sth  = $server->connection->getStatement($sql);
+	$sth->execute(array($guildID));
+
+	$items = $sth->fetchAll();
+	$cards = array();
+
+	if ($items) {
+		$cardIDs = array();
+
+		foreach ($items as $item) {
+			$item->cardsOver = -$item->slots;
+			
+			if ($item->card0) {
+				$cardIDs[] = $item->card0;
+				$item->cardsOver++;
+			}
+			if ($item->card1) {
+				$cardIDs[] = $item->card1;
+				$item->cardsOver++;
+			}
+			if ($item->card2) {
+				$cardIDs[] = $item->card2;
+				$item->cardsOver++;
+			}
+			if ($item->card3) {
+				$cardIDs[] = $item->card3;
+				$item->cardsOver++;
+			}
+			
+			if ($item->card0 == 254 || $item->card0 == 255 || $item->card0 == -256 || $item->cardsOver < 0) {
+				$item->cardsOver = 0;
+			}
+		}
+		
+		if ($cardIDs) {
+			$ids = implode(',', array_fill(0, count($cardIDs), '?'));
+			$sql = "SELECT id, name_japanese FROM {$server->charMapDatabase}.items WHERE id IN ($ids)";
+			$sth = $server->connection->getStatement($sql);
+
+			$sth->execute($cardIDs);
+			$temp = $sth->fetchAll();
+			if ($temp) {
+				foreach ($temp as $card) {
+					$cards[$card->id] = $card->name_japanese;
+				}
 			}
 		}
 	}
+	
+	$itemAttributes = Flux::config('Attributes')->toArray();
 }
 ?>

@@ -10,7 +10,7 @@ class Flux_LogFile {
 	 * @var resource
 	 */
 	private $fp;
-	
+
 	/**
 	 * Log file name.
 	 *
@@ -18,15 +18,15 @@ class Flux_LogFile {
 	 * @var string
 	 */
 	public $filename;
-	
+
 	/**
 	 * Date format used to indicate when the action was logged.
 	 *
 	 * @access public
 	 * @var string
 	 */
-	public $dateFormat = '[Y-m-d h:i:s] ';
-	
+	public $dateFormat = '[Y-m-d H:i:s] ';
+
 	/**
 	 * Create new LogFile instance.
 	 *
@@ -37,14 +37,19 @@ class Flux_LogFile {
 	public function __construct($filename, $mode = 'a')
 	{
 		$this->filename  = "$filename.php";
-		$isNewFile       = !file_exists($this->filename);	
-		$this->fp        = fopen($this->filename, 'a');
-		
+		$isNewFile       = !file_exists($this->filename);
+
+		if ($isNewFile) {
+			touch($this->filename);
+			chmod($this->filename, 0600);
+		}
+
+		$this->fp = fopen($this->filename, 'a');
 		if ($isNewFile) {
 			fputs($this->fp, "<?php exit('Forbidden'); ?>\n");
 		}
 	}
-	
+
 	/**
 	 * Close file handle.
 	 */
@@ -54,7 +59,7 @@ class Flux_LogFile {
 			fclose($this->fp);
 		}
 	}
-	
+
 	/**
 	 * Write a line to the log file.
 	 *

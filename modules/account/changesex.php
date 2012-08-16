@@ -5,11 +5,10 @@ $this->loginRequired();
 
 $title = Flux::message('GenderChangeTitle');
 
-$cost     = +(int)Flux::config('ChargeGenderChange');
-$jobIndex = Flux::config('JobClassIndex');
-$badJobs  = array('Bard', 'Clown', 'Gypsy', 'Dancer');
+$cost    = +(int)Flux::config('ChargeGenderChange');
+$badJobs = Flux::config('GenderLinkedJobClasses')->toArray();
 
-if ($cost && $session->account->balance < $cost) {
+if ($cost && $session->account->balance < $cost && !$auth->allowedToAvoidSexChangeCost) {
 	$hasNecessaryFunds = false;
 }
 else {
@@ -23,28 +22,12 @@ if (count($_POST)) {
 	
 	$classes = array();
 	foreach ($session->loginAthenaGroup->athenaServers as $athenaServer) {
-		$sql = "SELECT `class` FROM {$athenaServer->charMapDatabase}.`char` WHERE account_id = ?";
+		$sql = "SELECT COUNT(1) AS num FROM {$athenaServer->charMapDatabase}.`char` WHERE account_id = ? AND `class` IN (".implode(',', array_fill(0, count($badJobs), '?')).")";
 		$sth = $athenaServer->connection->getStatement($sql);
-		$sth->execute(array($session->account->account_id));
-		$chars = $sth->fetchAll();
+		$sth->execute(array_merge(array($session->account->account_id), array_keys($badJobs)));
 		
-		if ($chars) {
-			foreach ($chars as $char) {
-				$classes[] = $char->class;
-			}
-		}
-	}
-	
-	$bad = array();
-	foreach ($badJobs as $badJob) {
-		if ($index=$jobIndex->get($badJob)) {
-			$bad[] = $index;
-		}
-	}
-	
-	foreach ($classes as $class) {
-		if (in_array($class, $bad)) {
-			$errorMessage = sprintf(Flux::message('GenderChangeBadChars'), implode(', ', $badJobs));
+		if ($sth->fetch()->num) {
+			$errorMessage = sprintf(Flux::message('GenderChangeBadChars'), implode(', ', array_values($badJobs)));
 			break;
 		}
 	}
@@ -59,7 +42,7 @@ if (count($_POST)) {
 		$changeTimes = (int)$session->loginServer->getPref($session->account->account_id, 'NumberOfGenderChanges');
 		$session->loginServer->setPref($session->account->account_id, 'NumberOfGenderChanges', $changeTimes + 1);
 
-		if ($cost) {
+		if ($cost && !$auth->allowedToAvoidSexChangeCost) {
 			$session->loginServer->depositCredits($session->account->account_id, -$cost);
 			$session->setMessageData(sprintf(Flux::message('GenderChanged'), $cost));
 		}

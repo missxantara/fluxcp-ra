@@ -11,10 +11,12 @@ These hours are subject to change at anytime, but let's hope not.</p>
 	</tr>
 	<?php foreach ($woeTimes as $serverName => $times): ?>
 	<tr>
-		<td class="server" rowspan="<?php echo count($times) ?>">
+		<td class="server" rowspan="<?php echo count($times)+1 ?>">
 			<?php echo htmlspecialchars($serverName)  ?>
 		</td>
-		<?php foreach ($times as $time): ?>
+	</tr>
+	<?php foreach ($times as $time): ?>
+	<tr>
 		<td class="time">
 			<?php echo htmlspecialchars($time['startingDay']) ?>
 			@ <?php echo htmlspecialchars($time['startingHour']) ?>
@@ -25,9 +27,7 @@ These hours are subject to change at anytime, but let's hope not.</p>
 			@ <?php echo htmlspecialchars($time['endingHour']) ?>
 		</td>
 	</tr>
-	<tr>
-		<?php endforeach ?>
-	</tr>
+	<?php endforeach ?>
 	<?php endforeach ?>
 </table>
 <?php else: ?>
