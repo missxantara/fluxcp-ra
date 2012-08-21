@@ -1,6 +1,9 @@
 <?php
 return array(
 	    0 => 'None',
+	 4096 => 'Costume Low Headgear',
+	 2048 => 'Costume Mid Headgear',
+	 1024 => 'Costume Top Headgear',
 	  256 => 'Upper Headgear',
 	  512 => 'Middle Headgear',
 	    1 => 'Lower Headgear',

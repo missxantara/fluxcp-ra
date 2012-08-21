@@ -22,6 +22,13 @@ return array(
 	6004 => 'Vanilmirth',
 	6012 => 'Vanilmirth',
 	6008 => 'Vanilmirth',
-	6016 => 'Vanilmirth'
+	6016 => 'Vanilmirth',
+	
+	// Homunculus S
+	6048 => 'Eira',
+	6049 => 'Bayeri',
+	6050 => 'Sera',
+	6051 => 'Dieter',
+	6052 => 'Elanor'
 );
 ?>

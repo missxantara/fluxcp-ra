@@ -81,9 +81,9 @@ return array(
 	//4048 => 'Star Gladiator (Flying)',
 	4049 => 'Soul Linker',
 
-	//4050 => 'Jiang Shi',
-	//4051 => 'Death Knight',
-	//4052 => 'Dark Collector',
+	4050 => 'Jiang Shi',
+	4051 => 'Death Knight',
+	4052 => 'Dark Collector',
 
 	4054 => 'Rune Knight',
 	4055 => 'Warlock',
@@ -121,18 +121,29 @@ return array(
 	//4086 => 'Mechanic (Magic Gear)',
 	//4087 => 'Mechanic+ (Magic Gear)',
 
-	//4096 => 'Baby Rune Knight',
-	//4097 => 'Baby Warlock',
-	//4098 => 'Baby Ranger',
-	//4099 => 'Baby Arch Bishop',
-	//4100 => 'Baby Mechanic',
-	//4101 => 'Baby Guillotine Cross',
-	//4102 => 'Baby Royal Guard',
-	//4103 => 'Baby Sorceror',
-	//4104 => 'Baby Minstrel',
-	//4105 => 'Baby Wanderer',
-	//4106 => 'Baby Sura',
-	//4107 => 'Baby Genetic',
-	//4108 => 'Baby Shadow Chaser'
+	4096 => 'Baby Rune Knight',
+	4097 => 'Baby Warlock',
+	4098 => 'Baby Ranger',
+	4099 => 'Baby Arch Bishop',
+	4100 => 'Baby Mechanic',
+	4101 => 'Baby Guillotine Cross',
+	4102 => 'Baby Royal Guard',
+	4103 => 'Baby Sorceror',
+	4104 => 'Baby Minstrel',
+	4105 => 'Baby Wanderer',
+	4106 => 'Baby Sura',
+	4107 => 'Baby Genetic',
+	4108 => 'Baby Shadow Chaser',
+	
+	//4109 => 'Baby Rune Knight (Mounted)',
+	//4110 => 'Baby Royal Guard (Mounted)',
+	//4111 => 'Baby Ranger (Mounted)',
+	//4112 => 'Baby Mechanic (Magic Gear)',
+	
+	4190 => 'Expanded Super Novice',
+	4191 => 'Expanded Super Baby',
+	
+	4211 => 'Kagerou',
+	4212 => 'Oboro'
 )
 ?>

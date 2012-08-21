@@ -25,6 +25,10 @@ return array(
 	pow(2, 22) => 'Star Gladiator',
 	pow(2, 23) => 'Soul Linker',
 	pow(2, 24) => 'Gunslinger',
-	pow(2, 25) => 'Ninja'
+	pow(2, 25) => 'Ninja',
+	pow(2, 26) => 'Gangsi',
+	pow(2, 27) => 'Death Knight',
+	pow(2, 28) => 'Dark Collector',
+	pow(2, 29) => 'Kagerou/Oboro'
 )
 ?>

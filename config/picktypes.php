@@ -1,17 +1,21 @@
 <?php
 return array(
-	'M' => 'Monster',
-	'P' => 'Player',
-	'L' => 'Looted',
 	'T' => 'Traded',
 	'V' => 'Vended',
+	'P' => 'Player',
+	'L' => 'Looted',
 	'S' => 'NPC (Shop)',
 	'N' => 'NPC (Script)',
+	'D' => 'Stolen/Ganked',
 	'C' => 'Consumed',
+	'O' => 'Produced',
+	'U' => 'MVP',
 	'A' => 'Admin',
 	'R' => 'Storage',
 	'G' => 'Guild Storage',
 	'E' => 'Mailed',
-	'B' => 'Buy Store'
+	'I' => 'Auctioned',
+	'B' => 'Buy Store',
+	'X' => 'Other'
 );
 ?>

@@ -1,5 +1,5 @@
 <?php
-// eA attributes.
+// rA attributes.
 return array(
 	1 => 'Ice',
 	2 => 'Earth',
