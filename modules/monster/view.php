@@ -22,7 +22,7 @@ $col .= 'DEF AS defense, MDEF AS magic_defense, ATK1 AS attack1, ATK2 AS attack2
 $col .= 'STR AS strength, AGI AS agility, VIT AS vitality, `INT` AS intelligence, DEX AS dexterity, LUK AS luck, ';
 $col .= 'Scale AS size, Race AS race, (Element%10) AS element_type, (Element/20) AS element_level, Mode AS mode, ';
 $col .= 'Speed AS speed, aDelay AS attack_delay, aMotion AS attack_motion, dMotion AS delay_motion, ';
-$col .= 'MEXP AS mvp_exp, ExpPer AS mvp_exp_chance, ';
+$col .= 'MEXP AS mvp_exp, ';
 
 // Item drops.
 $col .= 'Drop1id AS drop1_id, Drop1per AS drop1_chance, ';
