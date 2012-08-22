@@ -35,7 +35,7 @@ if ($account) {
 	}
 	
 	if (count($_POST)) {
-		$groups     = AccountGroup::getArray();
+		$groups     = AccountLevel::getArray();
 	
 		$email      = trim($params->get('email'));
 		$gender     = trim($params->get('gender'));

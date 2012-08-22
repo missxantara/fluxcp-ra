@@ -157,7 +157,7 @@ try {
 		$accessConfig->merge($addon->accessConfig);
 	}
 
-	$accessConfig->set('unauthorized.index', AccountGroup::ANYONE);
+	$accessConfig->set('unauthorized.index', AccountLevel::ANYONE);
 	$authComponent = Flux_Authorization::getInstance($accessConfig, Flux::$sessionData);
 
 	if (!Flux::config('DebugMode')) {

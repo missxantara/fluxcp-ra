@@ -33,7 +33,7 @@ if (Flux::config('HideTempBannedZenyRank')) {
 	$sql .= "AND (login.unban_time IS NULL OR login.unban_time = 0) ";
 }
 
-$groupsLT  = AccountGroup::getGroupID((int)Flux::config('RankingHideGroupLevel'), '<');
+$groupsLT  = AccountLevel::getGroupID((int)Flux::config('RankingHideGroupLevel'), '<');
 if(!empty($groupsLT)) {
 	$idsLT = implode(', ', array_fill(0, count($groupsLT), '?'));
 	$sql  .= "AND login.group_id IN ($idsLT)";
@@ -45,7 +45,7 @@ if ($days=Flux::config('ZenyRankingThreshold')) {
 	$bind[]  = $days * 24 * 60 * 60;
 }
 
-$groupsGEQ = AccountGroup::getGroupID((int)$auth->getGroupLevelToHideFromZenyRank, '>=');
+$groupsGEQ = AccountLevel::getGroupID((int)$auth->getGroupLevelToHideFromZenyRank, '>=');
 if(!empty($groupsGEQ)) {
 	$ids    = implode(', ', array_fill(0, count($groupsGEQ), '?'));
 	$check1 = "AND login.group_id IN ($ids)";

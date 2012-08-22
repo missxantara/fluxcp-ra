@@ -35,8 +35,8 @@ if (count($_POST)) {
 
 		$row = $sth->fetch();
 		if ($row) {
-			$groups = AccountGroup::getArray();
-			if (AccountGroup::getGroupLevel($row->group_id) >= Flux::config('NoResetPassGroupLevel')) {
+			$groups = AccountLevel::getArray();
+			if (AccountLevel::getGroupLevel($row->group_id) >= Flux::config('NoResetPassGroupLevel')) {
 				$errorMessage = Flux::message('ResetPassDisallowed');
 			}
 			else {

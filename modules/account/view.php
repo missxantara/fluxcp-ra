@@ -49,7 +49,7 @@ else {
 	$title = Flux::message('AccountViewTitle3');
 }
 
-$level       = AccountGroup::getGroupLevel($account->group_id);
+$level       = AccountLevel::getGroupLevel($account->group_id);
 
 $banSuperior = $account && (($level > $session->account->group_level && $auth->allowedToBanHigherPower) || $level <= $session->account->group_level);
 $canTempBan  = !$isMine && $banSuperior && $auth->allowedToTempBanAccount;

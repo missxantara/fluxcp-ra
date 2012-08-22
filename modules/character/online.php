@@ -66,7 +66,7 @@ if ($auth->allowedToSearchWhosOnline) {
 
 // Hide groups greater than or equal to
 if (($hideGroupLevel=Flux::config('HideFromWhosOnline')) && !$auth->allowedToIgnoreHiddenPref2) {
-	$groups = AccountGroup::getGroupID($hideGroupLevel, '<');
+	$groups = AccountLevel::getGroupID($hideGroupLevel, '<');
 
 	if(!empty($groups)) {
 		$ids   = implode(', ', array_fill(0, count($groups), '?'));

@@ -73,7 +73,7 @@ class Flux_Authorization {
 	{
 		$accessConfig = $this->config->get('modules');
 		$accessKeys   = array("$moduleName.$actionName", "$moduleName.*");
-		$accountGroup = $this->session->account->group_level;
+		$accountLevel = $this->session->account->group_level;
 		$existentKeys = array();
 
 		if ($accessConfig instanceOf Flux_Config) {
@@ -83,8 +83,8 @@ class Flux_Authorization {
 				if (!is_null($accessLevel)) {
 					$existentKeys[] = $accessKey;
 					
-					if ($accessLevel == AccountGroup::ANYONE || $accessLevel == $accountGroup ||
-						($accessLevel != AccountGroup::UNAUTH && $accessLevel <= $accountGroup)) {
+					if ($accessLevel == AccountLevel::ANYONE || $accessLevel == $accountLevel ||
+						($accessLevel != AccountLevel::UNAUTH && $accessLevel <= $accountLevel)) {
 					
 						return true;
 					}
@@ -111,14 +111,14 @@ class Flux_Authorization {
 	public function featureAllowed($featureName)
 	{
 		$accessConfig = $this->config->get('features');
-		$accountGroup = $this->session->account->group_level;
+		$accountLevel = $this->session->account->group_level;
 		
 		if (($accessConfig instanceOf Flux_Config)) {
 			$accessLevel = $accessConfig->get($featureName);
 			
 			if (!is_null($accessLevel) &&
-				($accessLevel == AccountGroup::ANYONE || $accessLevel == $accountGroup ||
-				($accessLevel != AccountGroup::UNAUTH && $accessLevel <= $accountGroup))) {
+				($accessLevel == AccountLevel::ANYONE || $accessLevel == $accountLevel ||
+				($accessLevel != AccountLevel::UNAUTH && $accessLevel <= $accountLevel))) {
 			
 				return true;
 			}

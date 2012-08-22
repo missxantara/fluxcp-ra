@@ -19,7 +19,7 @@ return array(
 	'ForceEmptyEmblem'     => false,                    // Forcefully display empty guild emblems, helpful when you don't have GD2 installed.
 	'EmblemCacheInterval'  => 12,                       // Hourly interval to re-cache guild emblems (set to 0 to disable emblem cache).
 	'SessionCookieExpire'  => 48,                       // Duration in hours.
-	'AdminMenuGroupLevel'  => AccountGroup::LOWGM,      // The starting group ID for which module actions are moved into the admin menu for display.
+	'AdminMenuGroupLevel'  => AccountLevel::LOWGM,      // The starting group ID for which module actions are moved into the admin menu for display.
 	'DateDefaultTimezone'  => null,                     // The default timezone, consult the PHP manual for valid timezones: http://php.net/timezones (null for defaut system TZ)
 	'DateFormat'           => 'Y-m-d',                  // Default DATE format to be displayed in pages.
 	'DateTimeFormat'       => 'Y-m-d H:i:s',            // Default DATETIME format to be displayed in pages.
@@ -110,9 +110,9 @@ return array(
 	'AutoRemoveTempBans'   => true,                     // Automatically remove expired temporary bans on certain pages.
 	'ItemShopMaxCost'      => 99,                       // Max price an item can be sold for.
 	'ItemShopMaxQuantity'  => 99,                       // Max quantity the item may be sold at once for.
-	'HideFromWhosOnline'   => AccountGroup::LOWGM,      // Levels greater than or equal to this will be hidden from the "Who's Online" page.
-	'HideFromMapStats'     => AccountGroup::LOWGM,      // Levels greater than or equal to this will be hidden from the "Map Stats" page.
-	'EnableGMPassSecurity' => AccountGroup::LOWGM,      // Levels greater than or equal to this will be required to use passwords that meet the earlier GM Password settings.
+	'HideFromWhosOnline'   => AccountLevel::LOWGM,      // Levels greater than or equal to this will be hidden from the "Who's Online" page.
+	'HideFromMapStats'     => AccountLevel::LOWGM,      // Levels greater than or equal to this will be hidden from the "Map Stats" page.
+	'EnableGMPassSecurity' => AccountLevel::LOWGM,      // Levels greater than or equal to this will be required to use passwords that meet the earlier GM Password settings.
 	'ChargeGenderChange'   => 0,                        // You can specify this as the number of credits to charge for gender change.  Can be 0 for free change.
 	'BanPaymentStatuses'   => array(                    // Payment statuses that will automatically ban the account owner if received.
 		'Cancelled_Reversal',                           // -- 'Cancelled_Reversal'
@@ -139,14 +139,14 @@ return array(
 	'ShopImageExtensions'  => array(                    // These are the image extensions allowed for uploading in the item shop.
 		'png', 'jpg', 'gif', 'bmp', 'jpeg'
 	),
-	'NoResetPassGroupLevel'  => AccountGroup::LOWGM,    // Minimum group level of account to prevent password reset using control panel.
+	'NoResetPassGroupLevel'  => AccountLevel::LOWGM,    // Minimum group level of account to prevent password reset using control panel.
 	
 	'CharRankingLimit'       => 20,                     //
 	'GuildRankingLimit'      => 20,                     //
 	'ZenyRankingLimit'       => 20,                     //
 	'DeathRankingLimit'      => 20,                     //
-	'RankingHideGroupLevel'  => AccountGroup::LOWGM,    //
-	'InfoHideZenyGroupLevel' => AccountGroup::LOWGM,    // Minimum group level of account to hide zeny from in server information page.
+	'RankingHideGroupLevel'  => AccountLevel::LOWGM,    //
+	'InfoHideZenyGroupLevel' => AccountLevel::LOWGM,    // Minimum group level of account to hide zeny from in server information page.
 	
 	'CharRankingThreshold' => 0,                        // Number of days the character must have logged in within to be listed in character ranking. (0 = disabled)
 	'ZenyRankingThreshold' => 0,                        // Number of days the character must have logged in within to be listed in zeny ranking. (0 = disabled)

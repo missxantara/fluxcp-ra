@@ -114,7 +114,7 @@ class Flux_SessionData {
 		// Get new account data every request.
 		if ($this->loginAthenaGroup && $this->username && ($account = $this->getAccount($this->loginAthenaGroup, $this->username))) {	
 			$this->account = $account;
-			$this->account->group_level = AccountGroup::getGroupLevel($account->group_id);
+			$this->account->group_level = AccountLevel::getGroupLevel($account->group_id);
 			
 			// Automatically log out of account when detected as banned.
 			$permBan = ($account->state == 5 && !Flux::config('AllowPermBanLogin'));
@@ -125,7 +125,7 @@ class Flux_SessionData {
 			}
 		}
 		else {
-			$this->account = new Flux_DataObject(null, array('group_level' => AccountGroup::UNAUTH));
+			$this->account = new Flux_DataObject(null, array('group_level' => AccountLevel::UNAUTH));
 		}
 		
 		//if (!$this->isLoggedIn()) {
@@ -241,7 +241,7 @@ class Flux_SessionData {
 	 */
 	public function isLoggedIn()
 	{
-		return $this->account->group_level >= AccountGroup::NORMAL;
+		return $this->account->group_level >= AccountLevel::NORMAL;
 	}
 	
 	/**

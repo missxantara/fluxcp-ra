@@ -1,5 +1,5 @@
 <?php
-final class AccountGroup {
+final class AccountLevel {
 /*	Corresponds to the different 'level' attribrutes */
 	const ANYONE =   -2;
 	const UNAUTH =   -1;
@@ -19,31 +19,31 @@ final class AccountGroup {
  */
 		0 => array(
 			'name'  => "Player",
-			'level' => AccountGroup::LOWGM
+			'level' => AccountLevel::LOWGM
 		),
 		1 => array(
 			'name'  => "Super Player",
-			'level' => AccountGroup::LOWGM
+			'level' => AccountLevel::LOWGM
 		),
 		2 => array(
 			'name'  => "Support",
-			'level' => AccountGroup::LOWGM
+			'level' => AccountLevel::LOWGM
 		),
 		3 => array(
 			'name'  => "Script Manager",
-			'level' => AccountGroup::LOWGM
+			'level' => AccountLevel::LOWGM
 		),
 		4 => array(
 			'name'  => "Event Manager",
-			'level' => AccountGroup::LOWGM
+			'level' => AccountLevel::LOWGM
 		),
 		10 => array(
 			'name'  => "Law Enforcement",
-			'level' => AccountGroup::HIGHGM
+			'level' => AccountLevel::HIGHGM
 		),
 		99 => array(
 			'name'  => "Admin",
-			'level' => AccountGroup::ADMIN
+			'level' => AccountLevel::ADMIN
 		)
 	);
 
@@ -93,7 +93,7 @@ final class AccountGroup {
 			return self::$groups[$group_id]['level'];
 		}
 		else {
-			return AccountGroup::NORMAL;
+			return AccountLevel::NORMAL;
 		}
     }
 }

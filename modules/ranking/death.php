@@ -31,7 +31,7 @@ if (Flux::config('HideTempBannedDeathRank')) {
 	$sql .= "AND (login.unban_time IS NULL OR login.unban_time = 0) ";
 }
 
-$groups = AccountGroup::getGroupID((int)Flux::config('RankingHideGroupLevel'), '<');
+$groups = AccountLevel::getGroupID((int)Flux::config('RankingHideGroupLevel'), '<');
 if(!empty($groups)) {
 	$ids   = implode(', ', array_fill(0, count($groups), '?'));
 	$sql  .= "AND login.group_id IN ($ids) ";

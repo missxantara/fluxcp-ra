@@ -63,7 +63,7 @@ $sql  = "SELECT SUM(`char`.zeny) AS total FROM {$server->charMapDatabase}.`char`
 if ($hideGroupLevel=Flux::config('InfoHideZenyGroupLevel')) {
 	$sql .= "LEFT JOIN {$server->loginDatabase}.login ON login.account_id = `char`.account_id ";
 	
-	$groups = AccountGroup::getGroupID($hideGroupLevel, '<');
+	$groups = AccountLevel::getGroupID($hideGroupLevel, '<');
 	if(!empty($groups)) {
 		$ids   = implode(', ', array_fill(0, count($groups), '?'));
 		$sql  .= "WHERE login.group_id IN ($ids) ";

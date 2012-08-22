@@ -16,7 +16,7 @@ $sql  = "SELECT $col FROM {$server->charMapDatabase}.guild AS g ";
 $sql .= "LEFT JOIN {$server->charMapDatabase}.`char` AS ch ON ch.char_id = g.char_id ";
 $sql .= "LEFT JOIN {$server->loginDatabase}.login ON login.account_id = ch.account_id ";
 
-$groups = AccountGroup::getGroupID((int)Flux::config('RankingHideGroupLevel'), '<');
+$groups = AccountLevel::getGroupID((int)Flux::config('RankingHideGroupLevel'), '<');
 if(!empty($groups)) {
 	$ids   = implode(', ', array_fill(0, count($groups), '?'));
 	$sql  .= "WHERE login.group_id IN ($ids) ";
