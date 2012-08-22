@@ -647,16 +647,25 @@ class Flux_Template {
 	 *
 	 * @param string $name
 	 * @param string $value DATE formatted string.
+	 * @param int $fowardYears
+	 * @param int $backwardYears
 	 * @return string
 	 */
-	public function dateField($name, $value = null)
+	public function dateField($name, $value = null, $fowardYears, $backwardYears)
 	{
+		if(!isset($fowardYears)) {
+			$fowardYears = (int)Flux::config('ForwardYears');
+		}
+		if(!isset($backwardYears)) {
+			$backwardYears = (int)Flux::config('BackwardYears');
+		}
+		
 		$ts    = $value && !preg_match('/^0000-00-00(?: 00:00:00)?$/', $value) ? strtotime($value) : time();
 		$year  = ($year =$this->params->get("{$name}_year"))  ? $year  : date('Y', $ts);
 		$month = ($month=$this->params->get("{$name}_month")) ? $month : date('m', $ts);
 		$day   = ($day  =$this->params->get("{$name}_day"))   ? $day   : date('d', $ts);
-		$fw    = $year + (int)Flux::config('ForwardYears');
-		$bw    = $year - (int)Flux::config('BackwardYears');
+		$fw    = $year + $fowardYears;
+		$bw    = $year - $backwardYears;
 		
 		// Get years.
 		$years = sprintf('<select name="%s_year">', $name);

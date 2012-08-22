@@ -141,7 +141,7 @@ class Flux_LoginServer extends Flux_BaseServer {
 		elseif (!in_array(strtoupper($gender), array('M', 'F'))) {
 			throw new Flux_RegisterError('Invalid gender', Flux_RegisterError::INVALID_GENDER);
 		}
-		elseif (($birthdatestamp = strtotime($birthdate)) === false || date('Y-m-d', $birthdatestamp) == '0000-00-00') {
+		elseif (($birthdatestamp = strtotime($birthdate)) === false || date('Y-m-d', $birthdatestamp) != $birthdate) {
 			throw new Flux_RegisterError('Invalid birthdate', Flux_RegisterError::INVALID_BIRTHDATE);
 		}
 		elseif (Flux::config('UseCaptcha')) {
