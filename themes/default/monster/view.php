@@ -13,57 +13,6 @@
 		<td><?php echo $monster->monster_id ?></td>
 		<th>Sprite</th>
 		<td><?php echo htmlspecialchars($monster->sprite) ?></td>
-		<?php if ($itemDrops): ?>
-		<td rowspan="13" style="vertical-align: top">
-			<h3><?php echo htmlspecialchars($monster->iro_name) ?> Item Drops</h3>
-			<table class="vertical-table">
-				<tr>
-					<th>Item ID</th>
-					<th colspan="2">Item Name</th>
-					<th>Drop Chance</th>
-				</tr>
-				<?php $mvpDrops = 0; ?>
-				<?php foreach ($itemDrops as $itemDrop): ?>
-				<tr class="item-drop-<?php echo $itemDrop['type'] ?>"
-					title="<strong><?php echo htmlspecialchars($itemDrop['name']) ?></strong> (<?php echo (float)$itemDrop['chance'] ?>%)">
-					<td align="right">
-						<?php if ($auth->actionAllowed('item', 'view')): ?>
-							<?php echo $this->linkToItem($itemDrop['id'], $itemDrop['id']) ?>
-						<?php else: ?>
-							<?php echo htmlspecialchars($itemDrop['id']) ?>
-						<?php endif ?>
-					</td>
-					<?php if ($image=$this->iconImage($itemDrop['id'])): ?>
-						<td><img src="<?php echo $image ?>" /></td>
-						<td>
-							<?php if ($itemDrop['type'] == 'mvp'): ?>
-							<?php ++$mvpDrops; ?>
-								<span class="mvp">MVP!</span>
-							<?php endif ?>
-							<?php echo htmlspecialchars($itemDrop['name']) ?>
-						</td>
-					<?php else: ?>
-						<td colspan="2">
-							<?php if ($itemDrop['type'] == 'mvp'): ?>
-							<?php ++$mvpDrops; ?>
-								<span class="mvp">MVP!</span>
-							<?php endif ?>
-							<?php echo htmlspecialchars($itemDrop['name']) ?>
-						</td>
-					<?php endif ?>
-					<td><?php echo (float)$itemDrop['chance'] ?>%</td>
-				</tr>
-				<?php endforeach ?>
-				<?php if ($mvpDrops > 1): ?>
-				<tr>
-					<td colspan="4" align="center">
-						<p><em>Note: Only <strong>one</strong> MVP drop will be rewarded.</em></p>
-					</td>
-				</tr>
-				<?php endif ?>
-			</table>
-		</td>
-		<?php endif ?>
 	</tr>
 	<tr>
 		<th>kRO Name</th>
@@ -184,6 +133,58 @@
 	</tr>
 </table>
 
+<h3><?php echo htmlspecialchars($monster->iro_name) ?> Item Drops</h3>
+<?php if ($itemDrops): ?>
+<table class="vertical-table">
+	<tr>
+		<th>Item ID</th>
+		<th colspan="2">Item Name</th>
+		<th>Drop Chance</th>
+	</tr>
+	<?php $mvpDrops = 0; ?>
+	<?php foreach ($itemDrops as $itemDrop): ?>
+	<tr class="item-drop-<?php echo $itemDrop['type'] ?>"
+		title="<strong><?php echo htmlspecialchars($itemDrop['name']) ?></strong> (<?php echo (float)$itemDrop['chance'] ?>%)">
+		<td align="right">
+			<?php if ($auth->actionAllowed('item', 'view')): ?>
+				<?php echo $this->linkToItem($itemDrop['id'], $itemDrop['id']) ?>
+			<?php else: ?>
+				<?php echo htmlspecialchars($itemDrop['id']) ?>
+			<?php endif ?>
+		</td>
+		<?php if ($image=$this->iconImage($itemDrop['id'])): ?>
+			<td><img src="<?php echo $image ?>" /></td>
+			<td>
+				<?php if ($itemDrop['type'] == 'mvp'): ?>
+				<?php ++$mvpDrops; ?>
+					<span class="mvp">MVP!</span>
+				<?php endif ?>
+				<?php echo htmlspecialchars($itemDrop['name']) ?>
+			</td>
+		<?php else: ?>
+			<td colspan="2">
+				<?php if ($itemDrop['type'] == 'mvp'): ?>
+				<?php ++$mvpDrops; ?>
+					<span class="mvp">MVP!</span>
+				<?php endif ?>
+				<?php echo htmlspecialchars($itemDrop['name']) ?>
+			</td>
+		<?php endif ?>
+		<td><?php echo (float)$itemDrop['chance'] ?>%</td>
+	</tr>
+	<?php endforeach ?>
+	<?php if ($mvpDrops > 1): ?>
+	<tr>
+		<td colspan="4" align="center">
+			<p><em>Note: Only <strong>one</strong> MVP drop will be rewarded.</em></p>
+		</td>
+	</tr>
+	<?php endif ?>
+</table>
+<?php else: ?>
+<p>No item drops found for <?php echo htmlspecialchars($monster->iro_name) ?>.</p>
+<?php endif ?>
+
 <h3>Monster Skills for “<?php echo htmlspecialchars($monster->iro_name) ?>”</h3>
 <?php if ($mobSkills): ?>
 <table class="vertical-table">
@@ -201,18 +202,18 @@
 	</tr>	
 	<?php foreach ($mobSkills as $skill): ?>
 	<tr>
-		<td><?php echo htmlspecialchars($skill->info) ?></td>
-		<td><?php echo htmlspecialchars($skill->skill_lv) ?></td>
-		<td><?php echo htmlspecialchars(ucfirst($skill->state)) ?></td>
-		<td><?php echo $skill->rate ?>%</td>
-		<td><?php echo $skill->casttime ?>s</td>
-		<td><?php echo $skill->delay ?>s</td>
-		<td><?php echo htmlspecialchars(ucfirst($skill->cancelable)) ?></td>
-		<td><?php echo htmlspecialchars(ucfirst($skill->target)) ?></td>
-		<td><em><?php echo htmlspecialchars($skill->condition) ?></em></td>
+		<td><?php echo htmlspecialchars($skill->INFO) ?></td>
+		<td><?php echo htmlspecialchars($skill->SKILL_LV) ?></td>
+		<td><?php echo htmlspecialchars(ucfirst($skill->STATE)) ?></td>
+		<td><?php echo $skill->RATE ?>%</td>
+		<td><?php echo $skill->CASTTIME ?>s</td>
+		<td><?php echo $skill->DELAY ?>s</td>
+		<td><?php echo htmlspecialchars(ucfirst($skill->CANCELABLE)) ?></td>
+		<td><?php echo htmlspecialchars(ucfirst($skill->TARGET)) ?></td>
+		<td><em><?php echo htmlspecialchars($skill->CONDITION) ?></em></td>
 		<td>
-			<?php if (!is_null($skill->condition_value) && trim($skill->condition_value) !== ''): ?>
-				<?php echo htmlspecialchars($skill->condition_value) ?>
+			<?php if (!is_null($skill->CONDITION_VALUE) && trim($skill->CONDITION_VALUE) !== ''): ?>
+				<?php echo htmlspecialchars($skill->CONDITION_VALUE) ?>
 			<?php else: ?>
 				<span class="not-applicable">None</span>
 			<?php endif ?>

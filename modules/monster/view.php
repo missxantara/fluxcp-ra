@@ -118,7 +118,7 @@ if ($monster) {
 		}
 	}
 	
-	$sql  = "SELECT * FROM $skillDB WHERE mob_id = ?";
+	$sql = "SELECT * FROM $skillDB WHERE mob_id = ?";
 	$sth = $server->connection->getStatement($sql);
 	$sth->execute(array($mobID));
 	$mobSkills = $sth->fetchAll();
