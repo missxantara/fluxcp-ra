@@ -19,11 +19,11 @@ final class AccountLevel {
  */
 		0 => array(
 			'name'  => "Player",
-			'level' => AccountLevel::LOWGM
+			'level' => AccountLevel::NORMAL
 		),
 		1 => array(
 			'name'  => "Super Player",
-			'level' => AccountLevel::LOWGM
+			'level' => AccountLevel::NORMAL
 		),
 		2 => array(
 			'name'  => "Support",
