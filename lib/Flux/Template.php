@@ -651,7 +651,7 @@ class Flux_Template {
 	 * @param int $backwardYears
 	 * @return string
 	 */
-	public function dateField($name, $value = null, $fowardYears, $backwardYears)
+	public function dateField($name, $value = null, $fowardYears = null, $backwardYears = null)
 	{
 		if(!isset($fowardYears)) {
 			$fowardYears = (int)Flux::config('ForwardYears');
