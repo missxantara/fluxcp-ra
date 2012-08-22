@@ -8,10 +8,14 @@ $title = 'List Items';
 require_once 'Flux/TemporaryTable.php';
 
 try {
-	$tableName  = "{$server->charMapDatabase}.items";
-	$fromTables = array("{$server->charMapDatabase}.item_db", "{$server->charMapDatabase}.item_db2");
-	$tempTable  = new Flux_TemporaryTable($server->connection, $tableName, $fromTables);
-	$shopTable  = Flux::config('FluxTables.ItemShopTable');
+	if($server->isRenewal) {
+		$fromTables = array("{$server->charMapDatabase}.item_db", "{$server->charMapDatabase}.item_db_re", "{$server->charMapDatabase}.item_db2");
+	} else {
+		$fromTables = array("{$server->charMapDatabase}.item_db", "{$server->charMapDatabase}.item_db2");
+	}
+	$tableName = "{$server->charMapDatabase}.items";
+	$tempTable = new Flux_TemporaryTable($server->connection, $tableName, $fromTables);
+	$shopTable = Flux::config('FluxTables.ItemShopTable');
 	
 	// Statement parameters, joins and conditions.
 	$bind        = array();

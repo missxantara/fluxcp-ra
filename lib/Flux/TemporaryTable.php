@@ -9,7 +9,8 @@ require_once 'Flux/Error.php';
  * destructive manner allowing you to view a result set that has been
  * overridden by following tables.
  *
- * Use-case in Flux would be combining item_db/item_db2 and mob_db/mob_db2.
+ * Use-case in Flux would be combining item_db/item_db_re/item_db2, mob_db/mob_db2, 
+ * and mob_skill_db/mob_skill_db2.
  */
 class Flux_TemporaryTable {
 	/**

@@ -8,9 +8,13 @@ $title = 'Pending Redemption';
 try {
 	// Create item db temp table.
 	require_once 'Flux/TemporaryTable.php';
-	$tableName  = "{$server->charMapDatabase}.items";
-	$fromTables = array("{$server->charMapDatabase}.item_db", "{$server->charMapDatabase}.item_db2");
-	$tempTable  = new Flux_TemporaryTable($server->connection, $tableName, $fromTables);
+	if($server->isRenewal) {
+		$fromTables = array("{$server->charMapDatabase}.item_db", "{$server->charMapDatabase}.item_db_re", "{$server->charMapDatabase}.item_db2");
+	} else {
+		$fromTables = array("{$server->charMapDatabase}.item_db", "{$server->charMapDatabase}.item_db2");
+	}
+	$tableName = "{$server->charMapDatabase}.items";
+	$tempTable = new Flux_TemporaryTable($server->connection, $tableName, $fromTables);
 
 	$redeemTable = Flux::config('FluxTables.RedemptionTable');
 

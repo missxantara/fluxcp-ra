@@ -142,10 +142,14 @@ if (count($_POST) && $params->get('additem')) {
 		if (empty($errorMessage)) {
 			require_once 'Flux/TemporaryTable.php';
 
-			$tableName  = "{$server->charMapDatabase}.items";
-			$fromTables = array("{$server->charMapDatabase}.item_db", "{$server->charMapDatabase}.item_db2");
-			$tempTable  = new Flux_TemporaryTable($server->connection, $tableName, $fromTables);
-			$shopTable  = Flux::config('FluxTables.ItemShopTable');
+			if($server->isRenewal) {
+				$fromTables = array("{$server->charMapDatabase}.item_db", "{$server->charMapDatabase}.item_db_re", "{$server->charMapDatabase}.item_db2");
+			} else {
+				$fromTables = array("{$server->charMapDatabase}.item_db", "{$server->charMapDatabase}.item_db2");
+			}
+			$tableName = "{$server->charMapDatabase}.items";
+			$tempTable = new Flux_TemporaryTable($server->connection, $tableName, $fromTables);
+			$shopTable = Flux::config('FluxTables.ItemShopTable');
 			
 			$sth = $server->connection->getStatement("SELECT id, name_japanese, origin_table FROM $tableName WHERE id = ? LIMIT 1");
 			$sth->execute(array($itemID));
