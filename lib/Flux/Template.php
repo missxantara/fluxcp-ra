@@ -1294,6 +1294,16 @@ class Flux_Template {
 		return file_exists($path) ? $link : false;
 	}
 	
+ 	/**
+ 	 *
+ 	 */
+	public function monsterImage($monsterID)
+	{
+		$path = sprintf(FLUX_DATA_DIR."/monsters/".Flux::config('MonsterImageNameFormat'), $monsterID);
+		$link = preg_replace('&/{2,}&', '/', "{$this->basePath}/$path");
+		return file_exists($path) ? $link : false;
+	}
+	
 	/**
 	 *
 	 */

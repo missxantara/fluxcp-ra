@@ -11,6 +11,11 @@
 	<tr>
 		<th>Monster ID</th>
 		<td><?php echo $monster->monster_id ?></td>
+		<?php if ($image=$this->monsterImage($monster->monster_id)): ?>
+		<td rowspan="12" style="width:150px; text-align: center; vertical-alignment: middle">
+			<img src="<?php echo $image ?>" />
+		</td>
+		<?php endif ?>
 		<th>Sprite</th>
 		<td><?php echo htmlspecialchars($monster->sprite) ?></td>
 	</tr>
@@ -100,7 +105,7 @@
 	</tr>
 	<tr>
 		<th>Monster Mode</th>
-		<td colspan="3">
+		<td colspan="<?php echo $image ? 4 : 3 ?>">
 			<ul class="monster-mode">
 			<?php foreach ($this->monsterMode($monster->mode) as $mode): ?>
 				<li><?php echo htmlspecialchars($mode) ?></li>
@@ -110,7 +115,7 @@
 	</tr>
 	<tr>
 		<th>Monster Stats</th>
-		<td colspan="3">
+		<td colspan="<?php echo $image ? 4 : 3 ?>">
 			<table class="character-stats">
 				<tr>
 					<td><span class="stat-name">STR</span></td>

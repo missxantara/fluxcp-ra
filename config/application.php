@@ -16,6 +16,7 @@ return array(
 	'MissingEmblemBMP'     => 'empty.bmp',              //
 	'ItemIconNameFormat'   => '%d.gif',                 // The filename format for item icons (defaults to {itemid}.gif).
 	'ItemImageNameFormat'  => '%d.png',                 // The filename format for item images (defaults to {itemid}.png).
+	'MonsterImageNameFormat' => '%d.gif',               // The filename format for monster images (defaults to {monsterid}.gif).
 	'ForceEmptyEmblem'     => false,                    // Forcefully display empty guild emblems, helpful when you don't have GD2 installed.
 	'EmblemCacheInterval'  => 12,                       // Hourly interval to re-cache guild emblems (set to 0 to disable emblem cache).
 	'SessionCookieExpire'  => 48,                       // Duration in hours.
@@ -148,8 +149,8 @@ return array(
 	'RankingHideGroupLevel'  => AccountLevel::LOWGM,    //
 	'InfoHideZenyGroupLevel' => AccountLevel::LOWGM,    // Minimum group level of account to hide zeny from in server information page.
 	
-	'CharRankingThreshold' => 0,                        // Number of days the character must have logged in within to be listed in character ranking. (0 = disabled)
-	'ZenyRankingThreshold' => 0,                        // Number of days the character must have logged in within to be listed in zeny ranking. (0 = disabled)
+	'CharRankingThreshold'  => 0,                       // Number of days the character must have logged in within to be listed in character ranking. (0 = disabled)
+	'ZenyRankingThreshold'  => 0,                       // Number of days the character must have logged in within to be listed in zeny ranking. (0 = disabled)
 	'DeathRankingThreshold' => 0,                       // Number of days the character must have logged in within to be listed in death ranking. (0 = disabled)
 	
 	'HideTempBannedCharRank'  => false,                 // Hide temporarily banned characters from ranking.

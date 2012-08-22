@@ -11,8 +11,7 @@
 		<th>Item ID</th>
 		<td><?php echo htmlspecialchars($item->item_id) ?></td>
 		<?php if ($image=$this->itemImage($item->item_id)): ?>
-		<td rowspan="8"
-			style="width: 150px; text-align: center; vertical-alignment: middle">
+		<td rowspan="8" style="width: 150px; text-align: center; vertical-alignment: middle">
 			<img src="<?php echo $image ?>" />
 		</td>
 		<?php endif ?>
