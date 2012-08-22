@@ -8,10 +8,10 @@ require_once 'Flux/MapServer.php';
 require_once 'Flux/Athena.php';
 require_once 'Flux/LoginAthenaGroup.php';
 require_once 'Flux/Addon.php';
-require_once 'functions/svn_version.php';
+require_once 'functions/git_hash.php';
 
 // Get the SVN revision of the top-level directory (FLUX_ROOT).
-define('FLUX_SVNVERSION', svn_version());
+define('FLUX_GITHASH', git_hash());
 
 /**
  * The Flux class contains methods related to the application on the larger
@@ -27,7 +27,7 @@ class Flux {
 	/**
 	 * Top-level revision.
 	 */
-	const SVNVERSION = FLUX_SVNVERSION;
+	const GITHASH = FLUX_GITHASH;
 	
 	/**
 	 * Application-specific configuration object.

@@ -18,8 +18,8 @@
 				<td colspan="3"></td>
 				<td id="copyright">
 					<p>
-						<strong>Powered by Flux Control Panel (<?php echo htmlspecialchars(Flux::VERSION) ?><?php echo Flux::SVNVERSION ? '.'.Flux::SVNVERSION : '' ?>)</strong>
-						&mdash; Copyright &copy; 2008-2012 Matthew Harris and Nikunj Mehta.
+						<strong>Powered by rA's Flux Control Panel (<?php echo htmlspecialchars(Flux::VERSION) ?><?php echo Flux::GITHASH ? '.'.Flux::GITHASH : '' ?>)</strong>
+						&mdash; Copyright &copy; 2008-2012, Matthew Harris, Nikunj Mehta, and Xantara.
 					</p>
 				</td>
 				<td></td>
