@@ -1137,6 +1137,9 @@ class Flux_Template {
 		if (count($jobs) === count($equipJobs)) {
 			return array('All Jobs');
 		}
+		else if (count($jobs) === count($equipJobs) - 1 && !in_array($equipJobs[0], $jobs)) {
+			return array('All Jobs Except Novice');
+		}
 		else {
 			return $jobs;
 		}
