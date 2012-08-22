@@ -208,7 +208,7 @@ return array(
 			'Mob Database'  => array('module' => 'monster'),
 		),
 		'Misc. Stuff' => array(
-			'eA Logs'       => array('module' => 'logdata'),
+			'rA Logs'       => array('module' => 'logdata'),
 			'CP Logs'       => array('module' => 'cplog'),
 			'IP Ban List'   => array('module' => 'ipban'),
 			'Accounts'      => array('module' => 'account'),
@@ -341,28 +341,28 @@ return array(
 	// Shouldn't need touching, however modifying loginerrors.php should be relatively safe.
 	'LoginErrors' => include('loginerrors.php'),
 	
-	// eA equip jobs mapping.
+	// rA equip jobs mapping.
 	'EquipJobs' => include('equip_jobs.php'),
 	
-	// eA equip locations mapping.
+	// rA equip locations mapping.
 	'EquipLocations' => include('equip_locations.php'),
 	
-	// eA equip upper mapping.
+	// rA equip upper mapping.
 	'EquipUpper' => include('equip_upper.php'),
 	
-	// eA monster sizes mapping.
+	// rA monster sizes mapping.
 	'MonsterSizes' => include('sizes.php'),
 	
-	// eA monster races mapping.
+	// rA monster races mapping.
 	'MonsterRaces' => include('races.php'),
 	
-	// eA elements mapping.
+	// rA elements mapping.
 	'Elements' => include('elements.php'),
 	
-	// eA attributes mapping.
+	// rA attributes mapping.
 	'Attributes' => include('attributes.php'),
 	
-	// eA monster modes mapping.
+	// rA monster modes mapping.
 	'MonsterModes' => include('monstermode.php'),
 	
 	// Item shop categories.

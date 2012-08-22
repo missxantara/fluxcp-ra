@@ -1,5 +1,5 @@
 <?php
-// eA monster races.
+// rA monster races.
 return array(
 	 0 => 'Formless',
 	 1 => 'Undead',

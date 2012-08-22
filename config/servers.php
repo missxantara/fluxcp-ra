@@ -46,7 +46,7 @@ return array(
 			'Address'  => '127.0.0.1',
 			'Port'     => 6900,
 			'UseMD5'   => true,
-			'NoCase'   => true, // eA account case-sensitivity; Default: Case-INsensitive (true).
+			'NoCase'   => true, // rA account case-sensitivity; Default: Case-INsensitive (true).
 			'GroupID'  => 0,    // Default account group ID during registration.
 			//'Database' => 'ragnarok'
 		),

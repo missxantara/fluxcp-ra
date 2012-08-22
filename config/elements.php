@@ -1,5 +1,5 @@
 <?php
-// eA elements.
+// rA elements.
 return array(
 	0 => 'Neutral',
 	1 => 'Water',

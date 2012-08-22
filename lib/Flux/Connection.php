@@ -6,7 +6,7 @@ require_once 'Flux/DataObject.php';
  * The connection class acts more like a container, or connection manager and
  * anything else, really. It's true that it does establish connections to the
  * database, but it exists for the purpose of containing and separating the
- * connections to TWO databases, the logs database from which all the eA logs
+ * connections to TWO databases, the logs database from which all the rA logs
  * are stored, and the main database where everything else is stored.
  */
 class Flux_Connection {

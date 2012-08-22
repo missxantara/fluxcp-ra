@@ -2,7 +2,7 @@
 require_once 'Flux/Config.php';
 
 /**
- * The Athena class is used for all database interactions with each eA server,
+ * The Athena class is used for all database interactions with each rA server,
  * hence its name.
  *
  * All methods related to creating/modifying any data in the Ragnarok databases
@@ -10,7 +10,7 @@ require_once 'Flux/Config.php';
  */
 class Flux_Athena {	
 	/**
-	 * Connection object for saving and retrieving data to the eA databases.
+	 * Connection object for saving and retrieving data to the rA databases.
 	 *
 	 * @access public
 	 * @var Flux_Connection
@@ -26,7 +26,7 @@ class Flux_Athena {
 	public $serverName;
 	
 	/**
-	 * Base experience rater. Unlike eA, this value starts at 1 being 1%
+	 * Base experience rater. Unlike rA, this value starts at 1 being 1%
 	 * 200 being 200% and so on.
 	 *
 	 * @access public
@@ -100,7 +100,7 @@ class Flux_Athena {
 	public $charMapDatabase;
 	
 	/**
-	 * Login server object tied to this collective eA server.
+	 * Login server object tied to this collective rA server.
 	 *
 	 * @access public
 	 * @var Flux_LoginServer
@@ -108,7 +108,7 @@ class Flux_Athena {
 	public $loginServer;
 	
 	/**
-	 * Character server object tied to this collective eA server.
+	 * Character server object tied to this collective rA server.
 	 *
 	 * @access public
 	 * @var Flux_CharServer
@@ -116,7 +116,7 @@ class Flux_Athena {
 	public $charServer;
 	
 	/**
-	 * Map server object tied to this collective eA server.
+	 * Map server object tied to this collective rA server.
 	 *
 	 * @access public
 	 * @var Flux_MapServer
