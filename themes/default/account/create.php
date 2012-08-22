@@ -72,6 +72,11 @@
 			</td>
 		</tr>
 		
+		<tr>
+			<th><label><?php echo htmlspecialchars(Flux::message('AccountBirthdateLabel')) ?></label></th>
+			<td><?php echo $this->dateField('birthdate') ?></td>
+		</tr>
+		
 		<?php if (Flux::config('UseCaptcha')): ?>
 		<tr>
 			<?php if (Flux::config('EnableReCaptcha')): ?>

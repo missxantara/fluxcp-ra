@@ -40,6 +40,7 @@ if ($account) {
 		$email      = trim($params->get('email'));
 		$gender     = trim($params->get('gender'));
 		$loginCount = (int)$params->get('logincount');
+		$birthdate  = $params->get('birthdate_date');
 		$lastLogin  = $params->get('lastlogin_date');
 		$lastIP     = trim($params->get('last_ip'));
 		$group_id   = (int)$params->get('group_id');
@@ -63,6 +64,9 @@ if ($account) {
 		elseif ($account->balance != $balance && !$auth->allowedToEditAccountBalance) {
 			$errorMessage = Flux::message('CannotModifyBalance');
 		}
+		elseif ($birthdate && !preg_match('/^\d{4}-\d{2}-\d{2}$/', $birthdate)) {
+			$errorMessage = Flux::message('InvalidBirthdate');
+		}
 		elseif ($lastLogin && !preg_match('/^\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}$/', $lastLogin)) {
 			$errorMessage = Flux::message('InvalidLastLoginDate');
 		}
@@ -71,12 +75,13 @@ if ($account) {
 				'email'      => $email,
 				'sex'        => $gender,
 				'logincount' => $loginCount,
+				'birthdate'  => $birthdate ? $birthdate : $account->birthdate,
 				'lastlogin'  => $lastLogin ? $lastLogin : $account->lastlogin,
 				'last_ip'    => $lastIP
 			);
 			
 			$sql  = "UPDATE {$server->loginDatabase}.login SET email = :email, ";
-			$sql .= "sex = :sex, logincount = :logincount, lastlogin = :lastlogin, last_ip = :last_ip";
+			$sql .= "sex = :sex, logincount = :logincount, birthdate = :birthdate, lastlogin = :lastlogin, last_ip = :last_ip";
 			
 			if ($auth->allowedToEditAccountGroupID) {
 				$sql .= ", group_id = :group_id";

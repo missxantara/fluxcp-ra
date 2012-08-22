@@ -14,20 +14,21 @@ if (count($_POST)) {
 	require_once 'Flux/RegisterError.php';
 	
 	try {
-		$server   = $params->get('server');
-		$username = $params->get('username');
-		$password = $params->get('password');
-		$confirm  = $params->get('confirm_password');
-		$email    = trim($params->get('email_address'));
-		$gender   = $params->get('gender');
-		$code     = $params->get('security_code');
+		$server    = $params->get('server');
+		$username  = $params->get('username');
+		$password  = $params->get('password');
+		$confirm   = $params->get('confirm_password');
+		$email     = trim($params->get('email_address'));
+		$gender    = $params->get('gender');
+		$birthdate = $params->get('birthdate_date');
+		$code      = $params->get('security_code');
 		
 		if (!($server = Flux::getServerGroupByName($server))) {
 			throw new Flux_RegisterError('Invalid server', Flux_RegisterError::INVALID_SERVER);
 		}
 		
 		// Woohoo! Register ;)
-		$result = $server->loginServer->register($username, $password, $confirm, $email, $gender, $code);
+		$result = $server->loginServer->register($username, $password, $confirm, $email, $gender, $birthdate, $code);
 
 		if ($result) {
 			if (Flux::config('RequireEmailConfirm')) {
@@ -134,6 +135,9 @@ if (count($_POST)) {
 				break;
 			case Flux_RegisterError::INVALID_PASSWORD:
 				$errorMessage = Flux::message ('InvalidPassword');
+				break;
+			case Flux_RegisterError::INVALID_BIRTHDATE:
+				$errorMessage = Flux::message('InvalidBirthdate');
 				break;
 			default:
 				$errorMessage = Flux::message('CriticalRegisterError');

@@ -71,6 +71,10 @@
 		</td>
 	</tr>
 	<tr>
+		<th><?php echo htmlspecialchars(Flux::message('AccountBirthdateLabel')) ?></th>
+		<td colspan="3"><?php echo $account->birthdate ?></td>
+	</tr>
+	<tr>
 		<th><?php echo htmlspecialchars(Flux::message('LastLoginDateLabel')) ?></th>
 		<td colspan="3">
 			<?php if (!$account->lastlogin || $account->lastlogin == '0000-00-00 00:00:00'): ?>

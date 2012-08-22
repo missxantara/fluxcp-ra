@@ -60,6 +60,13 @@
 				<?php endif ?>
 			</tr>
 			<tr>
+				<th><label for="use_birthdate"><?php echo htmlspecialchars(Flux::message('AccountBirthdateLabel')) ?></label></th>
+				<td colspan="3">
+					<input type="checkbox" name="use_birthdate" id="use_birthdate" />
+					<?php echo $this->dateField('birthdate', $account->birthdate) ?>
+				</td>
+			</tr>
+			<tr>
 				<th><label for="use_lastlogin"><?php echo htmlspecialchars(Flux::message('LastLoginDateLabel')) ?></label></th>
 				<td colspan="3">
 					<input type="checkbox" name="use_lastlogin" id="use_lastlogin" />

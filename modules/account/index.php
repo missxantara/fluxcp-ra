@@ -47,6 +47,8 @@ else {
 	$balance          = $params->get('balance');
 	$loginCountOp     = $params->get('logincount_op');
 	$loginCount       = $params->get('logincount');
+	$birthdateA       = $params->get('birthdate_after_date');
+	$birthdateB       = $params->get('birthdate_before_date');
 	$lastLoginDateA   = $params->get('last_login_after_date');
 	$lastLoginDateB   = $params->get('last_login_before_date');
 	
@@ -123,13 +125,23 @@ else {
 		$bind[]      = $loginCount;
 	}
 	
+	if ($birthdateB && ($timestamp = strtotime($birthdateB))) {
+		$sqlpartial .= 'AND login.birthdate <= ? ';
+		$bind[]      = date('Y-m-d', $timestamp);
+	}
+	
+	if ($birthdateA && ($timestamp = strtotime($birthdateA))) {
+		$sqlpartial .= 'AND login.birthdate >= ? ';
+		$bind[]      = date('Y-m-d', $timestamp);
+	}
+
 	if ($lastLoginDateB && ($timestamp = strtotime($lastLoginDateB))) {
-		$sqlpartial .= 'AND login.lastlogin < ? ';
+		$sqlpartial .= 'AND login.lastlogin <= ? ';
 		$bind[]      = date('Y-m-d', $timestamp);
 	}
 	
 	if ($lastLoginDateA && ($timestamp = strtotime($lastLoginDateA))) {
-		$sqlpartial .= 'AND login.lastlogin > ? ';
+		$sqlpartial .= 'AND login.lastlogin >= ? ';
 		$bind[]      = date('Y-m-d', $timestamp);
 	}
 }

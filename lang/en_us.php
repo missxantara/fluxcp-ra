@@ -134,6 +134,7 @@ return array(
 	'AccountPassConfirmLabel' => 'Confirm Password',
 	'AccountEmailLabel'       => 'E-mail Address',
 	'AccountGenderLabel'      => 'Gender',
+	'AccountBirthdateLabel'   => 'Birthdate',
 	'AccountSecurityLabel'    => 'Security Code',
 	'AccountCreateButton'     => 'Create My Account',
 	'AccountInvalidChars'     => "A username can only contain these characters: '%s'",
@@ -159,6 +160,7 @@ return array(
 	'InvalidServer'           => "The server you've selected does not exist.",
 	'InvalidSecurityCode'     => 'Please enter the security code correctly.',
 	'InvalidPassword'         => 'Your password contains invalid characters.',
+	'InvalidBirthdate'        => 'Invalid birthdate input.',
 	'CriticalRegisterError'   => 'Something bad happened.  Report to an administrator ASAP.',
 	// - account/edit
 	'AccountEditTitle'        => 'Modify Account',
@@ -178,6 +180,7 @@ return array(
 	'AccountIndexTitle'       => 'List Accounts',
 	'AccountIndexHeading'     => 'Accounts',
 	'LoginBetweenLabel'       => 'Login Between',
+	'BirthdateBetweenLabel'   => 'Birthdate Between',
 	'AccountIndexNotFound'    => 'No such account.',
 	// - account/login
 	'LoginTitle'              => 'Log In',

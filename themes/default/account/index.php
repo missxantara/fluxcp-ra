@@ -63,6 +63,14 @@
 		</select>
 		<input type="text" name="logincount" id="logincount" value="<?php echo htmlspecialchars($params->get('logincount')) ?>" />
 		...
+		<label for="use_birthdate_after"><?php echo htmlspecialchars(Flux::message('BirthdateBetweenLabel')) ?>:</label>
+		<input type="checkbox" name="use_birthdate_after" id="use_birthdate_after"<?php if ($params->get('use_birthdate_after')) echo ' checked="checked"' ?> />
+		<?php echo $this->dateField('birthdate_after') ?>
+		<label for="use_birthdate_before">&mdash;</label>
+		<input type="checkbox" name="use_birthdate_before" id="use_birthdate_before"<?php if ($params->get('use_birthdate_before')) echo ' checked="checked"' ?> />
+		<?php echo $this->dateField('birthdate_before') ?>
+	</p>
+	<p>
 		<label for="use_last_login_after"><?php echo htmlspecialchars(Flux::message('LoginBetweenLabel')) ?>:</label>
 		<input type="checkbox" name="use_last_login_after" id="use_last_login_after"<?php if ($params->get('use_last_login_after')) echo ' checked="checked"' ?> />
 		<?php echo $this->dateField('last_login_after') ?>
@@ -87,6 +95,7 @@
 		<th><?php echo $paginator->sortableColumn('balance', Flux::message('CreditBalanceLabel')) ?></th>
 		<th><?php echo $paginator->sortableColumn('login.email', Flux::message('EmailAddressLabel')) ?></th>
 		<th><?php echo $paginator->sortableColumn('logincount', Flux::message('LoginCountLabel')) ?></th>
+		<th><?php echo $paginator->sortableColumn('birthdate', Flux::message('AccountBirthdateLabel')) ?></th>
 		<th><?php echo $paginator->sortableColumn('lastlogin', Flux::message('LastLoginDateLabel')) ?></th>
 		<th><?php echo $paginator->sortableColumn('last_ip', Flux::message('LastUsedIpLabel')) ?></th>
 		<!-- <th><?php echo $paginator->sortableColumn('reg_date', 'Register Date') ?></th> -->
@@ -134,6 +143,7 @@
 			<?php endif ?>
 		</td>
 		<td><?php echo number_format((int)$account->logincount) ?></td>
+		<td><?php echo $account->birthdate ?></td>
 		<td>
 			<?php if (!$account->lastlogin || $account->lastlogin == '0000-00-00 00:00:00'): ?>
 				<span class="not-applicable"><?php echo htmlspecialchars(Flux::message('NeverLabel')) ?></span>

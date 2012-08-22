@@ -97,7 +97,7 @@ class Flux_LoginServer extends Flux_BaseServer {
 	/**
 	 *
 	 */
-	public function register($username, $password, $confirmPassword, $email, $gender, $securityCode)
+	public function register($username, $password, $confirmPassword, $email, $gender, $birthdate, $securityCode)
 	{
 		if (preg_match('/^[^' . Flux::config('UsernameAllowedChars') . ']$/', $username)) {
 			throw new Flux_RegisterError('Invalid character(s) used in username', Flux_RegisterError::INVALID_USERNAME);
@@ -140,6 +140,9 @@ class Flux_LoginServer extends Flux_BaseServer {
 		}
 		elseif (!in_array(strtoupper($gender), array('M', 'F'))) {
 			throw new Flux_RegisterError('Invalid gender', Flux_RegisterError::INVALID_GENDER);
+		}
+		elseif (($birthdatestamp = strtotime($birthdate)) === false || date('Y-m-d', $birthdatestamp) == '0000-00-00') {
+			throw new Flux_RegisterError('Invalid birthdate', Flux_RegisterError::INVALID_BIRTHDATE);
 		}
 		elseif (Flux::config('UseCaptcha')) {
 			if (Flux::config('EnableReCaptcha')) {
@@ -191,9 +194,9 @@ class Flux_LoginServer extends Flux_BaseServer {
 			$password = Flux::hashPassword($password);
 		}
 		
-		$sql = "INSERT INTO {$this->loginDatabase}.login (userid, user_pass, email, sex, group_id) VALUES (?, ?, ?, ?, ?)";
+		$sql = "INSERT INTO {$this->loginDatabase}.login (userid, user_pass, email, sex, group_id, birthdate) VALUES (?, ?, ?, ?, ?, ?)";
 		$sth = $this->connection->getStatement($sql);
-		$res = $sth->execute(array($username, $password, $email, $gender, (int)$this->config->getGroupID()));
+		$res = $sth->execute(array($username, $password, $email, $gender, (int)$this->config->getGroupID(), date('Y-m-d', $birthdatestamp)));
 		
 		if ($res) {
 			$idsth = $this->connection->getStatement("SELECT LAST_INSERT_ID() AS account_id");
