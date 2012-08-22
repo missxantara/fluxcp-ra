@@ -515,6 +515,16 @@ return array(
 	'PickLogCard2Label'       => 'Card 2',
 	'PickLogCard3Label'       => 'Card 3',
 	'PickLogMapLabel'         => 'Map',
+	// - logdata/zeny
+	'ZenyLogTitle'            => 'List Zeny Log',
+	'ZenyLogHeading'          => 'Zeny Log',
+	'ZenyLogNotFound'         => 'No zeny logs found.',
+	'ZenyLogDateLabel'        => 'Date/Time',
+	'ZenyLogCharacterLabel'   => 'Character',
+	'ZenyLogSourceLabel'      => 'Source',
+	'ZenyLogTypeLabel'        => 'Type',
+	'ZenyLogAmountLabel'      => 'Amount',
+	'ZenyLogMapLabel'         => 'Map',
 	
 	// Module: mail
 	// - mail/index

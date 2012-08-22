@@ -263,7 +263,7 @@ return array(
 			//'mvp'     => 'MVP',
 			//'npc'     => 'NPC',
 			'pick'    => 'Item Picks',
-			//'zeny'    => 'Zeny'
+			'zeny'    => 'Zeny'
 		),
 		'cplog' => array(
 			'paypal'     => 'PayPal Transactions',
@@ -368,7 +368,7 @@ return array(
 	// Item shop categories.
 	'ShopCategories' => include('shopcategories.php'),
 	
-	// Item pick types.
+	// Item pick and zeny log types.
 	'PickTypes' => include('picktypes.php'),
 	
 	// Castle names.
