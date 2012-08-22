@@ -3,7 +3,7 @@ return array(
 	'T' => 'Traded',
 	'V' => 'Vended',
 	'P' => 'Player',
-	'L' => 'Looted',
+	'M' => 'Monster',
 	'S' => 'NPC (Shop)',
 	'N' => 'NPC (Script)',
 	'D' => 'Stolen/Ganked',
@@ -16,6 +16,7 @@ return array(
 	'E' => 'Mailed',
 	'I' => 'Auctioned',
 	'B' => 'Buy Store',
+	'L' => 'Looted',
 	'X' => 'Other'
 );
 ?>
