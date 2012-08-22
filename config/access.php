@@ -144,10 +144,6 @@ return array(
 		'test'      => array(
 			'*'        => AccountGroup::ANYONE
 		),
-		'reload'    => array(
-			'index'   => AccountGroup::ADMIN,
-			'mobskill' => AccountGroup::ADMIN
-		),
 		'woe'       => array(
 			'index'   => AccountGroup::ANYONE
 		),

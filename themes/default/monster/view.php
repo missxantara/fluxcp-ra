@@ -185,11 +185,7 @@
 </table>
 
 <h3>Monster Skills for “<?php echo htmlspecialchars($monster->iro_name) ?>”</h3>
-<?php if (!file_exists($skillDB) || !filesize($skillDB)): ?>
-<p><strong>Mob skill database needs to be reloaded!</strong></p>
-<?php elseif (empty($mobSkills)): ?>
-<p>No skills found for <?php echo htmlspecialchars($monster->iro_name) ?>.</p>
-<?php else: ?>
+<?php if ($mobSkills): ?>
 <table class="vertical-table">
 	<tr>
 		<th>Name</th>
@@ -205,18 +201,18 @@
 	</tr>	
 	<?php foreach ($mobSkills as $skill): ?>
 	<tr>
-		<td><?php echo htmlspecialchars($skill['name']) ?></td>
-		<td><?php echo htmlspecialchars($skill['level']) ?></td>
-		<td><?php echo htmlspecialchars(ucfirst($skill['state'])) ?></td>
-		<td><?php echo $skill['rate'] ?>%</td>
-		<td><?php echo $skill['cast_time'] ?>s</td>
-		<td><?php echo $skill['delay'] ?>s</td>
-		<td><?php echo htmlspecialchars(ucfirst($skill['cancelable'])) ?></td>
-		<td><?php echo htmlspecialchars(ucfirst($skill['target'])) ?></td>
-		<td><em><?php echo htmlspecialchars($skill['condition']) ?></em></td>
+		<td><?php echo htmlspecialchars($skill->info) ?></td>
+		<td><?php echo htmlspecialchars($skill->skill_lv) ?></td>
+		<td><?php echo htmlspecialchars(ucfirst($skill->state)) ?></td>
+		<td><?php echo $skill->rate ?>%</td>
+		<td><?php echo $skill->casttime ?>s</td>
+		<td><?php echo $skill->delay ?>s</td>
+		<td><?php echo htmlspecialchars(ucfirst($skill->cancelable)) ?></td>
+		<td><?php echo htmlspecialchars(ucfirst($skill->target)) ?></td>
+		<td><em><?php echo htmlspecialchars($skill->condition) ?></em></td>
 		<td>
-			<?php if (!is_null($skill['value']) && trim($skill['value']) !== ''): ?>
-				<?php echo htmlspecialchars($skill['value']) ?>
+			<?php if (!is_null($skill->condition_value) && trim($skill->condition_value) !== ''): ?>
+				<?php echo htmlspecialchars($skill->condition_value) ?>
 			<?php else: ?>
 				<span class="not-applicable">None</span>
 			<?php endif ?>
@@ -224,6 +220,8 @@
 	</tr>
 	<?php endforeach ?>
 </table>
+<?php else: ?>
+<p>No skills found for <?php echo htmlspecialchars($monster->iro_name) ?>.</p>
 <?php endif ?>
 <?php else: ?>
 <p>No such monster was found. <a href="javascript:history.go(-1)">Go back</a>.</p>

@@ -11,6 +11,11 @@ $mobDB      = "{$server->charMapDatabase}.monsters";
 $fromTables = array("{$server->charMapDatabase}.mob_db", "{$server->charMapDatabase}.mob_db2");
 $tempMobs   = new Flux_TemporaryTable($server->connection, $mobDB, $fromTables);
 
+// Monster Skills table.
+$skillDB    = "{$server->charMapDatabase}.mobskills";
+$fromTables = array("{$server->charMapDatabase}.mob_skill_db", "{$server->charMapDatabase}.mob_skill_db2");
+$tempSkills = new Flux_TemporaryTable($server->connection, $skillDB, $fromTables);
+
 // Items table.
 $itemDB     = "{$server->charMapDatabase}.items";
 $fromTables = array("{$server->charMapDatabase}.item_db", "{$server->charMapDatabase}.item_db2");
@@ -113,36 +118,9 @@ if ($monster) {
 		}
 	}
 	
-	$skillDB   = Flux::config('MobSkillDb');
-	$mobSkills = array();
-	if (file_exists($skillDB)) {
-		$fp = fopen($skillDB, 'r');
-		while ($row=fgetcsv($fp)) {
-			if ($row[0] == $monster->monster_id && count($row) >= 19) {
-				list ($mobName, $mobSkill) = explode('@', $row[1], 2);
-				$mobSkills[] = array(
-					'monster_id'  => $row[0],
-					'name'        => $mobSkill,
-					'state'       => $row[2],
-					'skill_id'    => $row[3],
-					'level'       => $row[4],
-					'rate'        => $row[5]/100,
-					'cast_time'   => $row[6]/1000,
-					'delay'       => $row[7]/1000,
-					'cancelable'  => $row[8],
-					'target'      => $row[9],
-					'condition'   => $row[10],
-					'value'       => $row[11],
-					'val1'        => $row[12],
-					'val2'        => $row[13],
-					'val3'        => $row[14],
-					'val4'        => $row[15],
-					'val5'        => $row[16],
-					'emotion'     => $row[17],
-					'chat'        => $row[18]
-				);
-			}
-		}
-	}
+	$sql  = "SELECT * FROM $skillDB WHERE mob_id = ?";
+	$sth = $server->connection->getStatement($sql);
+	$sth->execute(array($mobID));
+	$mobSkills = $sth->fetchAll();
 }
 ?>
