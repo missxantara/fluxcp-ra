@@ -60,6 +60,7 @@ return array(
 				'MvpDropRates'  => 25,
 				'CardDropRates' => 25,
 				'MaxCharSlots'  => 9,
+				'Renewal'       => true,
 				'DateTimezone'  => null,       // Specifies game server's timezone for this char/map pair. (See: http://php.net/timezones)
 				//'ResetDenyMaps' => 'sec_pri',  // Defaults to 'sec_pri'. This value can be an array of map names.
 				//'Database'      => 'ragnarok', // Defaults to DbConfig.Database

@@ -386,6 +386,7 @@ class Flux {
 				// Char/Map normalization.
 				//
 				
+				$charMapServer->setRenewal(true, $options);
 				$charMapServer->setBaseExpRates(1, $options);
 				$charMapServer->setJobExpRates(1, $options);
 				$charMapServer->setMvpExpRates(1, $options);

@@ -146,12 +146,12 @@ class Flux_Athena {
 	public $maxCharSlots;
 	
 	/**
-	 * Array of maps which prohibit the use of "reset position" feature.
+	 * Boolean to signify if server is running a renewal environment or not.
 	 *
 	 * @access public
-	 * @var array
+	 * @var bool
 	 */
-	public $resetDenyMaps;
+	public $isRenewal;
 	
 	/**
 	 * Timezone of this char/map server pair.
@@ -160,6 +160,14 @@ class Flux_Athena {
 	 * @var string
 	 */
 	public $dateTimezone;
+	
+	/**
+	 * Array of maps which prohibit the use of "reset position" feature.
+	 *
+	 * @access public
+	 * @var array
+	 */
+	public $resetDenyMaps;
 	
 	/**
 	 * Array of WoE times.
@@ -202,6 +210,7 @@ class Flux_Athena {
 		$this->mvpDropRates    = (int)$charMapConfig->getMvpDropRates();
 		$this->cardDropRates   = (int)$charMapConfig->getCardDropRates();
 		$this->maxCharSlots    = (int)$charMapConfig->getMaxCharSlots();
+		$this->isRenewal       = (boolean)$charMapConfig->getRenewal();
 		$this->dateTimezone    = $charMapConfig->getDateTimezone();
 		
 		$resetDenyMaps = $charMapConfig->getResetDenyMaps();
