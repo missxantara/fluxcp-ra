@@ -74,7 +74,7 @@ class Flux_LoginServer extends Flux_BaseServer {
 			return false;
 		}
 		
-		$sql  = "SELECT userid FROM {$this->loginDatabase}.login WHERE sex != 'S' AND level >= 0 ";
+		$sql  = "SELECT userid FROM {$this->loginDatabase}.login WHERE sex != 'S' AND group_id >= 0 ";
 		if ($this->config->getNoCase()) {
 			$sql .= 'AND LOWER(userid) = LOWER(?) ';
 		}
@@ -191,9 +191,9 @@ class Flux_LoginServer extends Flux_BaseServer {
 			$password = Flux::hashPassword($password);
 		}
 		
-		$sql = "INSERT INTO {$this->loginDatabase}.login (userid, user_pass, email, sex, level) VALUES (?, ?, ?, ?, ?)";
+		$sql = "INSERT INTO {$this->loginDatabase}.login (userid, user_pass, email, sex, group_id) VALUES (?, ?, ?, ?, ?)";
 		$sth = $this->connection->getStatement($sql);
-		$res = $sth->execute(array($username, $password, $email, $gender, (int)$this->config->getLevel()));
+		$res = $sth->execute(array($username, $password, $email, $gender, (int)$this->config->getGroupID()));
 		
 		if ($res) {
 			$idsth = $this->connection->getStatement("SELECT LAST_INSERT_ID() AS account_id");

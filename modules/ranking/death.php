@@ -4,7 +4,7 @@ if (!defined('FLUX_ROOT')) exit;
 $title    = 'Death Ranking';
 $classes  = Flux::config('JobClasses')->toArray();
 $jobClass = $params->get('jobclass');
-$bind     = array((int)Flux::config('RankingHideLevel'));
+$bind     = array();
 
 if (trim($jobClass) === '') {
 	$jobClass = null;
@@ -31,7 +31,12 @@ if (Flux::config('HideTempBannedDeathRank')) {
 	$sql .= "AND (login.unban_time IS NULL OR login.unban_time = 0) ";
 }
 
-$sql .= "AND login.level < ? ";
+$groups = AccountGroup::getGroupID((int)Flux::config('RankingHideGroupLevel'), '<');
+if(!empty($groups)) {
+	$ids   = implode(', ', array_fill(0, count($groups), '?'));
+	$sql  .= "AND login.group_id IN ($ids) ";
+	$bind  = array_merge($bind, $groups);
+}
 
 if ($days=Flux::config('DeathRankingThreshold')) {
 	$sql    .= 'AND TIMESTAMPDIFF(DAY, login.lastlogin, NOW()) <= ? ';

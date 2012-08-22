@@ -38,13 +38,13 @@
 			<option value="permabanned"<?php if ($account_state == 'permabanned') echo ' selected="selected"' ?>><?php echo htmlspecialchars(Flux::message('AccountStatePermBanned')) ?></option>
 		</select>
 		...
-		<label for="account_level"><?php echo htmlspecialchars(Flux::message('AccountLevelLabel')) ?>:</label>
-		<select name="account_level_op">
-			<option value="eq"<?php if (($account_level_op=$params->get('account_level_op')) == 'eq') echo ' selected="selected"' ?>><?php echo htmlspecialchars(Flux::message('IsEqualToLabel')) ?></option>
-			<option value="gt"<?php if ($account_level_op == 'gt') echo ' selected="selected"' ?>><?php echo htmlspecialchars(Flux::message('IsGreaterThanLabel')) ?></option>
-			<option value="lt"<?php if ($account_level_op == 'lt') echo ' selected="selected"' ?>><?php echo htmlspecialchars(Flux::message('IsLessThanLabel')) ?></option>
+		<label for="account_group_id"><?php echo htmlspecialchars(Flux::message('AccountGroupIDLabel')) ?>:</label>
+		<select name="account_group_id_op">
+			<option value="eq"<?php if (($account_group_id_op=$params->get('account_group_id_op')) == 'eq') echo ' selected="selected"' ?>><?php echo htmlspecialchars(Flux::message('IsEqualToLabel')) ?></option>
+			<option value="gt"<?php if ($account_group_id_op == 'gt') echo ' selected="selected"' ?>><?php echo htmlspecialchars(Flux::message('IsGreaterThanLabel')) ?></option>
+			<option value="lt"<?php if ($account_group_id_op == 'lt') echo ' selected="selected"' ?>><?php echo htmlspecialchars(Flux::message('IsLessThanLabel')) ?></option>
 		</select>
-		<input type="text" name="account_level" id="account_level" value="<?php echo htmlspecialchars($params->get('account_level')) ?>" />
+		<input type="text" name="account_group_id" id="account_group_id" value="<?php echo htmlspecialchars($params->get('account_group_id')) ?>" />
 		...
 		<label for="balance"><?php echo htmlspecialchars(Flux::message('CreditBalanceLabel')) ?>:</label>
 		<select name="balance_op">
@@ -82,7 +82,7 @@
 		<th><?php echo $paginator->sortableColumn('login.userid', Flux::message('UsernameLabel')) ?></th>
 		<?php if ($showPassword): ?><th><?php echo $paginator->sortableColumn('login.user_pass', Flux::message('PasswordLabel')) ?></th><?php endif ?>
 		<th><?php echo $paginator->sortableColumn('login.sex', Flux::message('GenderLabel')) ?></th>
-		<th><?php echo $paginator->sortableColumn('level', Flux::message('AccountLevelLabel')) ?></th>
+		<th><?php echo $paginator->sortableColumn('group_id', Flux::message('AccountGroupIDLabel')) ?></th>
 		<th><?php echo $paginator->sortableColumn('state', Flux::message('AccountStateLabel')) ?></th>
 		<th><?php echo $paginator->sortableColumn('balance', Flux::message('CreditBalanceLabel')) ?></th>
 		<th><?php echo $paginator->sortableColumn('login.email', Flux::message('EmailAddressLabel')) ?></th>
@@ -109,7 +109,7 @@
 				<span class="not-applicable"><?php echo htmlspecialchars(Flux::message('UnknownLabel')) ?></span>
 			<?php endif ?>
 		</td>
-		<td><?php echo (int)$account->level ?></td>
+		<td><?php echo (int)$account->group_id ?></td>
 		<td>
 			<?php if (!$account->confirmed && $account->confirm_code): ?>
 				<span class="account-state state-pending">

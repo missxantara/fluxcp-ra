@@ -47,7 +47,7 @@ return array(
 			'Port'     => 6900,
 			'UseMD5'   => true,
 			'NoCase'   => true, // eA account case-sensitivity; Default: Case-INsensitive (true).
-			'Level'    => 0,    // Default account level during registration.
+			'GroupID'  => 0,    // Default account group ID during registration.
 			//'Database' => 'ragnarok'
 		),
 		'CharMapServers' => array(

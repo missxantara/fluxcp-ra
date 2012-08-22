@@ -15,14 +15,14 @@
 			<tr>
 				<th><label for="email"><?php echo htmlspecialchars(Flux::message('EmailAddressLabel')) ?></label></th>
 				<td><input type="text" name="email" id="email" value="<?php echo htmlspecialchars($account->email) ?>" /></td>
-				<?php if ($auth->allowedToEditAccountLevel && !$isMine): ?>
-					<th><label for="level"><?php echo htmlspecialchars(Flux::message('AccountLevelLabel')) ?></label></th>
-					<td><input type="text" name="level" id="level" value="<?php echo (int)$account->level ?>" /></td>
+				<?php if ($auth->allowedToEditAccountGroupID && !$isMine): ?>
+					<th><label for="group_id"><?php echo htmlspecialchars(Flux::message('AccountGroupIDLabel')) ?></label></th>
+					<td><input type="text" name="group_id" id="group_id" value="<?php echo (int)$account->group_id ?>" /></td>
 				<?php else: ?>
-					<th><?php echo htmlspecialchars(Flux::message('AccountLevelLabel')) ?></th>
+					<th><?php echo htmlspecialchars(Flux::message('AccountGroupIDLabel')) ?></th>
 					<td>
-						<input type="hidden" name="level" value="<?php echo (int)$account->level ?>" />
-						<?php echo number_format((int)$account->level) ?>
+						<input type="hidden" name="group_id" value="<?php echo (int)$account->group_id ?>" />
+						<?php echo number_format((int)$account->group_id) ?>
 					</td>
 				<?php endif ?>
 			</tr>

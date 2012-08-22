@@ -64,10 +64,15 @@ if ($auth->allowedToSearchWhosOnline) {
 	}
 }
 
-// Hide levels greater than or equal to.
-if (($hideLevel=Flux::config('HideFromWhosOnline')) && !$auth->allowedToIgnoreHiddenPref2) {
-	$sqlpartial .= "AND login.level < ? ";
-	$bind[] = $hideLevel;
+// Hide groups greater than or equal to
+if (($hideGroupLevel=Flux::config('HideFromWhosOnline')) && !$auth->allowedToIgnoreHiddenPref2) {
+	$groups = AccountGroup::getGroupID($hideGroupLevel, '<');
+
+	if(!empty($groups)) {
+		$ids   = implode(', ', array_fill(0, count($groups), '?'));
+		$sql  .= "AND login.group_id IN ($ids) ";
+		$bind  = array_merge($bind, $groups);
+	}
 }
 
 $sql  = "SELECT COUNT(ch.char_id) AS total FROM {$server->charMapDatabase}.`char` AS ch $sqlpartial";

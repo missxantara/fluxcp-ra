@@ -4,7 +4,7 @@ require_once 'Flux/Error.php';
 /**
  * The authorization component allows you to find out whether or not the
  * the current user is allowed to perform a certain task based on his account
- * level.
+ * group level.
  */
 class Flux_Authorization {
 	/**
@@ -62,7 +62,7 @@ class Flux_Authorization {
 	
 	/**
 	 * Checks whether or not the current user is able to perform a particular
-	 * action based on his/her level.
+	 * action based on his/her group level and id.
 	 *
 	 * @param string $moduleName
 	 * @param string $actionName
@@ -73,9 +73,9 @@ class Flux_Authorization {
 	{
 		$accessConfig = $this->config->get('modules');
 		$accessKeys   = array("$moduleName.$actionName", "$moduleName.*");
-		$accountLevel = $this->session->account->level;
+		$accountGroup = $this->session->account->group_level;
 		$existentKeys = array();
-		
+
 		if ($accessConfig instanceOf Flux_Config) {
 			foreach ($accessKeys as $accessKey) {
 				$accessLevel = $accessConfig->get($accessKey);
@@ -83,8 +83,8 @@ class Flux_Authorization {
 				if (!is_null($accessLevel)) {
 					$existentKeys[] = $accessKey;
 					
-					if (($accessLevel == AccountLevel::ANYONE || $accessLevel == $accountLevel ||
-						($accessLevel != AccountLevel::UNAUTH && $accessLevel <= $accountLevel))) {
+					if ($accessLevel == AccountGroup::ANYONE || $accessLevel == $accountGroup ||
+						($accessLevel != AccountGroup::UNAUTH && $accessLevel <= $accountGroup)) {
 					
 						return true;
 					}
@@ -102,7 +102,7 @@ class Flux_Authorization {
 	
 	/**
 	 * Checks whether or not the current user is allowed to use a particular
-	 * feature based on his/her level.
+	 * feature based on his/her group level and id.
 	 *
 	 * @param string $featureName
 	 * @return bool
@@ -111,14 +111,14 @@ class Flux_Authorization {
 	public function featureAllowed($featureName)
 	{
 		$accessConfig = $this->config->get('features');
-		$accountLevel = $this->session->account->level;
+		$accountGroup = $this->session->account->group_level;
 		
 		if (($accessConfig instanceOf Flux_Config)) {
 			$accessLevel = $accessConfig->get($featureName);
 			
 			if (!is_null($accessLevel) &&
-				($accessLevel == AccountLevel::ANYONE || $accessLevel == $accountLevel ||
-				($accessLevel != AccountLevel::UNAUTH && $accessLevel <= $accountLevel))) {
+				($accessLevel == AccountGroup::ANYONE || $accessLevel == $accountGroup ||
+				($accessLevel != AccountGroup::UNAUTH && $accessLevel <= $accountGroup))) {
 			
 				return true;
 			}
@@ -128,7 +128,7 @@ class Flux_Authorization {
 	
 	/**
 	 * Provides convenient getters such as `allowedTo<FeatureName>' and
-	 * `getLevelTo<FeatureName>'.
+	 * `getGroupLevelTo<FeatureName>'.
 	 *
 	 * @access public
 	 */
@@ -137,7 +137,7 @@ class Flux_Authorization {
 		if (preg_match("/^allowedTo(.+)/i", $prop, $m)) {
 			return $this->featureAllowed($m[1]);
 		}
-		elseif (preg_match("/^getLevelTo(.+)/i", $prop, $m)) {
+		elseif (preg_match("/^getGroupLevelTo(.+)/i", $prop, $m)) {
 			$accessConfig = $this->config->get('features');
 			if ($accessConfig instanceOf Flux_Config) {
 				return $accessConfig->get($m[1]);

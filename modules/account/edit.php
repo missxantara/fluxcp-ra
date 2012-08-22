@@ -10,10 +10,9 @@ $accountID = $params->get('id');
 $creditsTable  = Flux::config('FluxTables.CreditsTable');
 $creditColumns = 'credits.balance, credits.last_donation_date, credits.last_donation_amount';
 
-
 $sql  = "SELECT login.*, {$creditColumns} FROM {$server->loginDatabase}.login ";
 $sql .= "LEFT OUTER JOIN {$creditsTable} AS credits ON login.account_id = credits.account_id ";
-$sql .= "WHERE login.sex != 'S' AND login.level >= 0 AND login.account_id = ? LIMIT 1";
+$sql .= "WHERE login.sex != 'S' AND login.group_id >= 0 AND login.account_id = ? LIMIT 1";
 $sth  = $server->connection->getStatement($sql);
 $sth->execute(array($accountID));
 
@@ -22,7 +21,7 @@ $account = $sth->fetch();
 $isMine  = false;
 
 if ($account) {
-	if ($account->level > $session->account->level && !$auth->allowedToEditHigherPower) {
+	if ($account->group_id > $session->account->group_id && !$auth->allowedToEditHigherPower) {
 		$this->deny();
 	}
 	
@@ -36,22 +35,27 @@ if ($account) {
 	}
 	
 	if (count($_POST)) {
+		$groups     = AccountGroup::getArray();
+	
 		$email      = trim($params->get('email'));
 		$gender     = trim($params->get('gender'));
 		$loginCount = (int)$params->get('logincount');
 		$lastLogin  = $params->get('lastlogin_date');
 		$lastIP     = trim($params->get('last_ip'));
-		$level      = (int)$params->get('level');
+		$group_id   = (int)$params->get('group_id');
 		$balance    = (int)$params->get('balance');
 		
-		if ($isMine && $account->level != $level) {
-			$errorMessage = Flux::message('CannotModifyOwnLevel');
+		if ($isMine && $account->group_id != $group_id) {
+			$errorMessage = Flux::message('CannotModifyOwnGroupID');
 		}
-		elseif ($account->level != $level && !$auth->allowedToEditAccountLevel) {
-			$errorMessage = Flux::message('CannotModifyAnyLevel');
+		elseif ($account->group_id != $group_id && !$auth->allowedToEditAccountGroupID) {
+			$errorMessage = Flux::message('CannotModifyAnyGroupID');
 		}
-		elseif ($level > $session->account->level) {
-			$errorMessage = Flux::message('CannotModifyLevelSoHigh');
+		elseif ($group_id > $session->account->group_id) {
+			$errorMessage = Flux::message('CannotModifyGroupIDHigh');
+		}
+		elseif (!isset($groups[$group_id])) {
+			$errorMessage = Flux::message('InvalidGroupID');
 		}
 		elseif (!in_array($gender, array('M', 'F'))) {
 			$errorMessage = Flux::message('InvalidGender');
@@ -74,9 +78,9 @@ if ($account) {
 			$sql  = "UPDATE {$server->loginDatabase}.login SET email = :email, ";
 			$sql .= "sex = :sex, logincount = :logincount, lastlogin = :lastlogin, last_ip = :last_ip";
 			
-			if ($auth->allowedToEditAccountLevel) {
-				$sql .= ", level = :level";
-				$bind['level'] = $level;
+			if ($auth->allowedToEditAccountGroupID) {
+				$sql .= ", group_id = :group_id";
+				$bind['group_id'] = $group_id;
 			}
 			
 			$bind['account_id'] = $account->account_id;

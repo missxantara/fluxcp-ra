@@ -4,7 +4,7 @@ if (!defined('FLUX_ROOT')) exit;
 $title    = 'Zeny Ranking';
 $classes  = Flux::config('JobClasses')->toArray();
 $jobClass = $params->get('jobclass');
-$bind     = array((int)Flux::config('RankingHideLevel'));
+$bind     = array();
 
 if (trim($jobClass) === '') {
 	$jobClass = null;
@@ -33,17 +33,34 @@ if (Flux::config('HideTempBannedZenyRank')) {
 	$sql .= "AND (login.unban_time IS NULL OR login.unban_time = 0) ";
 }
 
-$sql .= "AND login.level < ? ";
+$groupsLT  = AccountGroup::getGroupID((int)Flux::config('RankingHideGroupLevel'), '<');
+if(!empty($groupsLT)) {
+	$idsLT = implode(', ', array_fill(0, count($groupsLT), '?'));
+	$sql  .= "AND login.group_id IN ($idsLT)";
+	$bind  = array_merge($bind, $groupsLT);
+}
 
 if ($days=Flux::config('ZenyRankingThreshold')) {
 	$sql    .= 'AND TIMESTAMPDIFF(DAY, login.lastlogin, NOW()) <= ? ';
 	$bind[]  = $days * 24 * 60 * 60;
 }
 
+$groupsGEQ = AccountGroup::getGroupID((int)$auth->getGroupLevelToHideFromZenyRank, '>=');
+if(!empty($groupsGEQ)) {
+	$ids    = implode(', ', array_fill(0, count($groupsGEQ), '?'));
+	$check1 = "AND login.group_id IN ($ids)";
+	$bind   = array_merge($bind, $groupsGEQ);
+}
+
+if(!empty($groupsLT)) {
+	$check2 = "OR login.group_id IN ($idsLT)";
+	$bind   = array_merge($bind, $groupsLT);
+}
+
 // Whether or not the character is allowed to hide themselves from the Zeny Ranking.
-$sql .= "AND (((hide_from_zr.value IS NULL OR hide_from_zr.value = 0) AND login.level >= ?) OR login.level < ?) ";
-$bind[] = $auth->getLevelToHideFromZenyRank;
-$bind[] = $auth->getLevelToHideFromZenyRank;
+if(isset($check1) && isset($check2)) {
+	$sql .= "AND (((hide_from_zr.value IS NULL OR hide_from_zr.value = 0) $check1) $check2) ";
+}
 
 if (!is_null($jobClass)) {
 	$sql .= "AND ch.class = ? ";

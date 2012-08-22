@@ -9,7 +9,7 @@ if (count($_POST)) {
 	$currentPassword    = $params->get('currentpass');
 	$newPassword        = $params->get('newpass');
 	$confirmNewPassword = $params->get('confirmnewpass');
-	$useGMPassSecurity  = $session->account->level < Flux::config('EnableGMPassSecurity');
+	$useGMPassSecurity  = $session->account->group_level < Flux::config('EnableGMPassSecurity');
 	$passwordMinLength  = $useGMPassSecurity ? Flux::config('GMMinPasswordLength') : Flux::config('MinPasswordLength');
 	$passwordMinUpper   = $useGMPassSecurity ? Flux::config('GMPasswordMinUpper') : Flux::config('PasswordMinUpper');
 	$passwordMinLower   = $useGMPassSecurity ? Flux::config('GMPasswordMinLower') : Flux::config('PasswordMinLower');
@@ -23,7 +23,7 @@ if (count($_POST)) {
 		$errorMessage = Flux::message('NeedNewPassword');
 	}
 	elseif (!Flux::config('AllowUserInPassword') && stripos($newPassword, $session->account->userid) !== false) {
-		$errorMessage = Flux::message('PasswordContainsUser');
+		$errorMessage = Flux::message('NewPasswordHasUsername');
 	}
 	elseif (!ctype_graph($newPassword)) {
 		$errorMessage = Flux::message('NewPasswordInvalid');

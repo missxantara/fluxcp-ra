@@ -25,7 +25,7 @@ $createColumns  = 'created.confirmed, created.confirm_code, created.reg_date';
 $sqlpartial     = "LEFT OUTER JOIN {$server->loginDatabase}.{$creditsTable} AS credits ON login.account_id = credits.account_id ";
 $sqlpartial    .= "LEFT OUTER JOIN {$server->loginDatabase}.{$accountTable} AS createlog ON login.account_id = createlog.account_id ";
 $sqlpartial    .= "LEFT OUTER JOIN {$server->loginDatabase}.{$createTable} AS created ON login.account_id = created.account_id ";
-$sqlpartial    .= "WHERE login.sex != 'S' AND login.level >= 0 ";
+$sqlpartial    .= "WHERE login.sex != 'S' AND login.group_id >= 0 ";
 
 $accountID = $params->get('account_id');
 if ($accountID) {
@@ -33,22 +33,22 @@ if ($accountID) {
 	$bind[]      = $accountID;
 }
 else {
-	$opMapping      = array('eq' => '=', 'gt' => '>', 'lt' => '<');
-	$opValues       = array_keys($opMapping);
-	$username       = $params->get('username');
-	$password       = $params->get('password');
-	$email          = $params->get('email');
-	$lastIP         = $params->get('last_ip');
-	$gender         = $params->get('gender');
-	$accountState   = $params->get('account_state');
-	$accountLevelOp = $params->get('account_level_op');
-	$accountLevel   = $params->get('account_level');
-	$balanceOp      = $params->get('balance_op');
-	$balance        = $params->get('balance');
-	$loginCountOp   = $params->get('logincount_op');
-	$loginCount     = $params->get('logincount');
-	$lastLoginDateA = $params->get('last_login_after_date');
-	$lastLoginDateB = $params->get('last_login_before_date');
+	$opMapping        = array('eq' => '=', 'gt' => '>', 'lt' => '<');
+	$opValues         = array_keys($opMapping);
+	$username         = $params->get('username');
+	$password         = $params->get('password');
+	$email            = $params->get('email');
+	$lastIP           = $params->get('last_ip');
+	$gender           = $params->get('gender');
+	$accountState     = $params->get('account_state');
+	$accountGroupIdOp = $params->get('account_group_id_op');
+	$accountGroupID   = $params->get('account_group_id');
+	$balanceOp        = $params->get('balance_op');
+	$balance          = $params->get('balance');
+	$loginCountOp     = $params->get('logincount_op');
+	$loginCount       = $params->get('logincount');
+	$lastLoginDateA   = $params->get('last_login_after_date');
+	$lastLoginDateB   = $params->get('last_login_before_date');
 	
 	if ($username) {
 		$sqlpartial .= "AND (login.userid LIKE ? OR login.userid = ?) ";
@@ -100,10 +100,10 @@ else {
 		}
 	}
 	
-	if (in_array($accountLevelOp, $opValues) && trim($accountLevel) != '') {
-		$op          = $opMapping[$accountLevelOp];
-		$sqlpartial .= "AND login.level $op ? ";
-		$bind[]      = $accountLevel;
+	if (in_array($accountGroupIdOp, $opValues) && trim($accountGroupID) != '') {
+		$op          = $opMapping[$accountGroupIdOp];
+		$sqlpartial .= "AND login.group_id $op ? ";
+		$bind[]      = $accountGroupID;
 	}
 	
 	if (in_array($balanceOp, $opValues) && trim($balance) != '') {
@@ -141,7 +141,7 @@ $sth->execute($bind);
 $paginator = $this->getPaginator($sth->fetch()->total);
 $paginator->setSortableColumns(array(
 	'login.account_id' => 'asc', 'login.userid', 'login.user_pass',
-	'login.sex', 'level', 'state', 'balance',
+	'login.sex', 'group_id', 'state', 'balance',
 	'login.email', 'logincount', 'lastlogin', 'last_ip',
 	'reg_date'
 ));

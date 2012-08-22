@@ -58,14 +58,20 @@ $sth->execute();
 $info['parties'] += $sth->fetch()->total;
 
 // Zeny.
-$sql = "SELECT SUM(`char`.zeny) AS total FROM {$server->charMapDatabase}.`char` ";
-if ($hideLevel=Flux::config('InfoHideZenyLevel')) {
+$bind = array();
+$sql  = "SELECT SUM(`char`.zeny) AS total FROM {$server->charMapDatabase}.`char` ";
+if ($hideGroupLevel=Flux::config('InfoHideZenyGroupLevel')) {
 	$sql .= "LEFT JOIN {$server->loginDatabase}.login ON login.account_id = `char`.account_id ";
-	$sql .= "WHERE login.level < ?";
-	$bind = array($hideLevel);
+	
+	$groups = AccountGroup::getGroupID($hideGroupLevel, '<');
+	if(!empty($groups)) {
+		$ids   = implode(', ', array_fill(0, count($groups), '?'));
+		$sql  .= "WHERE login.group_id IN ($ids) ";
+		$bind  = array_merge($bind, $groups);
+	}
 }
 if (Flux::config('HideTempBannedStats')) {
-	if ($hideLevel) {
+	if ($hideGroupLevel) {
 		$sql .= " AND unban_time <= UNIX_TIMESTAMP()";
 	} else {
 		$sql .= "LEFT JOIN {$server->loginDatabase}.login ON login.account_id = `char`.account_id ";
@@ -73,7 +79,7 @@ if (Flux::config('HideTempBannedStats')) {
 	}
 }
 if (Flux::config('HidePermBannedStats')) {
-	if ($hideLevel || Flux::config('HideTempBannedStats')) {
+	if ($hideGroupLevel || Flux::config('HideTempBannedStats')) {
 		$sql .= " AND state != 5";
 	} else {
 		$sql .= "LEFT JOIN {$server->loginDatabase}.login ON login.account_id = `char`.account_id ";
@@ -82,7 +88,7 @@ if (Flux::config('HidePermBannedStats')) {
 }
 
 $sth = $server->connection->getStatement($sql);
-$sth->execute($hideLevel ? $bind : array());
+$sth->execute($hideGroupLevel ? $bind : array());
 $info['zeny'] += $sth->fetch()->total;
 
 // Job classes.

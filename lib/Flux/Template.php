@@ -375,19 +375,19 @@ class Flux_Template {
 	
 	/**
 	 * Returns an array of menu items that should be diplayed from the theme.
-	 * Only menu items the current user (and their level) have access to will
-	 * be returned as part of the array;
+	 * Only menu items the current user (and their group level) have access to
+	 * will be returned as part of the array;
 	 *
 	 * @return array
 	 */
 	public function getMenuItems($adminMenus = false)
 	{
-		$auth           = Flux_Authorization::getInstance();
-		$accountLevel   = Flux::$sessionData->account->level;
-		$adminMenuLevel = Flux::config('AdminMenuLevel');
-		$defaultAction  = Flux_Dispatcher::getInstance()->defaultAction;
-		$menuItems      = Flux::config('MenuItems');
-		$allowedItems   = array();
+		$auth              = Flux_Authorization::getInstance();
+		$accountGroupLevel = Flux::$sessionData->account->group_level;
+		$adminMenuLevel    = Flux::config('AdminMenuGroupLevel');
+		$defaultAction     = Flux_Dispatcher::getInstance()->defaultAction;
+		$menuItems         = Flux::config('MenuItems');
+		$allowedItems      = array();
 		
 		if (!($menuItems instanceOf Flux_Config)) {
 			return array();

@@ -176,7 +176,7 @@ class Flux_PaymentNotifyRequest {
 					$this->logPayPal('Payment for txn_id#%s has been completed.', $transactionID);
 
 					if ($servGroup && $exchangeableCurrency) {
-						$sql = "SELECT COUNT(account_id) AS acc_id_count FROM {$servGroup->loginDatabase}.login WHERE sex != 'S' AND level >= 0 AND account_id = ?";
+						$sql = "SELECT COUNT(account_id) AS acc_id_count FROM {$servGroup->loginDatabase}.login WHERE sex != 'S' AND group_id >= 0 AND account_id = ?";
 						$sth = $servGroup->connection->getStatement($sql);
 						$sth->execute(array($accountID));
 						$res = $sth->fetch();

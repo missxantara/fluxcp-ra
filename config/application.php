@@ -19,7 +19,7 @@ return array(
 	'ForceEmptyEmblem'     => false,                    // Forcefully display empty guild emblems, helpful when you don't have GD2 installed.
 	'EmblemCacheInterval'  => 12,                       // Hourly interval to re-cache guild emblems (set to 0 to disable emblem cache).
 	'SessionCookieExpire'  => 48,                       // Duration in hours.
-	'AdminMenuLevel'       => AccountLevel::LOWGM,      // The starting level for which module actions are moved into the admin menu for display.
+	'AdminMenuGroupLevel'  => AccountGroup::LOWGM,      // The starting group ID for which module actions are moved into the admin menu for display.
 	'DateDefaultTimezone'  => null,                     // The default timezone, consult the PHP manual for valid timezones: http://php.net/timezones (null for defaut system TZ)
 	'DateFormat'           => 'Y-m-d',                  // Default DATE format to be displayed in pages.
 	'DateTimeFormat'       => 'Y-m-d H:i:s',            // Default DATETIME format to be displayed in pages.
@@ -110,9 +110,9 @@ return array(
 	'AutoRemoveTempBans'   => true,                     // Automatically remove expired temporary bans on certain pages.
 	'ItemShopMaxCost'      => 99,                       // Max price an item can be sold for.
 	'ItemShopMaxQuantity'  => 99,                       // Max quantity the item may be sold at once for.
-	'HideFromWhosOnline'   => AccountLevel::HELPER,     // Levels greater than or equal to this will be hidden from the "Who's Online" page.
-	'HideFromMapStats'     => AccountLevel::HELPER,     // Levels greater than or equal to this will be hidden from the "Map Stats" page.
-	'EnableGMPassSecurity' => AccountLevel::HELPER,     // Levels greater than or equal to this will be required to use passwords that meet the earlier GM Password settings.
+	'HideFromWhosOnline'   => AccountGroup::LOWGM,      // Levels greater than or equal to this will be hidden from the "Who's Online" page.
+	'HideFromMapStats'     => AccountGroup::LOWGM,      // Levels greater than or equal to this will be hidden from the "Map Stats" page.
+	'EnableGMPassSecurity' => AccountGroup::LOWGM,      // Levels greater than or equal to this will be required to use passwords that meet the earlier GM Password settings.
 	'ChargeGenderChange'   => 0,                        // You can specify this as the number of credits to charge for gender change.  Can be 0 for free change.
 	'BanPaymentStatuses'   => array(                    // Payment statuses that will automatically ban the account owner if received.
 		'Cancelled_Reversal',                           // -- 'Cancelled_Reversal'
@@ -139,44 +139,44 @@ return array(
 	'ShopImageExtensions'  => array(                    // These are the image extensions allowed for uploading in the item shop.
 		'png', 'jpg', 'gif', 'bmp', 'jpeg'
 	),
-	'NoResetPassLevel'    => AccountLevel::HELPER,      // Level of account to prevent password reset using control panel.
+	'NoResetPassGroupLevel'  => AccountGroup::LOWGM,    // Minimum group level of account to prevent password reset using control panel.
 	
-	'CharRankingLimit'    => 20,                        //
-	'GuildRankingLimit'   => 20,                        //
-	'ZenyRankingLimit'    => 20,                        //
-	'DeathRankingLimit'   => 20,                        //
-	'RankingHideLevel'    => AccountLevel::LOWGM,       //
-	'InfoHideZenyLevel'   => AccountLevel::LOWGM,       // Level of account to hide zeny from in server information page.
+	'CharRankingLimit'       => 20,                     //
+	'GuildRankingLimit'      => 20,                     //
+	'ZenyRankingLimit'       => 20,                     //
+	'DeathRankingLimit'      => 20,                     //
+	'RankingHideGroupLevel'  => AccountGroup::LOWGM,    //
+	'InfoHideZenyGroupLevel' => AccountGroup::LOWGM,    // Minimum group level of account to hide zeny from in server information page.
 	
-	'CharRankingThreshold' => 0,                         // Number of days the character must have logged in within to be listed in character ranking. (0 = disabled)
-	'ZenyRankingThreshold' => 0,                         // Number of days the character must have logged in within to be listed in zeny ranking. (0 = disabled)
-	'DeathRankingThreshold' => 0,                        // Number of days the character must have logged in within to be listed in death ranking. (0 = disabled)
+	'CharRankingThreshold' => 0,                        // Number of days the character must have logged in within to be listed in character ranking. (0 = disabled)
+	'ZenyRankingThreshold' => 0,                        // Number of days the character must have logged in within to be listed in zeny ranking. (0 = disabled)
+	'DeathRankingThreshold' => 0,                       // Number of days the character must have logged in within to be listed in death ranking. (0 = disabled)
 	
-	'HideTempBannedCharRank'  => false,                  // Hide temporarily banned characters from ranking.
-	'HidePermBannedCharRank'  => true,                   // Hide permanently banned characters from ranking.
+	'HideTempBannedCharRank'  => false,                 // Hide temporarily banned characters from ranking.
+	'HidePermBannedCharRank'  => true,                  // Hide permanently banned characters from ranking.
 	
-	'HideTempBannedZenyRank'  => false,                  // Hide temporarily banned characters from ranking.
-	'HidePermBannedZenyRank'  => true,                   // Hide permanently banned characters from ranking.
+	'HideTempBannedZenyRank'  => false,                 // Hide temporarily banned characters from ranking.
+	'HidePermBannedZenyRank'  => true,                  // Hide permanently banned characters from ranking.
 	
-	'HideTempBannedDeathRank' => false,                  // Hide temporarily banned characters from ranking.
-	'HidePermBannedDeathRank' => true,                   // Hide permanently banned characters from ranking.
+	'HideTempBannedDeathRank' => false,                 // Hide temporarily banned characters from ranking.
+	'HidePermBannedDeathRank' => true,                  // Hide permanently banned characters from ranking.
 	
-	'HideTempBannedStats'     => false,                  // Hide temporarily banned accounts from statistics.
-	'HidePermBannedStats'     => true,                   // Hide permanently banned accounts from statistics.
+	'HideTempBannedStats'     => false,                 // Hide temporarily banned accounts from statistics.
+	'HidePermBannedStats'     => true,                  // Hide permanently banned accounts from statistics.
 	
-	'SortJobsByAmount'        => false,                  // Sort job class information on statistics page by descending quantity (false = Sort by Job ID).
+	'SortJobsByAmount'        => false,                 // Sort job class information on statistics page by descending quantity (false = Sort by Job ID).
 	
-	'CpLoginLogShowPassword'  => false,                  // Show password in CP login log (also see access.php's SeeCpLoginLogPass).
+	'CpLoginLogShowPassword'  => false,                 // Show password in CP login log (also see access.php's SeeCpLoginLogPass).
 	
-	'CpResetLogShowPassword'  => false,                  // Show password in CP "password resets" log (also see access.php's SeeCpResetPass).
+	'CpResetLogShowPassword'  => false,                 // Show password in CP "password resets" log (also see access.php's SeeCpResetPass).
 	
-	'CpChangeLogShowPassword' => false,                  // Show password in CP "password changes" log (also see access.php's SeeCpChangePass).
+	'CpChangeLogShowPassword' => false,                 // Show password in CP "password changes" log (also see access.php's SeeCpChangePass).
 	
-	'AdminMenuNewStyle'       => true,                   // Use new-style admin menu;  Applies to 'default' theme.
+	'AdminMenuNewStyle'       => true,                  // Use new-style admin menu;  Applies to 'default' theme.
 	
 	// These are the main menu items that should be displayed by themes.
 	// They route to modules and actions.  Whether they are displayed or
-	// not at any given time depends on the user's account level and/or
+	// not at any given time depends on the user's account group level and/or
 	// their login status.
 	'MenuItems' => array(
 		'Main Menu'   => array(

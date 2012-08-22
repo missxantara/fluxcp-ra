@@ -30,8 +30,8 @@
 				<span class="not-applicable"><?php echo htmlspecialchars(Flux::message('NoneLabel')) ?></span>
 			<?php endif ?>
 		</td>
-		<th><?php echo htmlspecialchars(Flux::message('AccountLevelLabel')) ?></th>
-		<td><?php echo (int)$account->level ?></td>
+		<th><?php echo htmlspecialchars(Flux::message('AccountGroupIDLabel')) ?></th>
+		<td><?php echo (int)$account->group_id ?></td>
 	</tr>
 	<tr>
 		<th><?php echo htmlspecialchars(Flux::message('GenderLabel')) ?></th>

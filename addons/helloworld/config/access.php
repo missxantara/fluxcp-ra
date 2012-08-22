@@ -2,7 +2,7 @@
 return array(
 	'modules' => array(
 		'helloworld' => array(
-			'index' => AccountLevel::ADMIN
+			'index' => AccountGroup::ADMIN
 		)
 	),
 	'features' => array(
