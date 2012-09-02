@@ -2,5 +2,5 @@
 if (!defined('FLUX_ROOT')) exit;
 
 $fluxVersion  = Flux::VERSION;
-$fluxVersion .= Flux::GITHASH ? '.'.Flux::GITHASH : '';
+$fluxVersion .= Flux::REPOSVERSION ? '.'.Flux::REPOSVERSION : '';
 ?>
