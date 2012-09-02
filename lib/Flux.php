@@ -385,14 +385,27 @@ class Flux {
 				//
 				// Char/Map normalization.
 				//
-				
+				$expRates = array(
+					'Base'        => 100,
+					'Job'         => 100,
+					'Mvp'         => 100
+				);
+				$dropRates = array(
+					'Common'      => 100,
+					'CommonBoss'  => 100,
+					'Heal'        => 100,
+					'HealBoss'    => 100,
+					'Useable'     => 100,
+					'UseableBoss' => 100,
+					'Equip'       => 100,
+					'EquipBoss'   => 100,
+					'Card'        => 100,
+					'CardBoss'    => 100,
+					'MvpItem'     => 100
+				);
+				$charMapServer->setExpRates($expRates, $options);
+				$charMapServer->setDropRates($dropRates, $options);
 				$charMapServer->setRenewal(true, $options);
-				$charMapServer->setBaseExpRates(1, $options);
-				$charMapServer->setJobExpRates(1, $options);
-				$charMapServer->setMvpExpRates(1, $options);
-				$charMapServer->setDropRates(1, $options);
-				$charMapServer->setMvpDropRates(1, $options);
-				$charMapServer->setCardDropRates(1, $options);
 				$charMapServer->setCharServer(array(), $options);
 				$charMapServer->setMapServer(array(), $options);
 				$charMapServer->setDatabase($dbConfig->getDatabase(), $options);				

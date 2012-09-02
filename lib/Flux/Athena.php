@@ -26,53 +26,21 @@ class Flux_Athena {
 	public $serverName;
 	
 	/**
-	 * Base experience rater. Unlike rA, this value starts at 1 being 1%
-	 * 200 being 200% and so on.
+	 * Experience rates for base, job, and mvp bonus. Values in percents.
+	 * For example, 100 means 100% which is 1x offical rates.
 	 *
 	 * @access public
 	 * @var int
 	 */
-	public $baseExpRates;
+	public $expRates = array();
 	
 	/**
-	 * Job experience rate. Same rules as $baseExpRates apply.
+	 * Drop rate. Same rules as $expRates apply.
 	 *
 	 * @access public
 	 * @var int
 	 */
-	public $jobExpRates;
-	
-	/**
-	 * Base MvP bonus experience rate. Same rules as $baseExpRates apply.
-	 *
-	 * @access public
-	 * @var int
-	 */
-	public $mvpExpRates;
-	
-	/**
-	 * Drop rate. Same rules as $baseExpRates apply.
-	 *
-	 * @access public
-	 * @var int
-	 */
-	public $dropRates;
-
-	/**
-	 * MvP Drop rate. Same rules as $baseExpRates apply.
-	 *
-	 * @access public
-	 * @var int
-	 */
-	public $mvpDropRates;
-
-	/**
-	 * Card Drop rate. Same rules as $baseExpRates apply.
-	 *
-	 * @access public
-	 * @var int
-	 */
-	public $cardDropRates;
+	public $dropRates = array();
 	
 	/**
 	 * Database used for the login-related SQL operations.
@@ -200,18 +168,15 @@ class Flux_Athena {
 		$this->loginServer     = $loginServer;
 		$this->charServer      = $charServer;
 		$this->mapServer       = $mapServer;
-		$this->serverName      = $charMapConfig->getServerName();
 		$this->loginDatabase   = $loginServer->config->getDatabase();
-		$this->charMapDatabase = $charMapConfig->getDatabase();
-		$this->baseExpRates    = (int)$charMapConfig->getBaseExpRates();
-		$this->jobExpRates     = (int)$charMapConfig->getJobExpRates();
-		$this->mvpExpRates     = (int)$charMapConfig->getMvpExpRates();
-		$this->dropRates       = (int)$charMapConfig->getDropRates();
-		$this->mvpDropRates    = (int)$charMapConfig->getMvpDropRates();
-		$this->cardDropRates   = (int)$charMapConfig->getCardDropRates();
-		$this->maxCharSlots    = (int)$charMapConfig->getMaxCharSlots();
+		
+		$this->serverName      = $charMapConfig->getServerName();
+		$this->expRates        = $charMapConfig->getExpRates()->toArray();
+		$this->dropRates       = $charMapConfig->getDropRates()->toArray();
 		$this->isRenewal       = (boolean)$charMapConfig->getRenewal();
+		$this->maxCharSlots    = (int)$charMapConfig->getMaxCharSlots();
 		$this->dateTimezone    = $charMapConfig->getDateTimezone();
+		$this->charMapDatabase = $charMapConfig->getDatabase();
 		
 		$resetDenyMaps = $charMapConfig->getResetDenyMaps();
 		if (!$resetDenyMaps) {

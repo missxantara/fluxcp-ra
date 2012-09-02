@@ -52,25 +52,43 @@ return array(
 		),
 		'CharMapServers' => array(
 			array(
-				'ServerName'    => 'FluxRO',
-				'BaseExpRates'  => 200,
-				'JobExpRates'   => 200,
-				'MvpExpRates'   => 200,
-				'DropRates'     => 25,
-				'MvpDropRates'  => 25,
-				'CardDropRates' => 25,
-				'MaxCharSlots'  => 9,
-				'Renewal'       => true,
-				'DateTimezone'  => null,       // Specifies game server's timezone for this char/map pair. (See: http://php.net/timezones)
-				//'ResetDenyMaps' => 'sec_pri',  // Defaults to 'sec_pri'. This value can be an array of map names.
-				//'Database'      => 'ragnarok', // Defaults to DbConfig.Database
-				'CharServer'    => array(
-					'Address'   => '127.0.0.1',
-					'Port'      => 6121
+				'ServerName'      => 'FluxRO',
+				'Renewal'         => true,
+				'MaxCharSlots'    => 9,
+				'DateTimezone'    => null, // Specifies game server's timezone for this char/map pair. (See: http://php.net/timezones)
+				//'ResetDenyMaps'   => 'sec_pri', // Defaults to 'sec_pri'. This value can be an array of map names.
+				//'Database'        => 'ragnarok', // Defaults to DbConfig.Database
+				'ExpRates' => array(
+					'Base'        => 100, // Rate at which (base) exp is given
+					'Job'         => 100, // Rate at which job exp is given
+					'Mvp'         => 100  // MVP bonus exp rate
 				),
-				'MapServer'     => array(
-					'Address'   => '127.0.0.1',
-					'Port'      => 5121
+				'DropRates' => array(
+					// The rate the common items (in the ETC tab, besides card) are dropped
+					'Common'      => 100,
+					'CommonBoss'  => 100,
+					// The rate healing items (that restore HP or SP) are dropped
+					'Heal'        => 100,
+					'HealBoss'    => 100,
+					// The rate usable items (in the item tab other then healing items) are dropped
+					'Useable'     => 100,
+					'UseableBoss' => 100,
+					// The rate at which equipment is dropped
+					'Equip'       => 100,
+					'EquipBoss'   => 100,
+					// The rate at which cards are dropped
+					'Card'        => 100,
+					'CardBoss'    => 100,
+					// The rate adjustment for the MVP items that the MVP gets directly in their inventory
+					'MvpItem'     => 100
+				),
+				'CharServer'      => array(
+					'Address'     => '127.0.0.1',
+					'Port'        => 6121
+				),
+				'MapServer'       => array(
+					'Address'     => '127.0.0.1',
+					'Port'        => 5121
 				),
 				// -- WoE days and times --
 				// First parameter: Starding day 0=Sunday / 1=Monday / 2=Tuesday / 3=Wednesday / 4=Thursday / 5=Friday / 6=Saturday

@@ -57,6 +57,13 @@ $monster = $sth->fetch();
 
 if ($monster) {
 	$title   = "Viewing Monster ({$monster->kro_name})";
+	
+	$monster->boss = $monster->mvp_exp;
+	
+	$monster->base_exp = $monster->base_exp * $server->expRates['Base'] / 100;
+	$monster->job_exp  = $monster->job_exp * $server->expRates['Job'] / 100;
+	$monster->mvp_exp  = $monster->mvp_exp * $server->expRates['Mvp'] / 100;
+	
 	$dropIDs = array(
 		'drop1'    => $monster->drop1_id,
 		'drop2'    => $monster->drop2_id,
@@ -73,7 +80,7 @@ if ($monster) {
 		'mvpdrop3' => $monster->mvpdrop3_id
 	);
 	
-	$sql = "SELECT id, name_japanese FROM $itemDB WHERE id IN (".implode(', ', array_fill(0, count($dropIDs), '?')).")";
+	$sql = "SELECT id, name_japanese, type FROM $itemDB WHERE id IN (".implode(', ', array_fill(0, count($dropIDs), '?')).")";
 	$sth = $server->connection->getStatement($sql);
 	$sth->execute(array_values($dropIDs));
 	$items = $sth->fetchAll();
@@ -89,6 +96,7 @@ if ($monster) {
 				if ($needToSet[$dropField] && $dropID == $item->id) {
 					$needToSet[$dropField] = false;
 					$monster->{$dropField.'_name'} = $item->name_japanese;
+					$monster->{$dropField.'_type'} = $item->type;
 				}
 			}
 		}
@@ -104,18 +112,40 @@ if ($monster) {
 			);
 			
 			if (preg_match('/^dropcard/', $dropField)) {
-				$itemDrops[$dropField]['chance'] = $itemDrops[$dropField]['chance']*$server->cardDropRates/100;
-				$itemDrops[$dropField]['type']   = 'card';
-			}
-			elseif (preg_match('/^drop/', $dropField)) {
-				$itemDrops[$dropField]['chance'] = $itemDrops[$dropField]['chance']*$server->dropRates/100;
-				$itemDrops[$dropField]['type']   = 'normal';
+				$adjust = ($monster->boss) ? $server->dropRates['CardBoss'] : $server->dropRates['Card'];
+				$itemDrops[$dropField]['type'] = 'card';
 			}
 			elseif (preg_match('/^mvpdrop/', $dropField)) {
-				$itemDrops[$dropField]['chance'] = $itemDrops[$dropField]['chance']*$server->mvpDropRates/100;
-				$itemDrops[$dropField]['type']   = 'mvp';
+				$adjust = $server->dropRates['MvpItem'];
+				$itemDrops[$dropField]['type'] = 'mvp';
+			}
+			elseif (preg_match('/^drop/', $dropField)) {
+				switch($monster->{$dropField.'_type'}) {
+					case 0: // Healing
+						$adjust = ($monster->boss) ? $server->dropRates['HealBoss'] : $server->dropRates['Heal'];
+						break;
+					
+					case 2: // Useable
+					case 18: // Cash Useable
+						$adjust = ($monster->boss) ? $server->dropRates['UseableBoss'] : $server->dropRates['Useable'];
+						break;
+					
+					case 4: // Weapon
+					case 5: // Armor
+					case 8: // Pet Armor
+						$adjust = ($monster->boss) ? $server->dropRates['EquipBoss'] : $server->dropRates['Equip'];
+						break;
+					
+					default: // Common
+						$adjust = ($monster->boss) ? $server->dropRates['CommonBoss'] : $server->dropRates['Common'];
+						break;
+				}
+				
+				$itemDrops[$dropField]['type'] = 'normal';
 			}
 			
+			$itemDrops[$dropField]['chance'] = $itemDrops[$dropField]['chance'] * $adjust / 10000;
+
 			if ($itemDrops[$dropField]['chance'] > 100) {
 				$itemDrops[$dropField]['chance'] = 100;
 			}

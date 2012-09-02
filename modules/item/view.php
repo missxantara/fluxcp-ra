@@ -127,18 +127,40 @@ if ($item) {
 				);
 				
 				if (preg_match('/^dropcard/', $dropName)) {
-					$dropArray['drop_chance'] = $dropArray['drop_chance']*$server->cardDropRates/100;
+					$adjust = ($drop->mvp_exp) ? $server->dropRates['CardBoss'] : $server->dropRates['Card'];
 					$dropArray['type'] = 'card';
 				}
-				elseif (preg_match('/^drop/', $dropName)) {
-					$dropArray['drop_chance'] = $dropArray['drop_chance']*$server->dropRates/100;
-					$dropArray['type'] = 'normal';
-				}
 				elseif (preg_match('/^mvp/', $dropName)) {
-					$dropArray['drop_chance'] = $dropArray['drop_chance']*$server->mvpDropRates/100;
+					$adjust = $server->dropRates['MvpItem'];
 					$dropArray['type'] = 'mvp';
 				}
+				elseif (preg_match('/^drop/', $dropName)) {
+					switch($item->type) {
+						case 0: // Healing
+							$adjust = ($drop->mvp_exp) ? $server->dropRates['HealBoss'] : $server->dropRates['Heal'];
+							break;
+						
+						case 2: // Useable
+						case 18: // Cash Useable
+							$adjust = ($drop->mvp_exp) ? $server->dropRates['UseableBoss'] : $server->dropRates['Useable'];
+							break;
+						
+						case 4: // Weapon
+						case 5: // Armor
+						case 8: // Pet Armor
+							$adjust = ($drop->mvp_exp) ? $server->dropRates['EquipBoss'] : $server->dropRates['Equip'];
+							break;
+						
+						default: // Common
+							$adjust = ($drop->mvp_exp) ? $server->dropRates['CommonBoss'] : $server->dropRates['Common'];
+							break;
+					}
+					
+					$dropArray['type'] = 'normal';
+				}
 				
+				$dropArray['drop_chance'] = $dropArray['drop_chance'] * $adjust / 10000;
+
 				if ($dropArray['drop_chance'] > 100) {
 					$dropArray['drop_chance'] = 100;
 				}
