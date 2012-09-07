@@ -138,7 +138,7 @@ class Flux_ItemShop {
 		$db = $this->server->charMapDatabase;
 		
 		if($this->server->isRenewal) {
-			$fromTables = array("$db.item_db", "$db.item_db_re", "$db.item_db2");
+			$fromTables = array("$db.item_db_re", "$db.item_db2");
 		} else {
 			$fromTables = array("$db.item_db", "$db.item_db2");
 		}
@@ -167,7 +167,7 @@ class Flux_ItemShop {
 		$db   = $this->server->charMapDatabase;
 		
 		if($this->server->isRenewal) {
-			$fromTables = array("$db.item_db", "$db.item_db_re", "$db.item_db2");
+			$fromTables = array("$db.item_db_re", "$db.item_db2");
 		} else {
 			$fromTables = array("$db.item_db", "$db.item_db2");
 		}

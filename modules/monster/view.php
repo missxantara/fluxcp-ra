@@ -18,7 +18,7 @@ $tempSkills = new Flux_TemporaryTable($server->connection, $skillDB, $fromTables
 
 // Items table.
 if($server->isRenewal) {
-	$fromTables = array("{$server->charMapDatabase}.item_db", "{$server->charMapDatabase}.item_db_re", "{$server->charMapDatabase}.item_db2");
+	$fromTables = array("{$server->charMapDatabase}.item_db_re", "{$server->charMapDatabase}.item_db2");
 } else {
 	$fromTables = array("{$server->charMapDatabase}.item_db", "{$server->charMapDatabase}.item_db2");
 }
