@@ -1018,6 +1018,27 @@ class Flux_Template {
 	}
 	
 	/**
+	 * Get the item information from splitting a delimiter
+	 * Used for renewal ATK and MATK as well as equip_level_min and equip_level_max.
+	 *
+	 * @param PDOStatement $object
+	 * @param string $field
+	 * @param string $delimiter
+	 * @param array $inputs
+	 * @return PDOStatement $object
+	 * @access public
+	 */
+	public function itemFieldExplode($object, $field, $delimiter, $inputs)
+	{
+		$outputs = array();
+		$fields = explode($delimiter, $object->$field);
+		foreach($inputs as $i => $input) {
+			$object->$input = isset($fields[$i]) ? $fields[$i] : NULL;
+		}
+		return $object;
+	}
+	
+	/**
 	 * Get the equip location combination name from an equip location combination.
 	 *
 	 * @param int $id

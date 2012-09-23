@@ -15,10 +15,12 @@ $npcBuy        = $params->get('npc_buy');
 $npcSell       = $params->get('npc_sell');
 $weight        = $params->get('weight');
 $attack        = $params->get('attack');
+$matk          = $params->get('matk');
 $defense       = $params->get('defense');
 $range         = $params->get('range');
 $weaponLevel   = $params->get('weapon_level');
-$equipLevel    = $params->get('equip_level');
+$equipLevelMin = $params->get('equip_level_min');
+$equipLevelMax = $params->get('equip_level_max');
 $refineable    = $params->get('refineable');
 $equipLocs     = $params->get('equip_locations');
 $equipUpper    = $params->get('equip_upper');
@@ -50,11 +52,15 @@ if (count($_POST) && $params->get('additem')) {
 		$equipJobs = $equipJobs->toArray();
 	}
 	
-	// Sanitize to NULL: viewid, slots, npcbuy, npcsell, weight, attack, defense, range, weaponlevel, equiplevel
+	// Sanitize to NULL: viewid, slots, npcbuy, npcsell, weight, attack, defense, range, weaponlevel, equipLevelMin
 	$nullables = array(
 		'viewID', 'slots', 'npcBuy', 'npcSell', 'weight', 'attack', 'defense',
-		'range', 'weaponLevel', 'equipLevel', 'script', 'equipScript', 'unequipScript'
+		'range', 'weaponLevel', 'equipLevelMin', 'script', 'equipScript', 'unequipScript'
 	);
+	// If renewal is enabled, sanitize matk and equipLevelMax to NULL
+	if($server->isRenewal) {
+		array_push($nullables, 'matk', 'equipLevelMax');
+	}
 	foreach ($nullables as $nullable) {
 		if (trim($$nullable) == '') {
 			$$nullable = null;
@@ -96,6 +102,9 @@ if (count($_POST) && $params->get('additem')) {
 	elseif (!is_null($attack) && !ctype_digit($attack)) {
 		$errorMessage = 'Attack must be a number.';
 	}
+	elseif (!is_null($matk) && !ctype_digit($matk)) {
+		$errorMessage = 'MATK must be a number.';
+	}
 	elseif (!is_null($defense) && !ctype_digit($defense)) {
 		$errorMessage = 'Defense must be a number.';
 	}
@@ -105,8 +114,11 @@ if (count($_POST) && $params->get('additem')) {
 	elseif (!is_null($weaponLevel) && !ctype_digit($weaponLevel)) {
 		$errorMessage = 'Weapon level must be a number.';
 	}
-	elseif (!is_null($equipLevel) && !ctype_digit($equipLevel)) {
-		$errorMessage = 'Equip level must be a number.';
+	elseif (!is_null($equipLevelMin) && !ctype_digit($equipLevelMin)) {
+		$errorMessage = 'Minimum equip level must be a number.';
+	}
+	elseif (!is_null($equipLevelMax) && !ctype_digit($equipLevelMax)) {
+		$errorMessage = 'Maximum equip level must be a number.';
 	}
 	else {
 		if (empty($errorMessage) && is_array($equipLocs)) {
@@ -160,6 +172,11 @@ if (count($_POST) && $params->get('additem')) {
 				$errorMessage = sprintf($errorMessage, $item->name_japanese, $item->origin_table, $item->id);
 			}
 			else {
+				$equipLevel = $equipLevelMin;
+				if($server->isRenewal && !is_null($equipLevelMax)) {
+					$equipLevel .= ':'. $equipLevelMax;
+				}
+				
 				$cols = array('id', 'name_english', 'name_japanese', 'type', 'weight');
 				$bind = array($itemID, $identifier, $itemName, $type, $weight*10);
 				$vals = array(
@@ -167,9 +184,8 @@ if (count($_POST) && $params->get('additem')) {
 					'slots'          => $slots,
 					'price_buy'      => $npcBuy,
 					'price_sell'     => $npcSell,
-					'attack'         => $attack,
 					'defence'        => $defense,
-					'`range`'          => $range,
+					'`range`'        => $range,
 					'weapon_level'   => $weaponLevel,
 					'equip_level'    => $equipLevel,
 					'script'         => $script,
@@ -177,6 +193,23 @@ if (count($_POST) && $params->get('additem')) {
 					'unequip_script' => $unequipScript,
 					'refineable'     => $refineable
 				);
+				
+				if($server->isRenewal) {
+					if(!is_null($matk)) {
+						$atk = $attack .':'. $matk;
+					}
+					else {
+						$atk = $attack;
+					}
+					$vals = array_merge($vals, array(
+						'`atk:matk`' => $atk
+					));
+				}
+				else {
+					$vals = array_merge($vals, array(
+						'attack' => $attack
+					));
+				}
 				
 				foreach ($vals as $col => $val) {
 					if (!is_null($val)) {

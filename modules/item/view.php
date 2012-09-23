@@ -20,11 +20,12 @@ $itemID = $params->get('id');
 
 $col  = 'items.id AS item_id, name_english AS identifier, ';
 $col .= 'name_japanese AS name, type, ';
-$col .= 'price_buy, price_sell, weight/10 AS weight, attack, defence, `range`, slots, ';
+$col .= 'price_buy, price_sell, weight/10 AS weight, defence, `range`, slots, ';
 $col .= 'equip_jobs, equip_upper, equip_genders, equip_locations, ';
-$col .= 'weapon_level, equip_level, refineable, view, script, ';
+$col .= 'weapon_level, equip_level AS equip_level_min, refineable, view, script, ';
 $col .= 'equip_script, unequip_script, origin_table, ';
-$col .= "$shopTable.cost, $shopTable.id AS shop_item_id";
+$col .= "$shopTable.cost, $shopTable.id AS shop_item_id, ";
+$col .= $server->isRenewal ? '`atk:matk` AS attack' : 'attack';
 
 $sql  = "SELECT $col FROM {$server->charMapDatabase}.items ";
 $sql .= "LEFT OUTER JOIN {$server->charMapDatabase}.$shopTable ON $shopTable.nameid = items.id ";
@@ -39,6 +40,11 @@ $isCustom = null;
 if ($item) {
 	$title = "Viewing Item ($item->name)";
 	$isCustom = (bool)preg_match('/item_db2$/', $item->origin_table);
+	
+	if($server->isRenewal) {
+		$item = $this->itemFieldExplode($item, 'attack', ':', array('attack','matk'));
+		$item = $this->itemFieldExplode($item, 'equip_level_min', ':', array('equip_level_min','equip_level_max'));
+	}
 	
 	$mobDB      = "{$server->charMapDatabase}.monsters";
 	$fromTables = array("{$server->charMapDatabase}.mob_db", "{$server->charMapDatabase}.mob_db2");

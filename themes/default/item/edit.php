@@ -54,8 +54,8 @@
 		<tr>
 			<th><label for="npc_sell">NPC Sell</label></th>
 			<td><input type="text" name="npc_sell" id="npc_sell" value="<?php echo htmlspecialchars($npcSell) ?>" /></td>
-			<th><label for="attack">Attack</label></th>
-			<td><input type="text" name="attack" id="attack" value="<?php echo htmlspecialchars($attack) ?>" /></td>
+			<th><label for="range">Range</label></th>
+			<td><input type="text" name="range" id="range" value="<?php echo htmlspecialchars($range) ?>" /></td>
 		</tr>
 		<tr>
 			<th><label for="weapon_level">Weapon Level</label></th>
@@ -65,12 +65,19 @@
 
 		</tr>
 		<tr>
-			<th><label for="equip_level">Equip Level</label></th>
-			<td><input type="text" name="equip_level" id="equip_level" value="<?php echo htmlspecialchars($equipLevel) ?>" /></td>
-
-			<th><label for="range">Range</label></th>
-			<td><input type="text" name="range" id="range" value="<?php echo htmlspecialchars($range) ?>" /></td>
+			<th><label for="attack">Attack</label></th>
+			<td><input type="text" name="attack" id="attack" value="<?php echo htmlspecialchars($attack) ?>" /></td>
+			<th><label for="equip_level">Min Equip Level</label></th>
+			<td><input type="text" name="equip_level_min" id="equip_level_min" value="<?php echo htmlspecialchars($equipLevelMin) ?>" /></td>
 		</tr>
+		<?php if($server->isRenewal): ?>
+		<tr>
+			<th><label for="matk">MATK</label></th>
+			<td><input type="text" name="matk" id="matk" value="<?php echo htmlspecialchars($matk) ?>" /></td>
+			<th><label for="equip_level_max">Max Equip Level</label></th>
+			<td><input type="text" name="equip_level_max" id="equip_level_max" value="<?php echo htmlspecialchars($equipLevelMax) ?>" /></td>
+		</tr>
+		<?php endif ?>
 		<tr>
 			<th><label>Refineable</label></th>
 			<td colspan="3">

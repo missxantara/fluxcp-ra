@@ -18,7 +18,13 @@ if($server->isRenewal) {
 $tableName = "{$server->charMapDatabase}.items";
 $tempTable = new Flux_TemporaryTable($server->connection, $tableName, $fromTables);
 
-$sql = "SELECT * FROM $tableName WHERE id = ? LIMIT 1";
+$col  = "name_english, name_japanese, type, price_buy, price_sell, ";
+$col .= "weight, defence, `range`, slots, equip_jobs, equip_upper, ";
+$col .= "equip_genders, equip_locations, weapon_level, equip_level, refineable, ";
+$col .= "view, script, equip_script, unequip_script, ";
+$col .= ($server->isRenewal) ? "`atk:matk` AS attack" : "attack";
+
+$sql = "SELECT $col FROM $tableName WHERE id = ? LIMIT 1";
 $sth = $server->connection->getStatement($sql);
 $sth->execute(array($itemID));
 
@@ -47,15 +53,19 @@ if ($item && count($_POST) && $params->get('copyitem')) {
 			$errorMessage = 'An item with that ID already exists in item_db2.';
 		}
 		else {
+			$col  = "id, name_english, name_japanese, type, price_buy, price_sell, ";
+			$col .= "weight, defence, `range`, slots, equip_jobs, equip_upper, ";
+			$col .= "equip_genders, equip_locations, weapon_level, equip_level, refineable, ";
+			$col .= "view, script, equip_script, unequip_script, ";
+			$col .= ($server->isRenewal) ? "`atk:matk`" : "attack";
+
 			$bind = array(
 				$copyID, $item->name_english, $item->name_japanese, $item->type, $item->price_buy, $item->price_sell,
-				$item->weight, $item->attack, $item->defence, $item->range, $item->slots, $item->equip_jobs, $item->equip_upper,
+				$item->weight, $item->defence, $item->range, $item->slots, $item->equip_jobs, $item->equip_upper,
 				$item->equip_genders, $item->equip_locations, $item->weapon_level, $item->equip_level, $item->refineable,
-				$item->view, $item->script, $item->equip_script, $item->unequip_script
+				$item->view, $item->script, $item->equip_script, $item->unequip_script, $item->attack
 			);
 			
-			$col  = "id,name_english,name_japanese,type,price_buy,price_sell,weight,attack,defence,`range`,slots,equip_jobs,";
-			$col .= "equip_upper,equip_genders,equip_locations,weapon_level,equip_level,refineable,view,script,equip_script,unequip_script";
 			$sql  = "INSERT INTO {$server->charMapDatabase}.item_db2 ($col) VALUES (".implode(',', array_fill(0, count($bind), '?')).")";
 			$sth  = $server->connection->getStatement($sql);
 			$res  = $sth->execute($bind);

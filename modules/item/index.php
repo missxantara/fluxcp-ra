@@ -170,7 +170,7 @@ try {
 			}
 		}
 		
-		if (in_array($attackOp, $opValues) && trim($attack) != '') {
+		if (!$server->isRenewal && in_array($attackOp, $opValues) && trim($attack) != '') {
 			$op = $opMapping[$attackOp];
 			if ($op == '=' && $attack === '0') {
 				$sqlpartial .= "AND (attack IS NULL OR attack = 0) ";
@@ -247,15 +247,20 @@ try {
 	$sth->execute($bind);
 	
 	$paginator = $this->getPaginator($sth->fetch()->total);
-	$paginator->setSortableColumns(array(
-		'item_id' => 'asc', 'name', 'type', 'equip_locations', 'price_buy', 'price_sell', 'weight', 'attack', 'defense',
-		'range', 'slots', 'refineable', 'cost', 'origin_table'
-	));
+	$sortable = array(
+		'item_id' => 'asc', 'name', 'type', 'equip_locations', 'price_buy', 'price_sell', 'weight',
+		'defense', 'range', 'slots', 'refineable', 'cost', 'origin_table'
+	);
+	if(!$server->isRenewal) {
+		$sortable[] = 'attack';
+	}
+	$paginator->setSortableColumns($sortable);
 	
 	$col  = "origin_table, items.id AS item_id, name_japanese AS name, type, ";
-	$col .= "IFNULL(equip_locations, 0) AS equip_locations, price_buy, weight/10 AS weight, attack, ";
+	$col .= "IFNULL(equip_locations, 0) AS equip_locations, price_buy, weight/10 AS weight, ";
 	$col .= "defence AS defense, `range`, slots, refineable, cost, $shopTable.id AS shop_item_id, ";
-	$col .= "IFNULL(price_sell, FLOOR(price_buy/2)) AS price_sell, view";
+	$col .= "IFNULL(price_sell, FLOOR(price_buy/2)) AS price_sell, view, ";
+	$col .= ($server->isRenewal) ? "`atk:matk` AS attack" : "attack";
 	
 	$sql  = $paginator->getSQL("SELECT $col FROM $tableName $sqlpartial GROUP BY items.id");
 	$sth  = $server->connection->getStatement($sql);
