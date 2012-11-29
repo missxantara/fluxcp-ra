@@ -69,9 +69,9 @@ if (($hideGroupLevel=Flux::config('HideFromWhosOnline')) && !$auth->allowedToIgn
 	$groups = AccountLevel::getGroupID($hideGroupLevel, '<');
 
 	if(!empty($groups)) {
-		$ids   = implode(', ', array_fill(0, count($groups), '?'));
-		$sql  .= "AND login.group_id IN ($ids) ";
-		$bind  = array_merge($bind, $groups);
+		$ids = implode(', ', array_fill(0, count($groups), '?'));
+		$sqlpartial .= "AND login.group_id IN ($ids) ";
+		$bind = array_merge($bind, $groups);
 	}
 }
 
