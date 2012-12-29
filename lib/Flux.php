@@ -22,7 +22,7 @@ class Flux {
 	/**
 	 * Current version.
 	 */
-	const VERSION = '1.0.0';
+	const VERSION = '2.0.0';
 	
 	/**
 	 * Repository SVN version or GIT hash of the top-level revision.
