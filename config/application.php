@@ -146,12 +146,15 @@ return array(
 	'GuildRankingLimit'      => 20,                     //
 	'ZenyRankingLimit'       => 20,                     //
 	'DeathRankingLimit'      => 20,                     //
+	'AlchemistRankingLimit'  => 20,                     //
+	
 	'RankingHideGroupLevel'  => AccountLevel::LOWGM,    //
 	'InfoHideZenyGroupLevel' => AccountLevel::LOWGM,    // Minimum group level of account to hide zeny from in server information page.
 	
-	'CharRankingThreshold'  => 0,                       // Number of days the character must have logged in within to be listed in character ranking. (0 = disabled)
-	'ZenyRankingThreshold'  => 0,                       // Number of days the character must have logged in within to be listed in zeny ranking. (0 = disabled)
-	'DeathRankingThreshold' => 0,                       // Number of days the character must have logged in within to be listed in death ranking. (0 = disabled)
+	'CharRankingThreshold'      => 0,                   // Number of days the character must have logged in within to be listed in character ranking. (0 = disabled)
+	'ZenyRankingThreshold'      => 0,                   // Number of days the character must have logged in within to be listed in zeny ranking. (0 = disabled)
+	'DeathRankingThreshold'     => 0,                   // Number of days the character must have logged in within to be listed in death ranking. (0 = disabled)
+	'AlchemistRankingThreshold' => 0,                   // Number of days the character must have logged in within to be listed in death ranking. (0 = disabled)
 	
 	'HideTempBannedCharRank'  => false,                 // Hide temporarily banned characters from ranking.
 	'HidePermBannedCharRank'  => true,                  // Hide permanently banned characters from ranking.
@@ -161,6 +164,9 @@ return array(
 	
 	'HideTempBannedDeathRank' => false,                 // Hide temporarily banned characters from ranking.
 	'HidePermBannedDeathRank' => true,                  // Hide permanently banned characters from ranking.
+	
+	'HideTempBannedAlcheRank' => false,                 // Hide temporarily banned characters from ranking.
+	'HidePermBannedAlcheRank' => true,                  // Hide permanently banned characters from ranking.
 	
 	'HideTempBannedStats'     => false,                 // Hide temporarily banned accounts from statistics.
 	'HidePermBannedStats'     => true,                  // Hide permanently banned accounts from statistics.
@@ -295,7 +301,8 @@ return array(
 			'character' => 'Character Ranking',
 			'guild'     => 'Guild Ranking',
 			'zeny'      => 'Zeny Ranking',
-			'death'     => 'Death Ranking'
+			'death'     => 'Death Ranking',
+			'alchemist' => 'Alchemist Ranking'
 		),
 		'item' => array(
 			'index' => 'List Items',
@@ -316,7 +323,11 @@ return array(
 	// Job classes, loaded from another file to avoid cluttering this one.
 	// There isn't normally a need to modify this file, unless it's been
 	// modified in an update. (In English: DON'T TOUCH THIS.)
-	'JobClasses'    => include('jobs.php'),
+	'JobClasses' => include('jobs.php'),
+	
+	// Alchemist job classes, mostly used for alchemist rankings.
+	// Should be left alone unless new alchemist-related job classes are introduced.
+	'AlchemistJobClasses' => include('jobs_alchemist.php'),
 	
 	// Gender-linked Job class IDs and their corresponding names.
 	// Should be left alone unless new gender-specific job classes are introduced.
