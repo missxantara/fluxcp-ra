@@ -147,6 +147,7 @@ return array(
 	'ZenyRankingLimit'       => 20,                     //
 	'DeathRankingLimit'      => 20,                     //
 	'AlchemistRankingLimit'  => 20,                     //
+	'BlacksmithRankingLimit' => 20,                     //
 	
 	'RankingHideGroupLevel'  => AccountLevel::LOWGM,    //
 	'InfoHideZenyGroupLevel' => AccountLevel::LOWGM,    // Minimum group level of account to hide zeny from in server information page.
@@ -167,6 +168,9 @@ return array(
 	
 	'HideTempBannedAlcheRank' => false,                 // Hide temporarily banned characters from ranking.
 	'HidePermBannedAlcheRank' => true,                  // Hide permanently banned characters from ranking.
+	
+	'HideTempBannedSmithRank' => false,                 // Hide temporarily banned characters from ranking.
+	'HidePermBannedSmithRank' => true,                  // Hide permanently banned characters from ranking.
 	
 	'HideTempBannedStats'     => false,                 // Hide temporarily banned accounts from statistics.
 	'HidePermBannedStats'     => true,                  // Hide permanently banned accounts from statistics.
@@ -298,11 +302,12 @@ return array(
 			'add'   => 'Add IP Ban'
 		),
 		'ranking' => array(
-			'character' => 'Character Ranking',
-			'guild'     => 'Guild Ranking',
-			'zeny'      => 'Zeny Ranking',
-			'death'     => 'Death Ranking',
-			'alchemist' => 'Alchemist Ranking'
+			'character'  => 'Character Ranking',
+			'guild'      => 'Guild Ranking',
+			'zeny'       => 'Zeny Ranking',
+			'death'      => 'Death Ranking',
+			'alchemist'  => 'Alchemist Ranking',
+			'blacksmith' => 'Blacksmith Ranking'
 		),
 		'item' => array(
 			'index' => 'List Items',
@@ -329,6 +334,10 @@ return array(
 	// Should be left alone unless new alchemist-related job classes are introduced.
 	'AlchemistJobClasses' => include('jobs_alchemist.php'),
 	
+	// Blacksmith job classes, mostly used for blacksmith rankings.
+	// Should be left alone unless new blacksmith-related job classes are introduced.
+	'BlacksmithJobClasses' => include('jobs_blacksmith.php'),
+
 	// Gender-linked Job class IDs and their corresponding names.
 	// Should be left alone unless new gender-specific job classes are introduced.
 	'GenderLinkedJobClasses' => include('jobs_gender_linked.php'),
