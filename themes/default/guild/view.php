@@ -161,7 +161,7 @@
 					<span class="not-applicable">Unknown</span>
 				<?php endif ?>
 			</td>
-			<td><?php echo number_format($member->exp_mode) ?>%</td>
+			<td><?php echo number_format($member->guild_tax) ?>%</td>
 			<td><?php echo htmlspecialchars($member->lastlogin) ?></td>
 		</tr>
 		<?php endforeach ?>

@@ -30,7 +30,7 @@ $col .= "mother.name AS mother_name, mother.char_id AS mother_id, ";
 $col .= "father.name AS father_name, father.char_id AS father_id, ";
 $col .= "child.name AS child_name, child.char_id AS child_id, ";
 $col .= "guild.guild_id, guild.name AS guild_name, guild.emblem_len AS guild_emblem_len, ";
-$col .= "guild_position.name AS guild_position, guild_position.exp_mode AS guild_tax, ";
+$col .= "guild_position.name AS guild_position, IFNULL(guild_position.exp_mode, 0) AS guild_tax, ";
 $col .= "party.name AS party_name, party.leader_char AS party_leader_id, party_leader.name AS party_leader_name, ";
 
 $col .= "homun.name AS homun_name, homun.class AS homun_class, homun.level AS homun_level, homun.exp AS homun_exp, ";

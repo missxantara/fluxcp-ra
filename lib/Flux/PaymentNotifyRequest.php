@@ -323,15 +323,20 @@ class Flux_PaymentNotifyRequest {
 	/**
 	 * Verify IPN variables against PayPal server.
 	 *
+	 * Updated to comply with changes being implemented Feb 1, 2013
+	 * https://www.x.com/node/320404
+	 *
 	 * @return bool True if verified, false if not.
 	 * @access private
 	 */
 	private function verify()
 	{
 		$qString  = 'cmd=_notify-validate&'.$this->ipnVarsToQueryString();
-		$request  = "POST /cgi-bin/webscr HTTP/1.0\r\n";
+		$request  = "POST /cgi-bin/webscr HTTP/1.1\r\n";
 		$request .= "Content-Type: application/x-www-form-urlencoded\r\n";
-		$request .= 'Content-Length: '.strlen($qString)."\r\n\r\n";
+		$request .= 'Content-Length: '.strlen($qString)."\r\n";
+		$request .= 'Host: '.$this->ppServer."\r\n";
+		$request .= "Connection: close\r\n\r\n";
 		$request .= $qString;
 
 		$this->logPayPal('Query string: %s', $qString);
