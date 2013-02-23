@@ -17,12 +17,14 @@ $sth2          = $server->connection->getStatement($sql2);
 $sth2->execute();
 $total         = $sth2->fetch()->total;
 
-$perPage       = Flux::config("ItemShopItemPerPage");
-$paginator     = $this->getPaginator($total, array('perPage' => $perPage));
-$items         = $shop->getItems($paginator, $category);
-
 foreach ($categories as $catID => $catName) {
 	$sth->execute(array($catID));
 	$categoryCount[$catID] = $sth->fetch()->total;
 }
+
+$categoryTotal = isset($category) ? $categoryCount[$category] : $total;
+$perPage       = Flux::config("ItemShopItemPerPage");
+$paginator     = $this->getPaginator($categoryTotal, array('perPage' => $perPage));
+$items         = $shop->getItems($paginator, $category);
+
 ?>
