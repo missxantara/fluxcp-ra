@@ -32,7 +32,12 @@
 		<?php endif ?>
 		</td>
 		<td>
-			<h4 class="shop-item-name"><?php echo $this->linkToItem($item->shop_item_nameid, $item->shop_item_name) ?></h4>
+			<h4 class="shop-item-name">
+				<?php if ($item->shop_item_qty > 1): ?>
+				<span class="qty"><?php echo number_format($item->shop_item_qty) ?>x</span>
+				<?php endif ?>
+				<?php echo $this->linkToItem($item->shop_item_nameid, $item->shop_item_name) ?>
+			</h4>
 			<p class="shop-item-info"><?php echo Markdown($item->shop_item_info) ?></p>
 			<p class="shop-item-action">
 				<?php if ($auth->actionAllowed('item', 'view')): ?>
@@ -49,7 +54,6 @@
 		</td>
 		<td class="shop-item-cost-qty">
 			<p><span class="cost"><?php echo number_format($item->shop_item_cost) ?></span> credits.</p>
-			<p>Quantity: <span class="qty"><?php echo number_format($item->shop_item_qty) ?></span></p>
 			<p class="shop-item-action">
 				<?php if ($auth->actionAllowed('purchase', 'add')): ?>
 				<a href="<?php echo $this->url('purchase', 'add', array('id' => $item->shop_item_id)) ?>"><strong>Add to Cart</strong></a>

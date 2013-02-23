@@ -421,7 +421,7 @@ class Flux_Paginator {
 	public function infoText()
 	{
 		$currPage = $this->currentPage;
-		$results  = Flux::config('ResultsPerPage');
+		$results  = $this->perPage;
 		$infoText = sprintf(
 			Flux::message('FoundSearchResults'),
 			$this->total, $this->numberOfPages, ($currPage*$results-($results - 1)), $currPage * $results < $this->total ? ($currPage*$results) : ($this->total)

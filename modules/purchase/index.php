@@ -16,7 +16,9 @@ $sth           = $server->connection->getStatement($sql);
 $sth2          = $server->connection->getStatement($sql2);
 $sth2->execute();
 $total         = $sth2->fetch()->total;
-$paginator     = $this->getPaginator($total);
+
+$perPage       = Flux::config("ItemShopItemPerPage");
+$paginator     = $this->getPaginator($total, array('perPage' => $perPage));
 $items         = $shop->getItems($paginator, $category);
 
 foreach ($categories as $catID => $catName) {

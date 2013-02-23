@@ -111,6 +111,7 @@ return array(
 	'AutoRemoveTempBans'   => true,                     // Automatically remove expired temporary bans on certain pages.
 	'ItemShopMaxCost'      => 99,                       // Max price an item can be sold for.
 	'ItemShopMaxQuantity'  => 99,                       // Max quantity the item may be sold at once for.
+	'ItemShopItemPerPage'  => 5,                        // The number of items to display per page in the "Item Shop" page.
 	'HideFromWhosOnline'   => AccountLevel::LOWGM,      // Levels greater than or equal to this will be hidden from the "Who's Online" page.
 	'HideFromMapStats'     => AccountLevel::LOWGM,      // Levels greater than or equal to this will be hidden from the "Map Stats" page.
 	'EnableGMPassSecurity' => AccountLevel::LOWGM,      // Levels greater than or equal to this will be required to use passwords that meet the earlier GM Password settings.
