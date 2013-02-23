@@ -161,8 +161,9 @@ class Flux_ItemShop {
 	/**
 	 *
 	 */
-	public function getItems($categoryID = null)
-	{	
+	public function getItems($paginator, $categoryID = null)
+	{
+		$sqlpartial = "";
 		$bind = array();
 		$db   = $this->server->charMapDatabase;
 		
@@ -176,11 +177,11 @@ class Flux_ItemShop {
 		$shop  = Flux::config('FluxTables.ItemShopTable');
 		$col   = "$shop.id AS shop_item_id, $shop.cost AS shop_item_cost, $shop.quantity AS shop_item_qty, $shop.use_existing AS shop_item_use_existing, ";
 		$col  .= "$shop.nameid AS shop_item_nameid, $shop.info AS shop_item_info, items.name_japanese AS shop_item_name";
-		$sql   = "SELECT $col FROM $db.$shop LEFT OUTER JOIN $db.items ON items.id = $shop.nameid";
 		if (!is_null($categoryID)) {
-			$sql   .= " WHERE $shop.category = ?";
-			$bind[] = $categoryID;
+			$sqlpartial = " WHERE $shop.category = ?";
+			$bind[]     = $categoryID;
 		}
+		$sql   = $paginator->getSQL("SELECT $col FROM $db.$shop LEFT OUTER JOIN $db.items ON items.id = $shop.nameid $sqlpartial");
 		$sth   = $this->server->connection->getStatement($sql);
 		
 		if ($sth->execute($bind)) {

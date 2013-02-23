@@ -691,14 +691,20 @@ label:hover {
 
 .shop-table {
 	width: 100%;
+	border-spacing: 0 10px;
+	border-collapse: separate;
 }
 
-.shop-item {
-	margin: 10px;
+.shop-table td {
 	padding: 10px;
 	background-color: #fff;
 	border: 1px solid #ddd;
-	width: 92%;
+}
+
+.shop-item-image {
+	width: 100px;
+	height: 75px;
+	text-align: center;
 }
 
 .shop-item-name {
@@ -709,28 +715,23 @@ label:hover {
 	border-bottom: 1px solid #eee;
 }
 
-.shop-item-cost {
-	margin: 0;
+.shop-item-cost-qty {
+	width: 150px;
 	color: #aaa;
-	text-transform: uppercase;
+	text-align: center;
 }
 
 .cost {
+	color: #000;
 	font-size: 120%;
 	font-weight: bold;
-	color: #000;
-}
-
-.shop-item-qty {
-	margin: 0 0 2px 0;
-	color: #aaa;
-	font-size: 8pt;
-	font-style: italic;
+	text-transform: uppercase;
 }
 
 .qty {
-	color: #888;
+	color: #000;
 	font-size: 10pt;
+	font-style: italic;
 }
 
 .shop-item-action {
