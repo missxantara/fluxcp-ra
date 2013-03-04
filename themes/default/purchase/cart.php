@@ -4,11 +4,15 @@
 <p class="cart-total-text">Your current subtotal is <span class="cart-sub-total"><?php echo number_format($total=$server->cart->getTotal()) ?></span> credit(s).</p>
 <br />
 <p class="checkout-text"><a href="<?php echo $this->url('purchase', 'checkout') ?>">Proceed to Checkout Area</a></p>
-<form action="<?php echo $this->url($params->get('module'), 'remove') ?>" method="post">
-	<?php echo $this->moduleActionFormInputs($params->get('module'), $params->get('action')) ?>
+<form action="<?php echo $this->url('purchase', 'remove') ?>" method="post">
 	<table class="vertical-table cart">
 		<?php foreach ($items as $num => $item): ?>
 		<tr>
+			<td class="shop-item-image">
+			<?php if (($item->shop_item_use_existing && ($image=$this->itemImage($item->shop_item_nameid))) || ($image=$this->shopItemImage($item->shop_item_id))): ?>
+				<img src="<?php echo $image ?>?nocache=<?php echo rand() ?>" />
+			<?php endif ?>
+			</td>
 			<td>
 				<h4>
 					<label>
@@ -33,7 +37,11 @@
 		<?php endforeach ?>
 	</table>
 	<p class="remove-from-cart">
-		<button onclick="window.location.href='<?php echo $this->url('purchase', 'clear') ?>'">Empty Out Your Cart</button>
 		<input type="submit" value="Remove Selected Items from Cart" />
+	</p>
+</form>
+<form action="<?php echo $this->url('purchase', 'clear') ?>" method="post">
+	<p class="remove-from-cart">
+		<input type="submit" value="Empty Out Your Cart" />
 	</p>
 </form>

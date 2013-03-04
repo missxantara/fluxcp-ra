@@ -691,6 +691,7 @@ label:hover {
 
 .shop-table {
 	width: 100%;
+	color: #000;
 	border-spacing: 0 10px;
 	border-collapse: separate;
 }
@@ -702,8 +703,8 @@ label:hover {
 }
 
 .shop-item-image {
-	width: 100px;
-	height: 75px;
+	width: 75px;
+	height: 100px;
 	text-align: center;
 }
 
@@ -809,6 +810,7 @@ textarea {
 }
 
 .remove-from-cart {
+	width: 100%;
 	text-align: right;
 }
 
