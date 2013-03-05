@@ -80,12 +80,10 @@ final class AccountLevel {
     }
 	
 	/**
-	 * Get array of group IDs that satisfy the operation 
-	 * condition that compares the group level.
+	 * Get the level associated with the group ID.
 	 *
-	 * @param int $compare
-	 * @param string $op
-	 * @return array
+	 * @param int $group_id
+	 * @return int
 	 * @access public
 	 */
     public static function getGroupLevel($group_id) {
@@ -94,6 +92,22 @@ final class AccountLevel {
 		}
 		else {
 			return AccountLevel::NORMAL;
+		}
+    }
+	
+	/**
+	 * Get the name associated with the group ID.
+	 *
+	 * @param int $group_id
+	 * @return string
+	 * @access public
+	 */
+    public static function getGroupName($group_id) {
+		if(isset(self::$groups[$group_id]['name'])) {
+			return self::$groups[$group_id]['name'];
+		}
+		else {
+			return "N/A";
 		}
     }
 }
