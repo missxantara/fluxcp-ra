@@ -5,7 +5,7 @@ if (!defined('FLUX_ROOT')) exit;
 <html>
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-		<title>Control Panel: Install &amp; Update</title>
+		<title>rA's Control Panel: Install &amp; Update</title>
 		<style type="text/css">
 			body {
 				margin: 20px;
@@ -69,6 +69,14 @@ if (!defined('FLUX_ROOT')) exit;
 			
 			.schema-info h3, .schema-info h4 {
 				margin: 20px 10px 5px 10px;
+			}
+			
+			.uptodate {
+				color: #008000;
+			}
+			
+			.needtoupdate {
+				color: #ff0000;
 			}
 			
 			.none {
