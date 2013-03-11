@@ -92,8 +92,6 @@ class Flux_Installer_Schema {
 	 */
 	public function install($version)
 	{
-		$version = (int)$version;
-		
 		if (!array_key_exists($version, $this->schemaInfo['versions']) || !$this->schemaInfo['versions'][$version]) {
 			// Switch database.
 			$this->connection->useDatabase($this->databaseName);
