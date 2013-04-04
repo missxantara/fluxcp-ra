@@ -10,7 +10,7 @@
 		<td bgcolor="#e1eaf3"></td>
 		<td bgcolor="#e1eaf3" valign="middle">
 			<span style="display: inline-block; margin: 2px 2px 2px 0">
-				You are currently logged in as <strong><a href="<?php echo $this->url('account', 'view') ?>" title="View account"><?php echo htmlspecialchars($session->account->userid) ?></a></strong>
+				You are currently logged in as <strong><a href="<?php echo $this->url('cpaccount', 'view') ?>" title="View CP Account"><?php echo htmlspecialchars($session->cpaccount->username) ?></a></strong>
 				on <?php echo htmlspecialchars($session->serverName) ?>.
 				
 			<?php if (count($athenaServerNames=$session->getAthenaServerNames()) > 1): ?>

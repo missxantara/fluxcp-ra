@@ -24,10 +24,10 @@ if (count($_POST)) {
 		}
 		
 		$sql  = "INSERT INTO {$session->loginAthenaGroup->loginDatabase}.$loginLogTable ";
-		$sql .= "(account_id, username, password, ip, error_code, login_date) ";
+		$sql .= "(cp_aid, username, password, ip, error_code, login_date) ";
 		$sql .= "VALUES (?, ?, ?, ?, ?, NOW())";
 		$sth  = $session->loginAthenaGroup->connection->getStatement($sql);
-		$sth->execute(array($session->account->account_id, $username, $password, $_SERVER['REMOTE_ADDR'], null));
+		$sth->execute(array($session->cpaccount->cp_aid, $username, $password, $_SERVER['REMOTE_ADDR'], null));
 		
 		if ($returnURL) {
 			$this->redirect($returnURL);
@@ -39,13 +39,15 @@ if (count($_POST)) {
 	catch (Flux_LoginError $e) {
 		if ($username && $password && $e->getCode() != Flux_LoginError::INVALID_SERVER) {
 			$loginAthenaGroup = Flux::getServerGroupByName($server);
+			
+			$cpAccountTable = Flux::config('FluxTables.CPAccountTable');
 
-			$sql = "SELECT account_id FROM {$loginAthenaGroup->loginDatabase}.login WHERE ";
+			$sql = "SELECT cp_aid FROM {$loginAthenaGroup->loginDatabase}.{$cpAccountTable} WHERE ";
 			
 			if (!$loginAthenaGroup->loginServer->config->getNoCase()) {
-				$sql .= "CAST(userid AS BINARY) ";
+				$sql .= "CAST(username AS BINARY) ";
 			} else {
-				$sql .= "userid ";
+				$sql .= "username ";
 			}
 			
 			$sql .= "= ? LIMIT 1";
@@ -54,17 +56,17 @@ if (count($_POST)) {
 			$row = $sth->fetch();
 
 			if ($row) {
-				$accountID = $row->account_id;
+				$userID = $row->cp_aid;
 				
 				if ($loginAthenaGroup->loginServer->config->getUseMD5()) {
 					$password = Flux::hashPassword($password);
 				}
 
 				$sql  = "INSERT INTO {$loginAthenaGroup->loginDatabase}.$loginLogTable ";
-				$sql .= "(account_id, username, password, ip, error_code, login_date) ";
+				$sql .= "(cp_aid, username, password, ip, error_code, login_date) ";
 				$sql .= "VALUES (?, ?, ?, ?, ?, NOW())";
 				$sth  = $loginAthenaGroup->connection->getStatement($sql);
-				$sth->execute(array($accountID, $username, $password, $_SERVER['REMOTE_ADDR'], $e->getCode()));
+				$sth->execute(array($userID, $username, $password, $_SERVER['REMOTE_ADDR'], $e->getCode()));
 			}
 		}
 		

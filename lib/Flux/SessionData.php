@@ -46,7 +46,14 @@ class Flux_SessionData {
 	 * @var Flux_DataObject
 	 */
 	public $account;
-
+	
+	/**
+	 * CP account object.
+	 *
+	 * @access public
+	 * @var Flux_DataObject
+	 */
+	public $cpaccount;
 	
 	/**
 	 * Create new SessionData instance.
@@ -111,18 +118,19 @@ class Flux_SessionData {
 			}
 		}
 		
-		// Get new account data every request.
-		if ($this->loginAthenaGroup && $this->username && ($account = $this->getAccount($this->loginAthenaGroup, $this->username))) {	
-			$this->account = $account;
-			$this->account->group_level = AccountLevel::getGroupLevel($account->group_id);
+		// Get new cp account data every request.
+		if ($this->loginAthenaGroup && $this->username && ($cpaccount = $this->getCpAccount($this->loginAthenaGroup, $this->username))) {	
+			$this->cpaccount = $cpaccount;
 			
-			// Automatically log out of account when detected as banned.
-			$permBan = ($account->state == 5 && !Flux::config('AllowPermBanLogin'));
-			$tempBan = (($account->unban_time > 0 && $account->unban_time < time()) && !Flux::config('AllowTempBanLogin'));
+			// Automatically log out of cp account when detected as banned.
+			//$permBan = ($cpaccount->state == 5 && !Flux::config('AllowPermBanLogin'));
+			//$tempBan = (($cpaccount->unban_time > 0 && $cpaccount->unban_time < time()) && !Flux::config('AllowTempBanLogin'));
+			//
+			//if ($permBan || $tempBan) {
+			//	$this->logout();
+			//}
 			
-			if ($permBan || $tempBan) {
-				$this->logout();
-			}
+			$this->account = new Flux_DataObject(null, array('group_level' => AccountLevel::NORMAL));
 		}
 		else {
 			$this->account = new Flux_DataObject(null, array('group_level' => AccountLevel::UNAUTH));
@@ -287,16 +295,19 @@ class Flux_SessionData {
 			throw new Flux_LoginError('Invalid login', Flux_LoginError::INVALID_LOGIN);
 		}
 		
-		$creditsTable  = Flux::config('FluxTables.CreditsTable');
-		$creditColumns = 'credits.balance, credits.last_donation_date, credits.last_donation_amount';
+		$cpAccountTable = Flux::config('FluxTables.CPAccountTable');
+		$creditsTable   = Flux::config('FluxTables.CreditsTable');
 		
-		$sql  = "SELECT login.*, {$creditColumns} FROM {$loginAthenaGroup->loginDatabase}.login ";
-		$sql .= "LEFT OUTER JOIN {$loginAthenaGroup->loginDatabase}.{$creditsTable} AS credits ON login.account_id = credits.account_id ";
-		$sql .= "WHERE login.sex != 'S' AND login.group_id >= 0 AND login.userid = ? LIMIT 1";
+		$creditColumns  = 'credits.balance, credits.last_donation_date, credits.last_donation_amount';
+		
+		$sql  = "SELECT cp_account.*, {$creditColumns} FROM {$loginAthenaGroup->loginDatabase}.{$cpAccountTable} AS cp_account ";
+		$sql .= "LEFT OUTER JOIN {$loginAthenaGroup->loginDatabase}.{$creditsTable} AS credits ON cp_account.cp_aid = credits.cp_aid ";
+		$sql .= "WHERE cp_account.username = ? LIMIT 1";
 		$smt  = $loginAthenaGroup->connection->getStatement($sql);
 		$res  = $smt->execute(array($username));
 		
 		if ($res && ($row = $smt->fetch())) {
+			/*
 			if ($row->unban_time > 0) {
 				if (time() >= $row->unban_time) {
 					$row->unban_time = 0;
@@ -323,6 +334,7 @@ class Flux_SessionData {
 			if (!Flux::config('AllowPermBanLogin') && $row->state == 5) {
 				throw new Flux_LoginError('Permanently banned', Flux_LoginError::PERMABANNED);
 			}
+			*/
 			
 			$this->setServerNameData($server);
 			$this->setUsernameData($username);
@@ -335,6 +347,35 @@ class Flux_SessionData {
 		}
 		
 		return true;
+	}
+		
+	/**
+	 * Get cp account object for a particular user name.
+	 *
+	 * @param Flux_LoginAthenaGroup $loginAthenaGroup
+	 * @param string $username
+	 * @return mixed
+	 * @access private
+	 */
+	private function getCpAccount(Flux_LoginAthenaGroup $loginAthenaGroup, $username)
+	{
+		$cpAccountTable = Flux::config('FluxTables.CPAccountTable');
+		$creditsTable   = Flux::config('FluxTables.CreditsTable');
+		
+		$creditColumns = 'credits.balance, credits.last_donation_date, credits.last_donation_amount';
+		
+		$sql  = "SELECT cp_account.*, {$creditColumns} FROM {$loginAthenaGroup->loginDatabase}.{$cpAccountTable} as cp_account ";
+		$sql .= "LEFT OUTER JOIN {$loginAthenaGroup->loginDatabase}.{$creditsTable} AS credits ON cp_account.cp_aid = credits.cp_aid ";
+		$sql .= "WHERE cp_account.username = ? LIMIT 1";
+		$smt  = $loginAthenaGroup->connection->getStatement($sql);
+		$res  = $smt->execute(array($username));
+		
+		if ($res && ($row = $smt->fetch())) {
+			return $row;
+		}
+		else {
+			return false;
+		}
 	}
 	
 	/**

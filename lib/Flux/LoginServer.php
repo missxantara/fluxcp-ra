@@ -74,14 +74,16 @@ class Flux_LoginServer extends Flux_BaseServer {
 			return false;
 		}
 		
-		$sql  = "SELECT userid FROM {$this->loginDatabase}.login WHERE sex != 'S' AND group_id >= 0 ";
+		$cpAccountTable = Flux::config('FluxTables.CPAccountTable');
+		
+		$sql  = "SELECT username FROM {$this->loginDatabase}.{$cpAccountTable} WHERE cp_aid > 0 ";
 		if ($this->config->getNoCase()) {
-			$sql .= 'AND LOWER(userid) = LOWER(?) ';
+			$sql .= "AND LOWER(username) = LOWER(?) ";
 		}
 		else {
-			$sql .= 'AND CAST(userid AS BINARY) = ? ';
+			$sql .= "AND CAST(username AS BINARY) = ? ";
 		}
-		$sql .= "AND user_pass = ? LIMIT 1";
+		$sql .= "AND password = ? LIMIT 1";
 		$sth  = $this->connection->getStatement($sql);
 		$sth->execute(array($username, $password));
 		
