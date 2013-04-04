@@ -196,11 +196,11 @@ return array(
 			//'Forums'        => array('exturl' => 'http://www.fluxro.com/community'),
 		),
 		'Account'     => array(
-			'Register'      => array('module' => 'account', 'action' => 'create'),
-			'Login'         => array('module' => 'account', 'action' => 'login'),
-			'Logout'        => array('module' => 'account', 'action' => 'logout'),
+			'Register'      => array('module' => 'cpaccount', 'action' => 'create'),
+			'Login'         => array('module' => 'cpaccount', 'action' => 'login'),
+			'Logout'        => array('module' => 'cpaccount', 'action' => 'logout'),
 			'History'       => array('module' => 'history'),
-			'My Account'    => array('module' => 'account', 'action' => 'view'),
+			'My Account'    => array('module' => 'cpaccount', 'action' => 'view'),
 		),
 		'Donations'   => array(
 			'Purchase'      => array('module' => 'purchase'),
@@ -223,7 +223,7 @@ return array(
 			'rA Logs'       => array('module' => 'logdata'),
 			'CP Logs'       => array('module' => 'cplog'),
 			'IP Ban List'   => array('module' => 'ipban'),
-			'Accounts'      => array('module' => 'account'),
+			'Accounts'      => array('module' => 'cpaccount'),
 			'Characters'    => array('module' => 'character'),
 			'Guilds'        => array('module' => 'guild'),
 			'Send Mail'     => array('module' => 'mail'),
@@ -243,7 +243,7 @@ return array(
 			'passchange' => 'Password Changes',
 			'passreset'  => 'Password Resets'
 		),
-		'account' => array(
+		'cpaccount' => array(
 			'index'      => 'List Accounts',
 			'view'       => 'View Account',
 			'changepass' => 'Change Password',

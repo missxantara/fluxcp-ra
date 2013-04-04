@@ -32,7 +32,7 @@ return array(
 			'delete'   => AccountLevel::ADMIN,
 			'imagedel' => AccountLevel::ADMIN
 		),
-		'account'   => array(
+		'cpaccount'   => array(
 			'index'    => AccountLevel::LOWGM,
 			'view'     => AccountLevel::NORMAL,
 			'create'   => AccountLevel::UNAUTH,
