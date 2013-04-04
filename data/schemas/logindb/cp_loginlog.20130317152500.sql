@@ -1,0 +1,1 @@
+ALTER TABLE `cp_loginlog` CHANGE COLUMN `account_id` `cp_aid`  int(10) NULL DEFAULT NULL AFTER `id`;

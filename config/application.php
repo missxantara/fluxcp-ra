@@ -412,7 +412,9 @@ return array(
 		'ResetPasswordTable'  => 'cp_resetpass',
 		'ChangeEmailTable'    => 'cp_emailchange',
 		'LoginLogTable'       => 'cp_loginlog',
-		'ChangePasswordTable' => 'cp_pwchange'
+		'ChangePasswordTable' => 'cp_pwchange',
+		'CPAccountTable'      => 'cp_account',
+		'AccountLinksTable'   => 'cp_acclinks'
 	)
 );
 ?>

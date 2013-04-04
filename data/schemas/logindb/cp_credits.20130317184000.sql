@@ -1,0 +1,1 @@
+ALTER TABLE `cp_credits` CHANGE COLUMN `account_id` `cp_aid`  int(11) UNSIGNED NOT NULL FIRST;
