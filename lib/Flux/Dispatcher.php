@@ -72,6 +72,7 @@ class Flux_Dispatcher {
 		$paramsArr                 = $config->get('params');
 		$modulePath                = $config->get('modulePath');
 		$themePath                 = $config->get('themePath');
+		$assetPath                 = $config->get('assetPath');
 		$defaultModule             = $config->get('defaultModule');
 		$defaultAction             = $config->get('defaultAction');
 		$missingActionModuleAction = $config->get('missingActionModuleAction');
@@ -145,6 +146,7 @@ class Flux_Dispatcher {
 			'modulePath'                => $modulePath,
 			'moduleName'                => $moduleName,
 			'themePath'                 => $themePath,
+			'assetPath'                 => $assetPath,
 			'actionName'                => $actionName,
 			'viewName'                  => $actionName,
 			'headerName'                => 'header',

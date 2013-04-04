@@ -195,6 +195,7 @@ class Flux_Template {
 		$this->modulePath                = $config->get('modulePath');
 		$this->moduleName                = $config->get('moduleName');
 		$this->themePath                 = $config->get('themePath');
+		$this->assetPath                 = $config->get('assetPath');
 		$this->actionName                = $config->get('actionName');
 		$this->viewName                  = $config->get('viewName');
 		$this->headerName                = $config->get('headerName');
@@ -522,6 +523,21 @@ class Flux_Template {
 			$path = implode('/', $path);
 		}
 		return $this->path("{$this->themePath}/$path");
+	}
+	
+	/**
+	 * Similar to the path() method, but uses the $assetPath as the path from
+	 * which the user-specified path is relative.
+	 *
+	 * @param string $path Relative path from assetPath.
+	 * @access public
+	 */
+	public function assetPath($path)
+	{
+		if (is_array($path)) {
+			$path = implode('/', $path);
+		}
+		return $this->path("{$this->assetPath}/$path");
 	}
 	
 	/**

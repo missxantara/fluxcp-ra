@@ -22,6 +22,7 @@ define('FLUX_CONFIG_DIR', 'config');
 define('FLUX_LIB_DIR',    'lib');
 define('FLUX_MODULE_DIR', 'modules');
 define('FLUX_THEME_DIR',  'themes');
+define('FLUX_ASSET_DIR',  'assets');
 define('FLUX_ADDON_DIR',  'addons');
 define('FLUX_LANG_DIR',   'lang');
 
@@ -172,6 +173,7 @@ try {
 		'useCleanUrls'              => Flux::config('UseCleanUrls'),
 		'modulePath'                => FLUX_MODULE_DIR,
 		'themePath'                 => FLUX_THEME_DIR.'/'.Flux::config('ThemeName'),
+		'assetPath'                 => FLUX_ASSET_DIR.'/'.Flux::config('ThemeName'),
 		'missingActionModuleAction' => Flux::config('DebugMode') ? array('errors', 'missing_action') : array('main', 'page_not_found'),
 		'missingViewModuleAction'   => Flux::config('DebugMode') ? array('errors', 'missing_view')   : array('main', 'page_not_found')
 	));

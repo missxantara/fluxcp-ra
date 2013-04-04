@@ -8,21 +8,21 @@
 		<meta http-equiv="refresh" content="<?php echo $metaRefresh['seconds'] ?>; URL=<?php echo $metaRefresh['location'] ?>" />
 		<?php endif ?>
 		<title><?php echo Flux::config('SiteTitle'); if (isset($title)) echo ": $title" ?></title>
-		<link rel="stylesheet" href="<?php echo $this->themePath('css/flux.css') ?>" type="text/css" media="screen" title="" charset="utf-8" />
-		<link href="<?php echo $this->themePath('css/flux/unitip.css') ?>" rel="stylesheet" type="text/css" media="screen" title="" charset="utf-8" />
+		<link rel="stylesheet" href="<?php echo $this->assetPath('css/flux.css') ?>" type="text/css" media="screen" title="" charset="utf-8" />
+		<link href="<?php echo $this->assetPath('css/flux/unitip.css') ?>" rel="stylesheet" type="text/css" media="screen" title="" charset="utf-8" />
 		<?php if (Flux::config('EnableReCaptcha')): ?>
-		<link href="<?php echo $this->themePath('css/flux/recaptcha.css') ?>" rel="stylesheet" type="text/css" media="screen" title="" charset="utf-8" />
+		<link href="<?php echo $this->assetPath('css/flux/recaptcha.css') ?>" rel="stylesheet" type="text/css" media="screen" title="" charset="utf-8" />
 		<?php endif ?>
 		<!--[if IE]>
-		<link rel="stylesheet" href="<?php echo $this->themePath('css/flux/ie.css') ?>" type="text/css" media="screen" title="" charset="utf-8" />
+		<link rel="stylesheet" href="<?php echo $this->assetPath('css/flux/ie.css') ?>" type="text/css" media="screen" title="" charset="utf-8" />
 		<![endif]-->	
 		<!--[if lt IE 9]>
-		<script src="<?php echo $this->themePath('js/ie9.js') ?>" type="text/javascript"></script>
-		<script type="text/javascript" src="<?php echo $this->themePath('js/flux.unitpngfix.js') ?>"></script>
+		<script src="<?php echo $this->assetPath('js/ie9.js') ?>" type="text/javascript"></script>
+		<script type="text/javascript" src="<?php echo $this->assetPath('js/flux.unitpngfix.js') ?>"></script>
 		<![endif]-->
-		<script type="text/javascript" src="<?php echo $this->themePath('js/jquery-1.8.3.min.js') ?>"></script>
-		<script type="text/javascript" src="<?php echo $this->themePath('js/flux.datefields.js') ?>"></script>
-		<script type="text/javascript" src="<?php echo $this->themePath('js/flux.unitip.js') ?>"></script>
+		<script type="text/javascript" src="<?php echo $this->assetPath('js/jquery-1.8.3.min.js') ?>"></script>
+		<script type="text/javascript" src="<?php echo $this->assetPath('js/flux.datefields.js') ?>"></script>
+		<script type="text/javascript" src="<?php echo $this->assetPath('js/flux.unitip.js') ?>"></script>
 		<script type="text/javascript">
 			$(document).ready(function(){
 				var inputs = 'input[type=text],input[type=password],input[type=file]';
@@ -83,7 +83,7 @@
 			
 			// Preload spinner image.
 			var spinner = new Image();
-			spinner.src = '<?php echo $this->themePath('img/spinner.gif') ?>';
+			spinner.src = '<?php echo $this->assetPath('img/spinner.gif') ?>';
 			
 			function refreshSecurityCode(imgSelector){
 				$(imgSelector).attr('src', spinner.src);
@@ -118,7 +118,7 @@
 				<td bgcolor="#8ebceb" width="20"></td>
 				<td bgcolor="#8ebceb" colspan="3">
 					<a href="<?php echo $this->basePath ?>">
-						<img src="<?php echo $this->themePath($session->account->group_level >= Flux::config('AdminMenuGroupLevel') ? 'img/logo_admin.gif' : 'img/logo.gif') ?>" id="logo" />
+						<img src="<?php echo $this->assetPath($session->account->group_level >= Flux::config('AdminMenuGroupLevel') ? 'img/logo_admin.gif' : 'img/logo.gif') ?>" id="logo" />
 					</a>
 				</td>
 				<td bgcolor="#8ebceb" width="20"></td>
@@ -142,9 +142,9 @@
 					<!-- Content -->
 					<table cellspacing="0" cellpadding="0" width="100%" id="content">
 						<tr>
-							<td width="18"><img src="<?php echo $this->themePath('img/content_tl.gif') ?>" style="display: block"  /></td>
+							<td width="18"><img src="<?php echo $this->assetPath('img/content_tl.gif') ?>" style="display: block"  /></td>
 							<td bgcolor="#f5f5f5"></td>
-							<td width="18"><img src="<?php echo $this->themePath('img/content_tr.gif') ?>" style="display: block" /></td>
+							<td width="18"><img src="<?php echo $this->assetPath('img/content_tr.gif') ?>" style="display: block" /></td>
 						</tr>
 						
 						<tr>
