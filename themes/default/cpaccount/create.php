@@ -61,22 +61,6 @@
 			<td><input type="text" name="email_address" id="register_email_address" value="<?php echo htmlspecialchars($params->get('email_address')) ?>" /></td>
 		</tr>
 		
-		<tr>
-			<th><label><?php echo htmlspecialchars(Flux::message('AccountGenderLabel')) ?></label></th>
-			<td>
-				<p>
-					<label><input type="radio" name="gender" id="register_gender_m" value="M"<?php if ($params->get('gender') === 'M') echo ' checked="checked"' ?> /> <?php echo $this->genderText('M') ?></label>
-					<label><input type="radio" name="gender" id="register_gender_f" value="F"<?php if ($params->get('gender') === 'F') echo ' checked="checked"' ?> /> <?php echo $this->genderText('F') ?></label>
-					<strong title="<?php echo htmlspecialchars(Flux::message('AccountCreateGenderInfo')) ?>">?</strong>
-				</p>
-			</td>
-		</tr>
-		
-		<tr>
-			<th><label><?php echo htmlspecialchars(Flux::message('AccountBirthdateLabel')) ?></label></th>
-			<td><?php echo $this->dateField('birthdate',null,0) ?></td>
-		</tr>
-		
 		<?php if (Flux::config('UseCaptcha')): ?>
 		<tr>
 			<?php if (Flux::config('EnableReCaptcha')): ?>

@@ -19,8 +19,6 @@ if (count($_POST)) {
 		$password  = $params->get('password');
 		$confirm   = $params->get('confirm_password');
 		$email     = trim($params->get('email_address'));
-		$gender    = $params->get('gender');
-		$birthdate = $params->get('birthdate_date');
 		$code      = $params->get('security_code');
 		
 		if (!($server = Flux::getServerGroupByName($server))) {
@@ -28,7 +26,7 @@ if (count($_POST)) {
 		}
 		
 		// Woohoo! Register ;)
-		$result = $server->loginServer->register($username, $password, $confirm, $email, $gender, $birthdate, $code);
+		$result = $server->loginServer->register($username, $password, $confirm, $email, $code);
 
 		if ($result) {
 			if (Flux::config('RequireEmailConfirm')) {
@@ -37,7 +35,7 @@ if (count($_POST)) {
 				$user = $username;
 				$code = md5(rand());
 				$name = $session->loginAthenaGroup->serverName;
-				$link = $this->url('account', 'confirm', array('_host' => true, 'code' => $code, 'user' => $username, 'login' => $name));
+				$link = $this->url('cpaccount', 'confirm', array('_host' => true, 'code' => $code, 'user' => $username, 'login' => $name));
 				$mail = new Flux_Mailer();
 				$sent = $mail->send($email, 'Account Confirmation', 'confirm', array('AccountUsername' => $username, 'ConfirmationLink' => htmlspecialchars($link)));
 				
@@ -52,7 +50,7 @@ if (count($_POST)) {
 					$bind[] = date('Y-m-d H:i:s', time() + (60 * 60 * $expire));
 				}
 				
-				$sql .= " WHERE account_id = ?";
+				$sql .= " WHERE cp_aid = ?";
 				$bind[] = $result;
 				
 				$sth  = $server->connection->getStatement($sql);
@@ -121,9 +119,6 @@ if (count($_POST)) {
 			case Flux_RegisterError::INVALID_EMAIL_ADDRESS:
 				$errorMessage = Flux::message('InvalidEmailAddress');
 				break;
-			case Flux_RegisterError::INVALID_GENDER:
-				$errorMessage = Flux::message('InvalidGender');
-				break;
 			case Flux_RegisterError::INVALID_SERVER:
 				$errorMessage = Flux::message('InvalidServer');
 				break;
@@ -135,9 +130,6 @@ if (count($_POST)) {
 				break;
 			case Flux_RegisterError::INVALID_PASSWORD:
 				$errorMessage = Flux::message ('InvalidPassword');
-				break;
-			case Flux_RegisterError::INVALID_BIRTHDATE:
-				$errorMessage = Flux::message('InvalidBirthdate');
 				break;
 			default:
 				$errorMessage = Flux::message('CriticalRegisterError');

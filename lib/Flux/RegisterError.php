@@ -16,11 +16,9 @@ class Flux_RegisterError extends Flux_Error {
 	const PASSWORD_HAS_USERNAME  = 11;
 	const EMAIL_ADDRESS_IN_USE   = 12;
 	const INVALID_EMAIL_ADDRESS  = 13;
-	const INVALID_GENDER         = 14;
 	const INVALID_SERVER         = 15;
 	const INVALID_SECURITY_CODE  = 16;
 	const INVALID_USERNAME       = 17;
 	const INVALID_PASSWORD       = 18;
-	const INVALID_BIRTHDATE      = 19;
 }
 ?>

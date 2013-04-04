@@ -99,7 +99,7 @@ class Flux_LoginServer extends Flux_BaseServer {
 	/**
 	 *
 	 */
-	public function register($username, $password, $confirmPassword, $email, $gender, $birthdate, $securityCode)
+	public function register($username, $password, $confirmPassword, $email, $securityCode)
 	{
 		if (preg_match('/^[^' . Flux::config('UsernameAllowedChars') . ']$/', $username)) {
 			throw new Flux_RegisterError('Invalid character(s) used in username', Flux_RegisterError::INVALID_USERNAME);
@@ -140,12 +140,6 @@ class Flux_LoginServer extends Flux_BaseServer {
 		elseif (!preg_match('/^(.+?)@(.+?)$/', $email)) {
 			throw new Flux_RegisterError('Invalid e-mail address', Flux_RegisterError::INVALID_EMAIL_ADDRESS);
 		}
-		elseif (!in_array(strtoupper($gender), array('M', 'F'))) {
-			throw new Flux_RegisterError('Invalid gender', Flux_RegisterError::INVALID_GENDER);
-		}
-		elseif (($birthdatestamp = strtotime($birthdate)) === false || date('Y-m-d', $birthdatestamp) != $birthdate) {
-			throw new Flux_RegisterError('Invalid birthdate', Flux_RegisterError::INVALID_BIRTHDATE);
-		}
 		elseif (Flux::config('UseCaptcha')) {
 			if (Flux::config('EnableReCaptcha')) {
 				require_once 'recaptcha/recaptchalib.php';
@@ -165,12 +159,14 @@ class Flux_LoginServer extends Flux_BaseServer {
 			}
 		}
 		
-		$sql  = "SELECT userid FROM {$this->loginDatabase}.login WHERE ";
+		$cpAccountTable = Flux::config('FluxTables.CPAccountTable');
+		
+		$sql  = "SELECT username FROM {$this->loginDatabase}.$cpAccountTable WHERE ";
 		if ($this->config->getNoCase()) {
-			$sql .= 'LOWER(userid) = LOWER(?) ';
+			$sql .= 'LOWER(username) = LOWER(?) ';
 		}
 		else {
-			$sql .= 'BINARY userid = ? ';
+			$sql .= 'BINARY username = ? ';
 		}
 		$sql .= 'LIMIT 1';
 		$sth  = $this->connection->getStatement($sql);
@@ -182,7 +178,7 @@ class Flux_LoginServer extends Flux_BaseServer {
 		}
 		
 		if (!Flux::config('AllowDuplicateEmails')) {
-			$sql = "SELECT email FROM {$this->loginDatabase}.login WHERE email = ? LIMIT 1";
+			$sql = "SELECT email FROM {$this->loginDatabase}.$cpAccountTable WHERE email = ? LIMIT 1";
 			$sth = $this->connection->getStatement($sql);
 			$sth->execute(array($email));
 
@@ -196,23 +192,23 @@ class Flux_LoginServer extends Flux_BaseServer {
 			$password = Flux::hashPassword($password);
 		}
 		
-		$sql = "INSERT INTO {$this->loginDatabase}.login (userid, user_pass, email, sex, group_id, birthdate) VALUES (?, ?, ?, ?, ?, ?)";
+		$sql = "INSERT INTO {$this->loginDatabase}.$cpAccountTable (username, password, email) VALUES (?, ?, ?)";
 		$sth = $this->connection->getStatement($sql);
-		$res = $sth->execute(array($username, $password, $email, $gender, (int)$this->config->getGroupID(), date('Y-m-d', $birthdatestamp)));
+		$res = $sth->execute(array($username, $password, $email));
 		
 		if ($res) {
-			$idsth = $this->connection->getStatement("SELECT LAST_INSERT_ID() AS account_id");
+			$idsth = $this->connection->getStatement("SELECT LAST_INSERT_ID() AS cp_aid");
 			$idsth->execute();
 			
 			$idres = $idsth->fetch();
 			$createTable = Flux::config('FluxTables.AccountCreateTable');
 			
-			$sql  = "INSERT INTO {$this->loginDatabase}.{$createTable} (account_id, userid, user_pass, sex, email, reg_date, reg_ip, confirmed) ";
-			$sql .= "VALUES (?, ?, ?, ?, ?, NOW(), ?, 1)";
+			$sql  = "INSERT INTO {$this->loginDatabase}.{$createTable} (cp_aid, username, password, email, reg_date, reg_ip, confirmed) ";
+			$sql .= "VALUES (?, ?, ?, ?, NOW(), ?, 1)";
 			$sth  = $this->connection->getStatement($sql);
 			
-			$sth->execute(array($idres->account_id, $username, $password, $gender, $email, $_SERVER['REMOTE_ADDR']));
-			return $idres->account_id;
+			$sth->execute(array($idres->cp_aid, $username, $password, $email, $_SERVER['REMOTE_ADDR']));
+			return $idres->cp_aid;
 		}
 		else {
 			return false;
