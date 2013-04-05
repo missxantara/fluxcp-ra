@@ -1,0 +1,1 @@
+ALTER TABLE `cp_account` DROP COLUMN `last_ip`;

@@ -55,6 +55,10 @@ return array(
 	'ItemCard2Label'          => 'Card 2',
 	'ItemCard3Label'          => 'Card 3',
 	
+	// Module: cpaccount
+	'AccountViewIngameAcc'    => 'In-game accounts on %s',
+	'AccountViewNoIngameAcc'  => 'This account has no in-game accounts on %s.',
+
 	// Module: account
 	// - account/changemail
 	'EmailChangeTitle'        => 'Change E-mail',
