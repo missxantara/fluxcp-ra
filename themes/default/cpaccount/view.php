@@ -5,17 +5,15 @@
 <?php endif ?>
 <?php if ($cpaccount): ?>
 <table class="vertical-table">
+	<?php if ($auth->allowedToSeeCpAccountID): ?>
+	<tr>
+		<th><?php echo htmlspecialchars(Flux::message('AccountIdLabel')) ?></th>
+		<td><?php echo $cpaccount->cp_aid ?></td>
+	</tr>
+	<?php endif ?>
 	<tr>
 		<th><?php echo htmlspecialchars(Flux::message('UsernameLabel')) ?></th>
 		<td><?php echo $cpaccount->username ?></td>
-		<th><?php echo htmlspecialchars(Flux::message('AccountIdLabel')) ?></th>
-		<td>
-			<?php if ($auth->allowedToSeeCpAccountID): ?>
-				<?php echo $cpaccount->cp_aid ?>
-			<?php else: ?>
-				<span class="not-applicable"><?php echo htmlspecialchars(Flux::message('NotApplicableLabel')) ?></span>
-			<?php endif ?>
-		</td>
 	</tr>
 	<tr>
 		<th><?php echo htmlspecialchars(Flux::message('EmailAddressLabel')) ?></th>
@@ -30,9 +28,21 @@
 				<span class="not-applicable"><?php echo htmlspecialchars(Flux::message('NoneLabel')) ?></span>
 			<?php endif ?>
 		</td>
+	</tr>
+	<tr>
 		<th><?php echo htmlspecialchars(Flux::message('AccountStateLabel')) ?></th>
 		<td>
-			<?php echo $cpaccount->state ?>
+			<?php if (!$cpaccount->confirmed && $cpaccount->confirm_code): ?>
+				<span class="account-state state-pending">
+					<?php echo htmlspecialchars(Flux::message('AccountStatePending')) ?>
+				</span>
+			<?php elseif ($cpaccount->state == 0): ?>
+				<span class="account-state state-normal">
+					<?php echo htmlspecialchars(Flux::message('AccountStateNormal')) ?>
+				</span>
+			<?php else: ?>
+				<span class="account-state state-unknown"><?php echo htmlspecialchars(Flux::message('UnknownLabel')) ?></span>
+			<?php endif ?>
 		</td>
 	</tr>
 	<tr>

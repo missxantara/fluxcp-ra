@@ -45,6 +45,4 @@ else {
 	$title = Flux::message('AccountViewTitle3');
 }
 
-// Account ban
-
 ?>
