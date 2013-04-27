@@ -1,7 +1,8 @@
 /data/items/icons/*.png
 /data/items/images/*.png
 
-/data/jobs/images/*.png
+/data/jobs/images/F/*.gif
+/data/jobs/images/M/*.gif
 
 /data/monsters/*.png
 
