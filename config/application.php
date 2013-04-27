@@ -14,7 +14,7 @@ return array(
 	'ThemeName'            => 'default',                // The theme name of the theme you would like to use.  Themes are in FLUX_ROOT/themes.
 	'ScriptTimeLimit'      => 0,                        // Script execution time limit. Specifies (in seconds) how long a page should run before timing out. (0 means forever)
 	'MissingEmblemBMP'     => 'empty.bmp',              //
-	'ItemIconNameFormat'   => '%d.gif',                 // The filename format for item icons (defaults to {itemid}.gif).
+	'ItemIconNameFormat'   => '%d.png',                 // The filename format for item icons (defaults to {itemid}.png).
 	'ItemImageNameFormat'  => '%d.png',                 // The filename format for item images (defaults to {itemid}.png).
 	'MonsterImageNameFormat' => '%d.gif',               // The filename format for monster images (defaults to {monsterid}.gif).
 	'ForceEmptyEmblem'     => false,                    // Forcefully display empty guild emblems, helpful when you don't have GD2 installed.
