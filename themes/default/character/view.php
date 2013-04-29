@@ -4,6 +4,11 @@
 <h3>Character Information for <?php echo htmlspecialchars($char->char_name) ?></h3>
 <table class="vertical-table">
 	<tr>
+		<?php if ($image=$this->jobImage($char->gender, $char->char_class)): ?>
+			<td rowspan="11" style="width: 150px; text-align: center; vertical-alignment: middle">
+				<img src="<?php echo $image ?>" />
+			</td>
+		<?php endif ?>
 		<th>Character ID</th>
 		<td colspan="2"><?php echo htmlspecialchars($char->char_id) ?></td>
 		<th>Account ID</th>

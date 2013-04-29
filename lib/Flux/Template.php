@@ -1347,6 +1347,16 @@ class Flux_Template {
 	/**
 	 *
 	 */
+	public function jobImage($gender, $jobID)
+	{
+		$path = sprintf(FLUX_DATA_DIR."/jobs/images/%s/".Flux::config('JobImageNameFormat'), $gender, $jobID);
+		$link = preg_replace('&/{2,}&', '/', "{$this->basePath}/$path");
+		return file_exists($path) ? $link : false;
+	}
+	
+	/**
+	 *
+	 */
 	public function monsterMode($mode)
 	{
 		$modes = Flux::monsterModeToArray($mode);
