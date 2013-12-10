@@ -70,6 +70,9 @@ if ($account) {
 		elseif ($lastLogin && !preg_match('/^\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}$/', $lastLogin)) {
 			$errorMessage = Flux::message('InvalidLastLoginDate');
 		}
+		elseif ( !Flux_Security::csrfValidate('AccountEdit', $_POST, $error) ) {
+			$errorMessage = $error;
+		}
 		else {
 			$bind = array(
 				'email'      => $email,

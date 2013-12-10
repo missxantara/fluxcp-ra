@@ -63,6 +63,9 @@ if ($item && count($_POST)) {
 	elseif (!$info) {
 		$errorMessage = 'You must input at least some info text.';
 	}
+	elseif ( !Flux_Security::csrfValidate('ItemShopAdd', $_POST, $error) ) {
+		$errorMessage = $error;
+	}
 	else {
 		if ($id=$shop->add($itemID, $category, $cost, $quantity, $info, $useExisting)) {
 			$message = 'Item has been successfully added to the shop';

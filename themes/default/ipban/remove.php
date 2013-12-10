@@ -6,6 +6,8 @@
 	<?php endif ?>
 	<form action="<?php echo $this->urlWithQs ?>" method="post" class="generic-form">
 		<input type="hidden" name="remipban" value="1" />
+		<?php echo Flux_Security::csrfGenerate('IPBanRemove', true) ?>
+
 		<table class="generic-form-table">
 			<tr>
 				<th><label for="list"><?php echo htmlspecialchars(Flux::message('IpbanIpAddressLabel')) ?></label></th>

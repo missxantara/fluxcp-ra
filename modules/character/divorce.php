@@ -38,6 +38,12 @@ if ($char->online || $partner->online || (!Flux::config('DivorceKeepChild') && $
 }
 
 if (count($_POST) && $params->get('divorce')) {
+
+	if (!Flux_Security::csrfValidate('Divorce', $_POST, $error) ) {
+		$session->setMessageData($error);
+		$this->redirect($this->referer);
+	}
+
 	$sql = "UPDATE {$server->charMapDatabase}.`char` SET partner_id = 0 ";
 	if (!Flux::config('DivorceKeepChild')) {
 		$sql .= ", child = 0 ";

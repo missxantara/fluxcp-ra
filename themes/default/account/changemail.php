@@ -12,6 +12,7 @@
 <?php endif ?>
 
 <form action="<?php echo $this->urlWithQs ?>" method="post" class="generic-form">
+	<?php echo Flux_Security::csrfGenerate('EmailEdit', true) ?>
 	<table class="generic-form-table">
 		<tr>
 			<th><label for="email"><?php echo htmlspecialchars(Flux::message('EmailChangeLabel')) ?></label></th>

@@ -37,6 +37,9 @@ if (count($_POST)) {
 	elseif ($slot === (int)$char->char_num+1) {
 		$errorMessage = 'Please choose a different slot.';
 	}
+	elseif ( !Flux_Security::csrfValidate('SlotEdit', $_POST, $error) ) {
+		$errorMessage = $error;
+	}
 	else {
 		$sql  = "SELECT char_id, name, online FROM {$server->charMapDatabase}.`char` AS ch ";
 		$sql .= "WHERE account_id = ? AND char_num = ? AND char_id != ?";

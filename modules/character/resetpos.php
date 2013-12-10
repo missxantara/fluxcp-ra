@@ -15,6 +15,11 @@ if (!$char || ($char->account_id != $session->account->account_id && !$auth->all
 	$this->deny();
 }
 
+if (!Flux_Security::csrfValidate('Session', $_GET, $error) ) {
+	$session->setMessageData($error);
+	$this->redirect($this->url('character', 'view', array('id' => $charID)));
+}
+
 $reset = $server->resetPosition($charID);
 if ($reset === -1) {
 	$message = sprintf(Flux::message('CantResetPosWhenOnline'), $char->name);

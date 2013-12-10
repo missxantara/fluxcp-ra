@@ -44,6 +44,9 @@ if ($item && count($_POST) && $params->get('copyitem')) {
 	elseif (!ctype_digit($copyID)) {
 		$errorMessage = 'Duplicate item ID must be a number.';
 	}
+	elseif ( !Flux_Security::csrfValidate('ItemCopy', $_POST, $error) ) {
+		$errorMessage = $error;
+	}
 	else {
 		$sql = "SELECT COUNT(id) AS itemExists FROM {$server->charMapDatabase}.item_db2 WHERE id = ?";
 		$sth = $server->connection->getStatement($sql);

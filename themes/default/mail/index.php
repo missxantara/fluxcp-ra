@@ -10,6 +10,7 @@ $markdownURL = 'http://daringfireball.net/projects/markdown/syntax';
 <?php endif ?>
 <form action="<?php echo $this->urlWithQs ?>" method="post" name="mailerform" class="generic-form">
 	<input type="hidden" name="_preview" value="0" />
+	<?php echo Flux_Security::csrfGenerate('Mailer', true) ?>
 	<table class="generic-form-table">
 		<tr>
 			<th><label><?php echo htmlspecialchars(Flux::message('MailerFromLabel')) ?></label></th>

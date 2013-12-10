@@ -7,6 +7,7 @@
 <?php endif ?>
 <form action="<?php echo $this->urlWithQs ?>" method="post">
 	<input type="hidden" name="additem" value="1" />
+	<?php echo Flux_Security::csrfGenerate('ItemAdd', true) ?>
 	<table class="vertical-table">
 		<tr>
 			<th><label for="item_id">Item ID</label></th>

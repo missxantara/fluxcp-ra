@@ -63,6 +63,9 @@ if ($item) {
 		elseif (!$info) {
 			$errorMessage = 'You must input at least some info text.';
 		}
+		elseif ( !Flux_Security::csrfValidate('ItemShopEdit', $_POST, $error) ) {
+			$errorMessage = $error;
+		}
 		else {
 			if ($shop->edit($shopItemID, $category, $cost, $quantity, $info, $useExisting)) {
 				if ($image && $image->get('size') && !$shop->uploadShopItemImage($shopItemID, $image)) {

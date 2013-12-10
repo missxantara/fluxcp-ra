@@ -31,7 +31,11 @@ if (count($_POST)) {
 			break;
 		}
 	}
-	
+
+	if ( empty($errorMessage) && !Flux_Security::csrfValidate('GenderEdit', $_POST, $error) ) {
+		$errorMessage = $error;
+	}
+
 	if (empty($errorMessage)) {
 		$sex = $session->account->sex == 'M' ? 'F' : 'M';
 		$sql = "UPDATE {$server->loginDatabase}.login SET sex = ? WHERE account_id = ?";

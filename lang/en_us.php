@@ -54,7 +54,12 @@ return array(
 	'ItemCard1Label'          => 'Card 1',
 	'ItemCard2Label'          => 'Card 2',
 	'ItemCard3Label'          => 'Card 3',
-	
+
+	// Security
+	'SecuritySessionInvalid'  => 'Sorry, the session has expired, try again.',
+	'SecurityNeedSession'     => 'Sorry, no form session found (hack attempt ?)',
+	'SecurityNeedToken'       => 'Sorry, no token found to identify this form (hack attempt ?)',
+
 	// Module: account
 	// - account/changemail
 	'EmailChangeTitle'        => 'Change E-mail',

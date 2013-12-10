@@ -4,6 +4,7 @@
 <?php echo $paginator->infoText() ?>
 <form action="<?php echo $this->url('ipban', 'unban') ?>" method="post">
 	<input type="hidden" name="unban" value="1" />
+	<?php echo Flux_Security::csrfGenerate('IPUnban', true) ?>
 	<table class="horizontal-table">
 		<tr>
 			<?php if ($auth->allowedToRemoveIpBan && $auth->actionAllowed('ipban', 'unban')): ?>

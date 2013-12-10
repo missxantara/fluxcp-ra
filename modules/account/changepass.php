@@ -55,6 +55,9 @@ if (count($_POST)) {
 	elseif (Flux::config('PasswordMinSymbol') > 0 && preg_match_all('/[^A-Za-z0-9]/', $newPassword, $matches) < $passwordMinSymbol) {
 		$errorMessage = sprintf(Flux::message('NewPasswordNeedSymbol'), $passwordMinSymbol);
 	}
+	elseif ( !Flux_Security::csrfValidate('PasswordEdit', $_POST, $error) ) {
+		$errorMessage = $error;
+	}
 	else {
 		$sql = "SELECT user_pass AS currentPassword FROM {$server->loginDatabase}.login WHERE account_id = ?";
 		$sth = $server->connection->getStatement($sql);

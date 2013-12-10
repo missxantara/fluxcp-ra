@@ -17,6 +17,12 @@ elseif (!$server->cart->hasFunds()) {
 $items = $server->cart->getCartItems();
 
 if (count($_POST) && $params->get('process')) {
+
+	if ( !Flux_Security::csrfValidate('PurchaseCheckOut', $_POST, $error) ) {
+		$session->setMessageData($error);
+		$this->redirect($this->url('purchase','checkout'));
+	}
+
 	$redeemTable = Flux::config('FluxTables.RedemptionTable');
 	$creditTable = Flux::config('FluxTables.CreditsTable');
 	$deduct      = 0;

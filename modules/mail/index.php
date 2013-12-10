@@ -21,7 +21,10 @@ if (count($_POST)) {
 	elseif (!$body) {
 		$errorMessage = Flux::message('MailerEnterBodyText');
 	}
-	
+	elseif ( !Flux_Security::csrfValidate('Mailer', $_POST, $error) ) {
+		$errorMessage = $error;
+	}
+
 	if (empty($errorMessage)) {
 		if ($prev) {
 			require_once 'markdown/markdown.php';

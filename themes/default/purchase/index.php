@@ -47,7 +47,7 @@
 				/ <a href="<?php echo $this->url('itemshop', 'edit', array('id' => $item->shop_item_id)) ?>">Modify</a>
 				<?php endif ?>
 				<?php if ($auth->allowedToDeleteShopItem): ?>
-				/ <a href="<?php echo $this->url('itemshop', 'delete', array('id' => $item->shop_item_id)) ?>"
+				/ <a href="<?php echo $this->url('itemshop', 'delete', array('id' => $item->shop_item_id, 'Session' => Flux_Security::csrfGet('Session'))) ?>"
 					onclick="return confirm('Are you sure you want to remove this item from the item shop?')">Delete</a>
 				<?php endif ?>
 			</p>

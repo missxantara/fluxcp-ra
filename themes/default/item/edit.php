@@ -8,6 +8,8 @@
 <?php endif ?>
 <form action="<?php echo $this->urlWithQs ?>" method="post" name="edit_item_form">
 	<input type="hidden" name="edititem" value="1" />
+	<?php echo Flux_Security::csrfGenerate('ItemEdit', true) ?>
+
 	<table class="vertical-table">
 		<tr>
 			<th><label for="item_id">Item ID</label></th>
