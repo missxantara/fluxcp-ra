@@ -5,6 +5,7 @@
 		<p class="red"><?php echo htmlspecialchars($errorMessage) ?></p>
 	<?php endif ?>
 	<form action="<?php echo $this->urlWithQs ?>" method="post">
+		<?php echo Flux_Security::csrfGenerate('AccountEdit', true) ?>
 		<table class="vertical-table">
 			<tr>
 				<th><?php echo htmlspecialchars(Flux::message('UsernameLabel')) ?></th>

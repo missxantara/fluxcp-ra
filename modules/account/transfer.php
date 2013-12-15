@@ -16,6 +16,9 @@ if (count($_POST)) {
 		elseif (!$charName) {
 			$errorMessage = Flux::message('TransferEnterCharName');
 		}
+		elseif ( !Flux_Security::csrfValidate('TransferCredit', $_POST, $error) ) {
+			$errorMessage = $error;
+		}
 		else {
 			$res = $server->transferCredits($session->account->account_id, $charName, $credits);
 			

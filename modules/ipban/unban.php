@@ -10,6 +10,9 @@ if (!count($_POST) || !$params->get('unban') ) {
 if (!(($unbanList=$params->get('unban_list')) instanceOf Flux_Config) || !count($unbanList=$unbanList->toArray())) {
 	$session->setMessageData(Flux::message('IpbanNothingToUnban'));
 }
+elseif ( !Flux_Security::csrfValidate('IPUnban', $_POST, $error) ) {
+	$session->setMessageData($error);
+}
 else {
 	$reason = trim($params->get('reason'));
 	

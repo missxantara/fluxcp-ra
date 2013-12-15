@@ -9,7 +9,7 @@ $emailChangeTable = Flux::config('FluxTables.ChangeEmailTable');
 
 if (count($_POST)) {
 	$email = trim($params->get('email'));
-	
+
 	if (!$email) {
 		$errorMessage = Flux::message('EnterEmailAddress');
 	}
@@ -18,6 +18,9 @@ if (count($_POST)) {
 	}
 	elseif (!preg_match('/^(.+?)@(.+?)$/', $email)) {
 		$errorMessage = Flux::message('EmailInvalid');
+	}
+	elseif ( !Flux_Security::csrfValidate('EmailEdit', $_POST, $error) ) {
+		$errorMessage = $error;
 	}
 	elseif (!Flux::config('AllowDuplicateEmails')) {
 		$sql = "SELECT email FROM {$server->loginDatabase}.login WHERE email = ? LIMIT 1";
@@ -29,7 +32,7 @@ if (count($_POST)) {
 			$errorMessage = Flux::message('EmailAlreadyRegistered');
 		}
 	}
-	
+
 	if (empty($errorMessage)) {
 		$code = md5(rand() + $session->account->account_id);
 		$ip   = $_SERVER['REMOTE_ADDR'];

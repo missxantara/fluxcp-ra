@@ -37,6 +37,9 @@ if (count($_POST)) {
 	elseif (!$ipban || !$ipban->list) {
 		$errorMessage = sprintf(Flux::message('IpbanNotBanned'), $list);
 	}
+	elseif ( !Flux_Security::csrfValidate('IPBanRemove', $_POST, $error) ) {
+		$errorMessage = $error;
+	}
 	elseif ($server->loginServer->removeIpBan($session->account->account_id, $reason, $list)) {
 		$session->setMessageData(sprintf(Flux::message('IpbanPatternUnbanned'), $list));
 		$this->redirect($this->url('ipban'));

@@ -7,6 +7,8 @@
 <?php endif ?>
 <br />
 <form action="<?php echo $this->urlWithQs ?>" method="post" class="generic-form">
+	<?php echo Flux_Security::csrfGenerate('PasswordEdit', true) ?>
+
 	<table class="generic-form-table">
 		<tr>
 			<th><label for="currentpass"><?php echo htmlspecialchars(Flux::message('CurrentPasswordLabel')) ?></label></th>

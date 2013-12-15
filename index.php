@@ -44,6 +44,7 @@ require_once FLUX_CONFIG_DIR.'/groups.php';
 
 // Some necessary Flux core libraries.
 require_once 'Flux.php';
+require_once 'Flux/Security.php';
 require_once 'Flux/Dispatcher.php';
 require_once 'Flux/SessionData.php';
 require_once 'Flux/DataObject.php';
@@ -148,6 +149,7 @@ try {
 
 	// Initialize session data.
 	Flux::$sessionData = new Flux_SessionData($_SESSION[$sessionKey], $hasUpdates);
+	Flux_Security::setSession($_SESSION[$sessionKey]);
 
 	// Initialize authorization component.
 	$accessConfig = Flux::parseConfigFile(FLUX_CONFIG_DIR.'/access.php');

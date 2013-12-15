@@ -8,6 +8,8 @@
 <?php endif ?>
 <form action="<?php echo $this->urlWithQs ?>" method="post" class="generic-form">
 	<input type="hidden" name="copyitem" value="1" />
+	<?php echo Flux_Security::csrfGenerate('ItemCopy', true) ?>
+
 	<table class="generic-form-table">
 		<tr>
 			<th><label>Item Name (Item ID)</label></th>

@@ -5,6 +5,8 @@
 <?php endif ?>
 <form action="<?php echo $this->urlWithQs ?>" method="post" class="generic-form">
 	<input type="hidden" name="changeslot" value="1" />
+	<?php echo Flux_Security::csrfGenerate('SlotEdit', true) ?>
+
 	<table class="generic-form-table">
 		<tr>
 			<th><label>Character Name</label></th>

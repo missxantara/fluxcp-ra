@@ -2,6 +2,8 @@
 <h2><?php echo htmlspecialchars(Flux::message('DivorceHeading')) ?></h2>
 <form action="<?php echo $this->urlWithQs ?>" method="post" class="generic-form">
 	<input type="hidden" name="divorce" value="1" />
+	<?php echo Flux_Security::csrfGenerate('Divorce', true) ?>
+
 	<table class="generic-form-table">
 		<tr>
 			<td>

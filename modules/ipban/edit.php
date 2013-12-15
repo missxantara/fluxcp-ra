@@ -49,6 +49,9 @@ if (count($_POST)) {
 	elseif (strtotime($rtime) <= time()) {
 		$errorMessage = Flux::message('IpbanFutureDate');
 	}
+	elseif ( !Flux_Security::csrfValidate('IPBanEdit', $_POST, $error) ) {
+		$errorMessage = $error;
+	}
 	else {
 		if ($list != $ipban->list) {
 			$listArr   = array();

@@ -7,6 +7,8 @@
 <h3>Viewing character preferences for “<?php echo ($charName=htmlspecialchars($char->name))  ?>” on <?php echo htmlspecialchars($server->serverName) ?></h3>
 <form action="<?php echo $this->urlWithQs ?>" method="post" class="generic-form">
 	<input type="hidden" name="charprefs" value="1" />
+	<?php echo Flux_Security::csrfGenerate('CharacterPreferences', true) ?>
+
 	<table class="generic-form-table">
 		<tr>
 			<th><label for="hide_from_whos_online">Hide Character From "Who's Online"</label></th>
